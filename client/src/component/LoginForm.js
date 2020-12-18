@@ -1,8 +1,7 @@
 import React from 'react';
 
 
-
-function CreateButton() {
+function LoginForm() {
 
     return (
         <div className="login">
@@ -10,10 +9,15 @@ function CreateButton() {
 
             <h2 className="login-header">☕ Log-In Page ☕</h2>
 
-            <form className="login-container">
+            <form className="login-container" action="/login">
                 <p><input type="email" placeholder="Email"/></p>
                 <p><input type="password" placeholder="Password"/></p>
-                <p><input type="submit" value="로그인"/><input type="submit" value="회원가입"/></p>
+                <p><input type="submit" value="로그인"/>
+                    <form action="/register">
+                        <input type="submit" value="회원가입"/>
+                    </form>
+
+                </p>
 
             </form>
         </div>
@@ -24,7 +28,4 @@ function CreateButton() {
 }
 
 
-
-
-
-export default CreateButton;
+export default LoginForm;

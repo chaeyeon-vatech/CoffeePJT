@@ -6,6 +6,7 @@ import './App.css';
 import Main from "./pages/Main";
 import Search from "./pages/Search";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 
 class App extends Component {
@@ -16,7 +17,7 @@ class App extends Component {
             <Route exact path="/" component={Main}/>
             <Route exact path="/pay" component={Search}/>
             <Route exact path="/login" component={Login}/>
-            <Route exact path="/register" component={Login}/>
+            <Route exact path="/register" component={Register}/>
           </div>
         </Router>
     );
