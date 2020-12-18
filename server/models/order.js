@@ -2,12 +2,12 @@ import mongoose from 'mongoose';   // 몽구스는 서버와 몽고디비를 연
 const {Schema} = mongoose;            // 스키마라는 개념을 넣어서 중구난방으로 데이터를 쓰지 않게 잡아준다.
 
 // 정형화된 스키마를 선언하는 부분 -> spring model과 비슷하다 생각하면 됨
-const contentSchema = new Schema({
-    title: {
+const orderSchema = new Schema({
+    menu: {
         type: String,
         required: true
     },
-    content: {
+    hi: {
         type: String,
         required: true
     },
@@ -15,6 +15,10 @@ const contentSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    username: {
+        type: String,
+        required: true
+    }
 });
 
-export default mongoose.model('Content', contentSchema); // Content라는 모델이름을 가지고 contentSchema의 틀에 맞게 가져갈 수 있다.
+export default mongoose.model('Order', orderSchema); // Content라는 모델이름을 가지고 contentSchema의 틀에 맞게 가져갈 수 있다.
