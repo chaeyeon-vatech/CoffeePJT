@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
 
 import Main from "./pages/Main";
-import Search from "./pages/Search";
+import Search from "./pages/Payment";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
