@@ -1,38 +1,39 @@
 import gql from 'graphql-tag'; //gql은 자바스크립트로 스키마를 정의함 이것도 spring model 같음..? 거의 컨트롤러 같은 느낌
 const typeDefs = gql`
     type Query {
-        contents(search:String, category:Int, index:Int, hasNext:Boolean): [Content]!
-        maxIndex : Int!
-        user(id: ID!): User
+        orders(search:String, category:Int, index:Int, hasNext:Boolean): [Order]!
+        user(_id: ID!): User
         allUsers: [User!]!
         me: User
     }
     type User {
-        id: ID!
+        _id: ID
         username: String
-        email: String!
-      }
+        idNum: String!
+    }
     type AuthPayload {
         token: String
         user: User
     }
-    type Content {
-        _id: ID!
-        title: String!
-        content: String!
-        createdAt: String!
+    type Order {
+        _id: ID
+        menu: String!
+        hi : String!
+        username: String!
+        createdAt: String
     }
-    input ContentInput{
-        title: String!
-        content: String!
+    input OrderInput{
+        menu: String!
+        hi: String!
+        username: String!
     }
     type Mutation{
-        createContent(contentInput: ContentInput): Content!
-        updateContent(_id: ID!, title:String, content:String): Content!
-        removeContent(_id: ID!): Content!
-        searchByID(_id: ID!) : Content!
-        registerUser(username: String, email: String!, password: String!): AuthPayload
-        login (email: String!, password: String!): AuthPayload!
+        createOrder(orderInput: OrderInput): Order!
+        updateOrder(_id: ID!, menu:String, hi:String): Order!
+        removeOrder(_id: ID!): Order!
+        searchByID(_id: ID!) : Order!
+        registerUser(username: String!, idNum: String!, password: String!): AuthPayload
+        login (idNum: String!, password: String!): AuthPayload!
         logout:Boolean!
     }
 `;
