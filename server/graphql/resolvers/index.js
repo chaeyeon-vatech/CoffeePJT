@@ -7,11 +7,24 @@ const resolvers = {
     Query: {
         async orders(_, args) {
             try {
-                const orders = await Order.find().sort({createdAt: -1});
+                let orders = await Order.find().sort({createdAt: -1});
                 const search = args.search || "";
                 const category = args.category;
                 const index = args.index;
                 const hasNext = args.hasNext;
+                const acdc = args.acdc;
+                if(acdc === "menu"){
+                    orders = Order.find().sort({menu:1});
+                }
+                else if(acdc === "hi"){
+                    orders = Order.find().sort({hi:1});
+                }
+                else if(acdc === 'username'){
+                    orders = Order.find().sort({username:1});
+                }
+                else if(acdc === "createdAt"){
+                    orders = Order.find().sort({createdAt:1});
+                }
                 let result = []
                 if (category == 1) {
 
