@@ -2,11 +2,17 @@ import React from 'react';
 import App from './App';
 import {ApolloClient, ApolloLink} from 'apollo-boost'
 import {onError} from 'apollo-link-error'
-
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {createHttpLink} from 'apollo-link-http';
 import {ApolloProvider} from '@apollo/react-hooks';
-import {setContext} from 'apollo-link-context';
+import { ThemeProvider } from 'react-jss';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Theme from 'resources/theme';
+import Routes from 'routes';
+
+import './index.css';
+import * as serviceWorker from './serviceWorker';
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'
@@ -29,7 +35,9 @@ const client = new ApolloClient({
 
 
 export default (
+    <ThemeProvider theme={Theme}>
     <ApolloProvider client={client}>
         <App/>
     </ApolloProvider>
+    </ThemeProvider>
 );
