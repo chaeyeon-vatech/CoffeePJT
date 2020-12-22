@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 
-function BoardTable() {
+function Usertable() {
     const [ contexts, setContexts] = useState([]);
 
     // const {data, loading} = useQuery(FETCH_POSTS_QUERY, {
@@ -15,7 +15,7 @@ function BoardTable() {
 
 
         <table>
-            <caption>주문자 현황</caption>
+            <caption>주문 내역</caption>
             <thead>
             <tr>
                 <th scope="col">Account</th>
@@ -55,4 +55,4 @@ function BoardTable() {
     )
 }
 
-export default BoardTable;
+export default Usertable;

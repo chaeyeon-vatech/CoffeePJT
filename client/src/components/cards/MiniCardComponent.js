@@ -1,6 +1,6 @@
 import React from 'react';
-import { Column } from 'simple-flexbox';
-import { createUseStyles, useTheme } from 'react-jss';
+import {Column} from 'simple-flexbox';
+import {createUseStyles, useTheme} from 'react-jss';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -34,9 +34,9 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function MiniCardComponent({ className = '', title, value }) {
+function MiniCardComponent({className = '', title, value}) {
     const theme = useTheme();
-    const classes = useStyles({ theme });
+    const classes = useStyles({theme});
     const composedClassName = [classes.container, className].join(' ');
     return (
         <Column flexGrow={1} className={composedClassName} horizontal='center' vertical='center'>
