@@ -1,27 +1,20 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import React, { Component } from 'react';
 
+import logo from './logo.svg';
 import './App.css';
-
-import Main from "./pages/Main";
-import Search from "./pages/Payment";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-
+import { ThemeProvider } from 'react-jss';
+import Theme from './resources/theme';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './routes';
 
 class App extends Component {
-  render() {
-    return (
-        <Router>
-          <div>
-            <Route exact path="/" component={Main}/>
-            <Route exact path="/pay" component={Search}/>
-            <Route exact path="/login" component={Login}/>
-            <Route exact path="/register" component={Register}/>
-          </div>
-        </Router>
-    );
-  }
+    render() {
+        return (
+            <Router>
+                <Routes />
+            </Router>
+        );
+    }
 }
 
 export default App;
