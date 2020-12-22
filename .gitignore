@@ -5,3 +5,4 @@
 
 /client/.eslintcache
 .idea
+/node_modules/

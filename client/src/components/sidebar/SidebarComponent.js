@@ -6,6 +6,9 @@ import { convertlinksToUrl } from 'resources/utilities';
 import LogoComponent from './LogoComponent';
 import Menu from './MenuComponent';
 import MenuItem from './MenuItemComponent';
+import { useLogout } from '../../auth/Logout';
+import { useAuthToken } from '../../auth/authToken';
+import { useApolloClient } from '@apollo/react-hooks';
 
 const useStyles = createUseStyles({
     separator: {
@@ -21,9 +24,13 @@ function SidebarComponent() {
     const theme = useTheme();
     const classes = useStyles({ theme });
     const isMobile = window.innerWidth <= 1080;
+    const [, , removeAuthToken] = useAuthToken();
+    const apolloClient = useApolloClient();
 
     async function logout() {
         push(SLUGS.login);
+        await apolloClient.clearStore(); // we remove all information in the store
+        removeAuthToken(); //we clear the authToken
     }
 
     function onClick(slug, parameters = {}) {
