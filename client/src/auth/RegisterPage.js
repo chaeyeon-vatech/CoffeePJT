@@ -36,7 +36,6 @@ const AuthenticationForm = () => {
         }
     );
 
-    console.log(token);
 
     return (
 
@@ -75,7 +74,7 @@ const AuthenticationForm = () => {
                                        className='button' />;
                         </div>
                         <div className='group'>
-                            <a href='/login' className='button' >이미 회원이신가요?</a>
+                            <a href='/login' className='button'>이미 회원이신가요?</a>
                         </div>
                     </div>
                     <div className='sign-up-htm'>

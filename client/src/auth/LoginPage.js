@@ -90,7 +90,7 @@ const AuthenticationForm = () => {
                         </div>
 
                         <div className='group'>
-                            <a href='/signup' className='button' >아직 회원이 아니신가요?</a>
+                            <a href='/signup' className='button'>아직 회원이 아니신가요?</a>
                         </div>
 
 

@@ -51,17 +51,10 @@ const useStyles = createUseStyles({
 function DashboardComponent() {
     const classes = useStyles();
     const [authToken] = useAuthToken();
-
-    console.log(authToken);
     const [contents, setContents] = useState([]);
-
-
-    // trying to fetch our user data. Will fail if authToken is undefined
     const { data, loading } = useUserQuery();
 
-    console.log(data)
-
-
+    console.log(data);
 
 
     useEffect(() => {
