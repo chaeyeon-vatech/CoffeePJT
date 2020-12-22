@@ -1,24 +1,23 @@
-import Order from '../../models/order.js';
+import Content from '../../models/content.js';
 import users from '../../models/user.js';
 import bcrypt from 'bcryptjs';
 import jsonwebtoken from 'jsonwebtoken';
 // resolver에서 mutation을 정의하고 구현하는 걸 보니 가장 중요한 부분이 아닐까 싶다. service 단이라고 생각하자
 const resolvers = {
     Query: {
-        async orders(_, args) {
+        async contents(_, args) {
             try {
-                const orders = await Order.find().sort({createdAt: -1});
+                const contents = await Content.find().sort({createdAt: -1});
                 const search = args.search || "";
-                const category = args.category;
                 const index = args.index;
                 const hasNext = args.hasNext;
                 let result = []
-                if (category == 1) {
+                if (args.category == 1) {
 
-                    for (let i = 0; i < orders.length; i++) {
+                    for (let i = 0; i < contents.length; i++) {
 
-                        if (orders[i].menu.indexOf(search) > -1) {
-                            result.push(orders[i]);
+                        if (contents[i].title.toLowerCase().indexOf(search.toLowerCase()) > -1) {
+                            result.push(contents[i]);
                         }
                     }
                     if (hasNext == false) {
@@ -26,11 +25,11 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else if (category == 2) {
-                    for (let i = 0; i < orders.length; i++) {
+                } else if (args.category == 2) {
+                    for (let i = 0; i < contents.length; i++) {
 
-                        if (orders[i].hi.indexOf(search) > -1) {
-                            result.push(orders[i]);
+                        if (contents[i].content.toLowerCase().indexOf(search.toLowerCase()) > -1) {
+                            result.push(contents[i]);
                         }
                     }
                     if (hasNext == false) {
@@ -38,11 +37,11 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else if(category == 3){
-                    for (let i = 0; i < orders.length; i++) {
+                } else {
+                    for (let i = 0; i < contents.length; i++) {
 
-                        if (orders[i].username.indexOf(search) > -1) {
-                            result.push(orders[i]);
+                        if (contents[i].content.toLowerCase().indexOf(search.toLowerCase()) > -1 || contents[i].title.toLowerCase().indexOf(search.toLowerCase()) > -1) {
+                            result.push(contents[i]);
                         }
                     }
                     if (hasNext == false) {
@@ -50,14 +49,16 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else{
-                    result = orders;
                 }
                 return result;
             } catch (err) {
                 console.log(err);
                 throw err;
             }
+        },
+        async maxIndex(){
+          const contents = await Content.find().sort({createdAt: -1});
+          return contents.length;
         },
         // 로그인 되어 있는 나
         async me(_, args, {user}) {
@@ -83,92 +84,89 @@ const resolvers = {
             }
         }
     },
-    Order: {
+    Content: {
         _id(_, args) {
             return _._id;
         },
-        menu(_, args) {
-            return _.menu;
+        title(_, args) {
+            return _.title;
         },
-        hi(_, args) {
-            return _.hi;
+        content(_, args) {
+            return _.content;
         },
         createdAt(_, args) {
             return _.createdAt;
-        },
-        username(_, args){
-            return _.username;
         }
     },
     Mutation: {
-        createOrder: async (_, args) => {
+        createContent: async (_, args) => {
             try {
-                const order = new Order({
-                    ...args.orderInput
+                const content = new Content({
+                    ...args.contentInput
                 })
-                const result = await order.save();
+                const result = await content.save();
                 return result;
             } catch (e) {
                 throw new Error('Error: ', e);
             }
         },
-        removeOrder: async (_, args) => {
+        removeContent: async (_, args) => {
             try {
-                const removedorder = await Order.findByIdAndRemove(args._id).exec()
-                return removedorder
+                const removedcontent = await Content.findByIdAndRemove(args._id).exec()
+                return removedcontent
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
-        updateOrder: async (_, {_id, menu, hi}) => {
+        updateContent: async (_, {_id, title, content}) => {
             try {
-                const updatedOrder = await Order.findByIdAndUpdate(_id, {
-                    $set: {menu, hi}
+                const updatedContent = await Content.findByIdAndUpdate(_id, {
+                    $set: {title, content}
                 }).exec()
-                return updatedOrder
+                return updatedContent
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
         searchByID: async (_, args) => {
             try {
-                const searchOrder = await Order.findById(args._id).exec()
-                return searchOrder
+                const searchcontent = await Content.findById(args._id).exec()
+                return searchcontent
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
         // 회원가입
-        registerUser: async (root, {username, idNum, password}) => {
+        registerUser: async (root, {username, email, password}) => {
             try {
                 // 이메일 중복 체크
-                const userConfirm = await users.findOne({idNum: idNum})
+                const userConfirm = await users.findOne({email: email})
                 if (userConfirm != null) {
-                    return "Already registered idNum.";
+                    return "Already registered Email. Please try again.";
                 }
                 const user = await users.create({
                     username,
-                    idNum,
+                    email,
                     password: await bcrypt.hash(password, 10)
                 })
                 const token = jsonwebtoken.sign(
-                    {id: user.id, idNum: user.idNum},
+                    {id: user.id, email: user.email},
                     "somereallylongsecret",
                     {expiresIn: '1y'}
                 )
                 return {
-                    token, id: user.id, username: user.username, idNum: user.idNum, message: "Authentication succesfull"
+                    token, id: user.id, username: user.username, email: user.email, message: "Authentication succesfull"
                 }
             } catch (error) {
                 throw new Error(error.message)
             }
         },
-        login: async (_, {idNum, password}) => {
+        login: async (_, {email, password}) => {
             try {
                 // 유저 이메일 정보 확인 후 로그인
-                const user = await users.findOne({idNum: idNum})
+                const user = await users.findOne({email: email})
                 console.log(user);
-                console.log(idNum);
+                console.log(email);
                 if (!user) {
                     throw new Error('No user with that email')
                 }
@@ -178,7 +176,7 @@ const resolvers = {
                 }
                 // return jwt
                 const token = jsonwebtoken.sign(
-                    {id: user.id, idNum: user.idNum},
+                    {id: user.id, email: user.email},
                     "somereallylongsecret",
                     {expiresIn: '1d'}
                 )
