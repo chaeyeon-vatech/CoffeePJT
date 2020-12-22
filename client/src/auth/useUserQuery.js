@@ -1,9 +1,9 @@
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
 
 const userQueryGQL = gql`
     query user {
-        allUsers {
+        me {
             _id
             username
             idNum

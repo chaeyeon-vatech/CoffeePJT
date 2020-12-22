@@ -1,7 +1,6 @@
 import { useApolloClient } from "@apollo/react-hooks";
 import { useAuthToken } from './authToken';
 
-const TOKEN_NAME = "authToken";
 
 export const useLogout = () => {
     const [, , removeAuthToken] = useAuthToken();
@@ -13,3 +12,4 @@ export const useLogout = () => {
     };
     return logout;
 };
+

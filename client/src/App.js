@@ -7,14 +7,14 @@ import Theme from './resources/theme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './routes';
 
-class App extends Component {
-    render() {
+const App = () => {
+
         return (
             <Router>
                 <Routes />
             </Router>
         );
-    }
+
 }
 
 export default App;

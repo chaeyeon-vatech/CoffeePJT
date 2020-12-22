@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Column, Row } from 'simple-flexbox';
 import { createUseStyles } from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
 import TodayTrendsComponent from './TodayTrendsComponent';
 import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
 import TasksComponent from './TasksComponent';
+import { useAuthToken } from '../../auth/authToken';
+import { useUserQuery } from '../../auth/useUserQuery';
+import Private from '../../auth/Private';
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -47,6 +50,35 @@ const useStyles = createUseStyles({
 
 function DashboardComponent() {
     const classes = useStyles();
+    const [authToken] = useAuthToken();
+
+    console.log(authToken);
+    const [contents, setContents] = useState([]);
+
+
+    // trying to fetch our user data. Will fail if authToken is undefined
+    const { data, loading } = useUserQuery();
+
+    console.log(data)
+
+
+
+
+    useEffect(() => {
+        if (data) {
+            setContents(data.contents);
+        }
+    }, [data]);
+
+    console.log(contents);
+
+    console.log(contents &&
+        contents.map((content) => (
+            content._id
+
+        ))
+    );
+
     return (
         <Column>
             <Row
@@ -66,7 +98,7 @@ function DashboardComponent() {
                     <MiniCardComponent
                         className={classes.miniCardContainer}
                         title='Open'
-                        value='60'
+                        value='40'
                     />
                     <MiniCardComponent
                         className={classes.miniCardContainer}
