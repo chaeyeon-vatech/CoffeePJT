@@ -14,16 +14,16 @@ const resolvers = {
                 const hasNext = args.hasNext;
                 const acdc = args.acdc;
                 if(acdc === "menu"){
-                    orders = Order.find().sort({menu:1});
+                    orders = await Order.find().sort({menu:1});
                 }
                 else if(acdc === "hi"){
-                    orders = Order.find().sort({hi:1});
+                    orders = await Order.find().sort({hi:1});
                 }
                 else if(acdc === 'username'){
-                    orders = Order.find().sort({username:1});
+                    orders = await Order.find().sort({username:1});
                 }
                 else if(acdc === "createdAt"){
-                    orders = Order.find().sort({createdAt:1});
+                    orders = await Order.find().sort({createdAt:1});
                 }
                 let result = []
                 if (category == 1) {
