@@ -13,17 +13,14 @@ const resolvers = {
                 const index = args.index;
                 const hasNext = args.hasNext;
                 const acdc = args.acdc;
-                if(acdc === "menu"){
-                    orders = Order.find().sort({menu:1});
-                }
-                else if(acdc === "hi"){
-                    orders = Order.find().sort({hi:1});
-                }
-                else if(acdc === 'username'){
-                    orders = Order.find().sort({username:1});
-                }
-                else if(acdc === "createdAt"){
-                    orders = Order.find().sort({createdAt:1});
+                if (acdc === "menu") {
+                    orders = Order.find().sort({menu: 1});
+                } else if (acdc === "hi") {
+                    orders = Order.find().sort({hi: 1});
+                } else if (acdc === 'username') {
+                    orders = Order.find().sort({username: 1});
+                } else if (acdc === "createdAt") {
+                    orders = Order.find().sort({createdAt: 1});
                 }
                 let result = []
                 if (category == 1) {
@@ -51,7 +48,7 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else if(category == 3){
+                } else if (category == 3) {
                     for (let i = 0; i < orders.length; i++) {
 
                         if (orders[i].username.indexOf(search) > -1) {
@@ -63,7 +60,7 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else{
+                } else {
                     result = orders;
                 }
                 return result;
@@ -109,7 +106,7 @@ const resolvers = {
         createdAt(_, args) {
             return _.createdAt;
         },
-        username(_, args){
+        username(_, args) {
             return _.username;
         }
     },
