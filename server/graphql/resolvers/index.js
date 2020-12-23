@@ -155,7 +155,49 @@ const resolvers = {
             } catch (error) {
                 throw new Error(error.message)
             }
-        }
+        },
+        howmany: async(_,args)=>{
+            const number = [0,0,0];
+            const people = await users.find()
+            for (let i = 0; i < people.length; i++) {
+
+                if (people[i].status === "주문완료") {
+                    number[0]++;
+                }
+                else if(people[i].status === "주문취소"){
+                    number[1]++;
+                }
+                else if(people[i].status === "주문포기"){
+                    number[2]++;
+                }
+            }
+            return number;
+
+        },
+        howmuch: async(_,args)=>{
+            let sum=0;
+            const orders = await Order.find();
+            console.log(orders.length)
+            for(let i=0; i<orders.length; i++){
+                if(orders[i].menu === "아메리카노"){
+                    
+                    sum+=2000;
+                }
+                else if(orders[i].menu === "카페모카"){
+                    
+                    sum+=2500;
+                }
+                else if(orders[i].menu === "아이스티"){
+                    
+                    sum+=2500;
+                }
+                else if(orders[i].menu === "바닐라라떼"){
+                    
+                    sum+=3000;
+                }
+            }
+            return sum;
+        },
     },
     Order: {
         _id(_, args) {
@@ -216,48 +258,8 @@ const resolvers = {
             await users.findOneAndUpdate(user._id,{status:"주문포기"});
             return "주문을 포기하셨습니다."
         },
-        howmany: async(_,args)=>{
-            const number = [0,0,0];
-            const people = await users.find()
-            for (let i = 0; i < people.length; i++) {
-
-                if (people[i].status === "주문완료") {
-                    number[0]++;
-                }
-                else if(people[i].status === "주문취소"){
-                    number[1]++;
-                }
-                else if(people[i].status === "주문포기"){
-                    number[2]++;
-                }
-            }
-            return number;
-
-        },
-        howmuch: async(_,args)=>{
-            let sum=0;
-            const orders = await Order.find();
-            console.log(orders.length)
-            for(let i=0; i<orders.length; i++){
-                if(orders[i].menu === "아메리카노"){
-                    
-                    sum+=2000;
-                }
-                else if(orders[i].menu === "카페모카"){
-                    
-                    sum+=2500;
-                }
-                else if(orders[i].menu === "아이스티"){
-                    
-                    sum+=2500;
-                }
-                else if(orders[i].menu === "바닐라라떼"){
-                    
-                    sum+=3000;
-                }
-            }
-            return sum;
-        },
+        
+        
         // confirmOrders: async(_,{_id,creater},{user})=>{
         //     if(!user) throw error("로그인 되어 있지 않습니다.");
         //     if(user._id != creater) throw error("결제자가 아닙니다.");
