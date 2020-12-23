@@ -220,6 +220,10 @@ const resolvers = {
         createOrder: async (_, args, {user}) => {
             try {
                 if(!user) throw error("로그인 되어 있지 않습니다.");
+                const us = await users.findOne(user._id)
+                const confirm = us.status
+                console.log(confirm)
+                if(confirm === "주문완료") throw error("이미 주문 하셨습니다.");
                 const order = new Order({
                     ...args.orderInput
                 })
