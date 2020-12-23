@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Column, Row } from 'simple-flexbox';
 import { createUseStyles } from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
-import TodayTrendsComponent from './TodayTrendsComponent';
+import TodayTrendsComponent from './PaymentBoard';
 import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
 import TasksComponent from './TasksComponent';
 import { useAuthToken } from '../../auth/authToken';

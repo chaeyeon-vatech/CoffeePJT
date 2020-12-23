@@ -72,7 +72,7 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function TodayTrendsComponent() {
+function UserBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
 
@@ -143,4 +143,4 @@ function TodayTrendsComponent() {
     );
 }
 
-export default TodayTrendsComponent;
+export default UserBoard;

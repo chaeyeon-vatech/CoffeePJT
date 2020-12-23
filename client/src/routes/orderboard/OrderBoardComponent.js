@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
-import TodayTrendsComponent from './TodayTrendsComponent';
+import TodayTrendsComponent from './OrderBoard';
 import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
 import TasksComponent from './TasksComponent';
 import {useAuthToken} from '../../auth/authToken';
@@ -53,7 +53,7 @@ const useStyles = createUseStyles({
     }
 });
 
-function DashboardComponent() {
+function OrderBoardComponent() {
     const classes = useStyles();
 
     const [contents, setContents] = useState('');
@@ -130,4 +130,4 @@ function DashboardComponent() {
     );
 }
 
-export default DashboardComponent;
+export default OrderBoardComponent;
