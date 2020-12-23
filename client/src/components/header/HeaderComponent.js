@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { string } from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { Row } from 'simple-flexbox';
@@ -7,6 +7,8 @@ import { SidebarContext } from 'hooks/useSidebar';
 import SLUGS from 'resources/links';
 import { IconBell, IconSearch } from 'assets/icons';
 import DropdownComponent from 'components/dropdown';
+import {useQuery} from "@apollo/react-hooks";
+import {MeQuery} from "../../util/graphql";
 
 const useStyles = createUseStyles((theme) => ({
     avatar: {
@@ -64,6 +66,15 @@ function HeaderComponent() {
     const { currentItem } = useContext(SidebarContext);
     const theme = useTheme();
     const classes = useStyles({ theme });
+    const [username, setName] = useState();
+
+    const {data} = useQuery(MeQuery);
+
+    useEffect(() => {
+        if (data) {
+            setName(data.me.username);
+        }
+    }, [data]);
 
 
     let title;
@@ -125,7 +136,7 @@ function HeaderComponent() {
                 <DropdownComponent
                     label={
                         <>
-                            <span className={classes.name}>이름</span>
+                            <span className={classes.name}>{username}님🧑‍💻 오늘도 좋은 하루 보내세요!</span>
                             <img
                                 src='https://www.vatech.co.kr/files/attach/site_image/site_image.1519883211.png'
                                 alt='avatar'

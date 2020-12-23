@@ -1,4 +1,4 @@
-import { useCookies } from 'react-cookie';
+import {useCookies} from 'react-cookie';
 
 const TOKEN_NAME = 'Auth_Token';
 

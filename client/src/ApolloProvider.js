@@ -32,12 +32,9 @@ const authMiddleware = (authToken) =>
         return forward(operation);
     });
 
-const cache = new InMemoryCache({});
-
-
 
 const authLink = setContext((_, {headers}) => {
-const token = localStorage.getItem('myData');
+    const token = localStorage.getItem('myData');
 
     return {
         headers: {

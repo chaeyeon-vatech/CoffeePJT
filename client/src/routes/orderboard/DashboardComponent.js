@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Column, Row } from 'simple-flexbox';
-import { createUseStyles } from 'react-jss';
+import React, {useEffect, useState} from 'react';
+import {Column, Row} from 'simple-flexbox';
+import {createUseStyles} from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
 import TodayTrendsComponent from './TodayTrendsComponent';
 import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
 import TasksComponent from './TasksComponent';
-import { useAuthToken } from '../../auth/authToken';
-import { useUserQuery } from '../../auth/useUserQuery';
+import {useAuthToken} from '../../auth/authToken';
+import {useUserQuery} from '../../auth/useUserQuery';
 import Private from '../../auth/Private';
+import {CountMutation} from "../../util/mutation";
+import {useMutation} from "@apollo/react-hooks";
+import {Search} from "semantic-ui-react";
+import {useQuery} from "@apollo/react-hooks";
+import {SearchQuery} from "../../util/graphql";
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -50,29 +55,18 @@ const useStyles = createUseStyles({
 
 function DashboardComponent() {
     const classes = useStyles();
-    const [authToken] = useAuthToken();
-    console.log(authToken)
 
-    const [contents, setContents] = useState([]);
-    const { data, loading } = useUserQuery();
+    const [contents, setContents] = useState('');
+    const mutation = CountMutation;
 
 
-
-
-
-    useEffect(() => {
-        if (data) {
-            setContents(data.contents);
+    const [count, {loading}] = useMutation(mutation, {
+            refetchQueries: [{query: SearchQuery}]
         }
-    }, [data]);
+    )
 
 
-    console.log(contents &&
-        contents.map((content) => (
-            content._id
-
-        ))
-    );
+    console.log(contents)
 
     return (
         <Column>
@@ -81,19 +75,19 @@ function DashboardComponent() {
                 wrap
                 flexGrow={1}
                 horizontal='space-between'
-                breakpoints={{ 768: 'column' }}
+                breakpoints={{768: 'column'}}
             >
                 <Row
                     className={classes.cardRow}
                     wrap
                     flexGrow={1}
                     horizontal='space-between'
-                    breakpoints={{ 384: 'column' }}
+                    breakpoints={{384: 'column'}}
                 >
                     <MiniCardComponent
                         className={classes.miniCardContainer}
                         title='Open'
-                        value='40'
+                        value='23'
                     />
                     <MiniCardComponent
                         className={classes.miniCardContainer}
@@ -106,7 +100,7 @@ function DashboardComponent() {
                     wrap
                     flexGrow={1}
                     horizontal='space-between'
-                    breakpoints={{ 384: 'column' }}
+                    breakpoints={{384: 'column'}}
                 >
                     <MiniCardComponent
                         className={classes.miniCardContainer}
@@ -123,13 +117,13 @@ function DashboardComponent() {
             <Row
                 horizontal='space-between'
                 className={classes.lastRow}
-                breakpoints={{ 1024: 'column' }}
+                breakpoints={{1024: 'column'}}
             >
-                <TasksComponent containerStyles={classes.tasks} />
+                <TasksComponent containerStyles={classes.tasks}/>
             </Row>
 
             <div className={classes.todayTrends}>
-                <TodayTrendsComponent />
+                <TodayTrendsComponent/>
             </div>
 
         </Column>

@@ -1,7 +1,9 @@
 import Order from '../../models/order.js';
+import Task from '../../models/task.js';
 import users from '../../models/user.js';
 import bcrypt from 'bcryptjs';
 import jsonwebtoken from 'jsonwebtoken';
+import { ObjectID } from 'bson';
 // resolver에서 mutation을 정의하고 구현하는 걸 보니 가장 중요한 부분이 아닐까 싶다. service 단이라고 생각하자
 const resolvers = {
     Query: {
@@ -78,7 +80,65 @@ const resolvers = {
             if (!user) throw new Error('You are not authenticated')
             return await users.findById(user.id)
         },
-        // id로 검색
+        async tasks(_, args,{user}) {
+            try {
+                if (!user) throw new Error('You are not authenticated')
+                let tasks = await Task.find().sort({createdAt: -1});
+                const search = args.search || "";
+                const category = args.category;
+                const index = args.index;
+                const hasNext = args.hasNext;
+                const acdc = args.acdc;
+                if(acdc === "creater"){
+                    tasks = await Task.find().sort({creater:1});
+                }
+                else if(acdc === "title"){
+                    tasks = await Task.find().sort({title:1});
+                }
+                else if(acdc === "createdAt"){
+                    tasks = await Task.find().sort({createdAt:1});
+                }
+                let result = []
+                if (category == 1) {
+
+                    for (let i = 0; i < tasks.length; i++) {
+
+                        if (tasks[i].creater.indexOf(search) > -1) {
+                            result.push(tasks[i]);
+                        }
+                    }
+                    if (hasNext == false) {
+                        result = result.slice(10 * (index - 1), result.length);
+                    } else {
+                        result = result.slice(10 * (index - 1), 10 * (index));
+                    }
+                } else if (category == 2) {
+                    for (let i = 0; i < tasks.length; i++) {
+
+                        if (tasks[i].title.indexOf(search) > -1) {
+                            result.push(tasks[i]);
+                        }
+                    }
+                    if (hasNext == false) {
+                        result = result.slice(10 * (index - 1), result.length);
+                    } else {
+                        result = result.slice(10 * (index - 1), 10 * (index));
+                    }
+                } 
+                else{
+                    result = tasks;
+                    if (hasNext == false) {
+                        result = result.slice(10 * (index - 1), result.length);
+                    } else {
+                        result = result.slice(10 * (index - 1), 10 * (index));
+                    }
+                }
+                return result;
+            } catch (err) {
+                console.log(err);
+                throw err;
+            }
+        },        // id로 검색
         async user(root, {id}, {user}) {
             try {
                 if (!user) throw new Error('You are not authenticated!')
@@ -121,7 +181,7 @@ const resolvers = {
                 const order = new Order({
                     ...args.orderInput
                 })
-
+                
                 await users.findOneAndUpdate(user._id,{status:"주문완료"});
                 const result = await order.save();
                 return result;
@@ -155,6 +215,68 @@ const resolvers = {
             if(!user) throw error("로그인 되어 있지 않습니다.");
             await users.findOneAndUpdate(user._id,{status:"주문포기"});
             return "주문을 포기하셨습니다."
+        },
+        howmany: async(_,args)=>{
+            const number = [0,0,0];
+            const people = await users.find()
+            for (let i = 0; i < people.length; i++) {
+
+                if (people[i].status === "주문완료") {
+                    number[0]++;
+                }
+                else if(people[i].status === "주문취소"){
+                    number[1]++;
+                }
+                else if(people[i].status === "주문포기"){
+                    number[2]++;
+                }
+            }
+            return number;
+
+        },
+        // confirmOrders: async(_,{_id,creater},{user})=>{
+        //     if(!user) throw error("로그인 되어 있지 않습니다.");
+        //     if(user._id != creater) throw error("결제자가 아닙니다.");
+        //     // 근데 다 지우는 건 뭘 기준으로??
+        //     return "완료 처리 되었습니다. 맛있게 드세요!"
+        // },
+        createTask: async (_, args, {user}) => {
+            try {
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                
+                const task = new Task({
+                    ...args.taskInput
+                })
+                const result = await task.save();
+                console.log(result._id)
+                
+                return result;
+            } catch (e) {
+                throw new Error('Error: ', e);
+            }
+        },
+        removeTask: async (_, {_id},{user}) => {
+            try {
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                // if(user._id != creater) throw error("게시물 작성자가 아니어서 삭제할 수 없습니다.");
+                const removedTask = await Task.findByIdAndRemove(_id).exec()
+                return removedTask
+            } catch (e) {
+                throw new Error('Error: ', e)
+            }
+        },
+        updateTask: async (_, {_id, title},{user}) => {
+            try {
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                // if(user._id != creater) throw error("게시물 작성자가 아니어서 수정할 수 없습니다.");
+                
+                const updatedTask = await Task.findByIdAndUpdate(_id, {
+                    $set: {title}
+                }).exec()
+                return updatedTask
+            } catch (e) {
+                throw new Error('Error: ', e)
+            }
         },
         searchByID: async (_, args) => {
             try {
