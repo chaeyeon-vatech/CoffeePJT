@@ -3,13 +3,11 @@ import React, { useState } from 'react';
 import { userQueryGQL, registerMutationGQL, meGQL, loginMutationGQL } from './mutation';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useAuthToken } from './authToken';
+
 import { TextField } from '@material-ui/core';
-
-import authGate from './authGate';
-import { removeDirectivesFromDocument } from '@apollo/client/utilities';
-
 import './login.css';
-import { Link } from 'react-router-dom';
+import { LOCAL_STORAGE_TEMPLATE, ROUTES } from 'enumerations';
+
 
 
 const AuthenticationForm = () => {
@@ -20,31 +18,14 @@ const AuthenticationForm = () => {
     const [idNum, setIdNum] = useState('');
     const [token, setToken] = useState('');
     const loginmutation = loginMutationGQL;
-    const registermutation = registerMutationGQL;
-
-    const [reg] = useMutation(registermutation, {
-            onCompleted: (data) => {
-                setAuthToken(data.token);
-
-                alert('회원가입이 완료되었습니다.');
-            },
-            refetchQueries: [{ query: meGQL }],
-            variables: {
-                username: username,
-                idNum: idNum,
-                password: password
-            }
-
-        }
-    );
 
 
     const [log, { error, loading, data }] = useMutation(loginmutation, {
             refetchQueries: [{ query: meGQL }],
             onCompleted: (data) => {
                 setAuthToken(data.login.token);
+                localStorage.setItem('myData', data.login.token);
                 setToken(data.login.token);
-                localStorage.setItem('token', token);
                 window.location.href = '/order';
 
 

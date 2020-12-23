@@ -65,6 +65,7 @@ function HeaderComponent() {
     const theme = useTheme();
     const classes = useStyles({ theme });
 
+
     let title;
     switch (true) {
         case currentItem === SLUGS.dashboard:
@@ -111,7 +112,7 @@ function HeaderComponent() {
                             },
                             {
                                 label: 'Notification #4',
-                                onClick: () => console.log('Notification #4')
+                                onClick: () => console.log()
                             }
                         ]}
                         position={{
@@ -132,16 +133,6 @@ function HeaderComponent() {
                             />
                         </>
                     }
-                    options={[
-                        {
-                            label: 'Settings',
-                            onClick: onSettingsClick
-                        },
-                        {
-                            label: 'Logout',
-                            onClick: () => console.log('logout')
-                        }
-                    ]}
                     position={{
                         top: 52,
                         right: -6

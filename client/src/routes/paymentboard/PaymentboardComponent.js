@@ -48,16 +48,13 @@ const useStyles = createUseStyles({
     }
 });
 
-function DashboardComponent() {
+function PaymentboardComponent() {
     const classes = useStyles();
     const [authToken] = useAuthToken();
-    console.log(authToken)
-
     const [contents, setContents] = useState([]);
     const { data, loading } = useUserQuery();
 
-
-
+    console.log(data);
 
 
     useEffect(() => {
@@ -66,6 +63,7 @@ function DashboardComponent() {
         }
     }, [data]);
 
+    console.log(contents);
 
     console.log(contents &&
         contents.map((content) => (
@@ -136,4 +134,4 @@ function DashboardComponent() {
     );
 }
 
-export default DashboardComponent;
+export default PaymentboardComponent;

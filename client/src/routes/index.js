@@ -6,7 +6,6 @@ import PublicRoutes from 'routes/PublicRoutes';
 
 function Routes() {
     const { pathname } = useLocation();
-    // eslint-disable-next-line no-unused-vars
     const [width, height] = useWindowSize();
 
     useEffect(() => {

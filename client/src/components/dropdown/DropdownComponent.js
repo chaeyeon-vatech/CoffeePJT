@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { arrayOf, element, func, number, oneOfType, shape, string } from 'prop-types';
-import { Column } from 'simple-flexbox';
-import { createUseStyles, useTheme } from 'react-jss';
-import { IconArrowUp } from 'assets/icons';
+import React, {useState} from 'react';
+import {arrayOf, element, func, number, oneOfType, shape, string} from 'prop-types';
+import {Column} from 'simple-flexbox';
+import {createUseStyles, useTheme} from 'react-jss';
+import {IconArrowUp} from 'assets/icons';
 
 const useStyles = createUseStyles((theme) => ({
     arrowContainer: {
@@ -30,10 +30,10 @@ const useStyles = createUseStyles((theme) => ({
         padding: 0,
         position: 'absolute',
         width: '100%',
-        top: ({ position }) => position.top,
-        right: ({ position }) => position.right,
-        bottom: ({ position }) => position.bottom,
-        left: ({ position }) => position.left,
+        top: ({position}) => position.top,
+        right: ({position}) => position.right,
+        bottom: ({position}) => position.bottom,
+        left: ({position}) => position.left,
         '& button:first-of-type:hover div > svg > path': {
             fill: theme.color.paleBlue
         }
@@ -64,10 +64,10 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function DropdownComponent({ label, options, position }) {
+function DropdownComponent({label, options, position}) {
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const theme = useTheme();
-    const classes = useStyles({ theme, position });
+    const classes = useStyles({theme, position});
 
     function onDropdownClick() {
         setUserMenuOpen((prev) => !prev);
@@ -94,7 +94,7 @@ function DropdownComponent({ label, options, position }) {
                             {option.label}
                             {index === 0 && (
                                 <div className={classes.arrowContainer}>
-                                    <IconArrowUp />
+                                    <IconArrowUp/>
                                 </div>
                             )}
                         </button>

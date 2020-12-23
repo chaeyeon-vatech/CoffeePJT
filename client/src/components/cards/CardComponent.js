@@ -1,6 +1,6 @@
 import React from 'react';
-import { Column, Row } from 'simple-flexbox';
-import { createUseStyles, useTheme } from 'react-jss';
+import {Column, Row} from 'simple-flexbox';
+import {createUseStyles, useTheme} from 'react-jss';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -50,14 +50,15 @@ const useStyles = createUseStyles((theme) => ({
 
 function CardComponent(props) {
     const theme = useTheme();
-    const classes = useStyles({ theme });
-    const { title, link, subtitle, subtitleTwo, items, containerStyles } = props;
+    const classes = useStyles({theme});
+    const {title, link, subtitle, subtitleTwo, items, containerStyles} = props;
+
     function renderItem(item, index) {
         return (
             <Column
                 className={classes.itemContainer}
                 key={`item-${index}`}
-                breakpoints={{ 426: classes.itemContainerMobile }}
+                breakpoints={{426: classes.itemContainerMobile}}
             >
                 {item}
             </Column>
@@ -68,12 +69,12 @@ function CardComponent(props) {
         <Column
             flexGrow={1}
             className={[classes.container, containerStyles].join(' ')}
-            breakpoints={{ 426: classes.containerMobile }}
+            breakpoints={{426: classes.containerMobile}}
         >
             <Row horizontal='space-between'>
                 <Column>
                     <span className={classes.title}>{title}</span>
-                    <Row style={{ marginTop: 8, marginBottom: 16 }}>
+                    <Row style={{marginTop: 8, marginBottom: 16}}>
                         <span className={classes.subtitle}>{subtitle}</span>
                         {subtitleTwo && (
                             <span className={[classes.subtitle, classes.subtitle2].join(' ')}>

@@ -5,6 +5,8 @@ import LoadingComponent from 'components/loading';
 import basicLogin from '../auth/LoginPage';
 import LINKS from '../resources/links';
 import RegisterPage from '../auth/RegisterPage';
+import PaymentboardComponent from "./paymentboard";
+import UserboardComponent from "./userboard";
 
 const DashboardComponent = lazy(() => import('./orderboard'));
 
@@ -13,8 +15,8 @@ function PrivateRoutes() {
         <Suspense fallback={<LoadingComponent loading />}>
             <Switch>
                 <Route exact path={SLUGS.dashboard} component={DashboardComponent} />
-                <Route exact path={SLUGS.tickets} render={() => <div>tickets</div>} />
-                <Route exact path={SLUGS.settings} render={() => <div>settings</div>} />
+                <Route exact path={SLUGS.tickets} component={PaymentboardComponent} />
+                <Route exact path={SLUGS.settings} component={UserboardComponent} />
                 <Route exact path={SLUGS.login} component={basicLogin}/>
                 <Route path={LINKS.signup} component={RegisterPage} />
 

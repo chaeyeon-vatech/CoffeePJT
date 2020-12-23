@@ -10,7 +10,7 @@ const typeDefs = gql`
         _id: ID
         username: String
         idNum: String!
-      }
+    }
     type AuthPayload {
         token: String
         user: User
