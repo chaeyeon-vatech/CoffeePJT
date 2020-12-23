@@ -15,6 +15,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    status: {
+        type:String,
+        required:false
+    }
 });
 
 export default mongoose.model('User', userSchema); // Content라는 모델이름을 가지고 contentSchema의 틀에 맞게 가져갈 수 있다.
