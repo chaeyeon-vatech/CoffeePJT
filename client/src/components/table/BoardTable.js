@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {SearchQuery} from "../../util/graphql";
+import {MeQuery, SearchQuery} from "../../util/graphql";
+import DeleteButton from "../button/DeleteButton";
 
 function BoardTable() {
 
     const [contents, setContents] = useState('');
+    const [id, setId] = useState();
 
     const {data, loading} = useQuery(SearchQuery);
+
 
     useEffect(() => {
         if (data) {
@@ -28,6 +31,7 @@ function BoardTable() {
                 <th scope="col">Hot/Ice</th>
                 <th scope="col">주문일시</th>
 
+
             </tr>
             </thead>
             <tbody>
@@ -38,9 +42,12 @@ function BoardTable() {
                     <td>{content.menu}</td>
                     <td>{content.hi}</td>
                     <td>{content.createdAt}</td>
+
+
                 </tr>
 
             ))}
+
             </tbody>
         </table>
 

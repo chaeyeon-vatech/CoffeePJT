@@ -26,32 +26,14 @@ export const CreateMutation = gql`
         }
     }
 `
-// export const CREATEMUTATION = gql`
-//     mutation createContent($title:String! $content:String!){
-//         createContent(contentInput:{
-//             title:$title,
-//             content:$content
-//         }){
-//             _id
-//             title
-//             content
-//             createdAt
-//         }
-//     }
-// `;
-//
-// export const UPDATEMUTATION = gql`
-//     mutation updateContent($id:ID! $title:String! $content:String! ){
-//         updateContent(
-//             _id:$id,
-//             title:$title,
-//             content:$content
-//         ){
-//             _id
-//             title
-//             content
-//             createdAt
-//         }
-//     }
-//
-// `;
+
+export const RemoveMutation = gql `
+    mutation removeOrder($id:ID!){
+        removeOrder(_id:$id){
+            _id
+            menu
+            hi
+            username
+            createdAt
+        }
+    }`
