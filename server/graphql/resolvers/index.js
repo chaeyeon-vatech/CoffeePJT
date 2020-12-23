@@ -121,7 +121,7 @@ const resolvers = {
                 const order = new Order({
                     ...args.orderInput
                 })
-
+                
                 await users.findOneAndUpdate(user._id,{status:"주문완료"});
                 const result = await order.save();
                 return result;

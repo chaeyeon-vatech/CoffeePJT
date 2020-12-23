@@ -16,8 +16,8 @@ const userSchema = new Schema({
         required: true
     },
     status: {
-        type: String,
-        required: false
+        type:String,
+        required:false
     }
 });
 
