@@ -10,7 +10,6 @@ function DeleteButton(post_id) {
 
     const mutation = RemoveMutation;
 
-
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
             refetchQueries: [{query: SearchQuery}],
             variables: {id: String(Object.values(post_id))}
@@ -26,9 +25,6 @@ function DeleteButton(post_id) {
                            onClick={deletePostOrMutation}
                            disabled={loading}
                            value="↳주문 취소"/>
-
-                {/*<button onClick="window.location.reload();">Refresh Page</button>*/}
-
 
             </form>
 
