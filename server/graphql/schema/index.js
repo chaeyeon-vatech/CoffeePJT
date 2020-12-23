@@ -31,6 +31,7 @@ const typeDefs = gql`
         createOrder(orderInput: OrderInput): Order!
         updateOrder(_id: ID!, menu:String, hi:String): Order!
         removeOrder(_id: ID!): Order!
+        giveupOrder: String!
         searchByID(_id: ID!) : Order!
         registerUser(username: String, idNum: String!, password: String!): AuthPayload
         login (idNum: String!, password: String!): AuthPayload!

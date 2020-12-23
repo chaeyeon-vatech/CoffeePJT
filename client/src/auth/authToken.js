@@ -12,8 +12,6 @@ export const useAuthToken = () => {
     const setAuthToken = (authToken) => setCookie(TOKEN_NAME, authToken);
 
 
-    console.log(cookies[TOKEN_NAME])
-
     //this function removes the key "authToken" from our cookies. Useful to logout
     const removeAuthToken = () => removeCookie(TOKEN_NAME);
 

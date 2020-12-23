@@ -5,22 +5,26 @@ import jsonwebtoken from 'jsonwebtoken';
 // resolver에서 mutation을 정의하고 구현하는 걸 보니 가장 중요한 부분이 아닐까 싶다. service 단이라고 생각하자
 const resolvers = {
     Query: {
-        async orders(_, args) {
+        async orders(_, args,{user}) {
             try {
+                if (!user) throw new Error('You are not authenticated')
                 let orders = await Order.find().sort({createdAt: -1});
                 const search = args.search || "";
                 const category = args.category;
                 const index = args.index;
                 const hasNext = args.hasNext;
                 const acdc = args.acdc;
-                if (acdc === "menu") {
-                    orders = Order.find().sort({menu: 1});
-                } else if (acdc === "hi") {
-                    orders = Order.find().sort({hi: 1});
-                } else if (acdc === 'username') {
-                    orders = Order.find().sort({username: 1});
-                } else if (acdc === "createdAt") {
-                    orders = Order.find().sort({createdAt: 1});
+                if(acdc === "menu"){
+                    orders = await Order.find().sort({menu:1});
+                }
+                else if(acdc === "hi"){
+                    orders = await Order.find().sort({hi:1});
+                }
+                else if(acdc === 'username'){
+                    orders = await Order.find().sort({username:1});
+                }
+                else if(acdc === "createdAt"){
+                    orders = await Order.find().sort({createdAt:1});
                 }
                 let result = []
                 if (category == 1) {
@@ -48,7 +52,7 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else if (category == 3) {
+                } else if(category == 3){
                     for (let i = 0; i < orders.length; i++) {
 
                         if (orders[i].username.indexOf(search) > -1) {
@@ -60,7 +64,7 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else {
+                } else{
                     result = orders;
                 }
                 return result;
@@ -106,32 +110,39 @@ const resolvers = {
         createdAt(_, args) {
             return _.createdAt;
         },
-        username(_, args) {
+        username(_, args){
             return _.username;
         }
     },
     Mutation: {
-        createOrder: async (_, args) => {
+        createOrder: async (_, args, {user}) => {
             try {
+                if(!user) throw error("로그인 되어 있지 않습니다.");
                 const order = new Order({
                     ...args.orderInput
                 })
+
+                await users.findOneAndUpdate(user._id,{status:"주문완료"});
                 const result = await order.save();
                 return result;
             } catch (e) {
                 throw new Error('Error: ', e);
             }
         },
-        removeOrder: async (_, args) => {
+        removeOrder: async (_, args,{user}) => {
             try {
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                await users.findOneAndUpdate(user._id,{status:"주문취소"});
                 const removedorder = await Order.findByIdAndRemove(args._id).exec()
                 return removedorder
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
-        updateOrder: async (_, {_id, menu, hi}) => {
+        updateOrder: async (_, {_id, menu, hi},{user}) => {
             try {
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                await users.findOneAndUpdate(user._id,{status:"주문완료"});
                 const updatedOrder = await Order.findByIdAndUpdate(_id, {
                     $set: {menu, hi}
                 }).exec()
@@ -139,6 +150,11 @@ const resolvers = {
             } catch (e) {
                 throw new Error('Error: ', e)
             }
+        },
+        giveupOrder: async (_, args,{user})=>{
+            if(!user) throw error("로그인 되어 있지 않습니다.");
+            await users.findOneAndUpdate(user._id,{status:"주문포기"});
+            return "주문을 포기하셨습니다."
         },
         searchByID: async (_, args) => {
             try {

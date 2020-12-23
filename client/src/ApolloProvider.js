@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import App from './App';
 import {ApolloClient, ApolloLink} from 'apollo-boost';
 import {onError} from 'apollo-link-error';
@@ -7,17 +7,37 @@ import {createHttpLink} from 'apollo-link-http';
 import {ApolloProvider} from '@apollo/react-hooks';
 import {ThemeProvider} from 'react-jss';
 import Theme from 'resources/theme';
-import {CookiesProvider} from 'react-cookie';
+import {CookiesProvider, useCookies} from 'react-cookie';
 import {setContext} from '@apollo/client/link/context';
 
 import './index.css';
+import {useAuthToken} from "./auth/authToken";
+import {LOCAL_STORAGE_TEMPLATE} from "enumerations";
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'
 });
 
+const authMiddleware = (authToken) =>
+    new ApolloLink((operation, forward) => {
+        // add the authorization to the headers
+        if (authToken) {
+            operation.setContext({
+                headers: {
+                    authorization: `Bearer ${authToken}`,
+                },
+            });
+        }
+
+        return forward(operation);
+    });
+
+const cache = new InMemoryCache({});
+
+
+
 const authLink = setContext((_, {headers}) => {
-    const token = localStorage.getItem('token');
+const token = localStorage.getItem('myData');
 
     return {
         headers: {
@@ -26,7 +46,6 @@ const authLink = setContext((_, {headers}) => {
         }
     }
 });
-
 
 const client = new ApolloClient({
     link: authLink.concat(httpLink),
