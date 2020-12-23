@@ -1,13 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import UserTable from '../../components/table/UserTable';
+import {useQuery} from "@apollo/react-hooks";
+import {MeQuery, SearchQuery} from "../../util/graphql";
 
-// const data = [];
-//
-// for (let x = 1; x <= 24; x++) {
-//     data.push({x: x, y: Math.floor(Math.random() * 100)});
-// }
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -79,6 +76,21 @@ function TodayTrendsComponent() {
     const theme = useTheme();
     const classes = useStyles({theme});
 
+    const [contents, setContents] = useState('');
+    const [username, setName] = useState();
+    const [id, setId] = useState();
+
+    const {data, loading} = useQuery(MeQuery);
+
+    useEffect(() => {
+        if (data) {
+            setContents(data.me);
+            setName(data.me.username);
+            setId(data.me.idNum);
+        }
+    }, [data]);
+
+
     function renderLegend(color, title) {
         return (
             <Row vertical='center'>
@@ -122,10 +134,10 @@ function TodayTrendsComponent() {
                 <div/>
             </Column>
             <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
-                {renderStat('이름', '449')}
-                {renderStat('이메일', '426')}
+                {renderStat('이름', username)}
+                {renderStat('이메일', id)}
                 {renderStat('소속', '플랫폼 사업팀')}
-                
+
             </Column>
         </Row>
     );

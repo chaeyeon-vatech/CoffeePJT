@@ -1,13 +1,12 @@
-import React from 'react';
-import { Column, Row } from 'simple-flexbox';
-import { createUseStyles, useTheme } from 'react-jss';
+import React, {useEffect, useState} from 'react';
+import {Column, Row} from 'simple-flexbox';
+import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
+import {CreateMutation} from "../../util/mutation";
+import {MeQuery, SearchQuery} from "../../util/graphql";
+import {useQuery, useMutation} from "@apollo/react-hooks";
+import {TextField} from "@material-ui/core";
 
-const data = [];
-
-for (let x = 1; x <= 24; x++) {
-    data.push({ x: x, y: Math.floor(Math.random() * 100) });
-}
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -48,7 +47,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     statContainer: {
         borderBottom: `1px solid ${theme.color.lightGrayishBlue2}`,
-        padding: '24px 32px 24px 32px',
+        padding: '48px 64px 48px 64px',
         height: 'calc(114px - 48px)',
         '&:last-child': {
             border: 'none'
@@ -70,25 +69,63 @@ const useStyles = createUseStyles((theme) => ({
     },
     statValue: {
         ...theme.typography.title,
-        textAlign: 'center',
+        textAlign: 'left',
+        color: theme.color.veryDarkGrayishBlue
+    },
+    statValue2: {
+        ...theme.typography.title,
+        textAlign: 'right',
         color: theme.color.veryDarkGrayishBlue
     }
 }));
 
 function TodayTrendsComponent() {
     const theme = useTheme();
-    const classes = useStyles({ theme });
+    const classes = useStyles({theme});
+
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+
+    const [id, setId] = useState();
+    const [menu, setMenu] = useState();
+    const [hi, setHi] = useState();
+    const [username, setName] = useState();
+
+    const {data} = useQuery(MeQuery);
+
+
+    useEffect(() => {
+        if (data) {
+            setName(data.me.username);
+            setId(data.me.idNum);
+        }
+    }, [data]);
+
+    const createmutation = CreateMutation;
+
+
+    const [create] = useMutation(createmutation, {
+            refetchQueries: [{query: SearchQuery}],
+            variables: {
+                username: username,
+                menu: menu,
+                hi: hi
+            },
+        }
+    )
+
+    console.log(menu, hi);
 
     function renderLegend(color, title) {
         return (
             <Row vertical='center'>
-                <div style={{ width: 16, border: '2px solid', borderColor: color }}></div>
+                <div style={{width: 18, border: '2px solid', borderColor: color}}></div>
                 <span className={classes.legendTitle}>{title}</span>
             </Row>
         );
     }
 
-    function renderStat(title, value) {
+    function renderStat(title, value, value2) {
         return (
             <Column
                 flexGrow={1}
@@ -98,6 +135,7 @@ function TodayTrendsComponent() {
             >
                 <span className={classes.statTitle}>{title}</span>
                 <span className={classes.statValue}>{value}</span>
+                <span className={classes.statValue2}>{value2}</span>
             </Column>
         );
     }
@@ -107,29 +145,99 @@ function TodayTrendsComponent() {
             flexGrow={1}
             className={classes.container}
             horizontal='center'
-            breakpoints={{ 1024: 'column' }}
+            breakpoints={{1024: 'column'}}
         >
             <Column
                 wrap
                 flexGrow={7}
                 flexBasis='735px'
                 className={classes.graphSection}
-                breakpoints={{ 1024: { width: 'calc(100% - 48px)', flexBasis: 'auto' } }}
+                breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
             >
-              <BoardTable/>
+                <BoardTable/>
             </Column>
-            <Column className={classes.separator} breakpoints={{ 1024: { display: 'none' } }}>
-                <div />
+            <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
+                <div/>
             </Column>
-            <Column flexGrow={3} flexBasis='342px' breakpoints={{ 1024: classes.stats }}>
-                {renderStat('Resolved', '449')}
-                {renderStat('Received', '426')}
-                {renderStat('Average first response time', '33m')}
-                {renderStat('Average response time', '3h 8m')}
-                {renderStat('Resolution within SLA', '94%')}
+            <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
+                {renderStat('Select 버튼을 클릭하세요!', '주문하기')}
+                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
+                                                    onClick={() => {
+                                                        setMenu("아메리카노")
+                                                        setHi("hot")
+                                                    }}
+                                                    value="Hot"/>,
+                    <TextField type='submit'
+                               onClick={() => {
+                                   setMenu("아메리카노")
+                                   setHi("ice")
+                               }}
+                               value="Ice"/>)}
+
+                {renderStat('☕ 카페라떼 ☕', <TextField type='submit'
+                                                    onClick={() => {
+                                                        setMenu("카페라떼")
+                                                        setHi("hot")
+                                                    }}
+                                                    value="Hot"/>,
+                    <TextField type='submit'
+                               onClick={() => {
+                                   setMenu("카페라떼")
+                                   setHi("ice")
+                               }}
+                               value="Ice"/>)}
+
+
+                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
+                                                    onClick={() => {
+                                                        setMenu("아메리카노")
+                                                        setHi("hot")
+                                                    }}
+                                                    value="Hot"/>,
+                    <TextField type='submit'
+                               onClick={() => {
+                                   setMenu("아메리카노")
+                                   setHi("ice")
+                               }}
+                               value="Ice"/>)}
+
+
+                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
+                                                    onClick={() => {
+                                                        setMenu("아메리카노")
+                                                        setHi("hot")
+                                                    }}
+                                                    value="Hot"/>,
+                    <TextField type='submit'
+                               onClick={() => {
+                                   setMenu("아메리카노")
+                                   setHi("ice")
+                               }}
+                               value="Ice"/>)}
+
+
+                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
+                                                    onClick={() => {
+                                                        setMenu("아메리카노")
+                                                        setHi("hot")
+                                                    }}
+                                                    value="Hot"/>,
+                    <TextField type='submit'
+                               onClick={() => {
+                                   setMenu("아메리카노")
+                                   setHi("ice")
+                               }}
+                               value="Ice"/>)}
+
+                {renderStat(<TextField type='submit'
+                                       onClick={create}
+                                       value="Select"/>)}
             </Column>
         </Row>
+
+
     );
+
 }
 
 export default TodayTrendsComponent;
