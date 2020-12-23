@@ -42,6 +42,7 @@ const typeDefs = gql`
         giveupOrder: String!
         confirmOrders(_id:ID!, creater:String):String!
         howmany:[Int!]
+        howmuch:Int!
         createTask(taskInput: TaskInput): Task!
         updateTask(_id:ID!, title:String):Task!
         removeTask(_id: ID!): Task!
