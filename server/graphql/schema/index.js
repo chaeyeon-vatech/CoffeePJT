@@ -2,6 +2,7 @@ import gql from 'graphql-tag'; //gql은 자바스크립트로 스키마를 정�
 const typeDefs = gql`
     type Query {
         orders(search:String, category:Int, index:Int, hasNext:Boolean, acdc: String): [Order]!
+        tasks(search:String, category:Int, index:Int, hasNext:Boolean, acdc: String):[Task]!
         user(_id: ID!): User
         allUsers: [User!]!
         me: User
@@ -22,16 +23,28 @@ const typeDefs = gql`
         username: String!
         createdAt: String
     }
+    type Task{
+        _id: ID
+        title: String!
+    }
     input OrderInput{
         menu: String!
         hi: String!
         username: String!
+    }
+    input TaskInput{
+        title: String!
     }
     type Mutation{
         createOrder(orderInput: OrderInput): Order!
         updateOrder(_id: ID!, menu:String, hi:String): Order!
         removeOrder(_id: ID!): Order!
         giveupOrder: String!
+        confirmOrders(_id:ID!, creater:String):String!
+        howmany:[Int!]
+        createTask(taskInput: TaskInput): Task!
+        updateTask(_id:ID!, title:String):Task!
+        removeTask(_id: ID!): Task!
         searchByID(_id: ID!) : Order!
         registerUser(username: String, idNum: String!, password: String!): AuthPayload
         login (idNum: String!, password: String!): AuthPayload!
