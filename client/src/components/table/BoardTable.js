@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery} from "../../util/graphql";
+import DeleteButton from "../button/DeleteButton";
 
 function BoardTable() {
 
@@ -27,6 +28,8 @@ function BoardTable() {
                 <th scope="col">메뉴</th>
                 <th scope="col">Hot/Ice</th>
                 <th scope="col">주문일시</th>
+                <th scope="col">주문취소</th>
+
 
             </tr>
             </thead>
@@ -38,6 +41,8 @@ function BoardTable() {
                     <td>{content.menu}</td>
                     <td>{content.hi}</td>
                     <td>{content.createdAt}</td>
+                    <td><DeleteButton post_id={content._id}/></td>
+
                 </tr>
 
             ))}
