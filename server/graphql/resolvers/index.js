@@ -265,7 +265,9 @@ const resolvers = {
         createOrder: async (_, args, {user}) => {
             try {
                 if(!user) throw error("로그인 되어 있지 않습니다.");
-                const us = await users.findOne(user._id)
+                console.log(user);
+                console.log(user.id);
+                const us = await users.findById(user.id)
                 const confirm = us.status
                 console.log(us)
                 console.log(confirm)
@@ -274,7 +276,7 @@ const resolvers = {
                     ...args.orderInput
                 })
                 
-                await users.findOneAndUpdate(user._id,{status:"주문완료"});
+                await users.findByIdAndUpdate(user.id,{status:"주문완료"});
                 const result = await order.save();
                 return result;
             } catch (e) {
@@ -417,6 +419,7 @@ const resolvers = {
             if (!user) {
                 return false;
             } else { // 로그인 상태라면(토큰이 존재하면) 토큰 비워주기
+                console.log(user.token);
                 user.token = '';
                 return true;
             }
