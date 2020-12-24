@@ -211,6 +211,38 @@ const resolvers = {
             }
             return sum;
         },
+        coffeeAmount: async(_,args)=>{
+            let coffee = [0,0,0,0,0,0,0,0];
+            const orders = await Order.find();
+            for(let i=0; i<orders.length; i++){
+                if(orders[i].menu === "아메리카노" && orders[i].hi === "hot"){
+                    coffee[0]++;
+                }
+                else if(orders[i].menu === "아메리카노" && orders[i].hi === "ice"){
+                    coffee[1]++;
+                }
+                else if(orders[i].menu === "카페모카" && orders[i].hi === "hot"){
+                    coffee[2]++;
+                    
+                }
+                else if(orders[i].menu === "카페모카" && orders[i].hi === "ice"){
+                    coffee[3]++;
+                }
+                else if(orders[i].menu === "아이스티"&& orders[i].hi === "hot"){
+                    coffee[4]++;
+                }
+                else if(orders[i].menu === "아이스티" && orders[i].hi === "ice"){
+                    coffee[5]++;
+                }
+                else if(orders[i].menu === "바닐라라떼" && orders[i].hi === "hot"){
+                    coffee[6]++;
+                }
+                else if(orders[i].menu === "바닐라라떼" && orders[i].hi === "ice"){
+                    coffee[7]++;
+                }
+            }
+            return coffee;
+        }
     },
     Order: {
         _id(_, args) {
@@ -235,6 +267,7 @@ const resolvers = {
                 if(!user) throw error("로그인 되어 있지 않습니다.");
                 const us = await users.findOne(user._id)
                 const confirm = us.status
+                console.log(us)
                 console.log(confirm)
                 if(confirm === "주문완료") throw error("이미 주문 하셨습니다.");
                 const order = new Order({
