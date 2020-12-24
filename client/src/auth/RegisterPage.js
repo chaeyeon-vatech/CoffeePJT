@@ -4,7 +4,6 @@ import { userQueryGQL, registerMutationGQL, meGQL, loginMutationGQL } from './mu
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useAuthToken } from './authToken';
 import { TextField } from '@material-ui/core';
-import authGate from './authGate';
 import { removeDirectivesFromDocument } from '@apollo/client/utilities';
 
 import './login.css';

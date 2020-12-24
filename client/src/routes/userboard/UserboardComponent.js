@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Column, Row } from 'simple-flexbox';
 import { createUseStyles } from 'react-jss';
-import TodayTrendsComponent from './TodayTrendsComponent';
+import UserBoard from './UserBoard';
 import { useAuthToken } from '../../auth/authToken';
 import { useUserQuery } from '../../auth/useUserQuery';
 
@@ -46,7 +46,6 @@ const useStyles = createUseStyles({
 
 function UserboardComponent() {
     const classes = useStyles();
-    const [authToken] = useAuthToken();
     const [contents, setContents] = useState([]);
     const { data, loading } = useUserQuery();
 
@@ -71,7 +70,7 @@ function UserboardComponent() {
     return (
         <Column>
             <div className={classes.todayTrends}>
-                <TodayTrendsComponent />
+                <UserBoard />
             </div>
 
         </Column>

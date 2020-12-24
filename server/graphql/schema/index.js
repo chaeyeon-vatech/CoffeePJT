@@ -6,11 +6,15 @@ const typeDefs = gql`
         user(_id: ID!): User
         allUsers: [User!]!
         me: User
+        howmany:[Int!]
+        howmuch:Int!
+        coffeeAmount:[Int!]
     }
     type User {
         _id: ID
         username: String
         idNum: String!
+        status: String
     }
     type AuthPayload {
         token: String
@@ -41,7 +45,6 @@ const typeDefs = gql`
         removeOrder(_id: ID!): Order!
         giveupOrder: String!
         confirmOrders(_id:ID!, creater:String):String!
-        howmany:[Int!]
         createTask(taskInput: TaskInput): Task!
         updateTask(_id:ID!, title:String):Task!
         removeTask(_id: ID!): Task!

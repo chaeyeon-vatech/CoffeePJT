@@ -27,7 +27,7 @@ export const CreateMutation = gql`
     }
 `
 
-export const RemoveMutation = gql `
+export const RemoveMutation = gql`
     mutation removeOrder($id:ID!){
         removeOrder(_id:$id){
             _id
@@ -37,3 +37,9 @@ export const RemoveMutation = gql `
             createdAt
         }
     }`
+
+export const LogoutMutation = gql`
+    mutation logout{
+        logout
+    }
+`

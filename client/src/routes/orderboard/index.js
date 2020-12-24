@@ -1,3 +1,3 @@
-import DashboardComponent from './DashboardComponent';
+import OrderBoardComponent from './OrderBoardComponent';
 
-export default DashboardComponent;
+export default OrderBoardComponent;

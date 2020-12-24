@@ -8,7 +8,7 @@ import RegisterPage from '../auth/RegisterPage';
 import PaymentboardComponent from "./paymentboard";
 import UserboardComponent from "./userboard";
 
-const DashboardComponent = lazy(() => import('./orderboard'));
+const DashboardComponent = lazy(() => import('./orderboard/OrderBoardComponent'));
 
 function PrivateRoutes() {
     return (
