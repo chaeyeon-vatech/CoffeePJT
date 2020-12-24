@@ -312,12 +312,20 @@ const resolvers = {
         },
         
         
-        // confirmOrders: async(_,{_id,creater},{user})=>{
-        //     if(!user) throw error("로그인 되어 있지 않습니다.");
-        //     if(user._id != creater) throw error("결제자가 아닙니다.");
-        //     // 근데 다 지우는 건 뭘 기준으로??
-        //     return "완료 처리 되었습니다. 맛있게 드세요!"
-        // },
+        confirmOrders: async(_,args,{user})=>{
+            if(!user) return "로그인 되어 있지 않습니다.";
+            if(user.id != args.creater) return "결제자가 아닙니다.";
+            console.log("결제자네? ㅎㅇ");
+            
+            await Order.deleteMany({});
+            const renualUser = await users.find();
+            
+            for (let index = 0; index < renualUser.length; index++) {
+                await users.findByIdAndUpdate(renualUser[i].id,{status:""})  
+            }
+
+            return "완료 처리 되었습니다. 맛있게 드세요!"
+        },
         createTask: async (_, args, {user}) => {
             try {
                 if(!user) throw error("로그인 되어 있지 않습니다.");
@@ -326,7 +334,9 @@ const resolvers = {
                     ...args.taskInput
                 })
                 const result = await task.save();
-                console.log(result._id)
+                const us = await users.findById(user.id);
+                console.log(user.id);
+                await Task.findByIdAndUpdate(result._id,{creater:user.id})
                 
                 return result;
             } catch (e) {
