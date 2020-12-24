@@ -24,7 +24,7 @@ const AuthenticationForm = () => {
             onCompleted: (data) => {
                 setAuthToken(data.login.token);
                 localStorage.setItem('myData', data.login.token);
-                console.log(localStorage.getItem('myData'));
+
                 setToken(data.login.token);
                 window.location.href = '/order';
 

@@ -17,7 +17,7 @@ export const SearchQuery = gql`
 //유저 목록 불러오기
 export const UserSearchQuery = gql`
     query orders($search:String!){
-        orders(search:$search,category:3,index:1,hasNext:false,acdc:"username"){
+        orders(search:$search,category:4,index:1,hasNext:false,acdc:"username"){
             _id
             menu
             hi

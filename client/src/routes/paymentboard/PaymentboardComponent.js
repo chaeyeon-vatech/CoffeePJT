@@ -7,7 +7,6 @@ import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
 import TasksComponent from './TasksComponent';
 import { useAuthToken } from '../../auth/authToken';
 import { useUserQuery } from '../../auth/useUserQuery';
-import Private from '../../auth/Private';
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -50,7 +49,6 @@ const useStyles = createUseStyles({
 
 function PaymentboardComponent() {
     const classes = useStyles();
-    const [authToken] = useAuthToken();
     const [contents, setContents] = useState([]);
     const { data, loading } = useUserQuery();
 

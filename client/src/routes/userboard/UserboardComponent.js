@@ -46,7 +46,6 @@ const useStyles = createUseStyles({
 
 function UserboardComponent() {
     const classes = useStyles();
-    const [authToken] = useAuthToken();
     const [contents, setContents] = useState([]);
     const { data, loading } = useUserQuery();
 

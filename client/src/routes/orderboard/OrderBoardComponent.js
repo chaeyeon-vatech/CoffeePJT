@@ -7,7 +7,6 @@ import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
 import TasksComponent from './TasksComponent';
 import {useAuthToken} from '../../auth/authToken';
 import {useUserQuery} from '../../auth/useUserQuery';
-import Private from '../../auth/Private';
 import {CountMutation} from "../../util/mutation";
 import {useMutation} from "@apollo/react-hooks";
 import {Search} from "semantic-ui-react";
