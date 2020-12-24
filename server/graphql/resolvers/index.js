@@ -66,7 +66,20 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else{
+                } else if(category == 4){
+                    for (let i = 0; i < orders.length; i++) {
+
+                        if (orders[i].username===search) {
+                            result.push(orders[i]);
+                        }
+                    }
+                    if (hasNext == false) {
+                        result = result.slice(10 * (index - 1), result.length);
+                    } else {
+                        result = result.slice(10 * (index - 1), 10 * (index));
+                    }
+                } 
+                else{
                     result = orders;
                 }
                 return result;
