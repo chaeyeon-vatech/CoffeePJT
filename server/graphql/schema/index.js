@@ -8,11 +8,13 @@ const typeDefs = gql`
         me: User
         howmany:[Int!]
         howmuch:Int!
+        coffeeAmount:[Int!]
     }
     type User {
         _id: ID
         username: String
         idNum: String!
+        status: String
     }
     type AuthPayload {
         token: String
