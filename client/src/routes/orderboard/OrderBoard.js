@@ -6,6 +6,7 @@ import {CreateMutation} from "../../util/mutation";
 import {MeQuery, SearchQuery} from "../../util/graphql";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
+import {Link} from "react-router-dom";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -89,6 +90,7 @@ function TodayTrendsComponent() {
     const [id, setId] = useState();
     const [menu, setMenu] = useState();
     const [hi, setHi] = useState();
+    const [status, setStatus] = useState();
     const [username, setName] = useState();
 
     const {data} = useQuery(MeQuery);
@@ -98,35 +100,34 @@ function TodayTrendsComponent() {
         if (data) {
             setName(data.me.username);
             setId(data.me.idNum);
+            setStatus(data.me.status);
+
         }
     }, [data]);
+
 
     const createmutation = CreateMutation;
 
 
-    const [create] = useMutation(createmutation, {
-            refetchQueries: [{query: SearchQuery}],
+    const [create, error] = useMutation(createmutation, {
+            refetchQueries: [{query: SearchQuery,MeQuery}],
             variables: {
                 username: username,
                 menu: menu,
                 hi: hi
             },
+        onCompleted: (data) => {
+            window.location.href = '/setting';
+
+
+        }
         }
     )
 
-    console.log(menu, hi);
-
-    function renderLegend(color, title) {
-        return (
-            <Row vertical='center'>
-                <div style={{width: 18, border: '2px solid', borderColor: color}}></div>
-                <span className={classes.legendTitle}>{title}</span>
-            </Row>
-        );
-    }
 
     function renderStat(title, value, value2) {
         return (
+
             <Column
                 flexGrow={1}
                 className={classes.statContainer}
@@ -140,7 +141,9 @@ function TodayTrendsComponent() {
         );
     }
 
+
     return (
+
         <Row
             flexGrow={1}
             className={classes.container}
@@ -175,11 +178,11 @@ function TodayTrendsComponent() {
                                value="Ice"/>)}
 
                 {renderStat('☕ 카페라떼 ☕', <TextField type='submit'
-                                                    onClick={() => {
-                                                        setMenu("카페라떼")
-                                                        setHi("hot")
-                                                    }}
-                                                    value="Hot"/>,
+                                                   onClick={() => {
+                                                       setMenu("카페라떼")
+                                                       setHi("hot")
+                                                   }}
+                                                   value="Hot"/>,
                     <TextField type='submit'
                                onClick={() => {
                                    setMenu("카페라떼")
@@ -229,14 +232,20 @@ function TodayTrendsComponent() {
                                }}
                                value="Ice"/>)}
 
-                {renderStat(<TextField type='submit'
-                                       onClick={create}
-                                       value="Select"/>)}
+                {status != "주문완료" &&
+                renderStat(<TextField type='submit'
+                                      onClick={create}
+                                      value="Select"/>)}
+
+                {status == "주문완료" &&
+                renderStat("주문 취소는 유저 페이지에서 가능","주문 완료", )}
+
             </Column>
         </Row>
 
 
     );
+
 
 }
 

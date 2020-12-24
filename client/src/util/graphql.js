@@ -35,6 +35,7 @@ export const MeQuery = gql`
             _id
             idNum
             username
+            status
         }
     }
 

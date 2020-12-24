@@ -15,11 +15,8 @@ function BoardTable() {
         }
     }, [da]);
 
-    console.log(typeof(id));
+
     const {data} = useQuery(SearchQuery);
-
-    console.log(data);
-
 
     useEffect(() => {
         if (data) {

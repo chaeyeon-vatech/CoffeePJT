@@ -102,40 +102,12 @@ function HeaderComponent() {
         <Row className={classes.container} vertical='center' horizontal='space-between'>
             <span className={classes.title}>{title}</span>
             <Row vertical='center'>
-                <div className={classes.iconStyles}>
-                    <IconSearch />
-                </div>
-                <div className={classes.iconStyles}>
-                    <DropdownComponent
-                        label={<IconBell />}
-                        options={[
-                            {
-                                label: 'Notification #1',
-                                onClick: () => console.log('Notification #1')
-                            },
-                            {
-                                label: 'Notification #2',
-                                onClick: () => console.log('Notification #2')
-                            },
-                            {
-                                label: 'Notification #3',
-                                onClick: () => console.log('Notification #3')
-                            },
-                            {
-                                label: 'Notification #4',
-                                onClick: () => console.log()
-                            }
-                        ]}
-                        position={{
-                            top: 42,
-                            right: -14
-                        }}
-                    />
-                </div>
                 <div className={classes.separator}></div>
+                {username &&
                 <DropdownComponent
                     label={
                         <>
+
                             <span className={classes.name}>{username}님🧑‍💻 오늘도 좋은 하루 보내세요!</span>
                             <img
                                 src='https://www.vatech.co.kr/files/attach/site_image/site_image.1519883211.png'
@@ -148,7 +120,7 @@ function HeaderComponent() {
                         top: 52,
                         right: -6
                     }}
-                />
+                />}
             </Row>
         </Row>
     );

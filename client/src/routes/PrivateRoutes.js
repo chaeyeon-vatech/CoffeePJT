@@ -20,7 +20,7 @@ function PrivateRoutes() {
                 <Route exact path={SLUGS.login} component={basicLogin}/>
                 <Route path={LINKS.signup} component={RegisterPage} />
 
-                <Redirect to={SLUGS.dashboard} />
+                <Redirect to={SLUGS.login} />
             </Switch>
         </Suspense>
     );
