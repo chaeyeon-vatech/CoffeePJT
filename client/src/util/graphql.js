@@ -43,4 +43,17 @@ export const MeQuery = gql`
 
 
 
+//명수 계산
+export const CountQuery = gql`
+    query howmany{
+       howmany
+    }
+
+`
+
+
+
+
+
+
 

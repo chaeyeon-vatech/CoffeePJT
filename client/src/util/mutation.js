@@ -1,14 +1,6 @@
 import gql from "graphql-tag";
 
 
-export const CountMutation = gql`
-
-    mutation howmany {
-        howmany
-    }
-`;
-
-
 //Order Create
 
 export const CreateMutation = gql`
@@ -38,8 +30,11 @@ export const RemoveMutation = gql`
         }
     }`
 
+
+//로그아웃
 export const LogoutMutation = gql`
     mutation logout{
         logout
     }
 `
+

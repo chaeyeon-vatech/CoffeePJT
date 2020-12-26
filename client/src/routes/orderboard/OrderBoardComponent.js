@@ -5,13 +5,12 @@ import MiniCardComponent from 'components/cards/MiniCardComponent';
 import TodayTrendsComponent from './OrderBoard';
 import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
 import TasksComponent from './TasksComponent';
-import {CountMutation} from "../../util/mutation";
 import {useMutation} from "@apollo/react-hooks";
 import {Search} from "semantic-ui-react";
 import {useQuery} from "@apollo/react-hooks";
-import {SearchQuery} from "../../util/graphql";
+import {CountQuery, SearchQuery} from "../../util/graphql";
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme)=>({
     cardsContainer: {
         marginRight: -30,
         marginTop: -30
@@ -24,7 +23,17 @@ const useStyles = createUseStyles({
     },
     miniCardContainer: {
         flexGrow: 1,
-        marginRight: 30,
+        marginRight: "auto",
+        marginLeft:"auto",
+        '@media (max-width: 768px)': {
+            marginTop: 30,
+            maxWidth: 'none'
+        }
+    },
+    naCardContainer: {
+        flexGrow: 1,
+        marginRight: "auto",
+        marginLeft:"auto",
         '@media (max-width: 768px)': {
             marginTop: 30,
             maxWidth: 'none'
@@ -48,22 +57,21 @@ const useStyles = createUseStyles({
             marginTop: 30
         }
     }
-});
+}));
+
 
 function OrderBoardComponent() {
     const classes = useStyles();
 
     const [contents, setContents] = useState('');
-    const mutation = CountMutation;
 
 
-    const [count, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: SearchQuery}]
+    const {data} = useQuery(CountQuery);
+    useEffect(() => {
+        if (data) {
+            setContents(data.howmany);
         }
-    )
-
-
-    console.log(contents)
+    }, [data]);
 
     return (
         <Column>
@@ -79,18 +87,19 @@ function OrderBoardComponent() {
                     wrap
                     flexGrow={1}
                     horizontal='space-between'
-                    breakpoints={{384: 'column'}}
+                    breakpoints={{400: 'column'}}
                 >
                     <MiniCardComponent
                         className={classes.miniCardContainer}
-                        title='Open'
-                        value='23'
+                        title='주문자'
+                        value={contents[0]}
                     />
                     <MiniCardComponent
                         className={classes.miniCardContainer}
-                        title='미주문자'
-                        value='16'
+                        title='취소자'
+                        value={contents[1]}
                     />
+
                 </Row>
                 <Row
                     className={classes.cardRow}
@@ -98,17 +107,15 @@ function OrderBoardComponent() {
                     flexGrow={1}
                     horizontal='space-between'
                     breakpoints={{384: 'column'}}
+
                 >
                     <MiniCardComponent
-                        className={classes.miniCardContainer}
-                        title='주문자'
-                        value='43'
+                        className={classes.naCardContainer}
+                        title='미주문자'
+                        value={contents[2]}
                     />
-                    <MiniCardComponent
-                        className={classes.miniCardContainer}
-                        title='취소자'
-                        value='64'
-                    />
+
+
                 </Row>
             </Row>
             <Row

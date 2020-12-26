@@ -7,6 +7,7 @@ import {MeQuery, SearchQuery} from "../../util/graphql";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
 import {Link} from "react-router-dom";
+import {convertlinksToUrl} from "../../resources/utilities";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -110,17 +111,17 @@ function TodayTrendsComponent() {
 
 
     const [create, error] = useMutation(createmutation, {
-            refetchQueries: [{query: SearchQuery,MeQuery}],
+            refetchQueries: [{query: SearchQuery, MeQuery}],
             variables: {
                 username: username,
                 menu: menu,
                 hi: hi
             },
-        onCompleted: (data) => {
-            window.location.href = '/setting';
+            onCompleted: (data) => {
+                window.location.href = '/order';
 
 
-        }
+            }
         }
     )
 
@@ -141,6 +142,12 @@ function TodayTrendsComponent() {
         );
     }
 
+    // function onClick(e) {
+    //     // push(convertlinksToUrl(slug, parameters));
+    //     setHi(e.target.value)
+    //     setMenu(e.target.id)
+    //
+    // }
 
     return (
 
@@ -169,7 +176,7 @@ function TodayTrendsComponent() {
                                                         setMenu("아메리카노")
                                                         setHi("hot")
                                                     }}
-                                                    value="Hot"/>,
+                                                    value="hot"/>,
                     <TextField type='submit'
                                onClick={() => {
                                    setMenu("아메리카노")
@@ -177,60 +184,44 @@ function TodayTrendsComponent() {
                                }}
                                value="Ice"/>)}
 
-                {renderStat('☕ 카페라떼 ☕', <TextField type='submit'
+
+
+                {renderStat('☕ 카페모카 ☕', <TextField type='submit'
+                                                    onClick={() => {
+                                                        setMenu("카페모카")
+                                                        setHi("hot")
+                                                    }}
+                                                    value="Hot"/>,
+                    <TextField type='submit'
+                               onClick={() => {
+                                   setMenu("카페모카")
+                                   setHi("ice")
+                               }}
+                               value="Ice"/>)}
+
+                {renderStat('☕ 아이스티 ☕', <TextField type='submit'
                                                    onClick={() => {
-                                                       setMenu("카페라떼")
-                                                       setHi("hot")
+                                                       setMenu("아이스티")
+                                                       setHi("ice")
                                                    }}
-                                                   value="Hot"/>,
-                    <TextField type='submit'
-                               onClick={() => {
-                                   setMenu("카페라떼")
-                                   setHi("ice")
-                               }}
-                               value="Ice"/>)}
+                                                   value="Ice"/>,
+                )}
 
 
-                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
+                {renderStat('☕ 바닐라라떼 ☕', <TextField type='submit'
                                                     onClick={() => {
-                                                        setMenu("아메리카노")
+                                                        setMenu("바닐라라떼")
                                                         setHi("hot")
                                                     }}
                                                     value="Hot"/>,
                     <TextField type='submit'
                                onClick={() => {
-                                   setMenu("아메리카노")
+                                   setMenu("바닐라라떼")
                                    setHi("ice")
                                }}
                                value="Ice"/>)}
 
 
-                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
-                                                    onClick={() => {
-                                                        setMenu("아메리카노")
-                                                        setHi("hot")
-                                                    }}
-                                                    value="Hot"/>,
-                    <TextField type='submit'
-                               onClick={() => {
-                                   setMenu("아메리카노")
-                                   setHi("ice")
-                               }}
-                               value="Ice"/>)}
-
-
-                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
-                                                    onClick={() => {
-                                                        setMenu("아메리카노")
-                                                        setHi("hot")
-                                                    }}
-                                                    value="Hot"/>,
-                    <TextField type='submit'
-                               onClick={() => {
-                                   setMenu("아메리카노")
-                                   setHi("ice")
-                               }}
-                               value="Ice"/>)}
 
                 {status != "주문완료" &&
                 renderStat(<TextField type='submit'
@@ -238,7 +229,7 @@ function TodayTrendsComponent() {
                                       value="Select"/>)}
 
                 {status == "주문완료" &&
-                renderStat("주문 취소는 유저 페이지에서 가능","주문 완료", )}
+                renderStat("주문 취소는 유저 페이지에서 가능", "주문 완료",)}
 
             </Column>
         </Row>

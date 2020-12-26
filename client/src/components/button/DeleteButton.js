@@ -14,7 +14,7 @@ function DeleteButton(post_id) {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
             variables: {id: String(Object.values(post_id))},
             onCompleted: (data) => {
-                window.location.href = '/setting';
+                window.location.href = '/order';
 
 
             }

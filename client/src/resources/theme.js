@@ -1,7 +1,7 @@
 const color = {
     brightBlue: '#3498db',
     darkGrayishBlue: '#8b8d94',
-    darkRed: '#a90000',
+    darkRed: '#774343',
     grayishBlue: '#A4A6B3',
     grayishBlue2: '#9fa2b4',
     grayishBlue3: '#bdc3c7',

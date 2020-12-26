@@ -9,9 +9,9 @@ import MenuItem from './MenuItemComponent';
 import {useLogout} from '../../auth/Logout';
 import {useAuthToken} from '../../auth/authToken';
 import {useApolloClient, useMutation, useQuery} from '@apollo/react-hooks';
-import {LogoutMutation} from "../../util/mutation";
 import {MeQuery} from "../../util/graphql";
 import {Row} from "simple-flexbox";
+import {LogoutMutation} from "../../util/mutation";
 
 const useStyles = createUseStyles({
     separator: {

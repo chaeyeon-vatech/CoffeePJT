@@ -69,14 +69,6 @@ function DropdownComponent({label, options, position}) {
     const theme = useTheme();
     const classes = useStyles({theme, position});
 
-    // function onDropdownClick() {
-    //     setUserMenuOpen((prev) => !prev);
-    // }
-    //
-    // function onItemClick(onClick) {
-    //     setUserMenuOpen(false);
-    //     onClick && onClick();
-    // }
 
     return (
         <Column className={classes.dropdownContainer}>
