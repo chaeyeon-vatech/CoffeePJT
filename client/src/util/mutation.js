@@ -64,8 +64,8 @@ export const TaskUpdateMutation = gql`
 
 //Task Remove
 export const TaskRemoveMutation = gql`
-mutation removeTask($_id:ID!){
-    removeTask(_id:$_id){
+mutation removeTask($id:ID!){
+    removeTask(_id:$id){
         _id
         title
     }

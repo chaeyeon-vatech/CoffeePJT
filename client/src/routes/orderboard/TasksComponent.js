@@ -6,6 +6,8 @@ import CardComponent from 'components/cards/CardComponent';
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../util/query";
 import {TaskCreateMutation} from "../../util/mutation";
+import DeleteButton from "../../components/button/DeleteButton";
+import TaskDeleteButton from "../../components/button/TaskDeleteButton";
 
 const useStyles = createUseStyles((theme) => ({
     addButton: {
@@ -29,19 +31,19 @@ const useStyles = createUseStyles((theme) => ({
         marginRight: 16
     },
     input: {
-    display: "inline-block",
-    width: "1000px",
-    padding: "10px 0 10px 15px",
-    fontFamily: "Open Sans",
-    fontWeight: "400",
-    color: "#377D6A",
-    background: "#efefef",
-    border: "0",
-    borderRadius: "3px",
-    outline: 0,
-    textIndent: "70px",
-    transition: "all .3s ease-in-out"
-}
+        display: "inline-block",
+        width: "1000px",
+        padding: "10px 0 10px 15px",
+        fontFamily: "Open Sans",
+        fontWeight: "400",
+        color: "#377D6A",
+        background: "#efefef",
+        border: "0",
+        borderRadius: "3px",
+        outline: 0,
+        textIndent: "70px",
+        transition: "all .3s ease-in-out"
+    }
 
 }));
 
@@ -58,8 +60,10 @@ function TasksComponent(props) {
     useEffect(() => {
         if (data) {
             setContents(data.tasks);
+
         }
     }, [data]);
+
 
 
 
@@ -72,8 +76,9 @@ function TasksComponent(props) {
     )
 
     console.log(contents &&
-        contents.map((content) => (content.title)));
+        contents.map((content) => (content._id)));
     console.log(contents);
+
 
 
     function onCheckboxClick(index) {
@@ -110,14 +115,24 @@ function TasksComponent(props) {
                     </span>
                     {renderAddButton()}
                 </Row>,
-                ...items.map((item, index) => (
-                    <TaskComponent
-                        classes={classes}
-                        index={index}
-                        item={item}
-                        onCheckboxClick={onCheckboxClick}
-                    />
-                ))
+                <Row>
+
+                    {contents && contents.map((content) => (
+
+                        <Row horizontal='space-between' vertical='center'>
+                            <Row>
+                                <table>
+                                    <td><span className={classes.itemTitle}>{content.title}</span></td>
+                                    <td><TaskDeleteButton post_id={content._id}/></td>
+                                </table>
+                            </Row>
+                        </Row>
+
+
+                    ))}
+                </Row>
+
+
             ]}
         />
     );
