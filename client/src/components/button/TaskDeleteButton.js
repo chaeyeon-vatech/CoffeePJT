@@ -3,11 +3,23 @@ import {useMutation} from '@apollo/react-hooks';
 import TextField from "@material-ui/core/TextField";
 import {TaskRemoveMutation} from "../../util/mutation";
 import {TaskQuery} from "../../util/query";
+import {Row} from "simple-flexbox";
+import {createUseStyles, useTheme} from "react-jss";
 
+const useStyles = createUseStyles((theme) => ({
+    addButton: {
+        backgroundColor: theme.color.lightGrayishBlue,
+        color: theme.color.grayishBlue2,
+        fontSize: '20px !important',
+        padding: '5px !important',
+        marginLeft:"40px"
+    },
+}));
 
 function TaskDeleteButton(post_id) {
 
-
+    const theme = useTheme();
+    const classes = useStyles({theme});
     const mutation = TaskRemoveMutation;
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
@@ -25,11 +37,14 @@ function TaskDeleteButton(post_id) {
         <>
 
             <form action="#">
-
-                <TextField type='submit'
-                           onClick={deletePostOrMutation}
-                           disabled={loading}
-                           value="X"/>
+                <Row
+                    horizontal='center'
+                    vertical='center'
+                    className={[classes.addButton].join(' ')}
+                    onClick={deletePostOrMutation}
+                >
+                    -
+                </Row>
 
             </form>
 
