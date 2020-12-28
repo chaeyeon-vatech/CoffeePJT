@@ -3,12 +3,11 @@ import {Column, Row} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
 import TodayTrendsComponent from './OrderBoard';
-import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
 import TasksComponent from './TasksComponent';
 import {useMutation} from "@apollo/react-hooks";
 import {Search} from "semantic-ui-react";
 import {useQuery} from "@apollo/react-hooks";
-import {CountQuery, SearchQuery} from "../../util/graphql";
+import {CountQuery, SearchQuery} from "../../util/query";
 
 const useStyles = createUseStyles((theme)=>({
     cardsContainer: {

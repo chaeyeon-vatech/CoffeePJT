@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { Row } from 'simple-flexbox';
-import { createUseStyles, useTheme } from 'react-jss';
-import { IconCheckboxOn, IconCheckboxOff } from 'assets/icons';
+import React, {useEffect, useState} from 'react';
+import {Row} from 'simple-flexbox';
+import {createUseStyles, useTheme} from 'react-jss';
+import {IconCheckboxOn, IconCheckboxOff} from 'assets/icons';
 import CardComponent from 'components/cards/CardComponent';
+import {useMutation, useQuery} from "@apollo/react-hooks";
+import {SearchQuery, TaskQuery} from "../../util/query";
+import {TaskCreateMutation} from "../../util/mutation";
 
 const useStyles = createUseStyles((theme) => ({
     addButton: {
@@ -21,34 +24,57 @@ const useStyles = createUseStyles((theme) => ({
     greyTitle: {
         color: theme.color.grayishBlue3
     },
-    tagStyles: {
-        borderRadius: 5,
-        cursor: 'pointer',
-        fontWeight: 'bold',
-        fontSize: 11,
-        letterSpacing: '0.5px',
-        lineHeight: '14px',
-        padding: '5px 12px 5px 12px'
-    },
     checkboxWrapper: {
         cursor: 'pointer',
         marginRight: 16
-    }
+    },
+    input: {
+    display: "inline-block",
+    width: "1000px",
+    padding: "10px 0 10px 15px",
+    fontFamily: "Open Sans",
+    fontWeight: "400",
+    color: "#377D6A",
+    background: "#efefef",
+    border: "0",
+    borderRadius: "3px",
+    outline: 0,
+    textIndent: "70px",
+    transition: "all .3s ease-in-out"
+}
+
 }));
 
-const TAGS = {
-    URGENT: { text: 'URGENT', backgroundColor: '#FEC400', color: '#FFFFFF' },
-    NEW: { text: 'NEW', backgroundColor: '#29CC97', color: '#FFFFFF' },
-    DEFAULT: { text: 'DEFAULT', backgroundColor: '#F0F1F7', color: '#9FA2B4' }
-};
 
 function TasksComponent(props) {
     const theme = useTheme();
-    const classes = useStyles({ theme });
-    const [items, setItems] = useState([
+    const classes = useStyles({theme});
+    const [items, setItems] = useState([{title: '(예시 주문) 오후 1시 커피- OOO 책임연구원', checked: false}]);
+    const [title, setTitle] = useState();
+    const [contents, setContents] = useState();
 
-        { title: 'Update ticket report', checked: true, tag: TAGS.DEFAULT }
-    ]);
+    const {data} = useQuery(TaskQuery);
+
+    useEffect(() => {
+        if (data) {
+            setContents(data.tasks);
+        }
+    }, [data]);
+
+
+
+    const [create, {loading}] = useMutation(TaskCreateMutation, {
+            refetchQueries: [{query: TaskQuery}],
+            variables: {
+                title: title
+            },
+        }
+    )
+
+    console.log(contents &&
+        contents.map((content) => (content.title)));
+    console.log(contents);
+
 
     function onCheckboxClick(index) {
         setItems((prev) => {
@@ -58,39 +84,14 @@ function TasksComponent(props) {
         });
     }
 
-    function getNextTag(current = 'URGENT') {
-        const tagLabels = ['URGENT', 'NEW', 'DEFAULT'];
-        const tagIndex = (tagLabels.indexOf(current) + 1) % 3;
-        return TAGS[tagLabels[tagIndex]];
-    }
-
-    function onTagClick(index) {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems[index].tag = getNextTag(newItems[index].tag.text);
-            return newItems;
-        });
-    }
-
-    function onAddButtonClick() {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems.push({
-                title: `Task ${newItems.length + 1}`,
-                checked: false,
-                tag: getNextTag()
-            });
-            return newItems;
-        });
-    }
 
     function renderAddButton() {
         return (
             <Row
                 horizontal='center'
                 vertical='center'
-                className={[classes.tagStyles, classes.addButton].join(' ')}
-                onClick={onAddButtonClick}
+                className={[classes.addButton].join(' ')}
+                onClick={create}
             >
                 +
             </Row>
@@ -100,13 +101,12 @@ function TasksComponent(props) {
     return (
         <CardComponent
             containerStyles={props.containerStyles}
-            title='Tasks'
-            link='View all'
-            subtitle='Today'
+            title='오늘의 주문'
+
             items={[
                 <Row horizontal='space-between' vertical='center'>
                     <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
-                        Create new task
+                      <input type="text" placeholder="(예시 주문) 오후 1시 커피- OOO 책임연구원" onChange={e => setTitle(e.target.value)} className={classes.input}/>
                     </span>
                     {renderAddButton()}
                 </Row>,
@@ -116,7 +116,6 @@ function TasksComponent(props) {
                         index={index}
                         item={item}
                         onCheckboxClick={onCheckboxClick}
-                        onTagClick={onTagClick}
                     />
                 ))
             ]}
@@ -124,35 +123,27 @@ function TasksComponent(props) {
     );
 }
 
-function TaskComponent({ classes, index, item = {}, onCheckboxClick, onTagClick }) {
-    const { tag = {} } = item;
+function TaskComponent({classes, index, item = {}, onCheckboxClick, onTagClick}) {
+
     return (
         <Row horizontal='space-between' vertical='center'>
             <Row>
                 <div className={classes.checkboxWrapper} onClick={() => onCheckboxClick(index)}>
-                    {item.checked ? <IconCheckboxOn /> : <IconCheckboxOff />}
+                    {item.checked ? <IconCheckboxOn/> : <IconCheckboxOff/>}
                 </div>
                 <span className={classes.itemTitle}>{item.title}</span>
             </Row>
-            <TagComponent
-                backgroundColor={tag.backgroundColor}
-                classes={classes}
-                color={tag.color}
-                index={index}
-                onClick={onTagClick}
-                text={tag.text}
-            />
+
         </Row>
     );
 }
 
-function TagComponent({ backgroundColor, classes, color, index, onClick, text }) {
+function TagComponent({backgroundColor, color, index, onClick, text}) {
     return (
         <Row
             horizontal='center'
             vertical='center'
-            style={{ backgroundColor, color }}
-            className={classes.tagStyles}
+            style={{backgroundColor, color}}
             onClick={() => onClick(index)}
         >
             {text}

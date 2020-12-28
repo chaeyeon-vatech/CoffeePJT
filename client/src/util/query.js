@@ -51,6 +51,20 @@ export const CountQuery = gql`
 
 `
 
+//TASK QUERY
+
+
+export const TaskQuery = gql`
+    query{
+        tasks(search:"",category:0,index:1,hasNext:true,acdc:""){
+            _id
+            title
+        }
+    }
+
+
+`
+
 
 
 

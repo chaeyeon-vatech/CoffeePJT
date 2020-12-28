@@ -3,7 +3,7 @@ import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
 import {CreateMutation} from "../../util/mutation";
-import {MeQuery, SearchQuery} from "../../util/graphql";
+import {MeQuery, SearchQuery} from "../../util/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
 import {Link} from "react-router-dom";

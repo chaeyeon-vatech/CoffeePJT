@@ -8,7 +8,7 @@ import SLUGS from 'resources/links';
 import { IconBell, IconSearch } from 'assets/icons';
 import DropdownComponent from 'components/dropdown';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery} from "../../util/graphql";
+import {MeQuery} from "../../util/query";
 
 const useStyles = createUseStyles((theme) => ({
     avatar: {

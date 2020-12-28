@@ -9,7 +9,7 @@ import MenuItem from './MenuItemComponent';
 import {useLogout} from '../../auth/Logout';
 import {useAuthToken} from '../../auth/authToken';
 import {useApolloClient, useMutation, useQuery} from '@apollo/react-hooks';
-import {MeQuery} from "../../util/graphql";
+import {MeQuery} from "../../util/query";
 import {Row} from "simple-flexbox";
 import {LogoutMutation} from "../../util/mutation";
 
