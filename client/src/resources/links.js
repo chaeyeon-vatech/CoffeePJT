@@ -4,6 +4,6 @@ export default {
     tickets: '/pay',
     settings: '/settings',
     // auth
-    login: '/login',
+    login: '/',
     signup: '/signup'
 };

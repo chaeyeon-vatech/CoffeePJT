@@ -67,7 +67,7 @@ const AuthenticationForm = () => {
                         </div>
 
                         <div className='group'>
-                            <TextField type='submit'
+                            <input type='submit'
                                        onClick={reg}
                                        value='회원가입'
                                        className='button'/>;

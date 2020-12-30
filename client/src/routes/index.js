@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import useWindowSize from 'hooks/useWindowSize';
+import React, {useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
+import useWindowSize from 'resources/hooks/useWindowSize';
 import PrivateSection from 'routes/PrivateSection';
 import PublicRoutes from 'routes/PublicRoutes';
 import {useQuery} from "@apollo/react-hooks";
 import {MeQuery} from "../util/query";
 
 function Routes() {
-    const { pathname } = useLocation();
+    const {pathname} = useLocation();
     const [width, height] = useWindowSize();
 
     useEffect(() => {
@@ -17,8 +17,7 @@ function Routes() {
 
     const {data} = useQuery(MeQuery);
 
-
-    return data ? <PrivateSection /> : <PublicRoutes />;
+    return data ? <PrivateSection/> : <PublicRoutes/>;
 }
 
 export default Routes;

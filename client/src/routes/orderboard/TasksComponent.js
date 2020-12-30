@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Row } from 'simple-flexbox';
 import { createUseStyles, useTheme } from 'react-jss';
-import { IconCheckboxOn, IconCheckboxOff } from 'assets/icons';
+import { IconCheckboxOn, IconCheckboxOff } from 'components/icons';
 import CardComponent from 'components/cards/CardComponent';
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../util/query";
