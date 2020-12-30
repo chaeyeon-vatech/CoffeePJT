@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Column, Row } from 'simple-flexbox';
-import { createUseStyles } from 'react-jss';
+import React, {useEffect, useState} from 'react';
+import {Column, Row} from 'simple-flexbox';
+import {createUseStyles} from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
 import TodayTrendsComponent from './PaymentBoard';
-import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
 import TasksComponent from './TasksComponent';
-import { useAuthToken } from '../../auth/authToken';
-import { useUserQuery } from '../../auth/useUserQuery';
+import {useUserQuery} from '../../auth/useUserQuery';
+import {useQuery} from "@apollo/react-hooks";
+import {CountQuery} from "../../util/query";
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -49,83 +49,13 @@ const useStyles = createUseStyles({
 
 function PaymentboardComponent() {
     const classes = useStyles();
-    const [contents, setContents] = useState([]);
-    const { data, loading } = useUserQuery();
 
-    console.log(data);
-
-
-    useEffect(() => {
-        if (data) {
-            setContents(data.contents);
-        }
-    }, [data]);
-
-    console.log(contents);
-
-    console.log(contents &&
-        contents.map((content) => (
-            content._id
-
-        ))
-    );
 
     return (
         <Column>
-            <Row
-                className={classes.cardsContainer}
-                wrap
-                flexGrow={1}
-                horizontal='space-between'
-                breakpoints={{ 768: 'column' }}
-            >
-                <Row
-                    className={classes.cardRow}
-                    wrap
-                    flexGrow={1}
-                    horizontal='space-between'
-                    breakpoints={{ 384: 'column' }}
-                >
-                    <MiniCardComponent
-                        className={classes.miniCardContainer}
-                        title='Open'
-                        value='40'
-                    />
-                    <MiniCardComponent
-                        className={classes.miniCardContainer}
-                        title='미주문자'
-                        value='16'
-                    />
-                </Row>
-                <Row
-                    className={classes.cardRow}
-                    wrap
-                    flexGrow={1}
-                    horizontal='space-between'
-                    breakpoints={{ 384: 'column' }}
-                >
-                    <MiniCardComponent
-                        className={classes.miniCardContainer}
-                        title='주문자'
-                        value='43'
-                    />
-                    <MiniCardComponent
-                        className={classes.miniCardContainer}
-                        title='취소자'
-                        value='64'
-                    />
-                </Row>
-            </Row>
-            <Row
-                horizontal='space-between'
-                className={classes.lastRow}
-                breakpoints={{ 1024: 'column' }}
-            >
-                <TasksComponent containerStyles={classes.tasks} />
-            </Row>
 
             <div className={classes.todayTrends}>
-                <TodayTrendsComponent />
+                <TodayTrendsComponent/>
             </div>
 
         </Column>

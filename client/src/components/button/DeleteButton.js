@@ -2,7 +2,7 @@ import React from 'react';
 import {useMutation} from '@apollo/react-hooks';
 import TextField from "@material-ui/core/TextField";
 import {RemoveMutation} from "../../util/mutation";
-import {SearchQuery, UserSearchQuery} from "../../util/graphql";
+import {MeQuery, SearchQuery, UserSearchQuery} from "../../util/query";
 
 
 function DeleteButton(post_id) {
@@ -11,8 +11,13 @@ function DeleteButton(post_id) {
     const mutation = RemoveMutation;
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: UserSearchQuery}],
-            variables: {id: String(Object.values(post_id))}
+            refetchQueries: [{query: UserSearchQuery, MeQuery}],
+            variables: {id: String(Object.values(post_id))},
+            onCompleted: (data) => {
+                window.location.href = '/order';
+
+
+            }
         }
     )
 

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
-import { useAuthToken } from './authToken';
+import {useMutation} from '@apollo/react-hooks';
+import {useAuthToken} from './authToken';
 
 export const loginMutationGQL = gql`
     mutation login($login: String!, $password: String!) {
@@ -46,3 +46,5 @@ export const useLoginMutation = () => {
 };
 
 export default useLoginMutation();
+
+

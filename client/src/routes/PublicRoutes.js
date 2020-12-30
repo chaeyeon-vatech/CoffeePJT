@@ -4,14 +4,14 @@ import LINKS from 'resources/links';
 import SLUGS from '../resources/links';
 import basicLogin from '../auth/LoginPage';
 import RegisterPage from '../auth/RegisterPage';
+import PaymentboardComponent from "./paymentboard";
+import UserboardComponent from "./userboard";
 
 function PublicRoutes() {
     return (
         <Switch>
-            <Route exact path={SLUGS.login} component={basicLogin} />
-            <Route path={LINKS.signup} component={RegisterPage} />
-            <Route path={LINKS.forgotPassword} render={() => <div>forgotPassword</div>} />
-            <Redirect to={LINKS.login} />
+            <Route exact path={SLUGS.tickets} component={PaymentboardComponent} />
+            <Route exact path={SLUGS.settings} component={UserboardComponent} />
         </Switch>
     );
 }

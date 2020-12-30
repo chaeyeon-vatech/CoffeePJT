@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Row } from 'simple-flexbox';
 import { createUseStyles, useTheme } from 'react-jss';
 import { IconCheckboxOn, IconCheckboxOff } from 'assets/icons';
 import CardComponent from 'components/cards/CardComponent';
+import {useMutation, useQuery} from "@apollo/react-hooks";
+import {TaskQuery} from "../../util/query";
+import {TaskCreateMutation} from "../../util/mutation";
+import TaskDeleteButton from "../../components/button/TaskDeleteButton";
 
 const useStyles = createUseStyles((theme) => ({
     addButton: {
         backgroundColor: theme.color.lightGrayishBlue,
         color: theme.color.grayishBlue2,
         fontSize: '20px !important',
-        padding: '7px !important'
+        padding: '7px !important',
+        width:"30%"
     },
     itemTitle: {
         ...theme.typography.itemTitle,
@@ -33,7 +38,29 @@ const useStyles = createUseStyles((theme) => ({
     checkboxWrapper: {
         cursor: 'pointer',
         marginRight: 16
+    },
+    input: {
+        backgroundColor: theme.color.lightGrayishBlue,
+        color: theme.color.black,
+        display: "block",
+        width:"450%",
+        padding: "10px 0 10px 50px",
+        fontSize: '15px !important',
+        fontFamily: "Open Sans",
+        fontWeight: "400",
+        background: "#efefef",
+        border: "0",
+        borderRadius: "3px",
+        outline: 0,
+        textIndent: "70px",
+        transition: "all .3s ease-in-out",
+        margin: "0px auto",
+        alignItems: "center",
+        justifyContent: "center",
+        LeftMargin: "30px",
+        alignSelf:"center"
     }
+
 }));
 
 const TAGS = {
@@ -44,11 +71,37 @@ const TAGS = {
 
 function TasksComponent(props) {
     const theme = useTheme();
-    const classes = useStyles({ theme });
-    const [items, setItems] = useState([
+    const classes = useStyles({theme});
+    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
+    const [title, setTitle] = useState();
+    const [contents, setContents] = useState();
 
-        { title: 'Update ticket report', checked: true, tag: TAGS.DEFAULT }
-    ]);
+    const {data} = useQuery(TaskQuery);
+
+    useEffect(() => {
+        if (data) {
+            setContents(data.tasks);
+
+        }
+    }, [data]);
+
+
+
+
+    const [create, {loading}] = useMutation(TaskCreateMutation, {
+            refetchQueries: [{query: TaskQuery}],
+            variables: {
+                title: title
+            },
+        }
+    )
+
+    console.log(contents &&
+        contents.map((content) => (content._id)));
+    console.log(contents);
+
+
+
 
     function onCheckboxClick(index) {
         setItems((prev) => {
@@ -58,39 +111,14 @@ function TasksComponent(props) {
         });
     }
 
-    function getNextTag(current = 'URGENT') {
-        const tagLabels = ['URGENT', 'NEW', 'DEFAULT'];
-        const tagIndex = (tagLabels.indexOf(current) + 1) % 3;
-        return TAGS[tagLabels[tagIndex]];
-    }
-
-    function onTagClick(index) {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems[index].tag = getNextTag(newItems[index].tag.text);
-            return newItems;
-        });
-    }
-
-    function onAddButtonClick() {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems.push({
-                title: `Task ${newItems.length + 1}`,
-                checked: false,
-                tag: getNextTag()
-            });
-            return newItems;
-        });
-    }
 
     function renderAddButton() {
         return (
             <Row
                 horizontal='center'
                 vertical='center'
-                className={[classes.tagStyles, classes.addButton].join(' ')}
-                onClick={onAddButtonClick}
+                className={[classes.addButton].join(' ')}
+                onClick={create}
             >
                 +
             </Row>
@@ -100,25 +128,34 @@ function TasksComponent(props) {
     return (
         <CardComponent
             containerStyles={props.containerStyles}
-            title='Tasks'
-            link='View all'
-            subtitle='Today'
+            title='📋 오늘의 주문 📋'
+            subtitle='(예시) 12/30 오후 1시 커피- OOO 책임 연구원'
+
             items={[
                 <Row horizontal='space-between' vertical='center'>
                     <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
-                        Create new task
+                        <input type="text" placeholder="주문을 추가해주세요." onChange={e => setTitle(e.target.value)} className={classes.input}/>
                     </span>
                     {renderAddButton()}
                 </Row>,
-                ...items.map((item, index) => (
-                    <TaskComponent
-                        classes={classes}
-                        index={index}
-                        item={item}
-                        onCheckboxClick={onCheckboxClick}
-                        onTagClick={onTagClick}
-                    />
-                ))
+                <Row>
+
+                    {contents && contents.map((content) => (
+
+                        <Row horizontal='space-between' vertical='center'>
+                            <Row>
+                                <table>
+                                    <td><span className={classes.itemTitle}>{content.title}</span></td>
+                                    <td><TaskDeleteButton post_id={content._id}/></td>
+                                </table>
+                            </Row>
+                        </Row>
+
+
+                    ))}
+                </Row>
+
+
             ]}
         />
     );

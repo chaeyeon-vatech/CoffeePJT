@@ -265,7 +265,9 @@ const resolvers = {
         createOrder: async (_, args, {user}) => {
             try {
                 if(!user) throw error("로그인 되어 있지 않습니다.");
-                const us = await users.findOne(user._id)
+                console.log(user);
+                console.log(user.id);
+                const us = await users.findById(user.id)
                 const confirm = us.status
                 console.log(us)
                 console.log(confirm)
@@ -274,7 +276,7 @@ const resolvers = {
                     ...args.orderInput
                 })
                 
-                await users.findOneAndUpdate(user._id,{status:"주문완료"});
+                await users.findByIdAndUpdate(user.id,{status:"주문완료"});
                 const result = await order.save();
                 return result;
             } catch (e) {
@@ -284,7 +286,7 @@ const resolvers = {
         removeOrder: async (_, args,{user}) => {
             try {
                 if(!user) throw error("로그인 되어 있지 않습니다.");
-                await users.findOneAndUpdate(user._id,{status:"주문취소"});
+                await users.findByIdAndUpdate(user.id,{status:"주문취소"});
                 const removedorder = await Order.findByIdAndRemove(args._id).exec()
                 return removedorder
             } catch (e) {
@@ -294,7 +296,7 @@ const resolvers = {
         updateOrder: async (_, {_id, menu, hi},{user}) => {
             try {
                 if(!user) throw error("로그인 되어 있지 않습니다.");
-                await users.findOneAndUpdate(user._id,{status:"주문완료"});
+                await users.findByIdAndUpdate(user.id,{status:"주문완료"});
                 const updatedOrder = await Order.findByIdAndUpdate(_id, {
                     $set: {menu, hi}
                 }).exec()
@@ -305,7 +307,7 @@ const resolvers = {
         },
         giveupOrder: async (_, args,{user})=>{
             if(!user) throw error("로그인 되어 있지 않습니다.");
-            await users.findOneAndUpdate(user._id,{status:"주문포기"});
+            await users.findByIdAndUpdate(user.id,{status:"주문포기"});
             return "주문을 포기하셨습니다."
         },
         
@@ -417,6 +419,7 @@ const resolvers = {
             if (!user) {
                 return false;
             } else { // 로그인 상태라면(토큰이 존재하면) 토큰 비워주기
+                console.log(user.token);
                 user.token = '';
                 return true;
             }

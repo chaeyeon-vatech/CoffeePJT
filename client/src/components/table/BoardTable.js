@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, SearchQuery, UserSearchQuery} from "../../util/graphql";
+import {MeQuery, SearchQuery, UserSearchQuery} from "../../util/query";
 
 function BoardTable() {
 
@@ -15,11 +15,8 @@ function BoardTable() {
         }
     }, [da]);
 
-    console.log(typeof(id));
+
     const {data} = useQuery(SearchQuery);
-
-    console.log(data);
-
 
     useEffect(() => {
         if (data) {

@@ -35,10 +35,51 @@ export const MeQuery = gql`
             _id
             idNum
             username
+            status
         }
     }
 
 `
+
+
+//명수 계산
+export const CountQuery = gql`
+    query howmany{
+        howmany
+    }
+
+`
+
+//누적 금액 계산
+export const CostQuery = gql`
+    query
+    {
+        howmuch
+    }
+
+`
+
+//누적 잔 수
+export const CupQuery = gql`
+    query{coffeeAmount}`
+
+
+//TASK QUERY
+
+
+export const TaskQuery = gql`
+    query{
+        tasks(search:"",category:0,index:1,hasNext:true,acdc:""){
+            _id
+            title
+        }
+    }
+
+
+`
+
+
+
 
 
 

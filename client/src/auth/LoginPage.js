@@ -13,9 +13,6 @@ const AuthenticationForm = () => {
     const [_, setAuthToken] = useAuthToken();
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
-    const [idNum, setIdNum] = useState('');
-    const [token, setToken] = useState('');
     const loginmutation = loginMutationGQL;
 
 
@@ -24,12 +21,13 @@ const AuthenticationForm = () => {
             onCompleted: (data) => {
                 setAuthToken(data.login.token);
                 localStorage.setItem('myData', data.login.token);
-
-                setToken(data.login.token);
                 window.location.href = '/order';
 
 
             },
+        onError:()=>{
+                alert("로그인에 실패했습니다.")
+        },
             variables: {
                 login: login,
                 password: password

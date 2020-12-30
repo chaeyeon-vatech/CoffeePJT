@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, UserSearchQuery} from "../../util/graphql";
+import {MeQuery, UserSearchQuery} from "../../util/query";
 import DeleteButton from "../button/DeleteButton";
 
 function BoardTable() {
@@ -14,7 +14,6 @@ function BoardTable() {
 
     useEffect(() => {
         if (da) {
-            setId(da.me._id);
             setName(da.me.username);
         }
     }, [da]);
@@ -24,13 +23,15 @@ function BoardTable() {
         variables: {
             search: name
 
-        },});
+        }});
 
     useEffect(() => {
         if (data) {
             setContents(data.orders);
         }
     }, [data]);
+
+
 
     console.log("contents",contents)
 
@@ -61,7 +62,7 @@ function BoardTable() {
                     <td>{content.menu}</td>
                     <td>{content.hi}</td>
                     <td>{content.createdAt}</td>
-                    <td><DeleteButton post_id={id}/></td>
+                    <td><DeleteButton post_id={content._id}/></td>
 
 
 

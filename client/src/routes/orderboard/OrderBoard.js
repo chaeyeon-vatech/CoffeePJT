@@ -3,9 +3,11 @@ import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
 import {CreateMutation} from "../../util/mutation";
-import {MeQuery, SearchQuery} from "../../util/graphql";
+import {MeQuery, SearchQuery} from "../../util/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
+import {Link} from "react-router-dom";
+import {convertlinksToUrl} from "../../resources/utilities";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -79,7 +81,7 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function TodayTrendsComponent() {
+function OrderBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
 
@@ -89,6 +91,7 @@ function TodayTrendsComponent() {
     const [id, setId] = useState();
     const [menu, setMenu] = useState();
     const [hi, setHi] = useState();
+    const [status, setStatus] = useState();
     const [username, setName] = useState();
 
     const {data} = useQuery(MeQuery);
@@ -98,35 +101,34 @@ function TodayTrendsComponent() {
         if (data) {
             setName(data.me.username);
             setId(data.me.idNum);
+            setStatus(data.me.status);
+
         }
     }, [data]);
+
 
     const createmutation = CreateMutation;
 
 
-    const [create] = useMutation(createmutation, {
-            refetchQueries: [{query: SearchQuery}],
+    const [create, error] = useMutation(createmutation, {
+            refetchQueries: [{query: SearchQuery, MeQuery}],
             variables: {
                 username: username,
                 menu: menu,
                 hi: hi
             },
+            onCompleted: (data) => {
+                window.location.href = '/order';
+
+
+            }
         }
     )
 
-    console.log(menu, hi);
-
-    function renderLegend(color, title) {
-        return (
-            <Row vertical='center'>
-                <div style={{width: 18, border: '2px solid', borderColor: color}}></div>
-                <span className={classes.legendTitle}>{title}</span>
-            </Row>
-        );
-    }
 
     function renderStat(title, value, value2) {
         return (
+
             <Column
                 flexGrow={1}
                 className={classes.statContainer}
@@ -140,7 +142,9 @@ function TodayTrendsComponent() {
         );
     }
 
+
     return (
+
         <Row
             flexGrow={1}
             className={classes.container}
@@ -166,34 +170,7 @@ function TodayTrendsComponent() {
                                                         setMenu("아메리카노")
                                                         setHi("hot")
                                                     }}
-                                                    value="Hot"/>,
-                    <TextField type='submit'
-                               onClick={() => {
-                                   setMenu("아메리카노")
-                                   setHi("ice")
-                               }}
-                               value="Ice"/>)}
-
-                {renderStat('☕ 카페라떼 ☕', <TextField type='submit'
-                                                    onClick={() => {
-                                                        setMenu("카페라떼")
-                                                        setHi("hot")
-                                                    }}
-                                                    value="Hot"/>,
-                    <TextField type='submit'
-                               onClick={() => {
-                                   setMenu("카페라떼")
-                                   setHi("ice")
-                               }}
-                               value="Ice"/>)}
-
-
-                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
-                                                    onClick={() => {
-                                                        setMenu("아메리카노")
-                                                        setHi("hot")
-                                                    }}
-                                                    value="Hot"/>,
+                                                    value="hot"/>,
                     <TextField type='submit'
                                onClick={() => {
                                    setMenu("아메리카노")
@@ -202,42 +179,57 @@ function TodayTrendsComponent() {
                                value="Ice"/>)}
 
 
-                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
+                {renderStat('☕ 카페모카 ☕', <TextField type='submit'
+                                                   onClick={() => {
+                                                       setMenu("카페모카")
+                                                       setHi("hot")
+                                                   }}
+                                                   value="Hot"/>,
+                    <TextField type='submit'
+                               onClick={() => {
+                                   setMenu("카페모카")
+                                   setHi("ice")
+                               }}
+                               value="Ice"/>)}
+
+                {renderStat('☕ 아이스티 ☕', <TextField type='submit'
+                                                   onClick={() => {
+                                                       setMenu("아이스티")
+                                                       setHi("ice")
+                                                   }}
+                                                   value="Ice"/>,
+                )}
+
+
+                {renderStat('☕ 바닐라라떼 ☕', <TextField type='submit'
                                                     onClick={() => {
-                                                        setMenu("아메리카노")
+                                                        setMenu("바닐라라떼")
                                                         setHi("hot")
                                                     }}
                                                     value="Hot"/>,
                     <TextField type='submit'
                                onClick={() => {
-                                   setMenu("아메리카노")
+                                   setMenu("바닐라라떼")
                                    setHi("ice")
                                }}
                                value="Ice"/>)}
 
 
-                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
-                                                    onClick={() => {
-                                                        setMenu("아메리카노")
-                                                        setHi("hot")
-                                                    }}
-                                                    value="Hot"/>,
-                    <TextField type='submit'
-                               onClick={() => {
-                                   setMenu("아메리카노")
-                                   setHi("ice")
-                               }}
-                               value="Ice"/>)}
+                {status != "주문완료" &&
+                renderStat(<TextField type='submit'
+                                      onClick={create}
+                                      value="Select"/>)}
 
-                {renderStat(<TextField type='submit'
-                                       onClick={create}
-                                       value="Select"/>)}
+                {status == "주문완료" &&
+                renderStat("주문 취소는 유저 페이지에서 가능", "주문 완료",)}
+
             </Column>
         </Row>
 
 
     );
 
+
 }
 
-export default TodayTrendsComponent;
+export default OrderBoard;

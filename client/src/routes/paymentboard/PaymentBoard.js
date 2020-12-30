@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Column, Row } from 'simple-flexbox';
 import { createUseStyles, useTheme } from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
+import {useQuery} from "@apollo/react-hooks";
+import {CostQuery, CountQuery} from "../../util/query";
+import PaymentTable from "../../components/table/PaymentTable";
 
 const data = [];
 
@@ -79,6 +82,25 @@ function TodayTrendsComponent() {
     const theme = useTheme();
     const classes = useStyles({ theme });
 
+    const [money, setMoney] = useState('');
+    const {data} = useQuery(CostQuery);
+    useEffect(() => {
+        if (data) {
+            setMoney(data.howmuch);
+        }
+    }, [data]);
+
+
+    const [norder, setNorder] = useState('');
+    const {data:na} = useQuery(CountQuery);
+    useEffect(() => {
+        if (na) {
+            setNorder(na.howmany[2]);
+        }
+    }, [na]);
+
+
+
     function renderLegend(color, title) {
         return (
             <Row vertical='center'>
@@ -116,17 +138,15 @@ function TodayTrendsComponent() {
                 className={classes.graphSection}
                 breakpoints={{ 1024: { width: 'calc(100% - 48px)', flexBasis: 'auto' } }}
             >
-              <BoardTable/>
+              <PaymentTable/>
             </Column>
             <Column className={classes.separator} breakpoints={{ 1024: { display: 'none' } }}>
                 <div />
             </Column>
             <Column flexGrow={3} flexBasis='342px' breakpoints={{ 1024: classes.stats }}>
-                {renderStat('Resolved', '449')}
-                {renderStat('Received', '426')}
-                {renderStat('Average first response time', '33m')}
-                {renderStat('Average response time', '3h 8m')}
-                {renderStat('Resolution within SLA', '94%')}
+                {renderStat('누적 금액', money)}
+                {renderStat('미주문자 수', norder)}
+                {renderStat('주문 초기화', '33m')}
             </Column>
         </Row>
     );

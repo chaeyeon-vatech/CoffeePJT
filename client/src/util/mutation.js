@@ -1,14 +1,6 @@
 import gql from "graphql-tag";
 
 
-export const CountMutation = gql`
-
-    mutation howmany {
-        howmany
-    }
-`;
-
-
 //Order Create
 
 export const CreateMutation = gql`
@@ -38,8 +30,44 @@ export const RemoveMutation = gql`
         }
     }`
 
+
+//로그아웃
 export const LogoutMutation = gql`
     mutation logout{
         logout
     }
 `
+
+//Task Create
+export const TaskCreateMutation = gql`
+    mutation createTask($title : String!){
+        createTask(taskInput:{
+            title:$title
+        }){
+            _id
+            title
+        }
+    }
+`
+
+//Task Update
+
+export const TaskUpdateMutation = gql`
+    mutation updateTask($id:ID!, $title:String!){
+        updateTask(_id:$id,title:$title){
+            _id
+            title
+        }
+    }
+
+`
+
+//Task Remove
+export const TaskRemoveMutation = gql`
+mutation removeTask($id:ID!){
+    removeTask(_id:$id){
+        _id
+        title
+    }
+}`
+
