@@ -17,10 +17,8 @@ function PrivateRoutes() {
                 <Route exact path={SLUGS.orderboard} component={OrderboardComponent} />
                 <Route exact path={SLUGS.tickets} component={PaymentboardComponent} />
                 <Route exact path={SLUGS.settings} component={UserboardComponent} />
-                <Route exact path={SLUGS.login} component={basicLogin}/>
-                <Route path={LINKS.signup} component={RegisterPage} />
 
-                <Redirect to={SLUGS.login} />
+                <Redirect to={SLUGS.orderboard} />
             </Switch>
         </Suspense>
     );

@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import useWindowSize from 'hooks/useWindowSize';
 import PrivateSection from 'routes/PrivateSection';
 import PublicRoutes from 'routes/PublicRoutes';
+import {useQuery} from "@apollo/react-hooks";
+import {MeQuery} from "../util/query";
 
 function Routes() {
     const { pathname } = useLocation();
@@ -12,8 +14,11 @@ function Routes() {
         window.scrollTo(0, 0);
     }, [pathname]);
 
-    const isUserLoggedIn = true;
-    return isUserLoggedIn ? <PrivateSection /> : <PublicRoutes />;
+
+    const {data} = useQuery(MeQuery);
+
+
+    return data ? <PrivateSection /> : <PublicRoutes />;
 }
 
 export default Routes;
