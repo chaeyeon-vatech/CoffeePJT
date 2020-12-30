@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
-import {CreateMutation} from "../../graphql/mutation";
+import {CreateMutation, OrderResetMutation} from "../../graphql/mutation";
 import {MeQuery, SearchQuery} from "../../graphql/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
@@ -122,6 +122,16 @@ function OrderBoard() {
         }
     )
 
+    const [giveup] = useMutation(OrderResetMutation, {
+            refetchQueries: [{query: SearchQuery, MeQuery}],
+            onCompleted: (data) => {
+                window.location.href = '/order';
+
+
+            }
+        }
+    )
+
 
     function renderStat(title, value, value2) {
         return (
@@ -215,10 +225,12 @@ function OrderBoard() {
                 {status != "주문완료" &&
                 renderStat(<TextField type='submit'
                                       onClick={create}
-                                      value="Select"/>)}
+                                      value="Select"/>, <TextField type='submit'
+                                                                   onClick={giveup}
+                                                                   value="주문 포기"/>)}
 
                 {status == "주문완료" &&
-                renderStat("주문 취소는 유저 페이지에서 가능", "주문 완료",)}
+                renderStat("주문 취소는 유저 페이지에서 가능", "주문 완료")}
 
             </Column>
         </Row>

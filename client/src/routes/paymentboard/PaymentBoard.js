@@ -2,17 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import {useQuery} from "@apollo/react-hooks";
-import {CostQuery, CountQuery, UserSearchQuery} from "../../graphql/query";
+import {AllUserQuery, CostQuery, CountQuery, UserSearchQuery} from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
 import {OrderResetMutation} from "../../graphql/mutation";
 import {TextField} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
-
-const data = [];
-
-for (let x = 1; x <= 24; x++) {
-    data.push({x: x, y: Math.floor(Math.random() * 100)});
-}
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -93,14 +87,25 @@ function TodayTrendsComponent() {
     }, [data]);
 
 
+    const [order, setOrder] = useState('');
     const [norder, setNorder] = useState('');
+    const [count, setCount] = useState('');
     const {data: na} = useQuery(CountQuery);
     useEffect(() => {
         if (na) {
-            setNorder(na.howmany[2]);
+            setOrder(na.howmany);
         }
     }, [na]);
 
+    const {data: user} = useQuery(AllUserQuery)
+
+
+    useEffect(() => {
+        if (user) {
+            setCount(user.allUsers.length);
+
+        }
+    }, [user]);
 
     const mutation = OrderResetMutation;
 
@@ -114,9 +119,6 @@ function TodayTrendsComponent() {
             }
         }
     )
-
-
-
 
 
     function renderLegend(color, title) {
@@ -163,11 +165,11 @@ function TodayTrendsComponent() {
             </Column>
             <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
                 {renderStat('누적 금액', money)}
-                {renderStat('미주문자 수', norder)}
-                {renderStat('주문 초기화', <TextField type='submit'
-                                                 onClick={deletePostOrMutation}
-                                                 disabled={loading}
-                                                 value="Reset"/>)}
+                {renderStat('미주문자', count - parseInt(order[0]) - parseInt(order[1]) - parseInt(order[2]))}
+                {renderStat('결제 완료', <TextField type='submit'
+                                                onClick={deletePostOrMutation}
+                                                disabled={loading}
+                                                value="Reset"/>)}
             </Column>
         </Row>
     );

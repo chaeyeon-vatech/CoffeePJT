@@ -5,7 +5,7 @@ import MiniCardComponent from 'components/cards/MiniCardComponent';
 import OrderBoard from './OrderBoard';
 import Task from './Task';
 import {useQuery} from "@apollo/react-hooks";
-import {CountQuery, SearchQuery} from "../../graphql/query";
+import {AllUserQuery, CountQuery, SearchQuery} from "../../graphql/query";
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -51,12 +51,23 @@ function OrderBoardComponent() {
     const classes = useStyles();
 
     const [contents, setContents] = useState('');
+    const [sum, setSum] = useState('');
+    const [count, setCount] = useState('');
 
+    const {data: user} = useQuery(AllUserQuery)
+
+
+    useEffect(() => {
+        if (user) {
+            setCount(user.allUsers.length);
+        }
+    }, [user]);
 
     const {data} = useQuery(CountQuery);
     useEffect(() => {
         if (data) {
             setContents(data.howmany);
+
         }
     }, [data]);
 
@@ -67,23 +78,23 @@ function OrderBoardComponent() {
                 wrap
                 flexGrow={1}
                 horizontal='space-between'
-                breakpoints={{ 768: 'column' }}
+                breakpoints={{768: 'column'}}
             >
                 <Row
                     className={classes.cardRow}
                     wrap
                     flexGrow={1}
                     horizontal='space-between'
-                    breakpoints={{ 384: 'column' }}
+                    breakpoints={{384: 'column'}}
                 >
                     <MiniCardComponent
                         className={classes.miniCardContainer}
-                        title='주문자'
+                        title='주문'
                         value={contents[0]}
                     />
                     <MiniCardComponent
                         className={classes.miniCardContainer}
-                        title='취소자'
+                        title='주문 취소'
                         value={contents[1]}
                     />
                 </Row>
@@ -92,12 +103,18 @@ function OrderBoardComponent() {
                     wrap
                     flexGrow={1}
                     horizontal='space-between'
-                    breakpoints={{ 384: 'column' }}
+                    breakpoints={{384: 'column'}}
                 >
                     <MiniCardComponent
                         className={classes.miniCardContainer}
-                        title='미주문자'
+                        title='주문 포기'
                         value={contents[2]}
+                    />
+
+                    <MiniCardComponent
+                        className={classes.miniCardContainer}
+                        title='미주문'
+                        value={count - parseInt(contents[0]) - parseInt(contents[1]) - parseInt(contents[2])}
                     />
 
                 </Row>
