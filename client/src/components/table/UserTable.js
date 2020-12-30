@@ -9,7 +9,7 @@ function BoardTable() {
     const [contents, setContents] = useState('');
     const [name, setName] = useState();
 
-    const {data:da} = useQuery(MeQuery);
+    const {data: da} = useQuery(MeQuery);
 
     useEffect(() => {
         if (da) {
@@ -22,7 +22,8 @@ function BoardTable() {
         variables: {
             search: name
 
-        }});
+        }
+    });
 
     useEffect(() => {
         if (data) {
@@ -40,7 +41,6 @@ function BoardTable() {
                 <th scope="col">사용자 이름</th>
                 <th scope="col">메뉴</th>
                 <th scope="col">Hot/Ice</th>
-                <th scope="col">주문일시</th>
                 <th scope="col">주문취소</th>
 
 
@@ -53,9 +53,7 @@ function BoardTable() {
                     <td>{content.username}</td>
                     <td>{content.menu}</td>
                     <td>{content.hi}</td>
-                    <td>{content.createdAt}</td>
                     <td><DeleteButton post_id={content._id}/></td>
-
 
 
                 </tr>

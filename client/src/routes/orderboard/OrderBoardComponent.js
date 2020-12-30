@@ -5,7 +5,7 @@ import MiniCardComponent from 'components/cards/MiniCardComponent';
 import OrderBoard from './OrderBoard';
 import Task from './Task';
 import {useQuery} from "@apollo/react-hooks";
-import {AllUserQuery, CountQuery, SearchQuery} from "../../graphql/query";
+import {AllUserQuery, CountQuery} from "../../graphql/query";
 
 const useStyles = createUseStyles({
     cardsContainer: {

@@ -1,6 +1,6 @@
 import React, {Suspense, lazy} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
-import SLUGS from 'resources/links';
+import LINKS from 'resources/links';
 import LoadingComponent from 'components/loading';
 import PaymentboardComponent from "./paymentboard";
 import UserboardComponent from "./userboard";
@@ -12,11 +12,11 @@ function PrivateRoutes() {
         <Suspense fallback={<LoadingComponent loading/>}>
 
             <Switch>
-                <Route exact path={SLUGS.orderboard} component={OrderboardComponent}/>
-                <Route exact path={SLUGS.tickets} component={PaymentboardComponent}/>
-                <Route exact path={SLUGS.settings} component={UserboardComponent}/>
+                <Route exact path={LINKS.orderboard} component={OrderboardComponent}/>
+                <Route exact path={LINKS.tickets} component={PaymentboardComponent}/>
+                <Route exact path={LINKS.settings} component={UserboardComponent}/>
 
-                <Redirect to={SLUGS.orderboard}/>
+                <Redirect to={LINKS.orderboard}/>
             </Switch>
         </Suspense>
     );

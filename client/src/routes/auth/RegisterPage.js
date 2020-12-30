@@ -19,7 +19,7 @@ const AuthenticationForm = () => {
                 setAuthToken(data.token);
                 setToken(data.token);
                 localStorage.setItem('token', token);
-                window.location.href = '/login';
+                window.location.href = '/';
             },
             onError: () => {
                 alert("회원 정보를 정확히 입력해주세요.")
