@@ -1,12 +1,8 @@
-import {useForm} from 'react-hook-form';
 import React, {useState} from 'react';
-import {userQueryGQL, registerMutationGQL, meGQL, loginMutationGQL} from './mutation';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {meGQL, loginMutationGQL} from './mutation';
+import {useMutation} from '@apollo/react-hooks';
 import {useAuthToken} from './authToken';
-
-import {TextField} from '@material-ui/core';
 import './login.css';
-import {LOCAL_STORAGE_TEMPLATE, ROUTES} from 'enumerations';
 
 
 const AuthenticationForm = () => {
@@ -16,7 +12,7 @@ const AuthenticationForm = () => {
     const loginmutation = loginMutationGQL;
 
 
-    const [log, {error, loading, data}] = useMutation(loginmutation, {
+    const [log, {loading}] = useMutation(loginmutation, {
             refetchQueries: [{query: meGQL}],
             onCompleted: (data) => {
                 setAuthToken(data.login.token);
@@ -47,7 +43,7 @@ const AuthenticationForm = () => {
                                                                                               className='tab'>Sign
                 In</label>
                 <input id='tab-2' type='text' name='tab' className='sign-up'/><label htmlFor='tab-2'
-                                                                                      className='tab'>Sign
+                                                                                     className='tab'>Sign
                 Up</label>
                 <div className='login-form'>
                     <div className='sign-in-htm'>
@@ -63,10 +59,10 @@ const AuthenticationForm = () => {
                         </div>
                         <div className='group'>
                             <input type='submit'
-                                       onClick={log}
-                                       className='button'
-                                       unable={loading}
-                                       value='Login'
+                                   onClick={log}
+                                   className='button'
+                                   unable={loading}
+                                   value='Login'
                             />;
                         </div>
 

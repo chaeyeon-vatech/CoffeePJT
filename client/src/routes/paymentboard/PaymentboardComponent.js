@@ -1,7 +1,7 @@
 import React from 'react';
 import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
-import TodayTrendsComponent from './PaymentBoard';
+import PaymentBoard from './PaymentBoard';
 
 
 const useStyles = createUseStyles({
@@ -51,7 +51,7 @@ function PaymentboardComponent() {
         <Column>
 
             <div className={classes.todayTrends}>
-                <TodayTrendsComponent/>
+                <PaymentBoard/>
             </div>
 
         </Column>

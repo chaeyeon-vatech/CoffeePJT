@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, SearchQuery, UserSearchQuery} from "../../util/query";
+import {MeQuery, SearchQuery} from "../../graphql/query";
 
 function BoardTable() {
 

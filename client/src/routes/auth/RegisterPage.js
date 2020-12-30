@@ -1,11 +1,7 @@
-import {useForm} from 'react-hook-form';
 import React, {useState} from 'react';
-import {userQueryGQL, registerMutationGQL, meGQL, loginMutationGQL} from './mutation';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {registerMutationGQL, meGQL} from './mutation';
+import {useMutation} from '@apollo/react-hooks';
 import {useAuthToken} from './authToken';
-import {TextField} from '@material-ui/core';
-import {removeDirectivesFromDocument} from '@apollo/client/utilities';
-
 import './login.css';
 
 
@@ -24,6 +20,9 @@ const AuthenticationForm = () => {
                 setToken(data.token);
                 localStorage.setItem('token', token);
                 window.location.href = '/login';
+            },
+            onError: () => {
+                alert("회원 정보를 정확히 입력해주세요.")
             },
             refetchQueries: [{query: meGQL}],
             variables: {
@@ -68,12 +67,12 @@ const AuthenticationForm = () => {
 
                         <div className='group'>
                             <input type='submit'
-                                       onClick={reg}
-                                       value='회원가입'
-                                       className='button'/>;
+                                   onClick={reg}
+                                   value='회원가입'
+                                   className='button'/>;
                         </div>
                         <div className='group'>
-                            <a href='/login' className='button'>이미 회원이신가요?</a>
+                            <a href='/' className='button'>이미 회원이신가요?</a>
                         </div>
                     </div>
                     <div className='sign-up-htm'>

@@ -4,7 +4,7 @@ import useWindowSize from 'resources/hooks/useWindowSize';
 import PrivateSection from 'routes/PrivateSection';
 import PublicRoutes from 'routes/PublicRoutes';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery} from "../util/query";
+import {MeQuery} from "../graphql/query";
 
 function Routes() {
     const {pathname} = useLocation();

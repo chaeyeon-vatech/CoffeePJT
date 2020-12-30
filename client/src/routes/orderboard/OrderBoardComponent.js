@@ -3,11 +3,9 @@ import {Column, Row} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
 import OrderBoard from './OrderBoard';
-import TasksComponent from './TasksComponent';
-import {useMutation} from "@apollo/react-hooks";
-import {Search} from "semantic-ui-react";
+import Task from './Task';
 import {useQuery} from "@apollo/react-hooks";
-import {CountQuery, SearchQuery} from "../../util/query";
+import {CountQuery, SearchQuery} from "../../graphql/query";
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -110,7 +108,7 @@ function OrderBoardComponent() {
                 className={classes.lastRow}
                 breakpoints={{1024: 'column'}}
             >
-                <TasksComponent containerStyles={classes.tasks}/>
+                <Task containerStyles={classes.tasks}/>
             </Row>
 
             <div className={classes.todayTrends}>

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { Row } from 'simple-flexbox';
-import { createUseStyles, useTheme } from 'react-jss';
-import { IconCheckboxOn, IconCheckboxOff } from 'components/icons';
+import {Row} from 'simple-flexbox';
+import {createUseStyles, useTheme} from 'react-jss';
+import {IconCheckboxOn, IconCheckboxOff} from 'components/icons';
 import CardComponent from 'components/cards/CardComponent';
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../util/query";
-import {TaskCreateMutation} from "../../util/mutation";
+import {TaskQuery} from "../../graphql/query";
+import {TaskCreateMutation} from "../../graphql/mutation";
 import TaskDeleteButton from "../../components/button/TaskDeleteButton";
 
 const useStyles = createUseStyles((theme) => ({
@@ -14,7 +14,7 @@ const useStyles = createUseStyles((theme) => ({
         color: theme.color.grayishBlue2,
         fontSize: '20px !important',
         padding: '7px !important',
-        width:"30%"
+        width: "fit-content"
     },
     itemTitle: {
         ...theme.typography.itemTitle,
@@ -40,15 +40,13 @@ const useStyles = createUseStyles((theme) => ({
         marginRight: 16
     },
     input: {
-        backgroundColor: theme.color.lightGrayishBlue,
         color: theme.color.black,
         display: "block",
-        width:"450%",
+        width: "200%",
         padding: "10px 0 10px 50px",
         fontSize: '15px !important',
         fontFamily: "Open Sans",
-        fontWeight: "400",
-        background: "#efefef",
+        fontWeight: "600",
         border: "0",
         borderRadius: "3px",
         outline: 0,
@@ -58,18 +56,18 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
         LeftMargin: "30px",
-        alignSelf:"center"
+        alignSelf: "center"
     }
 
 }));
 
 const TAGS = {
-    URGENT: { text: 'URGENT', backgroundColor: '#FEC400', color: '#FFFFFF' },
-    NEW: { text: 'NEW', backgroundColor: '#29CC97', color: '#FFFFFF' },
-    DEFAULT: { text: 'DEFAULT', backgroundColor: '#F0F1F7', color: '#9FA2B4' }
+    URGENT: {text: 'URGENT', backgroundColor: '#FEC400', color: '#FFFFFF'},
+    NEW: {text: 'NEW', backgroundColor: '#29CC97', color: '#FFFFFF'},
+    DEFAULT: {text: 'DEFAULT', backgroundColor: '#F0F1F7', color: '#9FA2B4'}
 };
 
-function TasksComponent(props) {
+function Task(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
     const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
@@ -86,12 +84,14 @@ function TasksComponent(props) {
     }, [data]);
 
 
-
-
     const [create, {loading}] = useMutation(TaskCreateMutation, {
             refetchQueries: [{query: TaskQuery}],
             variables: {
                 title: title
+            },
+
+            onError: () => {
+                alert("주문 내용을 작성해주세요.")
             },
         }
     )
@@ -99,8 +99,6 @@ function TasksComponent(props) {
     console.log(contents &&
         contents.map((content) => (content._id)));
     console.log(contents);
-
-
 
 
     function onCheckboxClick(index) {
@@ -134,7 +132,8 @@ function TasksComponent(props) {
             items={[
                 <Row horizontal='space-between' vertical='center'>
                     <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
-                        <input type="text" placeholder="주문을 추가해주세요." onChange={e => setTitle(e.target.value)} className={classes.input}/>
+                        <input type="text" placeholder="주문을 추가해주세요." onChange={e => setTitle(e.target.value)}
+                               className={classes.input}/>
                     </span>
                     {renderAddButton()}
                 </Row>,
@@ -161,13 +160,13 @@ function TasksComponent(props) {
     );
 }
 
-function TaskComponent({ classes, index, item = {}, onCheckboxClick, onTagClick }) {
-    const { tag = {} } = item;
+function TaskComponent({classes, index, item = {}, onCheckboxClick, onTagClick}) {
+    const {tag = {}} = item;
     return (
         <Row horizontal='space-between' vertical='center'>
             <Row>
                 <div className={classes.checkboxWrapper} onClick={() => onCheckboxClick(index)}>
-                    {item.checked ? <IconCheckboxOn /> : <IconCheckboxOff />}
+                    {item.checked ? <IconCheckboxOn/> : <IconCheckboxOff/>}
                 </div>
                 <span className={classes.itemTitle}>{item.title}</span>
             </Row>
@@ -183,12 +182,12 @@ function TaskComponent({ classes, index, item = {}, onCheckboxClick, onTagClick 
     );
 }
 
-function TagComponent({ backgroundColor, classes, color, index, onClick, text }) {
+function TagComponent({backgroundColor, classes, color, index, onClick, text}) {
     return (
         <Row
             horizontal='center'
             vertical='center'
-            style={{ backgroundColor, color }}
+            style={{backgroundColor, color}}
             className={classes.tagStyles}
             onClick={() => onClick(index)}
         >
@@ -197,4 +196,4 @@ function TagComponent({ backgroundColor, classes, color, index, onClick, text })
     );
 }
 
-export default TasksComponent;
+export default Task;

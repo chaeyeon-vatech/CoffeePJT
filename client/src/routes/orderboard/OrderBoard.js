@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
-import {CreateMutation} from "../../util/mutation";
-import {MeQuery, SearchQuery} from "../../util/query";
+import {CreateMutation} from "../../graphql/mutation";
+import {MeQuery, SearchQuery} from "../../graphql/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
-import {Link} from "react-router-dom";
-import {convertlinksToUrl} from "../../resources/utilities";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -84,10 +82,6 @@ const useStyles = createUseStyles((theme) => ({
 function OrderBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
-
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-
     const [id, setId] = useState();
     const [menu, setMenu] = useState();
     const [hi, setHi] = useState();
@@ -121,7 +115,10 @@ function OrderBoard() {
                 window.location.href = '/order';
 
 
-            }
+            },
+            onError: () => {
+                alert("메뉴를 선택해주세요.")
+            },
         }
     )
 

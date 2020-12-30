@@ -1,5 +1,5 @@
-import React, {Suspense} from 'react';
-import {Redirect, Route, Switch} from 'react-router-dom';
+import React from 'react';
+import { Route, Switch} from 'react-router-dom';
 import LINKS from 'resources/links';
 import SLUGS from '../resources/links';
 import basicLogin from './auth/LoginPage';

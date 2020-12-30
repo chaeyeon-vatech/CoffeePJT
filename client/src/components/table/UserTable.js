@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, UserSearchQuery} from "../../util/query";
+import {MeQuery, UserSearchQuery} from "../../graphql/query";
 import DeleteButton from "../button/DeleteButton";
 
 function BoardTable() {
 
     const [contents, setContents] = useState('');
-    const [id, setId] = useState();
     const [name, setName] = useState();
 
     const {data:da} = useQuery(MeQuery);

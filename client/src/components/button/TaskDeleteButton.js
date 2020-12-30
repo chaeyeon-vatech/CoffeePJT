@@ -1,8 +1,7 @@
 import React from 'react';
 import {useMutation} from '@apollo/react-hooks';
-import TextField from "@material-ui/core/TextField";
-import {TaskRemoveMutation} from "../../util/mutation";
-import {TaskQuery} from "../../util/query";
+import {TaskRemoveMutation} from "../../graphql/mutation";
+import {TaskQuery} from "../../graphql/query";
 import {Row} from "simple-flexbox";
 import {createUseStyles, useTheme} from "react-jss";
 
@@ -12,7 +11,7 @@ const useStyles = createUseStyles((theme) => ({
         color: theme.color.grayishBlue2,
         fontSize: '20px !important',
         padding: '5px !important',
-        marginLeft:"40px"
+        marginLeft: "40px"
     },
 }));
 

@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import BoardTable from '../../components/table/BoardTable';
 import {useQuery} from "@apollo/react-hooks";
-import {CostQuery, CountQuery, UserSearchQuery} from "../../util/query";
+import {CostQuery, CountQuery, UserSearchQuery} from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
-import {OrderResetMutation} from "../../util/mutation";
+import {OrderResetMutation} from "../../graphql/mutation";
 import {TextField} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
 
