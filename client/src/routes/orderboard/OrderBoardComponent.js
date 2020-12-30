@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Column, Row } from 'simple-flexbox';
-import { createUseStyles } from 'react-jss';
+import React, {useEffect, useState} from 'react';
+import {Column, Row} from 'simple-flexbox';
+import {createUseStyles} from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
-import TodayTrendsComponent from './TodayTrendsComponent';
-import UnresolvedTicketsComponent from './UnresolvedTicketsComponent';
-import TasksComponent from './TasksComponent';
-import { useAuthToken } from '../../auth/authToken';
-import { useUserQuery } from '../../auth/useUserQuery';
-import Private from '../../auth/Private';
+import OrderBoard from './OrderBoard';
+import Task from './Task';
+import {useQuery} from "@apollo/react-hooks";
+import {AllUserQuery, CountQuery} from "../../graphql/query";
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -48,31 +46,30 @@ const useStyles = createUseStyles({
     }
 });
 
-function DashboardComponent() {
+
+function OrderBoardComponent() {
     const classes = useStyles();
-    const [authToken] = useAuthToken();
-    console.log(authToken)
 
-    const [contents, setContents] = useState([]);
-    const { data, loading } = useUserQuery();
+    const [contents, setContents] = useState('');
+    const [sum, setSum] = useState('');
+    const [count, setCount] = useState('');
 
-
-
+    const {data: user} = useQuery(AllUserQuery)
 
 
     useEffect(() => {
+        if (user) {
+            setCount(user.allUsers.length);
+        }
+    }, [user]);
+
+    const {data} = useQuery(CountQuery);
+    useEffect(() => {
         if (data) {
-            setContents(data.contents);
+            setContents(data.howmany);
+
         }
     }, [data]);
-
-
-    console.log(contents &&
-        contents.map((content) => (
-            content._id
-
-        ))
-    );
 
     return (
         <Column>
@@ -81,24 +78,24 @@ function DashboardComponent() {
                 wrap
                 flexGrow={1}
                 horizontal='space-between'
-                breakpoints={{ 768: 'column' }}
+                breakpoints={{768: 'column'}}
             >
                 <Row
                     className={classes.cardRow}
                     wrap
                     flexGrow={1}
                     horizontal='space-between'
-                    breakpoints={{ 384: 'column' }}
+                    breakpoints={{384: 'column'}}
                 >
                     <MiniCardComponent
                         className={classes.miniCardContainer}
-                        title='Open'
-                        value='40'
+                        title='주문'
+                        value={contents[0]}
                     />
                     <MiniCardComponent
                         className={classes.miniCardContainer}
-                        title='미주문자'
-                        value='16'
+                        title='주문 취소'
+                        value={contents[1]}
                     />
                 </Row>
                 <Row
@@ -106,34 +103,37 @@ function DashboardComponent() {
                     wrap
                     flexGrow={1}
                     horizontal='space-between'
-                    breakpoints={{ 384: 'column' }}
+                    breakpoints={{384: 'column'}}
                 >
                     <MiniCardComponent
                         className={classes.miniCardContainer}
-                        title='주문자'
-                        value='43'
+                        title='주문 포기'
+                        value={contents[2]}
                     />
+
                     <MiniCardComponent
                         className={classes.miniCardContainer}
-                        title='취소자'
-                        value='64'
+                        title='미주문'
+                        value={count - parseInt(contents[0]) - parseInt(contents[1]) - parseInt(contents[2])}
                     />
+
                 </Row>
             </Row>
+
             <Row
                 horizontal='space-between'
                 className={classes.lastRow}
-                breakpoints={{ 1024: 'column' }}
+                breakpoints={{1024: 'column'}}
             >
-                <TasksComponent containerStyles={classes.tasks} />
+                <Task containerStyles={classes.tasks}/>
             </Row>
 
             <div className={classes.todayTrends}>
-                <TodayTrendsComponent />
+                <OrderBoard/>
             </div>
 
         </Column>
     );
 }
 
-export default DashboardComponent;
+export default OrderBoardComponent;

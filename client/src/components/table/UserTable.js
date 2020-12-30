@@ -1,58 +1,69 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
+import {useQuery} from "@apollo/react-hooks";
+import {MeQuery, UserSearchQuery} from "../../graphql/query";
+import DeleteButton from "../button/DeleteButton";
 
-function Usertable() {
-    const [ contexts, setContexts] = useState([]);
+function BoardTable() {
 
-    // const {data, loading} = useQuery(FETCH_POSTS_QUERY, {
-    //     variables: {
-    //         index: index
-    //     }
-    // });
+    const [contents, setContents] = useState('');
+    const [name, setName] = useState();
 
+    const {data: da} = useQuery(MeQuery);
+
+    useEffect(() => {
+        if (da) {
+            setName(da.me.username);
+        }
+    }, [da]);
+
+
+    const {data} = useQuery(UserSearchQuery, {
+        variables: {
+            search: name
+
+        }
+    });
+
+    useEffect(() => {
+        if (data) {
+            setContents(data.orders);
+        }
+    }, [data]);
 
     return (
 
 
         <table>
-            <caption>주문 내역</caption>
+            <caption>주문자 현황</caption>
             <thead>
             <tr>
-                <th scope="col">Account</th>
-                <th scope="col">Due Date</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Period</th>
+                <th scope="col">사용자 이름</th>
+                <th scope="col">메뉴</th>
+                <th scope="col">Hot/Ice</th>
+                <th scope="col">주문취소</th>
+
+
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td data-label="Account">Visa - 3412</td>
-                <td data-label="Due Date">04/01/2016</td>
-                <td data-label="Amount">$1,190</td>
-                <td data-label="Period">03/01/2016 - 03/31/2016</td>
-            </tr>
-            <tr>
-                <td scope="row" data-label="Account">Visa - 6076</td>
-                <td data-label="Due Date">03/01/2016</td>
-                <td data-label="Amount">$2,443</td>
-                <td data-label="Period">02/01/2016 - 02/29/2016</td>
-            </tr>
-            <tr>
-                <td scope="row" data-label="Account">Corporate AMEX</td>
-                <td data-label="Due Date">03/01/2016</td>
-                <td data-label="Amount">$1,181</td>
-                <td data-label="Period">02/01/2016 - 02/29/2016</td>
-            </tr>
-            <tr>
-                <td scope="row" data-label="Acount">Visa - 3412</td>
-                <td data-label="Due Date">02/01/2016</td>
-                <td data-label="Amount">$842</td>
-                <td data-label="Period">01/01/2016 - 01/31/2016</td>
-            </tr>
+            {contents &&
+            contents.map((content) => (
+                <tr key={content._id} style={{marginBottom: 20}}>
+                    <td>{content.username}</td>
+                    <td>{content.menu}</td>
+                    <td>{content.hi}</td>
+                    <td><DeleteButton post_id={content._id}/></td>
+
+
+                </tr>
+
+            ))}
+
             </tbody>
         </table>
 
     )
 }
 
-export default Usertable;
+export default BoardTable;

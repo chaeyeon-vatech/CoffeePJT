@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {arrayOf, element, func, number, oneOfType, shape, string} from 'prop-types';
 import {Column} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import {IconArrowUp} from 'assets/icons';
+import {IconArrowUp} from 'components/icons';
 
 const useStyles = createUseStyles((theme) => ({
     arrowContainer: {
@@ -69,18 +69,10 @@ function DropdownComponent({label, options, position}) {
     const theme = useTheme();
     const classes = useStyles({theme, position});
 
-    function onDropdownClick() {
-        setUserMenuOpen((prev) => !prev);
-    }
-
-    function onItemClick(onClick) {
-        setUserMenuOpen(false);
-        onClick && onClick();
-    }
 
     return (
         <Column className={classes.dropdownContainer}>
-            <button className={classes.dropdownButton} onClick={onDropdownClick}>
+            <button className={classes.dropdownButton}>
                 {label}
             </button>
             {userMenuOpen && (
@@ -89,7 +81,7 @@ function DropdownComponent({label, options, position}) {
                         <button
                             key={`option-${index}`}
                             className={classes.dropdownItem}
-                            onClick={() => onItemClick(option.onClick)}
+                            // onClick={() => onItemClick(option.onClick)}
                         >
                             {option.label}
                             {index === 0 && (

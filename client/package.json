@@ -1,8 +1,7 @@
 {
-  "name": "react-admin-dashboard",
+  "name": "CoffeePJT",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://llorentegerman.github.io/react-admin-dashboard",
   "dependencies": {
     "@apollo/client": "^3.3.6",
     "@apollo/react-hooks": "^4.0.0",

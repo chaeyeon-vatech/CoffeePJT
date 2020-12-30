@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Column, Row } from 'simple-flexbox';
-import { createUseStyles } from 'react-jss';
-import TodayTrendsComponent from './TodayTrendsComponent';
-import { useAuthToken } from '../../auth/authToken';
-import { useUserQuery } from '../../auth/useUserQuery';
+import React, {useEffect, useState} from 'react';
+import {Column, Row} from 'simple-flexbox';
+import {createUseStyles} from 'react-jss';
+import UserBoard from './UserBoard';
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -46,34 +44,13 @@ const useStyles = createUseStyles({
 
 function UserboardComponent() {
     const classes = useStyles();
-    const [authToken] = useAuthToken();
-    const [contents, setContents] = useState([]);
-    const { data, loading } = useUserQuery();
 
-    console.log(data);
-
-
-    useEffect(() => {
-        if (data) {
-            setContents(data.contents);
-        }
-    }, [data]);
-
-    console.log(contents);
-
-    console.log(contents &&
-        contents.map((content) => (
-            content._id
-
-        ))
-    );
 
     return (
         <Column>
             <div className={classes.todayTrends}>
-                <TodayTrendsComponent />
+                <UserBoard/>
             </div>
-
         </Column>
     );
 }

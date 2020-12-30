@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
-import { string } from 'prop-types';
-import { useHistory } from 'react-router-dom';
-import { Row } from 'simple-flexbox';
-import { createUseStyles, useTheme } from 'react-jss';
-import { SidebarContext } from 'hooks/useSidebar';
+import React, {useContext, useEffect, useState} from 'react';
+import {string} from 'prop-types';
+import {useHistory} from 'react-router-dom';
+import {Row} from 'simple-flexbox';
+import {createUseStyles, useTheme} from 'react-jss';
+import {SidebarContext} from 'resources/hooks/useSidebar';
 import SLUGS from 'resources/links';
-import { IconBell, IconSearch } from 'assets/icons';
 import DropdownComponent from 'components/dropdown';
+import {useQuery} from "@apollo/react-hooks";
+import {MeQuery} from "../../graphql/query";
 
 const useStyles = createUseStyles((theme) => ({
     avatar: {
@@ -26,6 +27,7 @@ const useStyles = createUseStyles((theme) => ({
     name: {
         ...theme.typography.itemTitle,
         textAlign: 'right',
+        color: "white",
         '@media (max-width: 768px)': {
             display: 'none'
         }
@@ -43,6 +45,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     title: {
         ...theme.typography.title,
+        color: "white",
         '@media (max-width: 1080px)': {
             marginLeft: 50
         },
@@ -60,15 +63,24 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 function HeaderComponent() {
-    const { push } = useHistory();
-    const { currentItem } = useContext(SidebarContext);
+    const {push} = useHistory();
+    const {currentItem} = useContext(SidebarContext);
     const theme = useTheme();
-    const classes = useStyles({ theme });
+    const classes = useStyles({theme});
+    const [username, setName] = useState();
+
+    const {data} = useQuery(MeQuery);
+
+    useEffect(() => {
+        if (data) {
+            setName(data.me.username);
+        }
+    }, [data]);
 
 
     let title;
     switch (true) {
-        case currentItem === SLUGS.dashboard:
+        case currentItem === SLUGS.orderboard:
             title = '주문자 페이지';
             break;
 
@@ -77,55 +89,25 @@ function HeaderComponent() {
             break;
 
         case currentItem === SLUGS.settings:
-            title = '마이페이지';
+            title = '유저 페이지';
+            title = '유저 페이지';
             break;
         default:
             title = '';
     }
 
-    function onSettingsClick() {
-        push(SLUGS.settings);
-    }
 
     return (
         <Row className={classes.container} vertical='center' horizontal='space-between'>
             <span className={classes.title}>{title}</span>
             <Row vertical='center'>
-                <div className={classes.iconStyles}>
-                    <IconSearch />
-                </div>
-                <div className={classes.iconStyles}>
-                    <DropdownComponent
-                        label={<IconBell />}
-                        options={[
-                            {
-                                label: 'Notification #1',
-                                onClick: () => console.log('Notification #1')
-                            },
-                            {
-                                label: 'Notification #2',
-                                onClick: () => console.log('Notification #2')
-                            },
-                            {
-                                label: 'Notification #3',
-                                onClick: () => console.log('Notification #3')
-                            },
-                            {
-                                label: 'Notification #4',
-                                onClick: () => console.log()
-                            }
-                        ]}
-                        position={{
-                            top: 42,
-                            right: -14
-                        }}
-                    />
-                </div>
                 <div className={classes.separator}></div>
+                {username &&
                 <DropdownComponent
                     label={
                         <>
-                            <span className={classes.name}>이름</span>
+
+                            <span className={classes.name}>{username}님🧑‍💻 오늘도 좋은 하루 보내세요!</span>
                             <img
                                 src='https://www.vatech.co.kr/files/attach/site_image/site_image.1519883211.png'
                                 alt='avatar'
@@ -137,7 +119,7 @@ function HeaderComponent() {
                         top: 52,
                         right: -6
                     }}
-                />
+                />}
             </Row>
         </Row>
     );

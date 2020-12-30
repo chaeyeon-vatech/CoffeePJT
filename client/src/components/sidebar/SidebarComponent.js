@@ -1,18 +1,20 @@
-import React from 'react';
-import { createUseStyles, useTheme } from 'react-jss';
-import { useHistory } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {createUseStyles, useTheme} from 'react-jss';
+import {useHistory} from 'react-router-dom';
 import SLUGS from 'resources/links';
-import { convertlinksToUrl } from 'resources/utilities';
+import {convertlinksToUrl} from 'resources/utilities';
 import LogoComponent from './LogoComponent';
 import Menu from './MenuComponent';
 import MenuItem from './MenuItemComponent';
-import { useLogout } from '../../auth/Logout';
-import { useAuthToken } from '../../auth/authToken';
-import { useApolloClient } from '@apollo/react-hooks';
+import {useAuthToken} from '../../routes/auth/authToken';
+import {useApolloClient, useMutation, useQuery} from '@apollo/react-hooks';
+import {MeQuery} from "../../graphql/query";
+import {Row} from "simple-flexbox";
+import {LogoutMutation} from "../../graphql/mutation";
 
 const useStyles = createUseStyles({
     separator: {
-        borderTop: ({ theme }) => `1px solid ${theme.color.lightGrayishBlue}`,
+        borderTop: ({theme}) => `1px solid ${theme.color.lightGrayishBlue}`,
         marginTop: 16,
         marginBottom: 16,
         opacity: 0.06
@@ -20,18 +22,30 @@ const useStyles = createUseStyles({
 });
 
 function SidebarComponent() {
-    const { push } = useHistory();
-    const theme = useTheme();
-    const classes = useStyles({ theme });
-    const isMobile = window.innerWidth <= 1080;
-    const [, , removeAuthToken] = useAuthToken();
-    const apolloClient = useApolloClient();
+    const [_, removeAuthToken] = useAuthToken();
 
-    async function logout() {
-        push(SLUGS.login);
-        await apolloClient.clearStore(); // we remove all information in the store
-        removeAuthToken(); //we clear the authToken
-    }
+    const {push} = useHistory();
+    const theme = useTheme();
+    const classes = useStyles({theme});
+    const isMobile = window.innerWidth <= 1080;
+
+
+    const {data} = useQuery(MeQuery);
+
+
+
+    const [logoutMutation, {loading}] = useMutation(LogoutMutation, {
+            refetchQueries: [{query: MeQuery}],
+            onCompleted: () => {
+                removeAuthToken();
+                localStorage.clear();
+                window.location.href = '/';
+
+
+
+            }
+        }
+    )
 
     function onClick(slug, parameters = {}) {
         push(convertlinksToUrl(slug, parameters));
@@ -39,31 +53,39 @@ function SidebarComponent() {
 
     return (
         <Menu isMobile={isMobile}>
-            <div style={{ paddingTop: 30, paddingBottom: 30 }}>
-                <LogoComponent />
+            <div style={{paddingTop: 30, paddingBottom: 30}}>
+                <LogoComponent/>
             </div>
-            <MenuItem
-                id={SLUGS.dashboard}
-                title='주문자 페이지'
-                onClick={() => onClick(SLUGS.dashboard)}
-            />
 
-            <MenuItem
+            {data&&<MenuItem
+                id={SLUGS.orderboard}
+                title='주문자 페이지'
+                onClick={() => onClick(SLUGS.orderboard)}
+            />}
+
+            {data&&<MenuItem
                 id={SLUGS.tickets}
                 title='결제자 페이지'
                 onClick={() => onClick(SLUGS.tickets)}
-            />
+            />}
 
             <div className={classes.separator}></div>
+            {data &&
             <MenuItem
                 id={SLUGS.settings}
                 title='유저 페이지'
                 onClick={() => onClick(SLUGS.settings)}
-            />
+            />}
 
-            <MenuItem id='logout' title='로그아웃' onClick={logout} />
+            {!data && <MenuItem id='login' title='로그인'   onClick={() => onClick(SLUGS.login)}/>}
+            {data&&<MenuItem id='logout' title='로그아웃' onClick={logoutMutation}/>}
+
         </Menu>
     );
 }
 
 export default SidebarComponent;
+
+
+
+

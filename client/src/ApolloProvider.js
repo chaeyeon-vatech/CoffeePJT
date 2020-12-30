@@ -9,22 +9,20 @@ import {ThemeProvider} from 'react-jss';
 import Theme from 'resources/theme';
 import {CookiesProvider, useCookies} from 'react-cookie';
 import {setContext} from '@apollo/client/link/context';
-
 import './index.css';
-import {useAuthToken} from "./auth/authToken";
-import {LOCAL_STORAGE_TEMPLATE} from "enumerations";
+
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'
 });
 
-const authMiddleware = (authToken) =>
+const authMiddleware = (AuthToken) =>
     new ApolloLink((operation, forward) => {
         // add the authorization to the headers
-        if (authToken) {
+        if (AuthToken) {
             operation.setContext({
                 headers: {
-                    authorization: `Bearer ${authToken}`,
+                    Authorization: `Bearer ${AuthToken}`,
                 },
             });
         }
@@ -32,12 +30,9 @@ const authMiddleware = (authToken) =>
         return forward(operation);
     });
 
-const cache = new InMemoryCache({});
-
-
 
 const authLink = setContext((_, {headers}) => {
-const token = localStorage.getItem('myData');
+    const token = localStorage.getItem('myData');
 
     return {
         headers: {
@@ -49,6 +44,7 @@ const token = localStorage.getItem('myData');
 
 const client = new ApolloClient({
     link: authLink.concat(httpLink),
+    fetchPolicy: "no-cache",
     cache: new InMemoryCache()
 });
 

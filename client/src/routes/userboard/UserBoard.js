@@ -1,13 +1,10 @@
-import React from 'react';
-import { Column, Row } from 'simple-flexbox';
-import { createUseStyles, useTheme } from 'react-jss';
-import BoardTable from '../../components/table/BoardTable';
+import React, {useEffect, useState} from 'react';
+import {Column, Row} from 'simple-flexbox';
+import {createUseStyles, useTheme} from 'react-jss';
+import UserTable from '../../components/table/UserTable';
+import {useQuery} from "@apollo/react-hooks";
+import {MeQuery, SearchQuery} from "../../graphql/query";
 
-const data = [];
-
-for (let x = 1; x <= 24; x++) {
-    data.push({ x: x, y: Math.floor(Math.random() * 100) });
-}
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -75,14 +72,29 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function TodayTrendsComponent() {
+function UserBoard() {
     const theme = useTheme();
-    const classes = useStyles({ theme });
+    const classes = useStyles({theme});
+
+    const [contents, setContents] = useState('');
+    const [username, setName] = useState();
+    const [id, setId] = useState();
+
+    const {data, loading} = useQuery(MeQuery);
+
+    useEffect(() => {
+        if (data) {
+            setContents(data.me);
+            setName(data.me.username);
+            setId(data.me.idNum);
+        }
+    }, [data]);
+
 
     function renderLegend(color, title) {
         return (
             <Row vertical='center'>
-                <div style={{ width: 16, border: '2px solid', borderColor: color }}></div>
+                <div style={{width: 16, border: '2px solid', borderColor: color}}></div>
                 <span className={classes.legendTitle}>{title}</span>
             </Row>
         );
@@ -107,29 +119,28 @@ function TodayTrendsComponent() {
             flexGrow={1}
             className={classes.container}
             horizontal='center'
-            breakpoints={{ 1024: 'column' }}
+            breakpoints={{1024: 'column'}}
         >
             <Column
                 wrap
                 flexGrow={7}
                 flexBasis='735px'
                 className={classes.graphSection}
-                breakpoints={{ 1024: { width: 'calc(100% - 48px)', flexBasis: 'auto' } }}
+                breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
             >
-              <BoardTable/>
+                <UserTable/>
             </Column>
-            <Column className={classes.separator} breakpoints={{ 1024: { display: 'none' } }}>
-                <div />
+            <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
+                <div/>
             </Column>
-            <Column flexGrow={3} flexBasis='342px' breakpoints={{ 1024: classes.stats }}>
-                {renderStat('Resolved', '449')}
-                {renderStat('Received', '426')}
-                {renderStat('Average first response time', '33m')}
-                {renderStat('Average response time', '3h 8m')}
-                {renderStat('Resolution within SLA', '94%')}
+            <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
+                {renderStat('이름', username)}
+                {renderStat('이메일', id)}
+                {renderStat('소속', '플랫폼 사업팀')}
+
             </Column>
         </Row>
     );
 }
 
-export default TodayTrendsComponent;
+export default UserBoard;
