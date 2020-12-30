@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import {IconCheckboxOn, IconCheckboxOff} from 'components/icons';
 import CardComponent from 'components/cards/CardComponent';
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
@@ -96,11 +95,6 @@ function Task(props) {
         }
     )
 
-    console.log(contents &&
-        contents.map((content) => (content._id)));
-    console.log(contents);
-
-
     function onCheckboxClick(index) {
         setItems((prev) => {
             const newItems = [...prev];
@@ -160,40 +154,5 @@ function Task(props) {
     );
 }
 
-function TaskComponent({classes, index, item = {}, onCheckboxClick, onTagClick}) {
-    const {tag = {}} = item;
-    return (
-        <Row horizontal='space-between' vertical='center'>
-            <Row>
-                <div className={classes.checkboxWrapper} onClick={() => onCheckboxClick(index)}>
-                    {item.checked ? <IconCheckboxOn/> : <IconCheckboxOff/>}
-                </div>
-                <span className={classes.itemTitle}>{item.title}</span>
-            </Row>
-            <TagComponent
-                backgroundColor={tag.backgroundColor}
-                classes={classes}
-                color={tag.color}
-                index={index}
-                onClick={onTagClick}
-                text={tag.text}
-            />
-        </Row>
-    );
-}
-
-function TagComponent({backgroundColor, classes, color, index, onClick, text}) {
-    return (
-        <Row
-            horizontal='center'
-            vertical='center'
-            style={{backgroundColor, color}}
-            className={classes.tagStyles}
-            onClick={() => onClick(index)}
-        >
-            {text}
-        </Row>
-    );
-}
 
 export default Task;
