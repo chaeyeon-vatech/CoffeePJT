@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
-import TodayTrendsComponent from './OrderBoard';
+import OrderBoard from './OrderBoard';
 import TasksComponent from './TasksComponent';
 import {useMutation} from "@apollo/react-hooks";
 import {Search} from "semantic-ui-react";
 import {useQuery} from "@apollo/react-hooks";
 import {CountQuery, SearchQuery} from "../../util/query";
 
-const useStyles = createUseStyles((theme)=>({
+const useStyles = createUseStyles({
     cardsContainer: {
         marginRight: -30,
         marginTop: -30
@@ -22,17 +22,7 @@ const useStyles = createUseStyles((theme)=>({
     },
     miniCardContainer: {
         flexGrow: 1,
-        marginRight: "auto",
-        marginLeft:"auto",
-        '@media (max-width: 768px)': {
-            marginTop: 30,
-            maxWidth: 'none'
-        }
-    },
-    naCardContainer: {
-        flexGrow: 1,
-        marginRight: "auto",
-        marginLeft:"auto",
+        marginRight: 30,
         '@media (max-width: 768px)': {
             marginTop: 30,
             maxWidth: 'none'
@@ -56,7 +46,7 @@ const useStyles = createUseStyles((theme)=>({
             marginTop: 30
         }
     }
-}));
+});
 
 
 function OrderBoardComponent() {
@@ -79,14 +69,14 @@ function OrderBoardComponent() {
                 wrap
                 flexGrow={1}
                 horizontal='space-between'
-                breakpoints={{768: 'column'}}
+                breakpoints={{ 768: 'column' }}
             >
                 <Row
                     className={classes.cardRow}
                     wrap
                     flexGrow={1}
                     horizontal='space-between'
-                    breakpoints={{400: 'column'}}
+                    breakpoints={{ 384: 'column' }}
                 >
                     <MiniCardComponent
                         className={classes.miniCardContainer}
@@ -98,25 +88,23 @@ function OrderBoardComponent() {
                         title='취소자'
                         value={contents[1]}
                     />
-
                 </Row>
                 <Row
                     className={classes.cardRow}
                     wrap
                     flexGrow={1}
                     horizontal='space-between'
-                    breakpoints={{384: 'column'}}
-
+                    breakpoints={{ 384: 'column' }}
                 >
                     <MiniCardComponent
-                        className={classes.naCardContainer}
+                        className={classes.miniCardContainer}
                         title='미주문자'
                         value={contents[2]}
                     />
 
-
                 </Row>
             </Row>
+
             <Row
                 horizontal='space-between'
                 className={classes.lastRow}
@@ -126,7 +114,7 @@ function OrderBoardComponent() {
             </Row>
 
             <div className={classes.todayTrends}>
-                <TodayTrendsComponent/>
+                <OrderBoard/>
             </div>
 
         </Column>

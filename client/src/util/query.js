@@ -42,14 +42,27 @@ export const MeQuery = gql`
 `
 
 
-
 //명수 계산
 export const CountQuery = gql`
     query howmany{
-       howmany
+        howmany
     }
 
 `
+
+//누적 금액 계산
+export const CostQuery = gql`
+    query
+    {
+        howmuch
+    }
+
+`
+
+//누적 잔 수
+export const CupQuery = gql`
+    query{coffeeAmount}`
+
 
 //TASK QUERY
 

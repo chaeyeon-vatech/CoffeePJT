@@ -79,7 +79,7 @@ function HeaderComponent() {
 
     let title;
     switch (true) {
-        case currentItem === SLUGS.dashboard:
+        case currentItem === SLUGS.orderboard:
             title = '주문자 페이지';
             break;
 

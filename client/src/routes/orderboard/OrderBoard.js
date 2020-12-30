@@ -81,7 +81,7 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function TodayTrendsComponent() {
+function OrderBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
 
@@ -142,12 +142,6 @@ function TodayTrendsComponent() {
         );
     }
 
-    // function onClick(e) {
-    //     // push(convertlinksToUrl(slug, parameters));
-    //     setHi(e.target.value)
-    //     setMenu(e.target.id)
-    //
-    // }
 
     return (
 
@@ -185,13 +179,12 @@ function TodayTrendsComponent() {
                                value="Ice"/>)}
 
 
-
                 {renderStat('☕ 카페모카 ☕', <TextField type='submit'
-                                                    onClick={() => {
-                                                        setMenu("카페모카")
-                                                        setHi("hot")
-                                                    }}
-                                                    value="Hot"/>,
+                                                   onClick={() => {
+                                                       setMenu("카페모카")
+                                                       setHi("hot")
+                                                   }}
+                                                   value="Hot"/>,
                     <TextField type='submit'
                                onClick={() => {
                                    setMenu("카페모카")
@@ -222,7 +215,6 @@ function TodayTrendsComponent() {
                                value="Ice"/>)}
 
 
-
                 {status != "주문완료" &&
                 renderStat(<TextField type='submit'
                                       onClick={create}
@@ -240,4 +232,4 @@ function TodayTrendsComponent() {
 
 }
 
-export default TodayTrendsComponent;
+export default OrderBoard;

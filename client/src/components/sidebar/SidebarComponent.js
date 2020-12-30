@@ -59,9 +59,9 @@ function SidebarComponent() {
             </div>
 
             {data&&<MenuItem
-                id={SLUGS.dashboard}
+                id={SLUGS.orderboard}
                 title='주문자 페이지'
-                onClick={() => onClick(SLUGS.dashboard)}
+                onClick={() => onClick(SLUGS.orderboard)}
             />}
 
             {data&&<MenuItem
