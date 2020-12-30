@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {CupQuery} from "../../util/query";
+import {CupQuery} from "../../graphql/query";
 
 
 function BoardTable() {
 
-    const [contents, setContents] = useState('');
     const [hame, setHame] = useState();
     const [iame, setIame] = useState();
 

@@ -71,3 +71,9 @@ mutation removeTask($id:ID!){
     }
 }`
 
+
+//주문 초기화
+export const OrderResetMutation = gql`
+mutation {
+    giveupOrder
+}`

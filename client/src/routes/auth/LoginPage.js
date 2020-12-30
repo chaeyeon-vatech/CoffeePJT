@@ -1,12 +1,8 @@
-import {useForm} from 'react-hook-form';
 import React, {useState} from 'react';
-import {userQueryGQL, registerMutationGQL, meGQL, loginMutationGQL} from './mutation';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {meGQL, loginMutationGQL} from './mutation';
+import {useMutation} from '@apollo/react-hooks';
 import {useAuthToken} from './authToken';
-
-import {TextField} from '@material-ui/core';
 import './login.css';
-import {LOCAL_STORAGE_TEMPLATE, ROUTES} from 'enumerations';
 
 
 const AuthenticationForm = () => {
@@ -16,7 +12,7 @@ const AuthenticationForm = () => {
     const loginmutation = loginMutationGQL;
 
 
-    const [log, {error, loading, data}] = useMutation(loginmutation, {
+    const [log, {loading}] = useMutation(loginmutation, {
             refetchQueries: [{query: meGQL}],
             onCompleted: (data) => {
                 setAuthToken(data.login.token);
@@ -25,9 +21,9 @@ const AuthenticationForm = () => {
 
 
             },
-        onError:()=>{
+            onError: () => {
                 alert("로그인에 실패했습니다.")
-        },
+            },
             variables: {
                 login: login,
                 password: password
@@ -41,30 +37,32 @@ const AuthenticationForm = () => {
 
         <div className='login-wrap'>
             <div className='login-html'>
+
+                <h3>☃ 플랫폼 사업팀 단체 주문 Board ☃</h3>
                 <input id='tab-1' type='radio' name='tab' className='sign-in' checked/><label htmlFor='tab-1'
                                                                                               className='tab'>Sign
                 In</label>
-                <input id='tab-2' type='radio' name='tab' className='sign-up'/><label htmlFor='tab-2'
-                                                                                      className='tab'>Sign
+                <input id='tab-2' type='text' name='tab' className='sign-up'/><label htmlFor='tab-2'
+                                                                                     className='tab'>Sign
                 Up</label>
                 <div className='login-form'>
                     <div className='sign-in-htm'>
                         <div className='group'>
-                            <label className='label'>Username</label>
-                            <input type='text' placeholder='content' onChange={e => setLogin(e.target.value)}
+                            <label className='label'>Email</label>
+                            <input type='text' placeholder='email' onChange={e => setLogin(e.target.value)}
                                    className='input'/>
                         </div>
                         <div className='group'>
                             <label htmlFor='pass' className='label'>Password</label>
-                            <input type='text' placeholder='title' onChange={e => setPassword(e.target.value)}
+                            <input type='text' placeholder='password' onChange={e => setPassword(e.target.value)}
                                    className='input'/>
                         </div>
                         <div className='group'>
-                            <TextField type='submit'
-                                       onClick={log}
-                                       className='button'
-                                       unable={loading}
-                                       value='Login'
+                            <input type='submit'
+                                   onClick={log}
+                                   className='button'
+                                   unable={loading}
+                                   value='Login'
                             />;
                         </div>
 
@@ -76,7 +74,8 @@ const AuthenticationForm = () => {
                     </div>
                 </div>
             </div>
-        </div>);
+        </div>
+    );
 };
 
 export default AuthenticationForm;

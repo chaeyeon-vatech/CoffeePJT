@@ -1,12 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {Column, Row} from 'simple-flexbox';
+import React from 'react';
+import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
-import MiniCardComponent from 'components/cards/MiniCardComponent';
-import TodayTrendsComponent from './PaymentBoard';
-import TasksComponent from './TasksComponent';
-import {useUserQuery} from '../../auth/useUserQuery';
-import {useQuery} from "@apollo/react-hooks";
-import {CountQuery} from "../../util/query";
+import PaymentBoard from './PaymentBoard';
+
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -55,7 +51,7 @@ function PaymentboardComponent() {
         <Column>
 
             <div className={classes.todayTrends}>
-                <TodayTrendsComponent/>
+                <PaymentBoard/>
             </div>
 
         </Column>

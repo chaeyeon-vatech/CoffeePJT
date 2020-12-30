@@ -14,7 +14,7 @@ export const SearchQuery = gql`
 `;
 
 
-//유저 목록 불러오기
+//User Order 목록 불러오기
 export const UserSearchQuery = gql`
     query orders($search:String!){
         orders(search:$search,category:4,index:1,hasNext:false,acdc:"username"){
@@ -76,6 +76,18 @@ export const TaskQuery = gql`
     }
 
 
+`
+
+
+//모든 유저 불러오기
+export const AllUserQuery= gql`
+ query{
+    allUsers{
+    _id
+    username
+    idNum
+}
+}
 `
 
 

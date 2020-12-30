@@ -6,12 +6,11 @@ import {convertlinksToUrl} from 'resources/utilities';
 import LogoComponent from './LogoComponent';
 import Menu from './MenuComponent';
 import MenuItem from './MenuItemComponent';
-import {useLogout} from '../../auth/Logout';
-import {useAuthToken} from '../../auth/authToken';
+import {useAuthToken} from '../../routes/auth/authToken';
 import {useApolloClient, useMutation, useQuery} from '@apollo/react-hooks';
-import {MeQuery} from "../../util/query";
+import {MeQuery} from "../../graphql/query";
 import {Row} from "simple-flexbox";
-import {LogoutMutation} from "../../util/mutation";
+import {LogoutMutation} from "../../graphql/mutation";
 
 const useStyles = createUseStyles({
     separator: {
@@ -40,7 +39,7 @@ function SidebarComponent() {
             onCompleted: () => {
                 removeAuthToken();
                 localStorage.clear();
-                window.location.href = '/login';
+                window.location.href = '/';
 
 
 

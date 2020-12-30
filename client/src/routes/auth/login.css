@@ -1,23 +1,26 @@
 *,:after,:before{box-sizing:border-box}
 .clearfix:after,.clearfix:before{content:'';display:table}
 .clearfix:after{clear:both;display:block}
-a{color:inherit;text-decoration:none}
+a{color:inherit;text-decoration:none;text-align: center;}
+body{
+background-image: url("https://images.unsplash.com/photo-1542601098-8fc114e148e2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")}
+
 
 .login-wrap{
+    padding-top: 50px;
     width:100%;
     margin:auto;
     max-width:525px;
     min-height:670px;
     position:relative;
-    background:url(https://www.vatech.com/files/attach/site_image/site_image.1519883184.png) no-repeat center;
-    box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+    box-shadow:0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
 .login-html{
     width:100%;
     height:100%;
     position:absolute;
     padding:90px 70px 50px 70px;
-    background: rgb(110, 36, 52);
+    background: rgb(95, 59, 59);
 }
 .login-html .sign-in-htm,
 .login-html .sign-up-htm{
@@ -48,6 +51,12 @@ a{color:inherit;text-decoration:none}
     display:inline-block;
     border-bottom:2px solid transparent;
 }
+
+h3{
+    color:white;
+    margin-bottom: 30px;
+}
+
 .login-html .sign-in:checked + .tab,
 .login-html .sign-up:checked + .tab{
     color:#fff;

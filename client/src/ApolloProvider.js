@@ -9,10 +9,8 @@ import {ThemeProvider} from 'react-jss';
 import Theme from 'resources/theme';
 import {CookiesProvider, useCookies} from 'react-cookie';
 import {setContext} from '@apollo/client/link/context';
-
 import './index.css';
-import {useAuthToken} from "./auth/authToken";
-import {LOCAL_STORAGE_TEMPLATE} from "enumerations";
+
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'

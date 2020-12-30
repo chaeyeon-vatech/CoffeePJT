@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
-import {CreateMutation} from "../../util/mutation";
-import {MeQuery, SearchQuery} from "../../util/query";
+import {CreateMutation, OrderResetMutation} from "../../graphql/mutation";
+import {MeQuery, SearchQuery} from "../../graphql/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
-import {Link} from "react-router-dom";
-import {convertlinksToUrl} from "../../resources/utilities";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -84,10 +82,6 @@ const useStyles = createUseStyles((theme) => ({
 function OrderBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
-
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-
     const [id, setId] = useState();
     const [menu, setMenu] = useState();
     const [hi, setHi] = useState();
@@ -117,6 +111,19 @@ function OrderBoard() {
                 menu: menu,
                 hi: hi
             },
+            onCompleted: (data) => {
+                window.location.href = '/order';
+
+
+            },
+            onError: () => {
+                alert("메뉴를 선택해주세요.")
+            },
+        }
+    )
+
+    const [giveup] = useMutation(OrderResetMutation, {
+            refetchQueries: [{query: SearchQuery, MeQuery}],
             onCompleted: (data) => {
                 window.location.href = '/order';
 
@@ -218,10 +225,12 @@ function OrderBoard() {
                 {status != "주문완료" &&
                 renderStat(<TextField type='submit'
                                       onClick={create}
-                                      value="Select"/>)}
+                                      value="Select"/>, <TextField type='submit'
+                                                                   onClick={giveup}
+                                                                   value="주문 포기"/>)}
 
                 {status == "주문완료" &&
-                renderStat("주문 취소는 유저 페이지에서 가능", "주문 완료",)}
+                renderStat("주문 취소는 유저 페이지에서 가능", "주문 완료")}
 
             </Column>
         </Row>
