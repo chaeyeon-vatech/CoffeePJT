@@ -3,7 +3,6 @@ import {Column, Row} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import MiniCardComponent from 'components/cards/MiniCardComponent';
 import TodayTrendsComponent from './PaymentBoard';
-import TasksComponent from './TasksComponent';
 import {useUserQuery} from '../../auth/useUserQuery';
 import {useQuery} from "@apollo/react-hooks";
 import {CountQuery} from "../../util/query";

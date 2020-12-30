@@ -31,13 +31,6 @@ function BoardTable() {
         }
     }, [data]);
 
-
-
-    console.log("contents",contents)
-
-
-
-
     return (
 
 
