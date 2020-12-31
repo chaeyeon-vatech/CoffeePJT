@@ -48,8 +48,6 @@
 <summary>1. 주문자 페이지</summary>
 <div markdown="1">
   <img width="1440" alt="결제자 페이지" src="https://user-images.githubusercontent.com/75648425/103402985-efc5f080-4b91-11eb-8c60-f9cea2195b71.jpg"> 
-
-![주문자 페이지](https://user-images.githubusercontent.com/75648425/103402985-efc5f080-4b91-11eb-8c60-f9cea2195b71.jpg)
 </div>
 </details>
 
