@@ -72,8 +72,15 @@ mutation removeTask($id:ID!){
 }`
 
 
-//주문 초기화
-export const OrderResetMutation = gql`
+//주문 포기 상태로 전환
+export const OrderGiveupMutation = gql`
 mutation {
     giveupOrder
 }`
+
+//주문 초기화
+export const OrderConfirmMutation = gql`
+mutation confirmOrders($creater:String!) {
+    confirmOrders(creater:$creater)
+}
+`

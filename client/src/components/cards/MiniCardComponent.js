@@ -4,7 +4,7 @@ import {createUseStyles, useTheme} from 'react-jss';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#d7c8c8',
         border: `1px solid ${theme.color.lightGrayishBlue2}`,
         borderRadius: 4,
         cursor: 'pointer',
@@ -19,14 +19,13 @@ const useStyles = createUseStyles((theme) => ({
     },
     title: {
         ...theme.typography.cardTitle,
-        color: theme.color.grayishBlue2,
+        color: "white",
         marginBottom: 12,
         minWidth: 102,
         textAlign: 'center'
     },
     value: {
         color: theme.color.veryDarkGrayishBlue,
-        fontWeight: 'bold',
         fontSize: 40,
         letterSpacing: '1px',
         lineHeight: '50px',

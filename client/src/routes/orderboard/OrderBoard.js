@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
-import {CreateMutation, OrderResetMutation} from "../../graphql/mutation";
+import {CreateMutation, OrderGiveupMutation} from "../../graphql/mutation";
 import {MeQuery, SearchQuery} from "../../graphql/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
@@ -122,7 +122,7 @@ function OrderBoard() {
         }
     )
 
-    const [giveup] = useMutation(OrderResetMutation, {
+    const [giveup] = useMutation(OrderGiveupMutation, {
             refetchQueries: [{query: SearchQuery, MeQuery}],
             onCompleted: (data) => {
                 window.location.href = '/order';

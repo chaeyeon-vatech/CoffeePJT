@@ -45,7 +45,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     title: {
         ...theme.typography.title,
-        color: "white",
+        color:"white",
         '@media (max-width: 1080px)': {
             marginLeft: 50
         },

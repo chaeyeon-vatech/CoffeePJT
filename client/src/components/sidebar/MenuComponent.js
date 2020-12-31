@@ -26,11 +26,11 @@ const getMenuStyles = ({ theme }) => ({
     bmMenuWrap: {
         position: 'fixed',
         height: '100%',
-        width: 255,
+        width: 200,
         zIndex: 30
     },
     bmMenu: {
-        background: theme.color.darkRed
+        background: theme.color.darkgreen
     },
     bmItem: {
         outline: 'none',
@@ -42,7 +42,7 @@ const getMenuStyles = ({ theme }) => ({
         fill: theme.color.veryDarkGrayishBlue
     },
     bmOverlay: {
-        background: 'rgba(0, 0, 0, 0.3)',
+        background: 'rgba(0,0,0,0.3)',
         zIndex: 20
     }
 });

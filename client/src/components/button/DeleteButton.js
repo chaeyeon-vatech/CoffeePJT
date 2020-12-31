@@ -2,7 +2,7 @@ import React from 'react';
 import {useMutation} from '@apollo/react-hooks';
 import TextField from "@material-ui/core/TextField";
 import {RemoveMutation} from "../../graphql/mutation";
-import {MeQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
+import {MeQuery, UserSearchQuery} from "../../graphql/query";
 
 
 function DeleteButton(post_id) {
