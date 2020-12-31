@@ -6,7 +6,7 @@ import './login.css';
 
 
 const AuthenticationForm = () => {
-    const [setAuthToken] = useAuthToken();
+    const [_, setAuthToken] = useAuthToken();
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
