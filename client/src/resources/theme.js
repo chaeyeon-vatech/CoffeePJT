@@ -6,12 +6,13 @@ const color = {
     grayishBlue2: '#9fa2b4',
     grayishBlue3: '#bdc3c7',
     lightBlue: '#3751FF',
-    lightGrayishBlue: '#F7F8FC', // background color
+    lightGrayishBlue: '#f7f8fc',
     lightGrayishBlue2: '#DFE0EB',
     paleBlue: '#DDE2FF',
     paleBlueTransparent: 'rgba(221, 226, 255, 0.08)',
     veryDarkGrayishBlue: '#373a47',
-    darkgreen: "#063014"
+    darkgreen: "#063014",
+    lightyellow: "#d2cdc1"
 };
 
 const typography = {

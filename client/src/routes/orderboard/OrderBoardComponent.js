@@ -51,7 +51,6 @@ function OrderBoardComponent() {
     const classes = useStyles();
 
     const [contents, setContents] = useState('');
-    const [sum, setSum] = useState('');
     const [count, setCount] = useState('');
 
     const {data: user} = useQuery(AllUserQuery)

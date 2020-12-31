@@ -18,11 +18,11 @@ const useStyles = createUseStyles((theme) => ({
     itemTitle: {
         ...theme.typography.itemTitle,
         color: theme.color.veryDarkGrayishBlue,
-        width:"50%"
+        width: "50%"
     },
     itemValue: {
         color: theme.color.grayishBlue2,
-        width:"50%"
+        width: "50%"
     },
     greyTitle: {
         color: theme.color.grayishBlue3

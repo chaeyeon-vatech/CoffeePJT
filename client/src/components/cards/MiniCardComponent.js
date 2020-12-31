@@ -4,22 +4,21 @@ import {createUseStyles, useTheme} from 'react-jss';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
-        backgroundColor: '#d7c8c8',
-        border: `1px solid ${theme.color.lightGrayishBlue2}`,
+        backgroundColor: '#f6f6f6',
+        border: `3px solid ${theme.color.lightGrayishBlue2}`,
         borderRadius: 4,
         cursor: 'pointer',
         maxWidth: 350,
         padding: '16px 32px 16px 32px',
         '&:hover': {
-            borderColor: theme.color.lightBlue,
+            borderColor: theme.color.darkRed,
             '&:nth-child(n) > span': {
-                color: theme.color.lightBlue
+                color: theme.color.darkRed
             }
         }
     },
     title: {
         ...theme.typography.cardTitle,
-        color: "white",
         marginBottom: 12,
         minWidth: 102,
         textAlign: 'center'

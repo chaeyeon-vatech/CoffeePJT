@@ -11,8 +11,8 @@ import {useMutation} from '@apollo/react-hooks';
 const useStyles = createUseStyles((theme) => ({
     container: {
         backgroundColor: '#FFFFFF',
-        border: `1px solid ${theme.color.lightGrayishBlue2}`,
-        borderRadius: 4,
+        border: `5px solid ${theme.color.darkRed}`,
+        borderRadius: 5,
         cursor: 'pointer'
     },
     graphContainer: {
@@ -121,16 +121,17 @@ function TodayTrendsComponent() {
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
             refetchQueries: [{query: SearchQuery}],
-        variables:{creater:id},
+            variables: {creater: id},
             onCompleted: (data) => {
                 alert("주문이 초기화되었습니다.")
                 window.location.href = '/order';
 
 
             },
-        onError: () => {
-            window.location.href = '/order';
-        },
+            onError: () => {
+                alert("초기화 권한이 없습니다.")
+                window.location.href = '/order';
+            },
         }
     )
 

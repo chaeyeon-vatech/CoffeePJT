@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useTheme } from 'react-jss';
-import { slide as Menu } from 'react-burger-menu';
+import React, {useState} from 'react';
+import {useTheme} from 'react-jss';
+import {slide as Menu} from 'react-burger-menu';
 
-const getMenuStyles = ({ theme }) => ({
+const getMenuStyles = ({theme}) => ({
     bmBurgerButton: {
         position: 'absolute',
         width: 26,
@@ -12,7 +12,7 @@ const getMenuStyles = ({ theme }) => ({
         zIndex: 19
     },
     bmBurgerBars: {
-        background: theme.color.veryDarkGrayishBlue
+        background: "white"
     },
     bmBurgerBarsHover: {
         background: theme.color.darkRed
@@ -47,9 +47,9 @@ const getMenuStyles = ({ theme }) => ({
     }
 });
 
-function MenuComponent({ children, isMobile }) {
+function MenuComponent({children, isMobile}) {
     const theme = useTheme();
-    const menuStyles = getMenuStyles({ theme });
+    const menuStyles = getMenuStyles({theme});
     const [isOpen, setIsOpen] = useState(false);
 
     return (

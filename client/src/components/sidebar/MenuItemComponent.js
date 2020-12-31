@@ -26,7 +26,7 @@ const useStyles = createUseStyles({
         fontSize: 18,
         lineHeight: '20px',
         letterSpacing: '0.2px',
-        color: ({theme, isActive}) => (isActive ? theme.color.paleBlue : theme.color.grayishBlue),
+        color: ({theme, isActive}) => (isActive ? "black" : theme.color.grayishBlue),
         marginLeft: 24
     }
 });

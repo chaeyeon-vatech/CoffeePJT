@@ -69,10 +69,6 @@ table th {
     }
 
     table td::before {
-        /*
-        * aria-label has no advantage, it won't be read inside a table
-        content: attr(aria-label);
-        */
         content: attr(data-label);
         float: left;
         font-weight: bold;
@@ -83,3 +79,36 @@ table th {
         border-bottom: 0;
     }
 }
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+.o-nav ol,
+.o-nav ul {
+    list-style: none;
+    padding-left: 30px;
+}
+
+.o-nav--inline a,
+.o-nav--inline li {
+    display: inline-block;
+}
+
+a,
+.c-pagination-nav__link {
+    color: #f1ecec;
+    text-decoration: none;
+}
+
+.c-pagination-nav__link {
+    padding: 0.5em 0.5em 0.4em;
+    line-height: 0.1;
+    background-color: rgb(90, 72, 63);
+    border-radius: 2px;
+    margin-right: 25px;
+}
+
