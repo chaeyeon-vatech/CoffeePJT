@@ -9,7 +9,7 @@ import TaskDeleteButton from "../../components/button/TaskDeleteButton";
 
 const useStyles = createUseStyles((theme) => ({
     addButton: {
-        backgroundColor: theme.color.lightGrayishBlue,
+        backgroundColor: theme.color.darkRed,
         color: theme.color.grayishBlue2,
         fontSize: '20px !important',
         padding: '7px !important',
@@ -17,22 +17,15 @@ const useStyles = createUseStyles((theme) => ({
     },
     itemTitle: {
         ...theme.typography.itemTitle,
-        color: theme.color.veryDarkGrayishBlue
+        color: theme.color.veryDarkGrayishBlue,
+        width:"50%"
     },
     itemValue: {
-        color: theme.color.grayishBlue2
+        color: theme.color.grayishBlue2,
+        width:"50%"
     },
     greyTitle: {
         color: theme.color.grayishBlue3
-    },
-    tagStyles: {
-        borderRadius: 5,
-        cursor: 'pointer',
-        fontWeight: 'bold',
-        fontSize: 11,
-        letterSpacing: '0.5px',
-        lineHeight: '14px',
-        padding: '5px 12px 5px 12px'
     },
     checkboxWrapper: {
         cursor: 'pointer',
@@ -59,12 +52,6 @@ const useStyles = createUseStyles((theme) => ({
     }
 
 }));
-
-const TAGS = {
-    URGENT: {text: 'URGENT', backgroundColor: '#FEC400', color: '#FFFFFF'},
-    NEW: {text: 'NEW', backgroundColor: '#29CC97', color: '#FFFFFF'},
-    DEFAULT: {text: 'DEFAULT', backgroundColor: '#F0F1F7', color: '#9FA2B4'}
-};
 
 function Task(props) {
     const theme = useTheme();
