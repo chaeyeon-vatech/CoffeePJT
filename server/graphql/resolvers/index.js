@@ -1,23 +1,40 @@
-import Content from '../../models/content.js';
+import Order from '../../models/order.js';
+import Task from '../../models/task.js';
 import users from '../../models/user.js';
 import bcrypt from 'bcryptjs';
 import jsonwebtoken from 'jsonwebtoken';
+import { ObjectID } from 'bson';
 // resolver에서 mutation을 정의하고 구현하는 걸 보니 가장 중요한 부분이 아닐까 싶다. service 단이라고 생각하자
 const resolvers = {
     Query: {
-        async contents(_, args) {
+        async orders(_, args,{user}) {
             try {
-                const contents = await Content.find().sort({createdAt: -1});
+                if (!user) throw new Error('You are not authenticated')
+                let orders = await Order.find().sort({createdAt: -1});
                 const search = args.search || "";
+                const category = args.category;
                 const index = args.index;
                 const hasNext = args.hasNext;
+                const acdc = args.acdc;
+                if(acdc === "menu"){
+                    orders = await Order.find().sort({menu:1});
+                }
+                else if(acdc === "hi"){
+                    orders = await Order.find().sort({hi:1});
+                }
+                else if(acdc === 'username'){
+                    orders = await Order.find().sort({username:1});
+                }
+                else if(acdc === "createdAt"){
+                    orders = await Order.find().sort({createdAt:1});
+                }
                 let result = []
-                if (args.category == 1) {
+                if (category == 1) {
 
-                    for (let i = 0; i < contents.length; i++) {
+                    for (let i = 0; i < orders.length; i++) {
 
-                        if (contents[i].title.toLowerCase().indexOf(search.toLowerCase()) > -1) {
-                            result.push(contents[i]);
+                        if (orders[i].menu.indexOf(search) > -1) {
+                            result.push(orders[i]);
                         }
                     }
                     if (hasNext == false) {
@@ -25,11 +42,11 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else if (args.category == 2) {
-                    for (let i = 0; i < contents.length; i++) {
+                } else if (category == 2) {
+                    for (let i = 0; i < orders.length; i++) {
 
-                        if (contents[i].content.toLowerCase().indexOf(search.toLowerCase()) > -1) {
-                            result.push(contents[i]);
+                        if (orders[i].hi.indexOf(search) > -1) {
+                            result.push(orders[i]);
                         }
                     }
                     if (hasNext == false) {
@@ -37,13 +54,92 @@ const resolvers = {
                     } else {
                         result = result.slice(10 * (index - 1), 10 * (index));
                     }
-                } else {
-                    for (let i = 0; i < contents.length; i++) {
+                } else if(category == 3){
+                    for (let i = 0; i < orders.length; i++) {
 
-                        if (contents[i].content.toLowerCase().indexOf(search.toLowerCase()) > -1 || contents[i].title.toLowerCase().indexOf(search.toLowerCase()) > -1) {
-                            result.push(contents[i]);
+                        if (orders[i].username.indexOf(search) > -1) {
+                            result.push(orders[i]);
                         }
                     }
+                    if (hasNext == false) {
+                        result = result.slice(10 * (index - 1), result.length);
+                    } else {
+                        result = result.slice(10 * (index - 1), 10 * (index));
+                    }
+                } else if(category == 4){
+                    for (let i = 0; i < orders.length; i++) {
+
+                        if (orders[i].username===search) {
+                            result.push(orders[i]);
+                        }
+                    }
+                    if (hasNext == false) {
+                        result = result.slice(10 * (index - 1), result.length);
+                    } else {
+                        result = result.slice(10 * (index - 1), 10 * (index));
+                    }
+                } 
+                else{
+                    result = orders;
+                }
+                return result;
+            } catch (err) {
+                console.log(err);
+                throw err;
+            }
+        },
+        // 로그인 되어 있는 나
+        async me(_, args, {user}) {
+            if (!user) throw new Error('You are not authenticated')
+            return await users.findById(user.id)
+        },
+        async tasks(_, args,{user}) {
+            try {
+                if (!user) throw new Error('You are not authenticated')
+                let tasks = await Task.find().sort({createdAt: -1});
+                const search = args.search || "";
+                const category = args.category;
+                const index = args.index;
+                const hasNext = args.hasNext;
+                const acdc = args.acdc;
+                if(acdc === "creater"){
+                    tasks = await Task.find().sort({creater:1});
+                }
+                else if(acdc === "title"){
+                    tasks = await Task.find().sort({title:1});
+                }
+                else if(acdc === "createdAt"){
+                    tasks = await Task.find().sort({createdAt:1});
+                }
+                let result = []
+                if (category == 1) {
+
+                    for (let i = 0; i < tasks.length; i++) {
+
+                        if (tasks[i].creater.indexOf(search) > -1) {
+                            result.push(tasks[i]);
+                        }
+                    }
+                    if (hasNext == false) {
+                        result = result.slice(10 * (index - 1), result.length);
+                    } else {
+                        result = result.slice(10 * (index - 1), 10 * (index));
+                    }
+                } else if (category == 2) {
+                    for (let i = 0; i < tasks.length; i++) {
+
+                        if (tasks[i].title.indexOf(search) > -1) {
+                            result.push(tasks[i]);
+                        }
+                    }
+                    if (hasNext == false) {
+                        result = result.slice(10 * (index - 1), result.length);
+                    } else {
+                        result = result.slice(10 * (index - 1), 10 * (index));
+                    }
+                } 
+                else{
+                    result = tasks;
                     if (hasNext == false) {
                         result = result.slice(10 * (index - 1), result.length);
                     } else {
@@ -55,17 +151,7 @@ const resolvers = {
                 console.log(err);
                 throw err;
             }
-        },
-        async maxIndex(){
-          const contents = await Content.find().sort({createdAt: -1});
-          return contents.length;
-        },
-        // 로그인 되어 있는 나
-        async me(_, args, {user}) {
-            if (!user) throw new Error('You are not authenticated')
-            return await users.findById(user.id)
-        },
-        // id로 검색
+        },        // id로 검색
         async user(root, {id}, {user}) {
             try {
                 if (!user) throw new Error('You are not authenticated!')
@@ -82,91 +168,243 @@ const resolvers = {
             } catch (error) {
                 throw new Error(error.message)
             }
+        },
+        howmany: async(_,args)=>{
+            const number = [0,0,0];
+            const people = await users.find()
+            for (let i = 0; i < people.length; i++) {
+
+                if (people[i].status === "주문완료") {
+                    number[0]++;
+                }
+                else if(people[i].status === "주문취소"){
+                    number[1]++;
+                }
+                else if(people[i].status === "주문포기"){
+                    number[2]++;
+                }
+            }
+            return number;
+
+        },
+        howmuch: async(_,args)=>{
+            let sum=0;
+            const orders = await Order.find();
+            console.log(orders.length)
+            for(let i=0; i<orders.length; i++){
+                if(orders[i].menu === "아메리카노"){
+                    
+                    sum+=2000;
+                }
+                else if(orders[i].menu === "카페모카"){
+                    
+                    sum+=2500;
+                }
+                else if(orders[i].menu === "아이스티"){
+                    
+                    sum+=2500;
+                }
+                else if(orders[i].menu === "바닐라라떼"){
+                    
+                    sum+=3000;
+                }
+            }
+            return sum;
+        },
+        coffeeAmount: async(_,args)=>{
+            let coffee = [0,0,0,0,0,0,0,0];
+            const orders = await Order.find();
+            for(let i=0; i<orders.length; i++){
+                if(orders[i].menu === "아메리카노" && orders[i].hi === "hot"){
+                    coffee[0]++;
+                }
+                else if(orders[i].menu === "아메리카노" && orders[i].hi === "ice"){
+                    coffee[1]++;
+                }
+                else if(orders[i].menu === "카페모카" && orders[i].hi === "hot"){
+                    coffee[2]++;
+                    
+                }
+                else if(orders[i].menu === "카페모카" && orders[i].hi === "ice"){
+                    coffee[3]++;
+                }
+                else if(orders[i].menu === "아이스티"&& orders[i].hi === "hot"){
+                    coffee[4]++;
+                }
+                else if(orders[i].menu === "아이스티" && orders[i].hi === "ice"){
+                    coffee[5]++;
+                }
+                else if(orders[i].menu === "바닐라라떼" && orders[i].hi === "hot"){
+                    coffee[6]++;
+                }
+                else if(orders[i].menu === "바닐라라떼" && orders[i].hi === "ice"){
+                    coffee[7]++;
+                }
+            }
+            return coffee;
         }
     },
-    Content: {
+    Order: {
         _id(_, args) {
             return _._id;
         },
-        title(_, args) {
-            return _.title;
+        menu(_, args) {
+            return _.menu;
         },
-        content(_, args) {
-            return _.content;
+        hi(_, args) {
+            return _.hi;
         },
         createdAt(_, args) {
             return _.createdAt;
+        },
+        username(_, args){
+            return _.username;
         }
     },
     Mutation: {
-        createContent: async (_, args) => {
+        createOrder: async (_, args, {user}) => {
             try {
-                const content = new Content({
-                    ...args.contentInput
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                console.log(user);
+                console.log(user.id);
+                const us = await users.findById(user.id)
+                const confirm = us.status
+                console.log(us)
+                console.log(confirm)
+                if(confirm === "주문완료") throw error("이미 주문 하셨습니다.");
+                const order = new Order({
+                    ...args.orderInput
                 })
-                const result = await content.save();
+                
+                await users.findByIdAndUpdate(user.id,{status:"주문완료"});
+                const result = await order.save();
                 return result;
             } catch (e) {
                 throw new Error('Error: ', e);
             }
         },
-        removeContent: async (_, args) => {
+        removeOrder: async (_, args,{user}) => {
             try {
-                const removedcontent = await Content.findByIdAndRemove(args._id).exec()
-                return removedcontent
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                await users.findByIdAndUpdate(user.id,{status:"주문취소"});
+                const removedorder = await Order.findByIdAndRemove(args._id).exec()
+                return removedorder
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
-        updateContent: async (_, {_id, title, content}) => {
+        updateOrder: async (_, {_id, menu, hi},{user}) => {
             try {
-                const updatedContent = await Content.findByIdAndUpdate(_id, {
-                    $set: {title, content}
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                await users.findByIdAndUpdate(user.id,{status:"주문완료"});
+                const updatedOrder = await Order.findByIdAndUpdate(_id, {
+                    $set: {menu, hi}
                 }).exec()
-                return updatedContent
+                return updatedOrder
+            } catch (e) {
+                throw new Error('Error: ', e)
+            }
+        },
+        giveupOrder: async (_, args,{user})=>{
+            if(!user) throw error("로그인 되어 있지 않습니다.");
+            await users.findByIdAndUpdate(user.id,{status:"주문포기"});
+            return "주문을 포기하셨습니다."
+        },
+        
+        
+        confirmOrders: async(_,args,{user})=>{
+            if(!user) return "로그인 되어 있지 않습니다.";
+            if(user.id != args.creater) return "결제자가 아닙니다.";
+            console.log("결제자네? ㅎㅇ");
+            
+            await Order.deleteMany({});
+            const renualUser = await users.find();
+            
+            for (let index = 0; index < renualUser.length; index++) {
+                await users.findByIdAndUpdate(renualUser[index].id,{status:""})  
+            }
+
+            return "완료 처리 되었습니다. 맛있게 드세요!"
+        },
+        createTask: async (_, args, {user}) => {
+            try {
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                
+                const task = new Task({
+                    ...args.taskInput
+                })
+                const result = await task.save();
+                const us = await users.findById(user.id);
+                console.log(user.id);
+                await Task.findByIdAndUpdate(result._id,{creater:user.id})
+                
+                return result;
+            } catch (e) {
+                throw new Error('Error: ', e);
+            }
+        },
+        removeTask: async (_, {_id},{user}) => {
+            try {
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                // if(user._id != creater) throw error("게시물 작성자가 아니어서 삭제할 수 없습니다.");
+                const removedTask = await Task.findByIdAndRemove(_id).exec()
+                return removedTask
+            } catch (e) {
+                throw new Error('Error: ', e)
+            }
+        },
+        updateTask: async (_, {_id, title},{user}) => {
+            try {
+                if(!user) throw error("로그인 되어 있지 않습니다.");
+                // if(user._id != creater) throw error("게시물 작성자가 아니어서 수정할 수 없습니다.");
+                
+                const updatedTask = await Task.findByIdAndUpdate(_id, {
+                    $set: {title}
+                }).exec()
+                return updatedTask
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
         searchByID: async (_, args) => {
             try {
-                const searchcontent = await Content.findById(args._id).exec()
-                return searchcontent
+                const searchOrder = await Order.findById(args._id).exec()
+                return searchOrder
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
         // 회원가입
-        registerUser: async (root, {username, email, password}) => {
+        registerUser: async (root, {username, idNum, password}) => {
             try {
                 // 이메일 중복 체크
-                const userConfirm = await users.findOne({email: email})
+                const userConfirm = await users.findOne({idNum: idNum})
                 if (userConfirm != null) {
-                    return "Already registered Email. Please try again.";
+                    return "Already registered idNum.";
                 }
                 const user = await users.create({
                     username,
-                    email,
+                    idNum,
                     password: await bcrypt.hash(password, 10)
                 })
                 const token = jsonwebtoken.sign(
-                    {id: user.id, email: user.email},
+                    {id: user.id, idNum: user.idNum},
                     "somereallylongsecret",
                     {expiresIn: '1y'}
                 )
                 return {
-                    token, id: user.id, username: user.username, email: user.email, message: "Authentication succesfull"
+                    token, id: user.id, username: user.username, idNum: user.idNum, message: "Authentication succesfull"
                 }
             } catch (error) {
                 throw new Error(error.message)
             }
         },
-        login: async (_, {email, password}) => {
+        login: async (_, {idNum, password}) => {
             try {
                 // 유저 이메일 정보 확인 후 로그인
-                const user = await users.findOne({email: email})
+                const user = await users.findOne({idNum: idNum})
                 console.log(user);
-                console.log(email);
+                console.log(idNum);
                 if (!user) {
                     throw new Error('No user with that email')
                 }
@@ -176,7 +414,7 @@ const resolvers = {
                 }
                 // return jwt
                 const token = jsonwebtoken.sign(
-                    {id: user.id, email: user.email},
+                    {id: user.id, idNum: user.idNum},
                     "somereallylongsecret",
                     {expiresIn: '1d'}
                 )
@@ -191,6 +429,7 @@ const resolvers = {
             if (!user) {
                 return false;
             } else { // 로그인 상태라면(토큰이 존재하면) 토큰 비워주기
+                console.log(user.token);
                 user.token = '';
                 return true;
             }
