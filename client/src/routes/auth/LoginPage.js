@@ -6,7 +6,7 @@ import './login.css';
 
 
 const AuthenticationForm = () => {
-    const [_, setAuthToken] = useAuthToken();
+    const [setAuthToken] = useAuthToken();
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const loginmutation = loginMutationGQL;
