@@ -11,8 +11,8 @@ import {useMutation} from '@apollo/react-hooks';
 const useStyles = createUseStyles((theme) => ({
     container: {
         backgroundColor: '#FFFFFF',
-        border: `1px solid ${theme.color.lightGrayishBlue2}`,
-        borderRadius: 4,
+        border: `5px solid ${theme.color.darkRed}`,
+        borderRadius: 5,
         cursor: 'pointer'
     },
     graphContainer: {

@@ -9,9 +9,9 @@ const useStyles = createUseStyles((theme) => ({
     },
     title: {
         ...theme.typography.cardTitle,
-        color: "black",
-        opacity: 0.7,
-        marginLeft: 12
+        color: "white",
+        opacity: 0.5,
+        marginLeft: 15
     }
 }));
 

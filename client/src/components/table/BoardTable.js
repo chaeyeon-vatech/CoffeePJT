@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {AllUserQuery, IndexQuery, MeQuery, SearchQuery} from "../../graphql/query";
-import {number} from "prop-types";
+import {AllUserQuery, IndexQuery, MeQuery} from "../../graphql/query";
+
 
 function BoardTable() {
 
@@ -10,8 +10,6 @@ function BoardTable() {
     const [id, setId] = useState();
     const [length, setLength] = useState();
     const [index, setIndex] = useState(1);
-
-    const paginate = pageNumber => setIndex(pageNumber);
 
     const pageNumbers = []
 
@@ -54,13 +52,12 @@ function BoardTable() {
         pageNumbers.push(i);
     }
 
-    console.log(pageNumbers)
-
     return (
 
 
         <table>
             <caption>주문자 현황</caption>
+
             <thead>
             <tr>
                 <th scope="col">사용자 이름</th>
