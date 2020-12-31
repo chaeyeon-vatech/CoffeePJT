@@ -9,7 +9,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     title: {
         ...theme.typography.cardTitle,
-        color: theme.color.grayishBlue,
+        color: "black",
         opacity: 0.7,
         marginLeft: 12
     }

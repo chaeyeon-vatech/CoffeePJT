@@ -12,7 +12,7 @@ const getMenuStyles = ({ theme }) => ({
         zIndex: 19
     },
     bmBurgerBars: {
-        background: theme.color.veryDarkGrayishBlue
+        background: "white"
     },
     bmBurgerBarsHover: {
         background: theme.color.darkRed
@@ -30,7 +30,7 @@ const getMenuStyles = ({ theme }) => ({
         zIndex: 30
     },
     bmMenu: {
-        background: theme.color.darkgreen
+        background: theme.color.lightyellow
     },
     bmItem: {
         outline: 'none',

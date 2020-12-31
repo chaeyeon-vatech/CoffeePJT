@@ -1,12 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, SearchQuery} from "../../graphql/query";
+import {AllUserQuery, IndexQuery, MeQuery, SearchQuery} from "../../graphql/query";
+import {number} from "prop-types";
 
 function BoardTable() {
 
     const [contents, setContents] = useState('');
     const [id, setId] = useState();
+    const [length, setLength] = useState();
+    const [index, setIndex] = useState(1);
+
+    const paginate = pageNumber => setIndex(pageNumber);
+
+    const pageNumbers = []
+
+
     const {data: da} = useQuery(MeQuery);
 
     useEffect(() => {
@@ -16,7 +25,12 @@ function BoardTable() {
     }, [da]);
 
 
-    const {data} = useQuery(SearchQuery);
+    const {data} = useQuery(IndexQuery, {
+        variables: {
+            index: index
+        }
+    });
+
 
     useEffect(() => {
         if (data) {
@@ -24,6 +38,23 @@ function BoardTable() {
         }
     }, [data]);
 
+
+    const {data: user} = useQuery(AllUserQuery)
+
+
+    useEffect(() => {
+        if (user) {
+            setLength(user.allUsers.length);
+
+        }
+    }, [user]);
+
+
+    for (let i = 1; i <= Math.ceil(length / 10); i++) {
+        pageNumbers.push(i);
+    }
+
+    console.log(pageNumbers)
 
     return (
 
@@ -52,7 +83,30 @@ function BoardTable() {
 
             ))}
 
+            <tr>
+                <td></td>
+                <td>
+                    <nav className="o-nav o-nav--inline">
+                        <ol>
+                            {pageNumbers.map(number => (
+                                <li key={number}>
+                                    <a onClick={() => setIndex(number)}
+                                       className='c-pagination-nav__link'>
+                                        {number}
+                                    </a>
+                                </li>
+                            ))}
+                        </ol>
+                    </nav>
+                </td>
+
+                <td></td>
+            </tr>
+
+
             </tbody>
+
+
         </table>
 
     )

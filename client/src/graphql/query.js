@@ -13,6 +13,18 @@ export const SearchQuery = gql`
     }
 `;
 
+//Pagination할 전체 목록
+export const IndexQuery = gql`
+    query orders($index:Int!){
+        orders(search:"",category:1,index:$index,hasNext:true){
+            _id
+            menu
+            hi
+            username
+            createdAt
+        }
+    }
+`;
 
 //User Order 목록 불러오기
 export const UserSearchQuery = gql`
