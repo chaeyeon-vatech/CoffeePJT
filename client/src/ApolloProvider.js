@@ -22,7 +22,7 @@ const authMiddleware = (AuthToken) =>
         if (AuthToken) {
             operation.setContext({
                 headers: {
-                    Authorization: `Bearer ${AuthToken}`,
+                    Authorization: `${AuthToken}`,
                 },
             });
         }
