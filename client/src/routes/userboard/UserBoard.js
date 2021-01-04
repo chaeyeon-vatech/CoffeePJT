@@ -3,14 +3,14 @@ import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import UserTable from '../../components/table/UserTable';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, SearchQuery} from "../../graphql/query";
+import {MeQuery} from "../../graphql/query";
 
 
 const useStyles = createUseStyles((theme) => ({
     container: {
         backgroundColor: '#FFFFFF',
-        border: `1px solid ${theme.color.lightGrayishBlue2}`,
-        borderRadius: 4,
+        border: `5px solid ${theme.color.darkRed}`,
+        borderRadius: 5,
         cursor: 'pointer'
     },
     graphContainer: {

@@ -13,8 +13,20 @@ export const SearchQuery = gql`
     }
 `;
 
+//Pagination할 전체 목록
+export const IndexQuery = gql`
+    query orders($index:Int!){
+        orders(search:"",category:1,index:$index,hasNext:true){
+            _id
+            menu
+            hi
+            username
+            createdAt
+        }
+    }
+`;
 
-//User Order 목록 불러오기
+//User Order 목록 불러오기/검색
 export const UserSearchQuery = gql`
     query orders($search:String!){
         orders(search:$search,category:4,index:1,hasNext:false,acdc:"username"){
@@ -80,15 +92,17 @@ export const TaskQuery = gql`
 
 
 //모든 유저 불러오기
-export const AllUserQuery= gql`
- query{
-    allUsers{
-    _id
-    username
-    idNum
-}
-}
+export const AllUserQuery = gql`
+    query{
+        allUsers{
+            _id
+            username
+            idNum
+        }
+    }
 `
+
+
 
 
 

@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
-import {CreateMutation, OrderResetMutation} from "../../graphql/mutation";
-import {MeQuery, SearchQuery} from "../../graphql/query";
+import {CreateMutation, OrderGiveupMutation} from "../../graphql/mutation";
+import {MeQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
 
@@ -11,8 +11,8 @@ import {TextField} from "@material-ui/core";
 const useStyles = createUseStyles((theme) => ({
     container: {
         backgroundColor: '#FFFFFF',
-        border: `1px solid ${theme.color.lightGrayishBlue2}`,
-        borderRadius: 4,
+        border: `5px solid ${theme.color.darkRed}`,
+        borderRadius: 5,
         cursor: 'pointer'
     },
     graphContainer: {
@@ -88,6 +88,8 @@ function OrderBoard() {
     const [status, setStatus] = useState();
     const [username, setName] = useState();
 
+
+
     const {data} = useQuery(MeQuery);
 
 
@@ -122,7 +124,7 @@ function OrderBoard() {
         }
     )
 
-    const [giveup] = useMutation(OrderResetMutation, {
+    const [giveup] = useMutation(OrderGiveupMutation, {
             refetchQueries: [{query: SearchQuery, MeQuery}],
             onCompleted: (data) => {
                 window.location.href = '/order';
@@ -131,6 +133,10 @@ function OrderBoard() {
             }
         }
     )
+
+
+
+
 
 
     function renderStat(title, value, value2) {

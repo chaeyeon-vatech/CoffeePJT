@@ -10,10 +10,10 @@ const useStyles = createUseStyles({
     },
     container: {
         display: 'flex',
-        height: 56,
+        height: 40,
         cursor: 'pointer',
         '&:hover': {
-            backgroundColor: ({theme}) => theme.color.paleBlueTransparent
+            backgroundColor: ({theme}) => theme.color.darkRed
         },
         paddingLeft: ({level}) => 32 * level,
         transition: 'all 0.2s ease-in-out'
@@ -23,10 +23,10 @@ const useStyles = createUseStyles({
             level > 1 ? 'none' : `3px solid ${theme.color.darkGrayishBlue}`
     },
     title: {
-        fontSize: 16,
+        fontSize: 18,
         lineHeight: '20px',
         letterSpacing: '0.2px',
-        color: ({theme, isActive}) => (isActive ? theme.color.paleBlue : theme.color.grayishBlue),
+        color: ({theme, isActive}) => (isActive ? "black" : theme.color.grayishBlue),
         marginLeft: 24
     }
 });

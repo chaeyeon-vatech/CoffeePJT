@@ -8,7 +8,7 @@ import {createUseStyles, useTheme} from "react-jss";
 const useStyles = createUseStyles((theme) => ({
     addButton: {
         backgroundColor: theme.color.lightGrayishBlue,
-        color: theme.color.grayishBlue2,
+        color: "black",
         fontSize: '20px !important',
         padding: '5px !important',
         marginLeft: "40px"

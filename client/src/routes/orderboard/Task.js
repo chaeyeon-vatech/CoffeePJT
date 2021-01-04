@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import {IconCheckboxOn, IconCheckboxOff} from 'components/icons';
 import CardComponent from 'components/cards/CardComponent';
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
@@ -10,7 +9,7 @@ import TaskDeleteButton from "../../components/button/TaskDeleteButton";
 
 const useStyles = createUseStyles((theme) => ({
     addButton: {
-        backgroundColor: theme.color.lightGrayishBlue,
+        backgroundColor: theme.color.darkRed,
         color: theme.color.grayishBlue2,
         fontSize: '20px !important',
         padding: '7px !important',
@@ -18,22 +17,15 @@ const useStyles = createUseStyles((theme) => ({
     },
     itemTitle: {
         ...theme.typography.itemTitle,
-        color: theme.color.veryDarkGrayishBlue
+        color: theme.color.veryDarkGrayishBlue,
+        width: "50%"
     },
     itemValue: {
-        color: theme.color.grayishBlue2
+        color: theme.color.grayishBlue2,
+        width: "50%"
     },
     greyTitle: {
         color: theme.color.grayishBlue3
-    },
-    tagStyles: {
-        borderRadius: 5,
-        cursor: 'pointer',
-        fontWeight: 'bold',
-        fontSize: 11,
-        letterSpacing: '0.5px',
-        lineHeight: '14px',
-        padding: '5px 12px 5px 12px'
     },
     checkboxWrapper: {
         cursor: 'pointer',
@@ -60,12 +52,6 @@ const useStyles = createUseStyles((theme) => ({
     }
 
 }));
-
-const TAGS = {
-    URGENT: {text: 'URGENT', backgroundColor: '#FEC400', color: '#FFFFFF'},
-    NEW: {text: 'NEW', backgroundColor: '#29CC97', color: '#FFFFFF'},
-    DEFAULT: {text: 'DEFAULT', backgroundColor: '#F0F1F7', color: '#9FA2B4'}
-};
 
 function Task(props) {
     const theme = useTheme();
@@ -95,11 +81,6 @@ function Task(props) {
             },
         }
     )
-
-    console.log(contents &&
-        contents.map((content) => (content._id)));
-    console.log(contents);
-
 
     function onCheckboxClick(index) {
         setItems((prev) => {
@@ -160,40 +141,5 @@ function Task(props) {
     );
 }
 
-function TaskComponent({classes, index, item = {}, onCheckboxClick, onTagClick}) {
-    const {tag = {}} = item;
-    return (
-        <Row horizontal='space-between' vertical='center'>
-            <Row>
-                <div className={classes.checkboxWrapper} onClick={() => onCheckboxClick(index)}>
-                    {item.checked ? <IconCheckboxOn/> : <IconCheckboxOff/>}
-                </div>
-                <span className={classes.itemTitle}>{item.title}</span>
-            </Row>
-            <TagComponent
-                backgroundColor={tag.backgroundColor}
-                classes={classes}
-                color={tag.color}
-                index={index}
-                onClick={onTagClick}
-                text={tag.text}
-            />
-        </Row>
-    );
-}
-
-function TagComponent({backgroundColor, classes, color, index, onClick, text}) {
-    return (
-        <Row
-            horizontal='center'
-            vertical='center'
-            style={{backgroundColor, color}}
-            className={classes.tagStyles}
-            onClick={() => onClick(index)}
-        >
-            {text}
-        </Row>
-    );
-}
 
 export default Task;

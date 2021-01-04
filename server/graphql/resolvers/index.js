@@ -321,7 +321,7 @@ const resolvers = {
             const renualUser = await users.find();
             
             for (let index = 0; index < renualUser.length; index++) {
-                await users.findByIdAndUpdate(renualUser[i].id,{status:""})  
+                await users.findByIdAndUpdate(renualUser[index].id,{status:""})  
             }
 
             return "완료 처리 되었습니다. 맛있게 드세요!"

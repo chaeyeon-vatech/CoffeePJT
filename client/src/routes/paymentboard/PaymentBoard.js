@@ -2,17 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import {useQuery} from "@apollo/react-hooks";
-import {AllUserQuery, CostQuery, CountQuery, UserSearchQuery} from "../../graphql/query";
+import {AllUserQuery, CostQuery, CountQuery, MeQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
-import {OrderResetMutation} from "../../graphql/mutation";
+import {OrderConfirmMutation, OrderGiveupMutation} from "../../graphql/mutation";
 import {TextField} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
         backgroundColor: '#FFFFFF',
-        border: `1px solid ${theme.color.lightGrayishBlue2}`,
-        borderRadius: 4,
+        border: `5px solid ${theme.color.darkRed}`,
+        borderRadius: 5,
         cursor: 'pointer'
     },
     graphContainer: {
@@ -88,7 +88,6 @@ function TodayTrendsComponent() {
 
 
     const [order, setOrder] = useState('');
-    const [norder, setNorder] = useState('');
     const [count, setCount] = useState('');
     const {data: na} = useQuery(CountQuery);
     useEffect(() => {
@@ -107,16 +106,32 @@ function TodayTrendsComponent() {
         }
     }, [user]);
 
-    const mutation = OrderResetMutation;
+
+    const [id, setId] = useState();
+
+    const {data: da} = useQuery(MeQuery);
+
+    useEffect(() => {
+        if (da) {
+            setId(da.me._id);
+        }
+    }, [da]);
+
+    const mutation = OrderConfirmMutation;
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: UserSearchQuery}],
+            refetchQueries: [{query: SearchQuery}],
+            variables: {creater: id},
             onCompleted: (data) => {
                 alert("주문이 초기화되었습니다.")
                 window.location.href = '/order';
 
 
-            }
+            },
+            onError: () => {
+                alert("초기화 권한이 없습니다.")
+                window.location.href = '/order';
+            },
         }
     )
 
