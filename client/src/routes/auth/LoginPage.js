@@ -50,7 +50,7 @@ const useStyles = createUseStyles((theme) => ({
                 width: "100%",
                 color: "#fff",
                 display: "block",
-                margin:"10px 10px"
+                margin: "10px 10px"
             },
             '&:nth-child(n) > input,button,a': {
                 border: "none",
@@ -116,12 +116,10 @@ const AuthenticationForm = () => {
 
                 <h3>현재 OOO님의 주문이 진행 중입니다.</h3><h5>아래에서 이름을 입력하세요!</h5>
                 <div className={classes.loginform}>
-                    {/*<div className='sign-in-htm'>*/}
-                        <div className={classes.group}>
-                            <label>이름</label>
-                            <input type='text' placeholder='이름을 입력하세요.' onChange={e => setLogin(e.target.value)}
-                            />
-                        {/*</div>*/}
+                    <div className={classes.group}>
+                        <label>이름</label>
+                        <input type='text' placeholder='이름을 입력하세요.' onChange={e => setLogin(e.target.value)}
+                        />
 
                         <div className={classes.group}>
                             <input type='submit'
