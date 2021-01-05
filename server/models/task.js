@@ -5,7 +5,7 @@ const {Schema} = mongoose;            // 스키마라는 개념을 넣어서 중
 const taskSchema = new Schema({
     creater: {
         type: String,
-        required : false
+        required : false,
     },
     title: {
         type: String,
