@@ -129,7 +129,12 @@ const resolvers = {
             const result = users.find({"position":{$eq:"휴가자"}})
             
             return result
+        },
+        includedNothing: async(_,args)=>{
+            const result = users.find({"status":{$eq:""},"position":{$ne:"휴가자"}})
+            return result
         }
+
     },
     Mutation: {
         createOrder: async (_, args) => {
