@@ -12,6 +12,7 @@ const typeDefs = gql`
         _id: ID
         username: String
         status: String
+        position : String
     }
     type Order {
         _id: ID
@@ -21,7 +22,8 @@ const typeDefs = gql`
     }
     type Task{
         _id: ID
-        title: String!
+        creater:String
+        title: String
     }
     
     type Mutation{
@@ -29,13 +31,12 @@ const typeDefs = gql`
         updateOrder(userid: ID!, orderid: ID!, menu:String, hi:String): Order!
         removeOrder(userid: ID!, orderid: ID!): Order!
         giveupOrder(userid: ID!): String!
-        confirmOrders(creater:String):String!
+        confirmOrders:String!
 
 
-        createTask(title:String!): Task!
+        createTask(userid: ID!, title:String!): Task!
         updateTask(_id:ID!, title:String):Task!
         removeTask(_id: ID!): Task!
-        searchByID(_id: ID!) : Order!
 
         registerUser(username:String!):User!
         updateUser(_id:ID!, position:String):User!
