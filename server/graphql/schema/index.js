@@ -3,6 +3,8 @@ const typeDefs = gql`
     type Query {
         orders: [Order]!
         tasks:[Task]!
+        user(word:String):[User!]
+        me(userid: ID!):User!
         allUsers: [User!]!
         howmany:[Int!]
         howmuch:Int!
