@@ -19,23 +19,22 @@ const resolvers = {
             try {
                 let tasks = await Task.find();
                 
-                return task;
+                return tasks;
             } catch (err) {
                 console.log(err);
                 throw err;
             }
         },
         // 모든 유저 검색
-        async allUsers(root, args, {user}) {
+        async allUsers(_, args) {
             try {
-                if (!user) throw new Error('You are not authenticated!')
                 return users.find()
             } catch (error) {
                 throw new Error(error.message)
             }
         },
         howmany: async(_,args)=>{
-            const number = [0,0,0];
+            const number = [0,0,0,0];
             const people = await users.find()
             for (let i = 0; i < people.length; i++) {
 
@@ -47,6 +46,9 @@ const resolvers = {
                 }
                 else if(people[i].status === "주문포기"){
                     number[2]++;
+                }
+                else{
+                    number[3]++;
                 }
             }
             return number;
@@ -107,6 +109,9 @@ const resolvers = {
                 }
             }
             return coffee;
+        },
+        included: async(_,args)=>{
+            
         }
     },
     Mutation: {
@@ -158,36 +163,34 @@ const resolvers = {
         },
         
         
-        confirmOrders: async(_,args,{user})=>{
+        confirmOrders: async(_,args)=>{
             
             await Order.deleteMany({});
+            await Task.deleteMany({});
             const renualUser = await users.find();
             
             for (let index = 0; index < renualUser.length; index++) {
-                await users.findByIdAndUpdate(renualUser[index].id,{status:""})  
+                await users.findByIdAndUpdate(renualUser[index].id,{status:"", position:"주문할사람"})  
             }
 
             return "완료 처리 되었습니다. 맛있게 드세요!"
         },
-        createTask: async (_, args, {user}) => {
+        createTask: async (_, {userid, title}) => {
             try {
-                const task = new Task({
-                    ...args.taskInput
+                const us = await users.findById(userid);
+                const creater = us.username;
+                const task = new Task({creater,
+                    title
                 })
                 const result = await task.save();
-                const us = await users.findById(user.id);
-                console.log(user.id);
-                await Task.findByIdAndUpdate(result._id,{creater:user.id})
                 
                 return result;
             } catch (e) {
                 throw new Error('Error: ', e);
             }
         },
-        removeTask: async (_, {_id},{user}) => {
+        removeTask: async (_, {_id}) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                // if(user._id != creater) throw error("게시물 작성자가 아니어서 삭제할 수 없습니다.");
                 const removedTask = await Task.findByIdAndRemove(_id).exec()
                 return removedTask
             } catch (e) {
@@ -196,8 +199,6 @@ const resolvers = {
         },
         updateTask: async (_, {_id, title},{user}) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                // if(user._id != creater) throw error("게시물 작성자가 아니어서 수정할 수 없습니다.");
                 
                 const updatedTask = await Task.findByIdAndUpdate(_id, {
                     $set: {title}
