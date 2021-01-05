@@ -1,163 +1,28 @@
 import Order from '../../models/order.js';
 import Task from '../../models/task.js';
 import users from '../../models/user.js';
-import bcrypt from 'bcryptjs';
-import jsonwebtoken from 'jsonwebtoken';
-import { ObjectID } from 'bson';
 // resolver에서 mutation을 정의하고 구현하는 걸 보니 가장 중요한 부분이 아닐까 싶다. service 단이라고 생각하자
 const resolvers = {
     Query: {
-        async orders(_, args,{user}) {
+        async orders(_, args) {
             try {
-                if (!user) throw new Error('You are not authenticated')
-                let orders = await Order.find().sort({createdAt: -1});
-                const search = args.search || "";
-                const category = args.category;
-                const index = args.index;
-                const hasNext = args.hasNext;
-                const acdc = args.acdc;
-                if(acdc === "menu"){
-                    orders = await Order.find().sort({menu:1});
-                }
-                else if(acdc === "hi"){
-                    orders = await Order.find().sort({hi:1});
-                }
-                else if(acdc === 'username'){
-                    orders = await Order.find().sort({username:1});
-                }
-                else if(acdc === "createdAt"){
-                    orders = await Order.find().sort({createdAt:1});
-                }
-                let result = []
-                if (category == 1) {
-
-                    for (let i = 0; i < orders.length; i++) {
-
-                        if (orders[i].menu.indexOf(search) > -1) {
-                            result.push(orders[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } else if (category == 2) {
-                    for (let i = 0; i < orders.length; i++) {
-
-                        if (orders[i].hi.indexOf(search) > -1) {
-                            result.push(orders[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } else if(category == 3){
-                    for (let i = 0; i < orders.length; i++) {
-
-                        if (orders[i].username.indexOf(search) > -1) {
-                            result.push(orders[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } else if(category == 4){
-                    for (let i = 0; i < orders.length; i++) {
-
-                        if (orders[i].username===search) {
-                            result.push(orders[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } 
-                else{
-                    result = orders;
-                }
-                return result;
+                let orders = await Order.find();
+                    
+                return orders;
             } catch (err) {
                 console.log(err);
                 throw err;
             }
         },
-        // 로그인 되어 있는 나
-        async me(_, args, {user}) {
-            if (!user) throw new Error('You are not authenticated')
-            return await users.findById(user.id)
-        },
-        async tasks(_, args,{user}) {
+        
+        async tasks(_, args) {
             try {
-                if (!user) throw new Error('You are not authenticated')
-                let tasks = await Task.find().sort({createdAt: -1});
-                const search = args.search || "";
-                const category = args.category;
-                const index = args.index;
-                const hasNext = args.hasNext;
-                const acdc = args.acdc;
-                if(acdc === "creater"){
-                    tasks = await Task.find().sort({creater:1});
-                }
-                else if(acdc === "title"){
-                    tasks = await Task.find().sort({title:1});
-                }
-                else if(acdc === "createdAt"){
-                    tasks = await Task.find().sort({createdAt:1});
-                }
-                let result = []
-                if (category == 1) {
-
-                    for (let i = 0; i < tasks.length; i++) {
-
-                        if (tasks[i].creater.indexOf(search) > -1) {
-                            result.push(tasks[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } else if (category == 2) {
-                    for (let i = 0; i < tasks.length; i++) {
-
-                        if (tasks[i].title.indexOf(search) > -1) {
-                            result.push(tasks[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } 
-                else{
-                    result = tasks;
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                }
-                return result;
+                let tasks = await Task.find();
+                
+                return task;
             } catch (err) {
                 console.log(err);
                 throw err;
-            }
-        },        // id로 검색
-        async user(root, {id}, {user}) {
-            try {
-                if (!user) throw new Error('You are not authenticated!')
-                return users.findById(id)
-            } catch (error) {
-                throw new Error(error.message)
             }
         },
         // 모든 유저 검색
@@ -244,60 +109,42 @@ const resolvers = {
             return coffee;
         }
     },
-    Order: {
-        _id(_, args) {
-            return _._id;
-        },
-        menu(_, args) {
-            return _.menu;
-        },
-        hi(_, args) {
-            return _.hi;
-        },
-        createdAt(_, args) {
-            return _.createdAt;
-        },
-        username(_, args){
-            return _.username;
-        }
-    },
     Mutation: {
-        createOrder: async (_, args, {user}) => {
+        createOrder: async (_, args) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                console.log(user);
-                console.log(user.id);
-                const us = await users.findById(user.id)
+                const us = await users.findById(args._id)
                 const confirm = us.status
+                console.log(args)
                 console.log(us)
                 console.log(confirm)
-                if(confirm === "주문완료") throw error("이미 주문 하셨습니다.");
-                const order = new Order({
-                    ...args.orderInput
-                })
+                if(confirm === "주문완료") throw new Error("이미 주문 하셨습니다.");
                 
-                await users.findByIdAndUpdate(user.id,{status:"주문완료"});
+                const username = us.username
+                const menu = args.menu;
+                const hi = args.hi
+                const order = new Order({username, menu, hi});
+                                
+                await users.findByIdAndUpdate(args._id,{status:"주문완료"});
                 const result = await order.save();
+                
                 return result;
             } catch (e) {
                 throw new Error('Error: ', e);
             }
         },
-        removeOrder: async (_, args,{user}) => {
+        removeOrder: async (_, args) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                await users.findByIdAndUpdate(user.id,{status:"주문취소"});
-                const removedorder = await Order.findByIdAndRemove(args._id).exec()
+                await users.findByIdAndUpdate(args.userid,{status:"주문취소"});
+                const removedorder = await Order.findByIdAndRemove(args.orderid).exec()
                 return removedorder
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
-        updateOrder: async (_, {_id, menu, hi},{user}) => {
+        updateOrder: async (_, {userid, orderid, menu, hi},{user}) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                await users.findByIdAndUpdate(user.id,{status:"주문완료"});
-                const updatedOrder = await Order.findByIdAndUpdate(_id, {
+                await users.findByIdAndUpdate(userid,{status:"주문완료"});
+                const updatedOrder = await Order.findByIdAndUpdate(orderid, {
                     $set: {menu, hi}
                 }).exec()
                 return updatedOrder
@@ -305,17 +152,13 @@ const resolvers = {
                 throw new Error('Error: ', e)
             }
         },
-        giveupOrder: async (_, args,{user})=>{
-            if(!user) throw error("로그인 되어 있지 않습니다.");
-            await users.findByIdAndUpdate(user.id,{status:"주문포기"});
+        giveupOrder: async (_, args)=>{
+            await users.findByIdAndUpdate(args.userid,{status:"주문포기"});
             return "주문을 포기하셨습니다."
         },
         
         
         confirmOrders: async(_,args,{user})=>{
-            if(!user) return "로그인 되어 있지 않습니다.";
-            if(user.id != args.creater) return "결제자가 아닙니다.";
-            console.log("결제자네? ㅎㅇ");
             
             await Order.deleteMany({});
             const renualUser = await users.find();
@@ -328,8 +171,6 @@ const resolvers = {
         },
         createTask: async (_, args, {user}) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                
                 const task = new Task({
                     ...args.taskInput
                 })
@@ -366,75 +207,33 @@ const resolvers = {
                 throw new Error('Error: ', e)
             }
         },
-        searchByID: async (_, args) => {
-            try {
-                const searchOrder = await Order.findById(args._id).exec()
-                return searchOrder
-            } catch (e) {
-                throw new Error('Error: ', e)
-            }
-        },
         // 회원가입
-        registerUser: async (root, {username, idNum, password}) => {
+        registerUser: async (_, args) => {
             try {
-                // 이메일 중복 체크
-                const userConfirm = await users.findOne({idNum: idNum})
-                if (userConfirm != null) {
-                    return "Already registered idNum.";
-                }
-                const user = await users.create({
-                    username,
-                    idNum,
-                    password: await bcrypt.hash(password, 10)
+                const username = args.username;
+                const user = new users({
+                    username
                 })
-                const token = jsonwebtoken.sign(
-                    {id: user.id, idNum: user.idNum},
-                    "somereallylongsecret",
-                    {expiresIn: '1y'}
-                )
-                return {
-                    token, id: user.id, username: user.username, idNum: user.idNum, message: "Authentication succesfull"
-                }
+                
+                return await user.save();
             } catch (error) {
                 throw new Error(error.message)
             }
         },
-        login: async (_, {idNum, password}) => {
-            try {
-                // 유저 이메일 정보 확인 후 로그인
-                const user = await users.findOne({idNum: idNum})
-                console.log(user);
-                console.log(idNum);
-                if (!user) {
-                    throw new Error('No user with that email')
-                }
-                const isValid = await bcrypt.compare(password, user.password)
-                if (!isValid) {
-                    throw new Error('Incorrect password')
-                }
-                // return jwt
-                const token = jsonwebtoken.sign(
-                    {id: user.id, idNum: user.idNum},
-                    "somereallylongsecret",
-                    {expiresIn: '1d'}
-                )
-                return {
-                    token, user
-                }
-            } catch (error) {
-                throw new Error(error.message)
-            }
-        },
-        logout: async (_, __, {user}) => {
-            if (!user) {
-                return false;
-            } else { // 로그인 상태라면(토큰이 존재하면) 토큰 비워주기
-                console.log(user.token);
-                user.token = '';
-                return true;
-            }
+        updateUser: async (_, args) => {
+            try{    
+                const id = args._id;
+                const position = args.position;
+                const user = new users({position})
 
+                const updatedPosition = await users.findByIdAndUpdate(id,{$set:{position}}).exec()
+                return updatedPosition
+
+            } catch(error){
+                throw new Error(error.message)
+            }
         }
+        
     }
 };
 
