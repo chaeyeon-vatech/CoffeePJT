@@ -1,9 +1,11 @@
 import gql from 'graphql-tag'; //gql은 자바스크립트로 스키마를 정의함 이것도 spring model 같음..? 거의 컨트롤러 같은 느낌
 const typeDefs = gql`
     type Query {
-        orders: [Order]!
-        tasks:[Task]!
+        orders(search:String, category:Int, index:Int, hasNext:Boolean, acdc: String): [Order]!
+        tasks(search:String, category:Int, index:Int, hasNext:Boolean, acdc: String):[Task]!
+        user(_id: ID!): User
         allUsers: [User!]!
+        me: User
         howmany:[Int!]
         howmuch:Int!
         coffeeAmount:[Int!]
@@ -11,34 +13,47 @@ const typeDefs = gql`
     type User {
         _id: ID
         username: String
+        idNum: String!
         status: String
+    }
+    type AuthPayload {
+        token: String
+        user: User
     }
     type Order {
         _id: ID
         menu: String!
         hi : String!
         username: String!
+        createdAt: String
     }
     type Task{
         _id: ID
         title: String!
     }
-    
+    input OrderInput{
+        menu: String!
+        hi: String!
+        username: String!
+    }
+    input TaskInput{
+        title: String!
+    }
     type Mutation{
-        createOrder(_id:ID!, menu:String!, hi:String!): Order!
-        updateOrder(userid: ID!, orderid: ID!, menu:String, hi:String): Order!
-        removeOrder(userid: ID!, orderid: ID!): Order!
-        giveupOrder(userid: ID!): String!
+        createOrder(orderInput: OrderInput): Order!
+        updateOrder(_id: ID!, menu:String, hi:String): Order!
+        removeOrder(_id: ID!): Order!
+        giveupOrder: String!
         confirmOrders(creater:String):String!
 
 
-        createTask(title:String!): Task!
+        createTask(taskInput: TaskInput): Task!
         updateTask(_id:ID!, title:String):Task!
         removeTask(_id: ID!): Task!
         searchByID(_id: ID!) : Order!
-
-        registerUser(username:String!):User!
-        updateUser(_id:ID!, position:String):User!
+        registerUser(username: String, idNum: String!, password: String!): AuthPayload
+        login (idNum: String!, password: String!): AuthPayload!
+        logout:Boolean!
     }
 `;
 // input 타입은 인자가 적으면 그냥 넣어주면 되지만 만약에 인자 값이 10개가 넘어간다고 했을 때 한번에 넣을 수 있는 객체이다.

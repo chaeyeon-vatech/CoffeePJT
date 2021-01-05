@@ -3,15 +3,19 @@ const {Schema} = mongoose;            // 스키마라는 개념을 넣어서 중
 
 // 정형화된 스키마를 선언하는 부분 -> spring model과 비슷하다 생각하면 됨
 const orderSchema = new Schema({
-    username: {
-        type: String,
-        required : true
-    },
     menu: {
         type: String,
         required: true
     },
     hi: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    username: {
         type: String,
         required: true
     }
