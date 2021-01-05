@@ -25,6 +25,14 @@ const resolvers = {
                 throw err;
             }
         },
+        async user(_, args) {
+            const word = args.word;
+            
+            return await users.find({username:{$regex:word}})
+        },
+        async me(_, args) {
+            return await users.findById(args.userid)
+        },
         // 모든 유저 검색
         async allUsers(_, args) {
             try {
@@ -90,7 +98,6 @@ const resolvers = {
                 }
                 else if(orders[i].menu === "카페모카" && orders[i].hi === "hot"){
                     coffee[2]++;
-                    
                 }
                 else if(orders[i].menu === "카페모카" && orders[i].hi === "ice"){
                     coffee[3]++;
@@ -111,7 +118,9 @@ const resolvers = {
             return coffee;
         },
         included: async(_,args)=>{
-            
+            const menu = args.menu;
+            const hi = args.hi;
+            return Order.find({$and:{menu:{$eq:menu}, hi:{$eq:hi}}})
         }
     },
     Mutation: {
