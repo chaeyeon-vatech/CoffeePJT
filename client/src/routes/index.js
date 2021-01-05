@@ -15,9 +15,11 @@ function Routes() {
     }, [pathname]);
 
 
-    const {data} = useQuery(MeQuery);
+    // const {data} = useQuery(MeQuery);
+    //
+    // return data ? <PrivateSection/> : <PublicRoutes/>;
 
-    return data ? <PrivateSection/> : <PublicRoutes/>;
+    return <PrivateSection/>;
 }
 
 export default Routes;

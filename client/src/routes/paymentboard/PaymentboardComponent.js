@@ -1,10 +1,10 @@
 import React from 'react';
-import {Column} from 'simple-flexbox';
+import {Column, Row} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import PaymentBoard from './PaymentBoard';
 
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme) => ({
     cardsContainer: {
         marginRight: -30,
         marginTop: -30
@@ -40,15 +40,38 @@ const useStyles = createUseStyles({
         '@media (max-width: 1024px)': {
             marginTop: 30
         }
+    },
+    border: {
+        backgroundColor: "whitesmoke",
+        fontSize: '15px !important',
+        fontFamily: "Do Hyeon",
+        fontWeight: "600",
+        border: `5px solid ${theme.color.darkRed}`,
+        borderRadius: 5,
+    },
+    itemTitle: {
+        ...theme.typography.itemTitle,
+        color: theme.color.veryDarkGrayishBlue,
+        width: "50%"
     }
-});
+}));
 
 function PaymentboardComponent() {
     const classes = useStyles();
 
 
     return (
+
+
+
         <Column>
+            <table className={classes.border}>
+
+                {/*오늘은 ""님이 ""기념으로 "" 쏩니다!*/}
+                <td><span className={classes.itemTitle}>Task Title: 👏  오늘은 ""님이 "" 기념으로 커피 쏩니다! 👏</span></td>
+                <td><span className={classes.itemTitle}>결제자 : OOO 님</span></td>
+                {/*<td><span className={classes.itemTitle}>주문 마감 기한: </span></td>*/}
+            </table>
 
             <div className={classes.todayTrends}>
                 <PaymentBoard/>
