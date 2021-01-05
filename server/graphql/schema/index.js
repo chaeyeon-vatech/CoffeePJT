@@ -7,6 +7,7 @@ const typeDefs = gql`
         howmany:[Int!]
         howmuch:Int!
         coffeeAmount:[Int!]
+        included:[User!]
     }
     type User {
         _id: ID
