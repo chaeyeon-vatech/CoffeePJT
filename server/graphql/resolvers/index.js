@@ -206,15 +206,16 @@ const resolvers = {
                 })
                 const result = await task.save();
                 await users.findByIdAndUpdate(userid,{position:"결제자"})
-                
+
                 return result;
             } catch (e) {
                 throw new Error('Error: ', e);
             }
         },
-        removeTask: async (_, {_id}) => {
+        removeTask: async (_, {_id, userid}) => {
             try {
                 const removedTask = await Task.findByIdAndRemove(_id).exec()
+                await users.findByIdAndUpdate(userid,{position:"주문자"})
                 return removedTask
             } catch (e) {
                 throw new Error('Error: ', e)

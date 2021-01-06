@@ -41,7 +41,7 @@ const typeDefs = gql`
 
         createTask(userid: ID!, title:String!): Task!
         updateTask(_id:ID!, title:String):Task!
-        removeTask(_id: ID!): Task!
+        removeTask(_id: ID!, userid:ID!): Task!
 
         registerUser(username:String!):User!
         updateUser(_id:ID!, position:String):User!
