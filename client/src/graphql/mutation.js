@@ -84,3 +84,12 @@ export const OrderConfirmMutation = gql`
         confirmOrders(creater:$creater)
     }
 `
+
+
+export const MeMutation = gql`
+    mutation($id:ID!){
+        me(userid:$id){
+            username
+        }
+    }
+`

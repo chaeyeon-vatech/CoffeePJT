@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, SearchQuery, TaskQuery} from "../../graphql/query";
+import {SearchQuery, TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 
@@ -100,9 +100,6 @@ const AuthenticationForm = () => {
 
     const [search, setSearch] = useState();
     const [result, setResult] = useState();
-    const [me, setMe] = useState();
-
-    // const loginmutation= loginMutation
 
     const {task} = useQuery(TaskQuery);
 
@@ -120,7 +117,6 @@ const AuthenticationForm = () => {
 
         }
     }, [data]);
-
 
 
     function onClick(name) {
@@ -156,12 +152,15 @@ const AuthenticationForm = () => {
                                 {result &&
                                 result.map((content) => (
                                     <tr style={{marginBottom: 20}}>
-                                        <td><a>{content.username}</a></td>
+
+                                        <td><a onClick={console.log("선택되었습니다.")}>{content.username}</a></td>
                                         <td>
-                                            <a type="submit" onClick={console.log("선택")}>선택</a>
+                                            <a type="submit" href="/create">선택</a>
                                         </td>
                                     </tr>
+
                                 ))}
+
 
                             </table>
 
