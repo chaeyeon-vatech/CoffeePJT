@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../graphql/query";
+import {MeQuery, SearchQuery, TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
+import '../../components/table/table.css';
 
 
 const useStyles = createUseStyles((theme) => ({
 
         loginwrap: {
             color: "white",
+            fontWeight: "lighter",
             textAlign: "center",
             paddingTop: "50px",
             backgroundImage: `url("https://jooinn.com/images/cafe-1.jpg")`,
@@ -48,18 +50,29 @@ const useStyles = createUseStyles((theme) => ({
 
         group: {
             marginBottom: "15px",
-            '&:nth-child(n) > label,input,button,a': {
+            '&:nth-child(n) > label,input,button,a,table': {
                 width: "100%",
                 color: "#fff",
                 display: "block",
                 margin: "10px 10px"
             },
-            '&:nth-child(n) > input,button': {
+            '&:nth-child(n) > input,button,table,tr': {
                 border: "none",
                 padding: "15px 20px",
                 borderRadius: "25px",
-                background: "rgba(255,255,255,.1)"
+                background: "rgba(255,255,255,.1)",
+                textAlign: "center",
+                alignContent: "center"
             },
+            '&:nth-child(n) > tr,td': {
+                width: "50%",
+                padding: "15px 60px",
+                alignContent: "center",
+                marginTop: 10,
+                border: "none",
+                margin: "20px"
+            },
+
             '&:nth-child(n) > a': {
                 marginTop: "50px",
                 border: "none",
@@ -85,9 +98,41 @@ const AuthenticationForm = () => {
     const theme = useTheme();
     const classes = useStyles({theme});
 
-    const [login, setLogin] = useState();
+    const [search, setSearch] = useState();
+    const [result, setResult] = useState();
+    const [me, setMe] = useState();
+
+    // const loginmutation= loginMutation
 
     const {task} = useQuery(TaskQuery);
+
+    const {data} = useQuery(SearchQuery, {
+        variables: {
+            word: search
+        },
+
+    });
+    console.log(data)
+
+    useEffect(() => {
+        if (data) {
+            setResult(data.user);
+
+        }
+    }, [data]);
+
+
+
+    function onClick(name) {
+
+        if (window.confirm(name + '을 결제자로 선택하시겠습니까?')) {
+
+            localStorage.setItem('myData', name)
+            window.location.href = '/create'
+        }
+
+
+    }
 
 
     return (
@@ -98,12 +143,29 @@ const AuthenticationForm = () => {
                 <div className={classes.loginhtml}>
 
                     <h3>현재 주문이 없습니다.</h3>
-                    <h5>주문을 생성하시겠습니까?</h5>
+                    <h5 className={classes.h5}>주문을 생성하시겠습니까?</h5>
 
                     <div className={classes.loginform}>
 
                         <div className={classes.group}>
-                            <a href='/create'>주문 생성</a>
+                            <label>결제자 </label>
+                            <input type='text' placeholder='이름을 입력하세요.' onChange={e => setSearch(e.target.value)}
+                            />
+
+                            <table>
+                                {result &&
+                                result.map((content) => (
+                                    <tr style={{marginBottom: 20}}>
+                                        <td><a>{content.username}</a></td>
+                                        <td>
+                                            <a type="submit" onClick={console.log("선택")}>선택</a>
+                                        </td>
+                                    </tr>
+                                ))}
+
+                            </table>
+
+                            <a>이름을 입력하시고<br/> 선택 버튼을 누르세요!</a>
                         </div>
 
 

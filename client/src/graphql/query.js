@@ -1,17 +1,5 @@
 import gql from 'graphql-tag';
 
-//전체 목록 불러오기
-export const SearchQuery = gql`
-    query orders{
-        orders(search:"",category:1,index:1,hasNext:false,acdc:"username"){
-            _id
-            menu
-            hi
-            username
-            createdAt
-        }
-    }
-`;
 
 //Pagination할 전체 목록
 export const IndexQuery = gql`
@@ -84,6 +72,19 @@ export const TaskQuery = gql`
 
 `
 
+//Search
+
+export const SearchQuery = gql`
+    query($word: String!) {
+        user(word:$word){
+            username
+            status
+            position
+        }
+    }
+
+`
+
 
 //모든 유저 불러오기
 export const AllUserQuery = gql`
@@ -95,6 +96,7 @@ export const AllUserQuery = gql`
         }
     }
 `
+
 
 
 

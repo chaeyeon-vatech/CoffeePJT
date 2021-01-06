@@ -67,7 +67,6 @@ function Task(props) {
     const [contents, setContents] = useState();
 
 
-
     function onCheckboxClick(index) {
         setItems((prev) => {
             const newItems = [...prev];

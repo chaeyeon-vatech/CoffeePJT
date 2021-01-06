@@ -40,13 +40,13 @@ export const LogoutMutation = gql`
 
 //Task Create
 export const TaskCreateMutation = gql`
-   mutation {
-       createTask(userid:$userid, title:$title){
-           _id
-           creater
-           title
-       }
-   }
+    mutation {
+        createTask(userid:$userid, title:$title){
+            _id
+            creater
+            title
+        }
+    }
 `
 
 //Task Update
@@ -63,23 +63,24 @@ export const TaskUpdateMutation = gql`
 
 //Task Remove
 export const TaskRemoveMutation = gql`
-mutation removeTask($id:ID!){
-    removeTask(_id:$id){
-        _id
-        title
-    }
-}`
+    mutation removeTask($id:ID!,$userid:ID!){
+        removeTask(_id:$id,userid:$userid){
+            _id
+            creater
+            title
+        }
+    }`
 
 
 //주문 포기 상태로 전환
 export const OrderGiveupMutation = gql`
-mutation {
-    giveupOrder
-}`
+    mutation {
+        giveupOrder
+    }`
 
 //주문 초기화
 export const OrderConfirmMutation = gql`
-mutation confirmOrders($creater:String!) {
-    confirmOrders(creater:$creater)
-}
+    mutation confirmOrders($creater:String!) {
+        confirmOrders(creater:$creater)
+    }
 `

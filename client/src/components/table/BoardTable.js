@@ -20,7 +20,7 @@ function BoardTable() {
     }, [user]);
 
     console.log(length)
-    
+
 
     return (
 
@@ -41,36 +41,16 @@ function BoardTable() {
             {length &&
             length.map((content) => (
 
-              
+
                 <tr style={{marginBottom: 20}}>
-                <td>{content.username}</td>
-                <td>{content.position}</td>
+                    <td>{content.username}</td>
+                    <td>{content.position}</td>
 
 
                 </tr>
 
 
             ))}
-
-            {/*<tr>*/}
-            {/*<td></td>*/}
-            {/*<td>*/}
-            {/*<nav className="o-nav o-nav--inline">*/}
-            {/*    <ol>*/}
-            {/*        {pageNumbers.map(number => (*/}
-            {/*            <li key={number}>*/}
-            {/*                <a onClick={() => setIndex(number)}*/}
-            {/*                   className='c-pagination-nav__link'>*/}
-            {/*                    {number}*/}
-            {/*                </a>*/}
-            {/*            </li>*/}
-            {/*        ))}*/}
-            {/*    </ol>*/}
-            {/*        /!*</nav>*!/*/}
-            {/*    </td>*/}
-
-            {/*    <td></td>*/}
-            {/*</tr>*/}
 
 
             </tbody>
