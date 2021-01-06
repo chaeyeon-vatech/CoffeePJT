@@ -117,11 +117,24 @@ const resolvers = {
             }
             return coffee;
         },
-        included: async(_,args)=>{
+        includedCoffee: async(_,args)=>{
             const menu = args.menu;
             const hi = args.hi;
-            return Order.find({$and:{menu:{$eq:menu}, hi:{$eq:hi}}})
+            const result = Order.find({"menu":{$eq:menu}, "hi":{$eq:hi}})
+            
+            return result
+        },
+        includedVacation: async(_,args)=>{
+            
+            const result = users.find({"position":{$eq:"휴가자"}})
+            
+            return result
+        },
+        includedNothing: async(_,args)=>{
+            const result = users.find({"status":{$eq:""},"position":{$ne:"휴가자"}})
+            return result
         }
+
     },
     Mutation: {
         createOrder: async (_, args) => {
@@ -179,7 +192,7 @@ const resolvers = {
             const renualUser = await users.find();
             
             for (let index = 0; index < renualUser.length; index++) {
-                await users.findByIdAndUpdate(renualUser[index].id,{status:"", position:"주문할사람"})  
+                await users.findByIdAndUpdate(renualUser[index].id,{status:"", position:"주문자"})  
             }
 
             return "완료 처리 되었습니다. 맛있게 드세요!"
@@ -192,6 +205,7 @@ const resolvers = {
                     title
                 })
                 const result = await task.save();
+                await users.findByIdAndUpdate(userid,{position:"결제자"})
                 
                 return result;
             } catch (e) {
