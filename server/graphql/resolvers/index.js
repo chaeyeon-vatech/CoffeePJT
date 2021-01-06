@@ -4,7 +4,7 @@ import users from '../../models/user.js';
 // resolver에서 mutation을 정의하고 구현하는 걸 보니 가장 중요한 부분이 아닐까 싶다. service 단이라고 생각하자
 const resolvers = {
     Query: {
-        async orders(_, args) {
+        orders: async(_, args) => {
             try {
                 let orders = await Order.find();
                     
@@ -15,7 +15,7 @@ const resolvers = {
             }
         },
         
-        async tasks(_, args) {
+        tasks: async(_, args) => {
             try {
                 let tasks = await Task.find();
                 
@@ -25,19 +25,22 @@ const resolvers = {
                 throw err;
             }
         },
-        async user(_, args) {
+        user: async(_, args) => {
             const word = args.word;
             
             return await users.find({username:{$regex:word}})
         },
         
         // 모든 유저 검색
-        async allUsers(_, args) {
+        allUsers: async(_, args) => {
             try {
                 return users.find()
             } catch (error) {
                 throw new Error(error.message)
             }
+        },
+        me: async (_, args) => {
+            return await users.findById(args.userid)
         },
         howmany: async(_,args)=>{
             const number = [0,0,0,0];
@@ -256,7 +259,7 @@ const resolvers = {
                 throw new Error(error.message)
             }
         },
-        me: async (_, args) => {
+        mee: async (_, args) => {
             return await users.findById(args.userid)
         },
     }
