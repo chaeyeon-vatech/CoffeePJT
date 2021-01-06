@@ -4,6 +4,8 @@ import {createUseStyles, useTheme} from 'react-jss';
 import UserTable from '../../components/table/UserTable';
 import {useQuery} from "@apollo/react-hooks";
 import {MeQuery} from "../../graphql/query";
+import Task from "./Task";
+import BoardTable from "../../components/table/BoardTable";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -69,7 +71,9 @@ const useStyles = createUseStyles((theme) => ({
         ...theme.typography.title,
         textAlign: 'center',
         color: theme.color.veryDarkGrayishBlue
-    }
+    },  lastRow: {
+        marginBelow: 200
+    },
 }));
 
 function UserBoard() {
@@ -115,31 +119,45 @@ function UserBoard() {
     }
 
     return (
-        <Row
-            flexGrow={1}
-            className={classes.container}
-            horizontal='center'
-            breakpoints={{1024: 'column'}}
-        >
-            <Column
-                wrap
-                flexGrow={7}
-                flexBasis='735px'
-                className={classes.graphSection}
-                breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
-            >
-                <UserTable/>
-            </Column>
-            <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
-                <div/>
-            </Column>
-            <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
-                {renderStat('이름', username)}
-                {renderStat('이메일', id)}
-                {renderStat('소속', '플랫폼 사업팀')}
 
-            </Column>
-        </Row>
+        <Column>
+            <Row
+                horizontal='space-between'
+                className={classes.lastRow}
+                breakpoints={{1024: 'column'}}
+            >
+                <Task/>
+
+            </Row>
+
+            <Row
+                flexGrow={1}
+                className={classes.container}
+                horizontal='center'
+                breakpoints={{1024: 'column'}}
+            >
+
+
+                <Column
+                    wrap
+                    flexGrow={7}
+                    flexBasis='735px'
+                    className={classes.graphSection}
+                    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
+                >
+                    <BoardTable/>
+                </Column>
+                <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
+                    <div/>
+                </Column>
+                <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
+                    {renderStat('이름', username)}
+                    {renderStat('이메일', id)}
+                    {renderStat('소속', '플랫폼 사업팀')}
+
+                </Column>
+            </Row>
+        </Column>
     );
 }
 

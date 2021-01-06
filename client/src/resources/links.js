@@ -4,7 +4,8 @@ export default {
     tickets: '/pay',
     settings: '/settings',
     notask:'/notask',
-    // auth
+    // firstpage
     login: '/',
-    signup: '/signup'
+    signup: '/signup',
+    create:'/create'
 };

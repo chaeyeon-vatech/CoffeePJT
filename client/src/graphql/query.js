@@ -28,13 +28,9 @@ export const IndexQuery = gql`
 
 //User Order 목록 불러오기/검색
 export const UserSearchQuery = gql`
-    query orders($search:String!){
-        orders(search:$search,category:4,index:1,hasNext:false,acdc:"username"){
-            _id
-            menu
-            hi
-            username
-            createdAt
+    query {
+        allUsers{
+            _id, position,username, status
         }
     }
 `;
@@ -42,13 +38,10 @@ export const UserSearchQuery = gql`
 
 //내 목록 불러오기
 export const MeQuery = gql`
-    query {
-        me {
-            _id
-            idNum
-            username
-            status
-        }
+    query me($userid:ID!) {
+      me(userid:$userid){
+          username
+      }
     }
 
 `
@@ -81,9 +74,10 @@ export const CupQuery = gql`
 
 export const TaskQuery = gql`
     query{
-        tasks(search:"",category:0,index:1,hasNext:true,acdc:""){
+        tasks{
             _id
             title
+            creater
         }
     }
 

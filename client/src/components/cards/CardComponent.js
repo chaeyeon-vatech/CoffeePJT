@@ -8,6 +8,7 @@ const useStyles = createUseStyles((theme) => ({
         border: `5px solid ${theme.color.darkRed}`,
         borderRadius: 5,
         padding: '12px 32px 0px 10px',
+        margin: "30px",
         height: '100%'
     },
     containerMobile: {

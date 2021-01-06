@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
-import {meGQL, loginMutationGQL} from './mutation';
-import {useMutation} from '@apollo/react-hooks';
-import {useAuthToken} from './authToken';
-import './login.css';
+import {useQuery} from "@apollo/react-hooks";
+import {TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
+
 
 const useStyles = createUseStyles((theme) => ({
 
         loginwrap: {
+            color: "white",
+            textAlign: "center",
             paddingTop: "50px",
+            backgroundImage: `url("https://jooinn.com/images/cafe-1.jpg")`,
             width: "100%",
             margin: "auto",
             maxWidth: "525px",
@@ -52,13 +54,13 @@ const useStyles = createUseStyles((theme) => ({
                 display: "block",
                 margin: "10px 10px"
             },
-            '&:nth-child(n) > input,button,a': {
+            '&:nth-child(n) > input,button': {
                 border: "none",
                 padding: "15px 20px",
                 borderRadius: "25px",
                 background: "rgba(255,255,255,.1)"
             },
-            '&:nth-child(n) > lbutton': {
+            '&:nth-child(n) > a': {
                 marginTop: "50px",
                 border: "none",
                 padding: "50px 50px",
@@ -78,59 +80,30 @@ const useStyles = createUseStyles((theme) => ({
     }))
 ;
 
-
 const AuthenticationForm = () => {
-    const [_, setAuthToken] = useAuthToken();
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
-    const loginmutation = loginMutationGQL;
+
     const theme = useTheme();
     const classes = useStyles({theme});
 
+    const [login, setLogin] = useState();
 
-    const [log, {loading}] = useMutation(loginmutation, {
-            refetchQueries: [{query: meGQL}],
-            onCompleted: (data) => {
-                setAuthToken(data.login.token);
-                localStorage.setItem('myData', data.login.token);
-                window.location.href = '/order';
-
-
-            },
-            onError: () => {
-                alert("로그인에 실패했습니다.")
-            },
-            variables: {
-                login: login,
-                password: password
-            }
-        }
-    );
+    const {task} = useQuery(TaskQuery);
 
 
     return (
 
 
-        <div className={classes.loginwrap}>
-            <div className={classes.loginhtml}>
+        <div className={classes.root}>
+            <div className={classes.loginwrap}>
+                <div className={classes.loginhtml}>
 
-                <h3>현재 OOO님의 주문이 진행 중입니다.</h3><h5>아래에서 이름을 입력하세요!</h5>
-                <div className={classes.loginform}>
-                    <div className={classes.group}>
-                        <label>이름</label>
-                        <input type='text' placeholder='이름을 입력하세요.' onChange={e => setLogin(e.target.value)}
-                        />
+                    <h3>현재 주문이 없습니다.</h3>
+                    <h5>주문을 생성하시겠습니까?</h5>
 
-                        <div className={classes.group}>
-                            <input type='submit'
-                                   onClick={log}
-                                   unable={loading}
-                                   value='Login'
-                            />;
-                        </div>
+                    <div className={classes.loginform}>
 
                         <div className={classes.group}>
-                            <a href='/pay'>결제자이신가요?</a>
+                            <a href='/create'>주문 생성</a>
                         </div>
 
 
@@ -138,6 +111,8 @@ const AuthenticationForm = () => {
                 </div>
             </div>
         </div>
+
+
     );
 };
 

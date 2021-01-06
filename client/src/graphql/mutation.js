@@ -40,14 +40,13 @@ export const LogoutMutation = gql`
 
 //Task Create
 export const TaskCreateMutation = gql`
-    mutation createTask($title : String!){
-        createTask(taskInput:{
-            title:$title
-        }){
-            _id
-            title
-        }
-    }
+   mutation {
+       createTask(userid:$userid, title:$title){
+           _id
+           creater
+           title
+       }
+   }
 `
 
 //Task Update
