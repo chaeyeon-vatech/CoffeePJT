@@ -64,16 +64,14 @@ function Create(props) {
     const [title, setTitle] = useState();
     const [contents, setContents] = useState();
 
+
     const {data} = useQuery(TaskQuery);
 
     useEffect(() => {
         if (data) {
             setContents(data.tasks);
-
         }
-    }, [data]);
-
-    console.log(contents);
+    })
 
 
     const [create, {loading}] = useMutation(TaskCreateMutation, {
@@ -141,7 +139,7 @@ function Create(props) {
                                 </tr>
                                 </thead>
 
-                    {contents && contents.map((content) => (
+                                {contents && contents.map((content) => (
 
 
                                     <tbody>
@@ -156,10 +154,8 @@ function Create(props) {
                                     </tbody>
 
 
-
-
-                    ))}
-                        </table>
+                                ))}
+                            </table>
                         </Row>
                     </Row>
                 </Row>,
