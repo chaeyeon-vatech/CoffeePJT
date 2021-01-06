@@ -205,6 +205,7 @@ const resolvers = {
                     title
                 })
                 const result = await task.save();
+                await users.findByIdAndUpdate(userid,{position:"결제자"})
                 
                 return result;
             } catch (e) {
