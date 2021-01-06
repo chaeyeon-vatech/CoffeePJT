@@ -30,9 +30,7 @@ const resolvers = {
             
             return await users.find({username:{$regex:word}})
         },
-        async me(_, args) {
-            return await users.findById(args.userid)
-        },
+        
         // 모든 유저 검색
         async allUsers(_, args) {
             try {
@@ -257,8 +255,10 @@ const resolvers = {
             } catch(error){
                 throw new Error(error.message)
             }
-        }
-        
+        },
+        me: async (_, args) => {
+            return await users.findById(args.userid)
+        },
     }
 };
 
