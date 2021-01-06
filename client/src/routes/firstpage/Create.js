@@ -77,7 +77,8 @@ function Create(props) {
     const [create, {loading}] = useMutation(TaskCreateMutation, {
             refetchQueries: [{query: TaskQuery}],
             variables: {
-                title: title
+                title: title,
+                userid: localStorage.getItem('myData')
             },
 
             onError: () => {
@@ -145,7 +146,7 @@ function Create(props) {
                                     <tbody>
                                     <td><span className={classes.itemTitle}>
                                         👏오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다!👏</span></td>
-                                    <td><TaskDeleteButton post_id={content._id} user_id={content.creater}/></td>
+                                    <td><TaskDeleteButton post_id={content._id} user_id={localStorage.getItem('myData')}/></td>
                                     {/*<TaskComponent*/}
                                     {/*    classes={classes}*/}
                                     {/*    item={content}*/}
