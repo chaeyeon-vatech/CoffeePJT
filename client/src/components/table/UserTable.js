@@ -35,7 +35,7 @@ function BoardTable() {
 
 
         <table>
-            <caption>주문자 현황</caption>
+            <caption>User 관리</caption>
             <thead>
             <tr>
                 <th scope="col">사용자 이름</th>
@@ -47,18 +47,26 @@ function BoardTable() {
             </tr>
             </thead>
             <tbody>
-            {contents &&
-            contents.map((content) => (
-                <tr key={content._id} style={{marginBottom: 20}}>
-                    <td>{content.username}</td>
-                    <td>{content.menu}</td>
-                    <td>{content.hi}</td>
-                    <td><DeleteButton post_id={content._id}/></td>
+            {/*{contents &&*/}
+            {/*contents.map((content) => (*/}
+            {/*    <tr key={content._id} style={{marginBottom: 20}}>*/}
+            {/*        <td>{content.username}</td>*/}
+            {/*        <td>{content.menu}</td>*/}
+            {/*        <td>{content.hi}</td>*/}
+            {/*        <td><DeleteButton post_id={content._id}/></td>*/}
 
 
-                </tr>
+            {/*    </tr>*/}
 
-            ))}
+            {/*))}*/}
+            <tr>
+
+                <th>박채연</th>
+                <th>아메리카노</th>
+                <th>Ice</th>
+                <th>주문취소</th>
+
+            </tr>
 
             </tbody>
         </table>

@@ -6,7 +6,7 @@ import {convertlinksToUrl} from 'resources/utilities';
 import LogoComponent from './LogoComponent';
 import Menu from './MenuComponent';
 import MenuItem from './MenuItemComponent';
-import {useAuthToken} from '../../routes/auth/authToken';
+import {useAuthToken} from '../../routes/firstpage/authToken';
 import {useApolloClient, useMutation, useQuery} from '@apollo/react-hooks';
 import {MeQuery} from "../../graphql/query";
 import {Row} from "simple-flexbox";

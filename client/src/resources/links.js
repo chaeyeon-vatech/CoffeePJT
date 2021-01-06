@@ -3,7 +3,9 @@ export default {
     orderboard: '/order',
     tickets: '/pay',
     settings: '/settings',
-    // auth
+    notask:'/notask',
+    // firstpage
     login: '/',
-    signup: '/signup'
+    signup: '/signup',
+    create:'/create'
 };
