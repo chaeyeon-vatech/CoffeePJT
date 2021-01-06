@@ -27,7 +27,7 @@ const resolvers = {
         },
         user: async(_, args) => {
             const word = args.word;
-            
+            if(word == "") return null
             return await users.find({username:{$regex:word}})
         },
         
