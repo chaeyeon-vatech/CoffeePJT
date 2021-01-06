@@ -5,6 +5,7 @@ const typeDefs = gql`
         tasks:[Task]!
         user(word:String):[User!]
         allUsers: [User!]!
+        me(userid: ID!):User!
         howmany:[Int!]
         howmuch:Int!
         coffeeAmount:[Int!]
@@ -44,7 +45,7 @@ const typeDefs = gql`
 
         registerUser(username:String!):User!
         updateUser(_id:ID!, position:String):User!
-        me(userid: ID!):User!
+        mee(userid: ID!):User!
     }
 `;
 // input 타입은 인자가 적으면 그냥 넣어주면 되지만 만약에 인자 값이 10개가 넘어간다고 했을 때 한번에 넣을 수 있는 객체이다.
