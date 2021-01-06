@@ -15,7 +15,14 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
+
+
+
+
 function TaskDeleteButton(post_id,user_id) {
+
+    const user = localStorage.getItem('myData');
+
 
     const theme = useTheme();
     const classes = useStyles({theme});
@@ -23,7 +30,7 @@ function TaskDeleteButton(post_id,user_id) {
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
             refetchQueries: [{query: TaskQuery}],
-            variables: {id: String(Object.values(post_id)),userid: String(Object.values(user_id))},
+            variables: {id: String(Object.values(post_id)),userid: localStorage.getItem('myData')},
             onCompleted: (data) => {
                 alert("주문이 취소되었습니다.");
 

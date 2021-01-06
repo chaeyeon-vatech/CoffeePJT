@@ -94,10 +94,10 @@ const useStyles = createUseStyles((theme) => ({
     }))
 ;
 
-const handleClick = (name) => {
+const handleClick = (name, id) => {
     if (window.confirm(name + '을 결제자로 선택하시겠습니까?')) {
 
-        localStorage.setItem('myData', name)
+        localStorage.setItem('myData', id)
         window.location.href = '/create'
     }
 }
@@ -151,7 +151,7 @@ const AuthenticationForm = () => {
 
                                         <td>{content.username}</td>
                                         <td>
-                                            <a type="submit" onClick={() => handleClick(content.username)}
+                                            <a type="submit" onClick={() => handleClick(content.username, content._id)}
                                             >선택</a>
                                         </td>
                                     </tr>

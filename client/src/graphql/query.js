@@ -77,6 +77,7 @@ export const TaskQuery = gql`
 export const SearchQuery = gql`
     query($word: String!) {
         user(word:$word){
+            _id
             username
             status
             position
