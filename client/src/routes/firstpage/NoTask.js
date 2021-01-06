@@ -3,6 +3,7 @@ import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
+import {MeMutation} from "../../graphql/mutation";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -93,6 +94,14 @@ const useStyles = createUseStyles((theme) => ({
     }))
 ;
 
+const handleClick = (name) => {
+    if (window.confirm(name + '을 결제자로 선택하시겠습니까?')) {
+
+        localStorage.setItem('myData', name)
+        window.location.href = '/create'
+    }
+}
+
 const AuthenticationForm = () => {
 
     const theme = useTheme();
@@ -109,7 +118,6 @@ const AuthenticationForm = () => {
         },
 
     });
-    console.log(data)
 
     useEffect(() => {
         if (data) {
@@ -117,18 +125,6 @@ const AuthenticationForm = () => {
 
         }
     }, [data]);
-
-
-    function onClick(name) {
-
-        if (window.confirm(name + '을 결제자로 선택하시겠습니까?')) {
-
-            localStorage.setItem('myData', name)
-            window.location.href = '/create'
-        }
-
-
-    }
 
 
     return (
@@ -153,14 +149,14 @@ const AuthenticationForm = () => {
                                 result.map((content) => (
                                     <tr style={{marginBottom: 20}}>
 
-                                        <td><a onClick={console.log("선택되었습니다.")}>{content.username}</a></td>
+                                        <td>{content.username}</td>
                                         <td>
-                                            <a type="submit" href="/create">선택</a>
+                                            <a type="submit" onClick={() => handleClick(content.username)}
+                                            >선택</a>
                                         </td>
                                     </tr>
 
-                                ))}
-
+                                ), this)}
 
                             </table>
 
