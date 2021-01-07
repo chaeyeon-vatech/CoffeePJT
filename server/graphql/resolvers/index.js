@@ -278,6 +278,10 @@ const resolvers = {
                 throw new Error(error.message)
             }
         },
+        deleteUser:async(_,args)=>{
+            const removedUser = await users.findByIdAndRemove(args._id).exec()
+            return removedUser
+        },
         mee: async (_, args) => {
             return await users.findById(args.userid)
         },
