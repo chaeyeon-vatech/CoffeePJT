@@ -5,6 +5,7 @@ import {
     VacationQuery
 } from "../../graphql/query";
 import {createUseStyles} from "react-jss";
+import UserBackButton from "../button/UserBackButton";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -52,7 +53,7 @@ function BoardTable() {
 
                 <tr style={{marginBottom: 20}}>
                     <td>{content.username}</td>
-                    <td>X</td>
+                    <td><UserBackButton post_id={content._id}/></td>
                 </tr>
 
 

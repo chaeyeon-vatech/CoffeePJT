@@ -27,9 +27,9 @@ export const UserSearchQuery = gql`
 //내 목록 불러오기
 export const MeQuery = gql`
     query me($userid:ID!) {
-      me(userid:$userid){
-          username
-      }
+        me(userid:$userid){
+            username
+        }
     }
 
 `
@@ -76,7 +76,22 @@ export const TaskQuery = gql`
 
 export const SearchQuery = gql`
     query($word: String!) {
-        user(word:$word){
+        user(word:$word category:1){
+            _id
+            username
+            status
+            position
+        }
+    }
+
+`
+
+
+//주문자 Search
+
+export const USearchQuery = gql`
+    query($word: String!) {
+        user(word:$word category:2){
             _id
             username
             status
@@ -102,6 +117,7 @@ export const VacationQuery = gql`
     query{
         includedVacation{
             username
+            _id
         }
     }
 
