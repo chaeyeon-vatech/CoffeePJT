@@ -124,7 +124,15 @@ export const VacationQuery = gql`
 
 `
 
+//Order Query
 
+export const OrderQuery = gql`
+    query {
+        orders{
+            username
+            menu}
+    }
+`
 
 
 
