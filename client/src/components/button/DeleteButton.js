@@ -15,8 +15,6 @@ function DeleteButton(post_id) {
             variables: {id: String(Object.values(post_id))},
             onCompleted: (data) => {
                 window.location.href = '/order';
-
-
             }
         }
     )

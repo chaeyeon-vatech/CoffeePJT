@@ -98,7 +98,14 @@ export const AllUserQuery = gql`
     }
 `
 
+export const VacationQuery = gql`
+    query{
+        includedVacation{
+            username
+        }
+    }
 
+`
 
 
 

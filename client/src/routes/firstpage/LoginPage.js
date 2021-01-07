@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {meGQL, loginMutationGQL} from './mutation';
-import {useMutation} from '@apollo/react-hooks';
-import {useAuthToken} from './authToken';
-import {createUseStyles, useTheme} from "react-jss";
 import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../graphql/query";
+import {SearchQuery, TaskQuery} from "../../graphql/query";
+import {createUseStyles, useTheme} from "react-jss";
+import '../../components/table/table.css';
+import {MeMutation} from "../../graphql/mutation";
+
 
 const useStyles = createUseStyles((theme) => ({
 
         loginwrap: {
+            color: "white",
+            fontWeight: "lighter",
+            textAlign: "center",
             paddingTop: "50px",
+            backgroundImage: `url("https://jooinn.com/images/cafe-1.jpg")`,
             width: "100%",
             margin: "auto",
             maxWidth: "525px",
@@ -47,19 +51,30 @@ const useStyles = createUseStyles((theme) => ({
 
         group: {
             marginBottom: "15px",
-            '&:nth-child(n) > label,input,button,a': {
+            '&:nth-child(n) > label,input,button,a,table': {
                 width: "100%",
                 color: "#fff",
                 display: "block",
                 margin: "10px 10px"
             },
-            '&:nth-child(n) > input,button,a': {
+            '&:nth-child(n) > input,button,table,tr': {
                 border: "none",
                 padding: "15px 20px",
                 borderRadius: "25px",
-                background: "rgba(255,255,255,.1)"
+                background: "rgba(255,255,255,.1)",
+                textAlign: "center",
+                alignContent: "center"
             },
-            '&:nth-child(n) > lbutton': {
+            '&:nth-child(n) > tr,td': {
+                width: "50%",
+                padding: "15px 60px",
+                alignContent: "center",
+                marginTop: 10,
+                border: "none",
+                margin: "20px"
+            },
+
+            '&:nth-child(n) > a': {
                 marginTop: "50px",
                 border: "none",
                 padding: "50px 50px",
@@ -79,51 +94,82 @@ const useStyles = createUseStyles((theme) => ({
     }))
 ;
 
+const handleClick = (name, id) => {
+    if (window.confirm(name + '을 결제자로 선택하시겠습니까?')) {
+
+        localStorage.setItem('myData', id)
+        window.location.href = '/create'
+    }
+}
 
 const AuthenticationForm = () => {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [login, setLogin] = useState('');
+
+    const [search, setSearch] = useState();
+    const [result, setResult] = useState();
+
     const {task} = useQuery(TaskQuery);
-    //
-    // useEffect(() => {
-    //     if (task) {
-    //         setLogin(task.tasks);
-    //     }
-    //     if(error){
-    //         alert("로그인에 실패했습니다.");
-    //     }
-    // }, [task]);
-    //
-    //
-    // console.log(login)
+
+    const {data} = useQuery(SearchQuery, {
+        variables: {
+            word: search
+        },
+
+    });
+
+    useEffect(() => {
+        if (data) {
+            setResult(data.user);
+
+        }
+    }, [data]);
+
 
     return (
 
 
-        <div className={classes.loginwrap}>
-            <div className={classes.loginhtml}>
+        <div className={classes.root}>
+            <div className={classes.loginwrap}>
+                <div className={classes.loginhtml}>
 
-                <h3>현재 OOO님의 주문이 진행 중입니다.</h3><h5>아래에서 이름을 입력하세요!</h5>
-                <div className={classes.loginform}>
-                    <div className={classes.group}>
-                        <label>이름</label>
-                        <input type='text' placeholder='이름을 입력하세요.'
-                        />
+                    <h3>OOO님의 주문이 진행 중입니다.</h3>
+                    <h5 className={classes.h5}>주문을 생성하시겠습니까?</h5>
+
+                    <div className={classes.loginform}>
 
                         <div className={classes.group}>
-                            <input type='submit'
-                                // onClick={log}
-                                // unable={loading}
-                                   value='Login'
-                            />;
+                            <label>결제자 </label>
+                            <input type='text' placeholder='이름을 입력하세요.' onChange={e => setSearch(e.target.value)}
+                            />
+
+                            <table>
+                                {result &&
+                                result.map((content) => (
+                                    <tr style={{marginBottom: 20}}>
+
+                                        <td>{content.username}</td>
+                                        <td>
+                                            <a type="submit" onClick={() => handleClick(content.username, content._id)}
+                                            >선택</a>
+                                        </td>
+                                    </tr>
+
+                                ), this)}
+
+                            </table>
+
+                            <a>이름을 입력하시고<br/> 선택 버튼을 누르세요!</a>
                         </div>
+
 
                     </div>
                 </div>
             </div>
         </div>
+
+
     );
 };
 
