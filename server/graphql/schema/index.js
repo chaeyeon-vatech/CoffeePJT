@@ -2,7 +2,7 @@ import gql from 'graphql-tag'; //gql은 자바스크립트로 스키마를 정�
 const typeDefs = gql`
     type Query {
         orders: [Order]!
-        tasks:[Task]!
+        tasks:[Task]
         user(word:String, category:Int!):[User!]
         allUsers: [User!]!
         me(userid: ID!):User!
