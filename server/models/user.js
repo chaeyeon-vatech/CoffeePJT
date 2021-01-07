@@ -13,7 +13,7 @@ const userSchema = new Schema({
     },
     position: {
         type: String,
-        default:"주문할사람"
+        default:"주문자"
         
     }
 });
