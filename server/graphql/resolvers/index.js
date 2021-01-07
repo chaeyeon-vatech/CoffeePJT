@@ -14,7 +14,17 @@ const resolvers = {
                 throw err;
             }
         },
-        
+        orderMine: async(_, args)=>{
+            try {
+                const user = await users.findById(args._id)
+                
+                const word = user.username
+                return await Order.find({"username":{$eq:word}})
+            } catch (err){
+                console.log(err);
+                throw err;
+            }
+        },
         tasks: async(_, args) => {
             try {
                 let tasks = await Task.find();

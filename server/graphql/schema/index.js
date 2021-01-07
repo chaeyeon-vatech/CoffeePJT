@@ -3,6 +3,7 @@ const typeDefs = gql`
     type Query {
         orders: [Order]!
         tasks:[Task]
+        orderMine(_id:ID!):[Order!]
         user(word:String, category:Int!):[User!]
         allUsers: [User!]!
         me(userid: ID!):User!
@@ -21,9 +22,9 @@ const typeDefs = gql`
     }
     type Order {
         _id: ID
-        menu: String!
-        hi : String!
-        username: String!
+        menu: String
+        hi : String
+        username: String
     }
     type Task{
         _id: ID
