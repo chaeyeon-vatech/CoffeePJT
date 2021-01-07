@@ -8,6 +8,8 @@ import {TaskCreateMutation} from "../../graphql/mutation";
 import TaskDeleteButton from "../../components/button/TaskDeleteButton";
 import PaymentTable from "../../components/table/PaymentTable";
 import {IconCheckboxOff, IconCheckboxOn} from "../../components/icons";
+import PaymentBoard from "../paymentboard/PaymentBoard";
+import VacationBoard from "./VacationBoard";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: "30px"},
@@ -146,12 +148,9 @@ function Create(props) {
                                     <tbody>
                                     <td><span className={classes.itemTitle}>
                                         👏오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다!👏</span></td>
-                                    <td><TaskDeleteButton post_id={content._id} user_id={localStorage.getItem('myData')}/></td>
-                                    {/*<TaskComponent*/}
-                                    {/*    classes={classes}*/}
-                                    {/*    item={content}*/}
-                                    {/*    onCheckboxClick={onCheckboxClick}*/}
-                                    {/*/>*/}
+                                    <td><TaskDeleteButton post_id={content._id}
+                                                          user_id={localStorage.getItem('myData')}/></td>
+
                                     </tbody>
 
 
@@ -160,9 +159,8 @@ function Create(props) {
                         </Row>
                     </Row>
                 </Row>,
-                <Row>
-                    <PaymentTable/>
-                </Row>
+
+                <VacationBoard/>
 
 
             ]}
