@@ -18,7 +18,7 @@ const resolvers = {
         tasks: async(_, args) => {
             try {
                 let tasks = await Task.find();
-                
+                if(tasks.length == 0) return null;
                 return tasks;
             } catch (err) {
                 console.log(err);
