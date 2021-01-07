@@ -1,164 +1,152 @@
 import React, {useEffect, useState} from 'react';
-import {Column, Row} from 'simple-flexbox';
+import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import UserTable from '../../components/table/UserTable';
-import {useQuery} from "@apollo/react-hooks";
-import {MeQuery} from "../../graphql/query";
-import Task from "./Task";
+import CardComponent from 'components/cards/CardComponent';
+import {useMutation, useQuery} from "@apollo/react-hooks";
+import {TaskQuery, UserSearchQuery} from "../../graphql/query";
+import {CreateUserMutation, TaskCreateMutation} from "../../graphql/mutation";
+import TaskDeleteButton from "../../components/button/TaskDeleteButton";
+import PaymentTable from "../../components/table/PaymentTable";
+import {IconCheckboxOff, IconCheckboxOn} from "../../components/icons";
+import PaymentBoard from "../paymentboard/PaymentBoard";
+import VacationBoard from "../firstpage/VacationBoard";
 import BoardTable from "../../components/table/BoardTable";
 
-
 const useStyles = createUseStyles((theme) => ({
-    container: {
-        backgroundColor: '#FFFFFF',
-        border: `5px solid ${theme.color.darkRed}`,
-        borderRadius: 5,
-        cursor: 'pointer'
-    },
-    graphContainer: {
-        marginTop: 24,
-        marginLeft: 0,
-        marginRight: 0,
-        width: '100%'
-    },
-    graphSection: {
-        padding: 24
-    },
-    graphSubtitle: {
-        ...theme.typography.smallSubtitle,
+    root: {marginTop: "30px"},
+
+    addButton: {
+        backgroundColor: theme.color.darkRed,
         color: theme.color.grayishBlue2,
-        marginTop: 4,
-        marginRight: 8
+        fontSize: '20px !important',
+        padding: '7px !important',
+        width: "fit-content"
     },
-    graphTitle: {
-        ...theme.typography.cardTitle,
-        color: theme.color.veryDarkGrayishBlue
+    itemTitle: {
+        ...theme.typography.itemTitle,
+        color: theme.color.veryDarkGrayishBlue,
+        width: "50%"
     },
-    legendTitle: {
-        ...theme.typography.smallSubtitle,
-        fontWeight: '600',
+    itemValue: {
         color: theme.color.grayishBlue2,
-        marginLeft: 8
+        width: "50%"
     },
-    separator: {
-        backgroundColor: theme.color.lightGrayishBlue2,
-        width: 1,
-        minWidth: 1
+    greyTitle: {
+        color: theme.color.grayishBlue3
     },
-    statContainer: {
-        borderBottom: `1px solid ${theme.color.lightGrayishBlue2}`,
-        padding: '24px 32px 24px 32px',
-        height: 'calc(114px - 48px)',
-        '&:last-child': {
-            border: 'none'
-        }
+    checkboxWrapper: {
+        cursor: 'pointer',
+        marginRight: 16
     },
-    stats: {
-        borderTop: `1px solid ${theme.color.lightGrayishBlue2}`,
-        width: '100%'
-    },
-    statTitle: {
-        fontWeight: '600',
-        fontSize: 16,
-        lineHeight: '22px',
-        letterSpacing: '0.3px',
-        textAlign: 'center',
-        color: theme.color.grayishBlue2,
-        whiteSpace: 'nowrap',
-        marginBottom: 6
-    },
-    statValue: {
-        ...theme.typography.title,
-        textAlign: 'center',
-        color: theme.color.veryDarkGrayishBlue
-    },  lastRow: {
-        marginBelow: 200
-    },
+    input: {
+        color: theme.color.black,
+        display: "block",
+        width: "200%",
+        padding: "10px 0 10px 50px",
+        fontSize: '15px !important',
+        fontFamily: "Open Sans",
+        fontWeight: "600",
+        border: "0",
+        borderRadius: "3px",
+        outline: 0,
+        textIndent: "70px",
+        transition: "all .3s ease-in-out",
+        margin: "0px auto",
+        alignItems: "center",
+        justifyContent: "center",
+        LeftMargin: "30px",
+        alignSelf: "center"
+    }
+
 }));
 
-function UserBoard() {
+function Create(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
+    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
+    const [title, setTitle] = useState();
+    const [contents, setContents] = useState();
 
-    const [contents, setContents] = useState('');
-    const [username, setName] = useState();
-    const [id, setId] = useState();
 
-    const {data, loading} = useQuery(MeQuery);
+    const {data} = useQuery(TaskQuery);
 
     useEffect(() => {
         if (data) {
-            setContents(data.me);
-            setName(data.me.username);
-            setId(data.me.idNum);
+            setContents(data.tasks);
         }
-    }, [data]);
+    })
 
 
-    function renderLegend(color, title) {
-        return (
-            <Row vertical='center'>
-                <div style={{width: 16, border: '2px solid', borderColor: color}}></div>
-                <span className={classes.legendTitle}>{title}</span>
-            </Row>
-        );
+    const [create, {loading}] = useMutation(CreateUserMutation, {
+            refetchQueries: [{query: UserSearchQuery}],
+            variables: {
+                username:title
+            },
+            onCompleted: (data) => {
+
+            },
+
+            onError: () => {
+                alert("유저 이름을 작성해주세요.")
+            },
+        }
+    )
+
+    function onCheckboxClick(index) {
+        setItems((prev) => {
+            const newItems = [...prev];
+            newItems[index].checked = newItems[index].checked ? false : true;
+            return newItems;
+        });
     }
 
-    function renderStat(title, value) {
+
+    function renderAddButton() {
         return (
-            <Column
-                flexGrow={1}
-                className={classes.statContainer}
-                vertical='center'
+            <Row
                 horizontal='center'
+                vertical='center'
+                className={[classes.addButton].join(' ')}
+                onClick={create}
             >
-                <span className={classes.statTitle}>{title}</span>
-                <span className={classes.statValue}>{value}</span>
-            </Column>
+                +
+            </Row>
         );
     }
 
     return (
+        <CardComponent
+            containerStyles={props.containerStyles}
+            className={classes.root}
+            // title='📋 유저를 추가해주세요 📋'
+            // subtitle='(예시) 👏오늘은 OOO님이 @@ 기념으로 커피 쏩니다!👏'
 
-        <Column>
-            <Row
-                horizontal='space-between'
-                className={classes.lastRow}
-                breakpoints={{1024: 'column'}}
-            >
-                <Task/>
-
-            </Row>
-
-            <Row
-                flexGrow={1}
-                className={classes.container}
-                horizontal='center'
-                breakpoints={{1024: 'column'}}
-            >
+            items={[
 
 
-                <Column
-                    wrap
-                    flexGrow={7}
-                    flexBasis='735px'
-                    className={classes.graphSection}
-                    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
-                >
-                    <BoardTable/>
-                </Column>
-                <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
-                    <div/>
-                </Column>
-                <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
-                    {renderStat('이름', username)}
-                    {renderStat('이메일', id)}
-                    {renderStat('소속', '플랫폼 사업팀')}
+                <Row horizontal='space-between' vertical='center'>
 
-                </Column>
-            </Row>
-        </Column>
+                    <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
+                        <input type="text" placeholder="유저를 추가해주세요" onChange={e => setTitle(e.target.value)}
+                               className={classes.input}/>
+                    </span>
+                    {renderAddButton()}
+                </Row>,
+                <Row>
+                    <Row horizontal='space-between' vertical='center'>
+                        <Row>
+                            <BoardTable/>
+
+                        </Row>
+                    </Row>
+                </Row>
+
+
+            ]}
+        />
+
     );
 }
 
-export default UserBoard;
+
+export default Create;

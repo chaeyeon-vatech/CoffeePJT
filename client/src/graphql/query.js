@@ -29,6 +29,7 @@ export const MeQuery = gql`
     query me($userid:ID!) {
         me(userid:$userid){
             username
+            position
         }
     }
 

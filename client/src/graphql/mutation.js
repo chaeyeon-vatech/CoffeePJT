@@ -103,5 +103,16 @@ export const BackUserMutation = gql`
             position
         }
     }
-    
+
+`
+
+
+export const CreateUserMutation = gql`
+    mutation registerUser($username: String!){
+        registerUser(username:$username){
+            username
+        }
+    }
+
+
 `

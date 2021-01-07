@@ -19,7 +19,6 @@ function BoardTable() {
         }
     }, [user]);
 
-    console.log(length)
 
 
     return (
