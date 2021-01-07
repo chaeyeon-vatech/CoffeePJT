@@ -95,10 +95,10 @@ const useStyles = createUseStyles((theme) => ({
 ;
 
 const handleClick = (name, id) => {
-    if (window.confirm(name + '을 결제자로 선택하시겠습니까?')) {
+    if (window.confirm(name + '로 로그인하시겠습니까?')) {
 
         localStorage.setItem('myData', id)
-        window.location.href = '/create'
+        window.location.href = '/order'
     }
 }
 
@@ -128,8 +128,6 @@ const AuthenticationForm = () => {
 
 
     return (
-
-
         <div className={classes.root}>
             <div className={classes.loginwrap}>
                 <div className={classes.loginhtml}>

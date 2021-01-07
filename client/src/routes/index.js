@@ -17,7 +17,10 @@ function Routes() {
 
     const {data} = useQuery(TaskQuery);
 
-    return data ?  <PublicRoutes/>:<PrivateSection/> ;
+    console.log(data);
+
+    return data ? <PrivateSection/>:<PublicRoutes/>;
+
 }
 
 export default Routes;
