@@ -82,6 +82,11 @@ function Create(props) {
                 title: title,
                 userid: localStorage.getItem('myData')
             },
+            onCompleted: (data) => {
+                alert("주문이 생성되었습니다!");
+
+
+            },
 
             onError: () => {
                 alert("주문 내용을 작성해주세요.")
@@ -166,20 +171,6 @@ function Create(props) {
             ]}
         />
 
-    );
-}
-
-function TaskComponent({classes, index, item = {}, onCheckboxClick, onTagClick}) {
-    const {tag = {}} = item;
-    return (
-        <Row horizontal='space-between' vertical='center'>
-            <Row>
-                <div className={classes.checkboxWrapper} onClick={() => onCheckboxClick(index)}>
-                    {item.checked ? <IconCheckboxOn/> : <IconCheckboxOff/>}
-                </div>
-                <span className={classes.itemTitle}>{item.title}</span>
-            </Row>
-        </Row>
     );
 }
 

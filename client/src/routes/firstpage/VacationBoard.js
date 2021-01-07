@@ -15,6 +15,7 @@ import PaymentTable from "../../components/table/PaymentTable";
 import {OrderConfirmMutation, OrderGiveupMutation} from "../../graphql/mutation";
 import {TextField} from "@material-ui/core";
 import VacationTable from "../../components/table/VacationTable";
+import SearchTable from "../../components/table/SearchTable";
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -153,10 +154,7 @@ function TodayTrendsComponent() {
                 className={classes.graphSection}
                 breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
             >
-                <input className={classes.input} type='text' placeholder='휴가자로 전환할 주문자를 입력하세요.' onChange={e => setSearch(e.target.value)}
-                />
-
-                <PaymentTable/>
+               <SearchTable/>
             </Column>
             <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
                 <div/>

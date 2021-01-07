@@ -52,11 +52,10 @@ export const TaskCreateMutation = gql`
 
 //Task Update
 
-export const TaskUpdateMutation = gql`
-    mutation updateTask($id:ID!, $title:String!){
-        updateTask(_id:$id,title:$title){
-            _id
-            title
+export const UpdateMutation = gql`
+    mutation($id:ID!){
+        updateUser(_id:$id){
+            username
         }
     }
 
@@ -93,4 +92,16 @@ export const MeMutation = gql`
             username
         }
     }
+`
+
+
+export const BackUserMutation = gql`
+    mutation($id:ID!){
+        getbackUser(_id:$id){
+            username
+            status
+            position
+        }
+    }
+    
 `

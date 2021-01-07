@@ -1,35 +1,34 @@
 import React from 'react';
 import {useMutation} from '@apollo/react-hooks';
-import {TaskRemoveMutation} from "../../graphql/mutation";
-import {TaskQuery} from "../../graphql/query";
+import {BackUserMutation, TaskRemoveMutation} from "../../graphql/mutation";
+import {VacationQuery} from "../../graphql/query";
 import {Row} from "simple-flexbox";
 import {createUseStyles, useTheme} from "react-jss";
 
 const useStyles = createUseStyles((theme) => ({
     addButton: {
-        backgroundColor: theme.color.lightGrayishBlue,
-        color: "black",
-        fontSize: '20px !important',
-        padding: '5px !important',
-        marginLeft: "40px"
+        width: "100%",
+        color: "#151414",
+        display: "block",
+        margin: "10px 10px",
     },
 }));
 
 
-function TaskDeleteButton(post_id, user_id) {
+function TaskDeleteButton(post_id) {
 
     const user = localStorage.getItem('myData');
 
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const mutation = TaskRemoveMutation;
+    const mutation = BackUserMutation;
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: TaskQuery}],
-            variables: {id: post_id.post_id, userid: post_id.user_id},
+            refetchQueries: [{query: VacationQuery}],
+            variables: {id: String(Object.values(post_id))},
             onCompleted: (data) => {
-                alert("주문이 취소되었습니다.");
+                alert("주문자로 전환되었습니다!");
 
 
             }
@@ -46,8 +45,7 @@ function TaskDeleteButton(post_id, user_id) {
                     className={[classes.addButton].join(' ')}
                     onClick={deletePostOrMutation}
                 >
-                    -
-                </Row>
+                    Click! </Row>
 
             </form>
 
@@ -57,3 +55,4 @@ function TaskDeleteButton(post_id, user_id) {
 
 
 export default TaskDeleteButton;
+
