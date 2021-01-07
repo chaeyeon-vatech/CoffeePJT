@@ -131,6 +131,7 @@ function Create(props) {
                                className={classes.input}/>
                     </span>
                     {renderAddButton()}
+                    {/*<a href="/order">주문자 페이지로 이동</a>*/}
                 </Row>,
                 <Row>
                     <Row horizontal='space-between' vertical='center'>
@@ -161,6 +162,7 @@ function Create(props) {
 
                                 ))}
                             </table>
+
                         </Row>
                     </Row>
                 </Row>,

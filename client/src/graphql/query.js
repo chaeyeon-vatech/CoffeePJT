@@ -29,6 +29,7 @@ export const MeQuery = gql`
     query me($userid:ID!) {
         me(userid:$userid){
             username
+            position
         }
     }
 
@@ -123,7 +124,15 @@ export const VacationQuery = gql`
 
 `
 
+//Order Query
 
+export const OrderQuery = gql`
+    query {
+        orders{
+            username
+            menu}
+    }
+`
 
 
 

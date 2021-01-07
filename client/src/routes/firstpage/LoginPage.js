@@ -95,10 +95,10 @@ const useStyles = createUseStyles((theme) => ({
 ;
 
 const handleClick = (name, id) => {
-    if (window.confirm(name + '을 결제자로 선택하시겠습니까?')) {
+    if (window.confirm(name + '로 로그인하시겠습니까?')) {
 
         localStorage.setItem('myData', id)
-        window.location.href = '/create'
+        window.location.href = '/order'
     }
 }
 
@@ -109,8 +109,7 @@ const AuthenticationForm = () => {
 
     const [search, setSearch] = useState();
     const [result, setResult] = useState();
-
-    const {task} = useQuery(TaskQuery);
+    const [tasks, setTasks] = useState();
 
     const {data} = useQuery(SearchQuery, {
         variables: {
@@ -118,6 +117,8 @@ const AuthenticationForm = () => {
         },
 
     });
+
+    const {data: task} = useQuery(TaskQuery);
 
     useEffect(() => {
         if (data) {
@@ -127,20 +128,32 @@ const AuthenticationForm = () => {
     }, [data]);
 
 
+    useEffect(() => {
+        if (task) {
+            setTasks(task.tasks);
+
+        }
+    }, [task]);
+
+
+    // console.log("tasks");
+
     return (
-
-
         <div className={classes.root}>
             <div className={classes.loginwrap}>
                 <div className={classes.loginhtml}>
 
-                    <h3>OOO님의 주문이 진행 중입니다.</h3>
-                    <h5 className={classes.h5}>주문을 생성하시겠습니까?</h5>
+
+                    {tasks && tasks.map((task) => (
+                        <h3>{task.creater}님의 주문이 진행 중입니다.</h3>
+                    ))}
+
+                    <h5 className={classes.h5}>주문하시겠습니까?</h5>
 
                     <div className={classes.loginform}>
 
                         <div className={classes.group}>
-                            <label>결제자 </label>
+                            <label>주문자 </label>
                             <input type='text' placeholder='이름을 입력하세요.' onChange={e => setSearch(e.target.value)}
                             />
 

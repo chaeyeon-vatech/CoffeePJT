@@ -3,9 +3,10 @@ import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
 import {CreateMutation, OrderGiveupMutation} from "../../graphql/mutation";
-import {MeQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
+import {MeQuery, OrderQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
+import {ObjectId} from "bson";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -89,15 +90,17 @@ function OrderBoard() {
     const [username, setName] = useState();
 
 
-
-    const {data} = useQuery(MeQuery);
+    const {data} = useQuery(MeQuery, {
+        variables: {
+            userid: localStorage.getItem('myData')
+        }
+    });
 
 
     useEffect(() => {
         if (data) {
             setName(data.me.username);
-            setId(data.me.idNum);
-            setStatus(data.me.status);
+            setStatus(data.me.position);
 
         }
     }, [data]);
@@ -107,9 +110,9 @@ function OrderBoard() {
 
 
     const [create, error] = useMutation(createmutation, {
-            refetchQueries: [{query: SearchQuery, MeQuery}],
+            refetchQueries: [{query: OrderQuery}],
             variables: {
-                username: username,
+                id: localStorage.getItem('myData'),
                 menu: menu,
                 hi: hi
             },
@@ -124,8 +127,11 @@ function OrderBoard() {
         }
     )
 
+
+    console.log(Object(localStorage.getItem('myData')));
     const [giveup] = useMutation(OrderGiveupMutation, {
-            refetchQueries: [{query: SearchQuery, MeQuery}],
+            refetchQueries: [{query: OrderQuery}],
+            variables: {id: String(Object.values(localStorage.getItem('myData')))},
             onCompleted: (data) => {
                 window.location.href = '/order';
 
@@ -133,10 +139,6 @@ function OrderBoard() {
             }
         }
     )
-
-
-
-
 
 
     function renderStat(title, value, value2) {
@@ -164,15 +166,7 @@ function OrderBoard() {
             horizontal='center'
             breakpoints={{1024: 'column'}}
         >
-            {/*<Column*/}
-            {/*    wrap*/}
-            {/*    flexGrow={7}*/}
-            {/*    flexBasis='735px'*/}
-            {/*    className={classes.graphSection}*/}
-            {/*    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}*/}
-            {/*>*/}
-            {/*    <BoardTable/>*/}
-            {/*</Column>*/}
+
             <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
                 <div/>
             </Column>
@@ -241,7 +235,6 @@ function OrderBoard() {
             </Column>
 
         </Row>
-
 
 
     );

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createUseStyles, useTheme} from 'react-jss';
 import {useHistory} from 'react-router-dom';
 import SLUGS from 'resources/links';
@@ -21,6 +21,15 @@ const useStyles = createUseStyles({
     }
 });
 
+const handleClick = () => {
+    if (window.confirm('로그아웃하시겠습니까?')) {
+
+        localStorage.clear()
+        window.location.href = '/'
+    }
+}
+
+
 function SidebarComponent() {
     const [_, removeAuthToken] = useAuthToken();
 
@@ -29,23 +38,24 @@ function SidebarComponent() {
     const classes = useStyles({theme});
     const isMobile = window.innerWidth <= 1080;
 
-
-    const {data} = useQuery(MeQuery);
-
+    const [user, setUser] = useState();
 
 
-    const [logoutMutation, {loading}] = useMutation(LogoutMutation, {
-            refetchQueries: [{query: MeQuery}],
-            onCompleted: () => {
-                removeAuthToken();
-                localStorage.clear();
-                window.location.href = '/';
+    const {data} = useQuery(MeQuery, {
+        variables: {
+            userid: localStorage.getItem('myData')
+        },
 
+    });
 
+    useEffect(() => {
+        if (data) {
+            setUser(data.me.position);
 
-            }
         }
-    )
+    }, [data]);
+
+    console.log(user)
 
     function onClick(slug, parameters = {}) {
         push(convertlinksToUrl(slug, parameters));
@@ -57,30 +67,40 @@ function SidebarComponent() {
                 <LogoComponent/>
             </div>
 
-            {data&&<MenuItem
+
+            {user&&
+            <MenuItem
                 id={SLUGS.orderboard}
                 title='주문자 페이지'
                 onClick={() => onClick(SLUGS.orderboard)}
             />}
 
-            {data&&<MenuItem
+            <div className={classes.separator}></div>
+            {user == "결제자" && <MenuItem
                 id={SLUGS.tickets}
                 title='결제자 페이지'
                 onClick={() => onClick(SLUGS.tickets)}
             />}
 
-            <div className={classes.separator}></div>
-            {data &&
+
+            {user == "결제자" && <MenuItem
+                id={SLUGS.create}
+                title='주문 관리'
+                onClick={() => onClick(SLUGS.create)}
+            />}
+            {user == "결제자" &&
             <MenuItem
                 id={SLUGS.settings}
-                title='유저 페이지'
+                title='유저 관리'
                 onClick={() => onClick(SLUGS.settings)}
             />}
 
-            {!data && <MenuItem id='login' title='로그인'   onClick={() => onClick(SLUGS.login)}/>}
-            {data&&<MenuItem id='logout' title='로그아웃' onClick={logoutMutation}/>}
+            {/*{!data && <MenuItem id='login' title='로그인'   onClick={() => onClick(SLUGS.login)}/>}*/}
+            <div className={classes.separator}></div>
+            {localStorage.getItem('myData') && <MenuItem id='logout' title='로그아웃' onClick={handleClick}/>}
 
         </Menu>
+
     );
 }
 

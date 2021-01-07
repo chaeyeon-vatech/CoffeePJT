@@ -30,7 +30,7 @@ const typeDefs = gql`
         creater:String
         title: String
     }
-    
+
     type Mutation{
         createOrder(_id:ID!, menu:String!, hi:String!): Order!
         updateOrder(userid: ID!, orderid: ID!, menu:String, hi:String): Order!

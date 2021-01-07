@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import useWindowSize from 'resources/hooks/useWindowSize';
 import PrivateSection from 'routes/PrivateSection';
@@ -10,6 +10,8 @@ function Routes() {
     const {pathname} = useLocation();
     const [width, height] = useWindowSize();
 
+    const [task, setTask] = useState();
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [pathname]);
@@ -17,7 +19,18 @@ function Routes() {
 
     const {data} = useQuery(TaskQuery);
 
-    return data ?  <PublicRoutes/>:<PrivateSection/> ;
+    useEffect(() => {
+        if (data) {
+            setTask(data.tasks);
+        }
+    }, [data]);
+
+
+    console.log(task);
+
+
+    return task ? <PrivateSection/> : <PublicRoutes/>;
+
 }
 
 export default Routes;

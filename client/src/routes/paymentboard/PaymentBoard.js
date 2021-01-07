@@ -180,7 +180,7 @@ function TodayTrendsComponent() {
             </Column>
             <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
                 {renderStat('누적 금액', money)}
-                {renderStat('미주문자', count - parseInt(order[0]) - parseInt(order[1]) - parseInt(order[2]))}
+                {renderStat('미주문자', '0')}
                 {renderStat('결제 완료', <TextField type='submit'
                                                 onClick={deletePostOrMutation}
                                                 disabled={loading}
