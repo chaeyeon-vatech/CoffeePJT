@@ -135,6 +135,16 @@ export const OrderQuery = gql`
 `
 
 
+export const NotQuery = gql`
+    query {
+        includedNothing{
+            username
+        }
+    }
+
+
+`
+
 
 
 

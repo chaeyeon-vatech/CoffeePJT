@@ -6,8 +6,6 @@ import {CreateMutation, OrderGiveupMutation} from "../../graphql/mutation";
 import {MeQuery, OrderQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
-import {ObjectId} from "bson";
-
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -112,7 +110,7 @@ function OrderBoard() {
     const [create, error] = useMutation(createmutation, {
             refetchQueries: [{query: OrderQuery}],
             variables: {
-                id: localStorage.getItem('myData'),
+                id: String(Object.values(localStorage.getItem('myData')).join('')),
                 menu: menu,
                 hi: hi
             },
@@ -128,7 +126,8 @@ function OrderBoard() {
     )
 
 
-    console.log(Object(localStorage.getItem('myData')));
+    console.log(String(Object.values(localStorage.getItem('myData')).join('')));
+
     const [giveup] = useMutation(OrderGiveupMutation, {
             refetchQueries: [{query: OrderQuery}],
             variables: {id: String(Object.values(localStorage.getItem('myData')))},

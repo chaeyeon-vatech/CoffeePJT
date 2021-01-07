@@ -2,7 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import {useQuery} from "@apollo/react-hooks";
-import {AllUserQuery, CostQuery, CountQuery, MeQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
+import {
+    AllUserQuery,
+    CostQuery,
+    CountQuery,
+    MeQuery, NotQuery,
+    SearchQuery,
+    UserSearchQuery
+} from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
 import {OrderConfirmMutation, OrderGiveupMutation} from "../../graphql/mutation";
 import {TextField} from "@material-ui/core";
@@ -74,6 +81,10 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
+function changeBackground(e) {
+    e.target.style.background = 'red';
+}
+
 function TodayTrendsComponent() {
     const theme = useTheme();
     const classes = useStyles({theme});
@@ -86,6 +97,7 @@ function TodayTrendsComponent() {
         }
     }, [data]);
 
+    const [isShown, setIsShown] = useState(false);
 
     const [order, setOrder] = useState('');
     const [count, setCount] = useState('');
@@ -95,6 +107,8 @@ function TodayTrendsComponent() {
             setOrder(na.howmany);
         }
     }, [na]);
+
+    console.log(order[3])
 
     const {data: user} = useQuery(AllUserQuery)
 
@@ -135,6 +149,21 @@ function TodayTrendsComponent() {
         }
     )
 
+    const [vac, setVac] = useState();
+
+    const{not}= useQuery(NotQuery);
+
+    console.log("q"+not)
+
+    // const [vac, setVac] = useState();
+    // const {data: vacation} = useQuery(VacationArray);
+    //
+    // useEffect(() => {
+    //     if (vacation) {
+    //         setVac(vacation.includedNothing);
+    //     }
+    // }, [vacation]);
+
 
     function renderLegend(color, title) {
         return (
@@ -159,6 +188,7 @@ function TodayTrendsComponent() {
         );
     }
 
+
     return (
         <Row
             flexGrow={1}
@@ -180,13 +210,22 @@ function TodayTrendsComponent() {
             </Column>
             <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
                 {renderStat('누적 금액', money)}
-                {renderStat('미주문자', '0')}
+                {renderStat('미주문자', <a onMouseEnter={() => setIsShown(true)}
+                                       onMouseLeave={() => setIsShown(false)}>{order[3]}</a>)}
+
+                {isShown && (
+                    <div>
+                        {renderStat('미주문자 명단', money)}                    </div>
+                )
+                }
                 {renderStat('결제 완료', <TextField type='submit'
                                                 onClick={deletePostOrMutation}
                                                 disabled={loading}
                                                 value="Reset"/>)}
             </Column>
         </Row>
+
+
     );
 }
 
