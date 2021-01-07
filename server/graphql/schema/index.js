@@ -3,7 +3,7 @@ const typeDefs = gql`
     type Query {
         orders: [Order]!
         tasks:[Task]!
-        user(word:String):[User!]
+        user(word:String, category:Int!):[User!]
         allUsers: [User!]!
         me(userid: ID!):User!
         howmany:[Int!]
@@ -44,7 +44,8 @@ const typeDefs = gql`
         removeTask(_id: ID!, userid:ID!): Task!
 
         registerUser(username:String!):User!
-        updateUser(_id:ID!, position:String):User!
+        updateUser(_id:ID!):User!
+        getbackUser(_id:ID!):User!
         mee(userid: ID!):User!
     }
 `;

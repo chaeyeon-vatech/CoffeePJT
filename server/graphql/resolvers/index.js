@@ -27,8 +27,16 @@ const resolvers = {
         },
         user: async(_, args) => {
             const word = args.word;
-            if(word == "") return null
-            return await users.find({username:{$regex:word}})
+            const category = args.category;
+            if(category == 1){
+                if(word == "") return null
+                return await users.find({"username":{$regex:word}})  
+            }
+            else{
+                if(word == "") return null
+                return await users.find({"username":{$regex:word},"position":{$eq:"주문자"}})
+            }
+            
         },
         
         // 모든 유저 검색
@@ -249,11 +257,22 @@ const resolvers = {
         updateUser: async (_, args) => {
             try{    
                 const id = args._id;
-                const position = args.position;
-                const user = new users({position})
+                const position = "휴가자"
 
                 const updatedPosition = await users.findByIdAndUpdate(id,{$set:{position}}).exec()
                 return updatedPosition
+
+            } catch(error){
+                throw new Error(error.message)
+            }
+        },
+        getbackUser: async (_, args) => {
+            try{    
+                const id = args._id;
+                const position = "주문자"
+
+                const getbackPosition = await users.findByIdAndUpdate(id,{$set:{position}}).exec()
+                return getbackPosition
 
             } catch(error){
                 throw new Error(error.message)
