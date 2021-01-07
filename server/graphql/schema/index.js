@@ -30,7 +30,7 @@ const typeDefs = gql`
         creater:String
         title: String
     }
-    
+
     type Mutation{
         createOrder(_id:ID!, menu:String!, hi:String!): Order!
         updateOrder(userid: ID!, orderid: ID!, menu:String, hi:String): Order!
@@ -46,6 +46,7 @@ const typeDefs = gql`
         registerUser(username:String!):User!
         updateUser(_id:ID!):User!
         getbackUser(_id:ID!):User!
+        deleteUser(_id:ID!):User!
         mee(userid: ID!):User!
     }
 `;

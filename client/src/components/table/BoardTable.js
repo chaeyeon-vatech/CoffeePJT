@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
 import {AllUserQuery, IndexQuery, MeQuery, UserSearchQuery} from "../../graphql/query";
+import UserDeleteButton from "../button/UserDeleteButton";
 
 
 function BoardTable() {
@@ -25,12 +26,12 @@ function BoardTable() {
 
 
         <table>
-            <caption>주문 내역</caption>
+            <caption>유저 추가/삭제</caption>
 
             <thead>
             <tr>
                 <th scope="col">사용자 이름</th>
-                <th scope="col">상태</th>
+                <th scope="col">삭제</th>
 
 
             </tr>
@@ -43,7 +44,7 @@ function BoardTable() {
 
                 <tr style={{marginBottom: 20}}>
                     <td>{content.username}</td>
-                    <td>{content.position}</td>
+                    <td><UserDeleteButton post_id={content._id}/></td>
 
 
                 </tr>

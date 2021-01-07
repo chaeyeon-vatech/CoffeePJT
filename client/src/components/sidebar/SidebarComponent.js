@@ -67,13 +67,15 @@ function SidebarComponent() {
                 <LogoComponent/>
             </div>
 
-            {user == "주문자" && <MenuItem
+
+            {user&&
+            <MenuItem
                 id={SLUGS.orderboard}
                 title='주문자 페이지'
                 onClick={() => onClick(SLUGS.orderboard)}
             />}
 
-
+            <div className={classes.separator}></div>
             {user == "결제자" && <MenuItem
                 id={SLUGS.tickets}
                 title='결제자 페이지'
@@ -98,6 +100,7 @@ function SidebarComponent() {
             {localStorage.getItem('myData') && <MenuItem id='logout' title='로그아웃' onClick={handleClick}/>}
 
         </Menu>
+
     );
 }
 

@@ -89,7 +89,6 @@ function OrderBoard() {
     const [username, setName] = useState();
 
 
-
     const {data} = useQuery(MeQuery);
 
 
@@ -135,10 +134,6 @@ function OrderBoard() {
     )
 
 
-
-
-
-
     function renderStat(title, value, value2) {
         return (
 
@@ -164,15 +159,7 @@ function OrderBoard() {
             horizontal='center'
             breakpoints={{1024: 'column'}}
         >
-            {/*<Column*/}
-            {/*    wrap*/}
-            {/*    flexGrow={7}*/}
-            {/*    flexBasis='735px'*/}
-            {/*    className={classes.graphSection}*/}
-            {/*    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}*/}
-            {/*>*/}
-            {/*    <BoardTable/>*/}
-            {/*</Column>*/}
+
             <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
                 <div/>
             </Column>
@@ -241,7 +228,6 @@ function OrderBoard() {
             </Column>
 
         </Row>
-
 
 
     );

@@ -116,3 +116,15 @@ export const CreateUserMutation = gql`
 
 
 `
+
+
+export const UserDeleteMutation = gql`
+    mutation deleteUser($id: ID!){
+        deleteUser(_id:$id){
+            username
+            position
+        }
+    }
+
+
+`
