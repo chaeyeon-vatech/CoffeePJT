@@ -46,6 +46,7 @@ const typeDefs = gql`
         registerUser(username:String!):User!
         updateUser(_id:ID!):User!
         getbackUser(_id:ID!):User!
+        deleteUser(_id:ID!):User!
         mee(userid: ID!):User!
     }
 `;
