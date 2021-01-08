@@ -1,3 +1,4 @@
+import { extendResolversFromInterfaces } from 'apollo-server';
 import Order from '../../models/order.js';
 import Task from '../../models/task.js';
 import users from '../../models/user.js';
@@ -333,6 +334,10 @@ const resolvers = {
         },
         createTask: async (_, {userid, title}) => {
             try {
+                const isthere = await Task.find()
+                if(isthere.length != 0){
+                    throw new Error
+                }
                 const us = await users.findById(userid);
                 const creater = us.username;
                 const task = new Task({creater,
@@ -343,7 +348,7 @@ const resolvers = {
 
                 return result;
             } catch (e) {
-                throw new Error('Error: ', e);
+                throw new Error('Error: ds', e);
             }
         },
         removeTask: async (_, {_id, userid}) => {
