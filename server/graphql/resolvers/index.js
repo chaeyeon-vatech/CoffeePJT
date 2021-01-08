@@ -6,9 +6,15 @@ const resolvers = {
     Query: {
         orders: async(_, args) => {
             try {
-                let orders = await Order.find();
-                    
-                return orders;
+                if(args.hi == "icecream"){
+                    return await Order.find({"hi":{$eq:"icecream"}})
+                }
+                else if(args.hi == "etc"){
+                    return await Order.find({"hi":{$eq:"etc"}})
+                }
+                else {
+                    return await Order.find({"hi":{$nin:["icecream","etc"]}})
+                }
             } catch (err) {
                 console.log(err);
                 throw err;
@@ -160,9 +166,6 @@ const resolvers = {
             try {
                 const us = await users.findById(args._id)
                 const confirm = us.status
-                console.log(args)
-                console.log(us)
-                console.log(confirm)
                 if(confirm === "주문완료") throw new Error("이미 주문 하셨습니다.");
                 
                 const username = us.username

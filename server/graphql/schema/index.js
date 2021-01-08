@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'; //gql은 자바스크립트로 스키마를 정의함 이것도 spring model 같음..? 거의 컨트롤러 같은 느낌
 const typeDefs = gql`
     type Query {
-        orders: [Order]!
+        orders(hi:String): [Order]!
         tasks:[Task]
         orderMine(_id:ID!):[Order!]
         user(word:String, category:Int!):[User!]
@@ -33,7 +33,7 @@ const typeDefs = gql`
     }
 
     type Mutation{
-        createOrder(_id:ID!, menu:String!, hi:String!): Order!
+        createOrder(_id:ID!, menu:String!, hi:String): Order!
         updateOrder(userid: ID!, orderid: ID!, menu:String, hi:String): Order!
         removeOrder(userid: ID!, orderid: ID!): Order!
         giveupOrder(userid: ID!): String!
