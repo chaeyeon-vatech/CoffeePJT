@@ -56,7 +56,6 @@ function BoardTable() {
                     <td><UserBackButton post_id={content._id}/></td>
                 </tr>
 
-
             ))}
 
 

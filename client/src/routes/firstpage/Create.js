@@ -120,8 +120,8 @@ function Create(props) {
         <CardComponent
             containerStyles={props.containerStyles}
             className={classes.root}
-            title='📋 오늘의 주문 📋'
-            subtitle='(예시) 👏오늘은 OOO님이 @@ 기념으로 커피 쏩니다!👏'
+            title='📋 주문 생성 및 휴가자 관리 📋'
+            subtitle='(예시) 사유를 적어주시면 👏오늘은 OOO님이 @@ 기념으로 커피 삽니다!👏 로 주문자 화면에 보여집니다!'
 
             items={[
                 <Row horizontal='space-between' vertical='center'>
@@ -152,7 +152,7 @@ function Create(props) {
 
                                     <tbody>
                                     <td><span className={classes.itemTitle}>
-                                        👏오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다!👏</span></td>
+                                        👏오늘은 {content.creater}님이 {content.title} 기념으로 커피 삽니다!👏</span></td>
                                     <td><TaskDeleteButton post_id={content._id}
                                                           user_id={localStorage.getItem('myData')}/></td>
 
