@@ -49,7 +49,7 @@ export const TaskCreateMutation = gql`
 
 export const UpdateMutation = gql`
     mutation($id:ID!){
-        updateUser(_id:$id){
+        updatePosition(_id:$id){
             username
         }
     }
@@ -75,8 +75,8 @@ export const OrderGiveupMutation = gql`
 
 //주문 초기화
 export const OrderConfirmMutation = gql`
-    mutation confirmOrders($creater:String!) {
-        confirmOrders(creater:$creater)
+    mutation {
+        confirmOrders
     }
 `
 

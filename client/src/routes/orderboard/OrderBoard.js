@@ -3,7 +3,7 @@ import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import BoardTable from '../../components/table/BoardTable';
 import {CreateMutation, OrderGiveupMutation} from "../../graphql/mutation";
-import {MeQuery, OrderQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
+import {MeQuery, OrderQuery, OrderSearch, SearchQuery, UserSearchQuery} from "../../graphql/query";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {TextField} from "@material-ui/core";
 
@@ -81,7 +81,6 @@ const useStyles = createUseStyles((theme) => ({
 function OrderBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [id, setId] = useState();
     const [menu, setMenu] = useState();
     const [hi, setHi] = useState();
     const [status, setStatus] = useState();
@@ -110,11 +109,13 @@ function OrderBoard() {
     const [create, error] = useMutation(createmutation, {
             refetchQueries: [{query: OrderQuery}],
             variables: {
-                id: String(Object.values(localStorage.getItem('myData')).join('')),
+                id: localStorage.getItem('myData'),
                 menu: menu,
                 hi: hi
             },
             onCompleted: (data) => {
+
+                alert("주문이 완료되었습니다!")
                 window.location.href = '/order';
 
 
@@ -125,16 +126,22 @@ function OrderBoard() {
         }
     )
 
+    // const [id, setId] = useState();
 
-    console.log(String(Object.values(localStorage.getItem('myData')).join('')));
+    const {ordersea} = useQuery(OrderSearch, {
+        variables: {
+            id: localStorage.getItem('myData')
+        }
+    });
+
+    console.log(ordersea)
+
 
     const [giveup] = useMutation(OrderGiveupMutation, {
             refetchQueries: [{query: OrderQuery}],
-            variables: {id: String(Object.values(localStorage.getItem('myData')))},
+            variables: {id: localStorage.getItem('myData')},
             onCompleted: (data) => {
                 window.location.href = '/order';
-
-
             }
         }
     )

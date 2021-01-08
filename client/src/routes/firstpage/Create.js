@@ -127,7 +127,7 @@ function Create(props) {
                 <Row horizontal='space-between' vertical='center'>
 
                     <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
-                        <input type="text" placeholder="결제 사유를 적어주세요!" onChange={e => setTitle(e.target.value)}
+                        <input type="text" placeholder="어떤 이유로 커피를 사시나요?" onChange={e => setTitle(e.target.value)}
                                className={classes.input}/>
                     </span>
                     {renderAddButton()}
@@ -137,7 +137,6 @@ function Create(props) {
                     <Row horizontal='space-between' vertical='center'>
                         <Row>
                             <table>
-                                <caption>주문 내역</caption>
 
                                 <thead>
                                 <tr>

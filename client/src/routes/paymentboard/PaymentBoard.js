@@ -6,7 +6,7 @@ import {
     AllUserQuery,
     CostQuery,
     CountQuery,
-    MeQuery, NotQuery,
+    MeQuery, OrderSearch,
     SearchQuery,
     UserSearchQuery
 } from "../../graphql/query";
@@ -149,11 +149,17 @@ function TodayTrendsComponent() {
         }
     )
 
-    const [vac, setVac] = useState();
+    // const [self, setSelf] = useState();
 
-    const{not}= useQuery(NotQuery);
-
-    console.log("q"+not)
+    // const {or} = useQuery(OrderSearch,{variables:{id:localStorage.getItem('getData')}});
+    //
+    // useEffect(() => {
+    //     if (or) {
+    //         setId(or);
+    //     }
+    // }, [or]);
+    //
+    // console.log(or)
 
     // const [vac, setVac] = useState();
     // const {data: vacation} = useQuery(VacationArray);

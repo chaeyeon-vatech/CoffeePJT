@@ -21,6 +21,7 @@ function PrivateRoutes() {
                 <Route exact path={LINKS.settings} component={UserboardComponent}/>
                 <Route exact path={LINKS.create} component={Create}/>
                 <Route exact path={LINKS.login} component={basicLogin}/>
+                <Redirect to={LINKS.login} component={basicLogin}/>
             </Switch>
         </Suspense>
     );

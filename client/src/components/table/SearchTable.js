@@ -136,7 +136,7 @@ const AuthenticationForm = () => {
             <div className={classes.loginwrap}>
                 <div className={classes.loginhtml}>
 
-                    <h3>주문자 검색</h3>
+                    <h3>휴가자 전환용 검색</h3>
                     <h5 className={classes.h5}>주문자를 검색해서 휴가자로 전환하세요!</h5>
 
                     <div className={classes.loginform}>

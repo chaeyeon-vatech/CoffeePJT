@@ -16,6 +16,7 @@ import {OrderConfirmMutation, OrderGiveupMutation} from "../../graphql/mutation"
 import {TextField} from "@material-ui/core";
 import VacationTable from "../../components/table/VacationTable";
 import SearchTable from "../../components/table/SearchTable";
+import TransferList from "../../components/table/TransferTable";
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -81,7 +82,7 @@ const useStyles = createUseStyles((theme) => ({
         textAlign: 'center',
         color: theme.color.veryDarkGrayishBlue
     },
-    input:{
+    input: {
         border: "none",
         padding: "15px 20px",
         borderRadius: "25px",
@@ -115,7 +116,6 @@ function TodayTrendsComponent() {
     }, [data]);
 
 
-
     function renderLegend(color, title) {
         return (
             <Row vertical='center'>
@@ -147,27 +147,29 @@ function TodayTrendsComponent() {
             horizontal='center'
             breakpoints={{1024: 'column'}}
         >
-            <Column
-                wrap
-                flexGrow={5}
-                flexBasis='735px'
-                className={classes.graphSection}
-                breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
-            >
-               <SearchTable/>
-            </Column>
-            <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
-                <div/>
-            </Column>
-            <Column
-                wrap
-                flexGrow={5}
-                flexBasis='735px'
-                className={classes.graphSection}
-                breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
-            >
-                <VacationTable/>
-            </Column>
+
+            <TransferList/>
+            {/*<Column*/}
+            {/*    wrap*/}
+            {/*    flexGrow={5}*/}
+            {/*    flexBasis='735px'*/}
+            {/*    className={classes.graphSection}*/}
+            {/*    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}*/}
+            {/*>*/}
+            {/*    <SearchTable/>*/}
+            {/*</Column>*/}
+            {/*<Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>*/}
+            {/*    <div/>*/}
+            {/*</Column>*/}
+            {/*<Column*/}
+            {/*    wrap*/}
+            {/*    flexGrow={5}*/}
+            {/*    flexBasis='735px'*/}
+            {/*    className={classes.graphSection}*/}
+            {/*    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}*/}
+            {/*>*/}
+            {/*    <VacationTable/>*/}
+            {/*</Column>*/}
         </Row>
     );
 }

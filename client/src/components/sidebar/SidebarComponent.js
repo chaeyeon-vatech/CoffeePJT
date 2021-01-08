@@ -55,20 +55,20 @@ function SidebarComponent() {
         }
     }, [data]);
 
-    console.log(user)
 
     function onClick(slug, parameters = {}) {
         push(convertlinksToUrl(slug, parameters));
     }
 
     return (
+
         <Menu isMobile={isMobile}>
             <div style={{paddingTop: 30, paddingBottom: 30}}>
                 <LogoComponent/>
             </div>
 
 
-            {user&&
+            {localStorage.getItem('myData') &&
             <MenuItem
                 id={SLUGS.orderboard}
                 title='주문자 페이지'

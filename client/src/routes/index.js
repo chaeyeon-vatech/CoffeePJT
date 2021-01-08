@@ -5,6 +5,7 @@ import PrivateSection from 'routes/PrivateSection';
 import PublicRoutes from 'routes/PublicRoutes';
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../graphql/query";
+import PublicSection from "./PublicSection";
 
 function Routes() {
     const {pathname} = useLocation();
@@ -24,10 +25,6 @@ function Routes() {
             setTask(data.tasks);
         }
     }, [data]);
-
-
-    console.log(task);
-
 
     return task ? <PrivateSection/> : <PublicRoutes/>;
 

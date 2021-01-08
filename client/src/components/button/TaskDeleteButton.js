@@ -9,7 +9,7 @@ const useStyles = createUseStyles((theme) => ({
     addButton: {
         backgroundColor: theme.color.lightGrayishBlue,
         color: "black",
-        fontSize: '20px !important',
+        fontSize: '14px !important',
         padding: '5px !important',
         marginLeft: "40px"
     },
@@ -46,7 +46,7 @@ function TaskDeleteButton(post_id, user_id) {
                     className={[classes.addButton].join(' ')}
                     onClick={deletePostOrMutation}
                 >
-                    -
+                    재작성
                 </Row>
 
             </form>
