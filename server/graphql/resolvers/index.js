@@ -1,3 +1,4 @@
+import { extendResolversFromInterfaces } from 'apollo-server';
 import Order from '../../models/order.js';
 import Task from '../../models/task.js';
 import users from '../../models/user.js';
@@ -333,6 +334,10 @@ const resolvers = {
         },
         createTask: async (_, {userid, title}) => {
             try {
+                const isthere = await Task.find()
+                if(isthere.length != 0){
+                    throw new Error
+                }
                 const us = await users.findById(userid);
                 const creater = us.username;
                 const task = new Task({creater,
@@ -343,7 +348,7 @@ const resolvers = {
 
                 return result;
             } catch (e) {
-                throw new Error('Error: ', e);
+                throw new Error('Error: ds', e);
             }
         },
         removeTask: async (_, {_id, userid}) => {
@@ -383,11 +388,14 @@ const resolvers = {
         },
         updatePosition: async (_, args) => {
             try{    
-                const id = args._id;
-                const position = "휴가자"
-
-                const updatedPosition = await users.findByIdAndUpdate(id,{$set:{position}}).exec()
-                return updatedPosition
+                const ids = args.ids;
+                for (let i = 0; i < ids.length; i++) {
+                    
+                    await users.findByIdAndUpdate(ids[i],{$set:{"position":"휴가자"}})
+                    
+                }
+                
+                return "휴가자 등록이 완료 되었습니다."
 
             } catch(error){
                 throw new Error(error.message)
