@@ -383,11 +383,14 @@ const resolvers = {
         },
         updatePosition: async (_, args) => {
             try{    
-                const id = args._id;
-                const position = "휴가자"
-
-                const updatedPosition = await users.findByIdAndUpdate(id,{$set:{position}}).exec()
-                return updatedPosition
+                const ids = args.ids;
+                for (let i = 0; i < ids.length; i++) {
+                    
+                    await users.findByIdAndUpdate(ids[i],{$set:{"position":"휴가자"}})
+                    
+                }
+                
+                return "휴가자 등록이 완료 되었습니다."
 
             } catch(error){
                 throw new Error(error.message)
