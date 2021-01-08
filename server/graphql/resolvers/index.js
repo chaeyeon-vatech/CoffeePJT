@@ -258,13 +258,15 @@ const resolvers = {
                 const user = new users({
                     username
                 })
-                
+                const re = await users.find({"username":{$eq:username}})
+                if(re.length != 0) throw new Error("이미 있는 유저입니다.");
+
                 return await user.save();
             } catch (error) {
                 throw new Error(error.message)
             }
         },
-        updateUser: async (_, args) => {
+        updatePosition: async (_, args) => {
             try{    
                 const id = args._id;
                 const position = "휴가자"
@@ -272,6 +274,14 @@ const resolvers = {
                 const updatedPosition = await users.findByIdAndUpdate(id,{$set:{position}}).exec()
                 return updatedPosition
 
+            } catch(error){
+                throw new Error(error.message)
+            }
+        },
+        updateUser: async (_, {_id,username}) => {
+            try{
+                
+                return await users.findByIdAndUpdate(_id,{$set:{username}}).exec()
             } catch(error){
                 throw new Error(error.message)
             }
