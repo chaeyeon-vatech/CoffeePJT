@@ -10,9 +10,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import {useQuery} from "@apollo/react-hooks";
-import {VacationQuery} from "../../graphql/query";
+import {useMutation, useQuery} from "@apollo/react-hooks";
+import {Ordermen, VacationQuery} from "../../graphql/query";
 import UserBackButton from "../button/UserBackButton";
+import {BackUserMutation} from "../../graphql/mutation";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,6 +48,7 @@ function union(a, b) {
 export default function TransferList() {
     const classes = useStyles();
     const [checked, setChecked] = React.useState([]);
+    const [id, setId] = React.useState([]);
     const [left, setLeft] = React.useState([1, 2, 3]);
     const [right, setRight] = React.useState([4, 5, 6, 7]);
 
@@ -57,6 +59,18 @@ export default function TransferList() {
             setRight(user.includedVacation);
         }
     }, [user]);
+
+
+    const {data: order} = useQuery(Ordermen);
+
+    useEffect(() => {
+        if (order) {
+            setLeft(order.includedOrdermen);
+        }
+    }, [order]);
+
+    const mutation = BackUserMutation;
+
 
 
     const leftChecked = intersection(checked, left);
@@ -129,13 +143,8 @@ export default function TransferList() {
                                 />
                             </ListItemIcon>
 
-                            {items &&
-                            items.map((content) => (
+                            <ListItemText id={labelId} primary={value.username}/>
 
-                                <ListItemText id={labelId} primary={content.username}/>
-
-                            ))}
-                            {/*<ListItemText id={labelId} primary={`List item ${value + 1}`}/>}*/}
                         </ListItem>
                     );
                 })}

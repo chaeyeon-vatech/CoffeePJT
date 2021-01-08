@@ -21,7 +21,6 @@ function BoardTable() {
 
 
     const [length, setLength] = useState();
-
     const {data: user} = useQuery(VacationQuery)
 
     useEffect(() => {
@@ -57,6 +56,8 @@ function BoardTable() {
                 </tr>
 
             ))}
+
+
 
 
             </tbody>

@@ -146,6 +146,13 @@ export const NotQuery = gql`
 
 `
 
+export const Ordermen = gql`
+    query{
+        includedOrdermen{
+            username
+        }
+    }`
+
 
 export const OrderSearch = gql`
     query orderMine($id:ID!){
