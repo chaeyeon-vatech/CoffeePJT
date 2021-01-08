@@ -14,6 +14,7 @@ const typeDefs = gql`
         includedOrdermen:[User!]
         includedVacation:[User!]
         includedNothing:[User!]
+        receipt:[String]
     }
     type User {
         _id: ID
