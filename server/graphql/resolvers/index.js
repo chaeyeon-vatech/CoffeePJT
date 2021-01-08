@@ -149,6 +149,10 @@ const resolvers = {
             
             return result
         },
+        includedOrdermen: async(_, args)=>{
+            const result = users.find({"position":{$eq:"주문자"}})
+            return  result
+        },
         includedVacation: async(_,args)=>{
             
             const result = users.find({"position":{$eq:"휴가자"}})

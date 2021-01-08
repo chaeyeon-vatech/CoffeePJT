@@ -11,6 +11,7 @@ const typeDefs = gql`
         howmuch:Int!
         coffeeAmount:[Int!]
         includedCoffee(menu:String!, hi:String!):[Order!]
+        includedOrdermen:[User!]
         includedVacation:[User!]
         includedNothing:[User!]
     }
