@@ -9,6 +9,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
+import {Tab, Tabs} from "@material-ui/core";
+import {TabPanel} from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,15 +21,41 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
-    card: {maxWidth: 345}
+    card: {maxWidth: 345},
+    color:{
+        brown:"#6d4c41"
+    }
 }));
 
-export default function CenteredGrid() {
+export default function CorderBoard() {
     const classes = useStyles();
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
 
     return (
         <div className={classes.root}>
+
             <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <Paper className={classes.root}>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            indicatorColor="secondary"
+                            textColor="secondary"
+                            centered
+                        >
+                            <Tab label="☕ 커피 ☕" href={"/order"}/>
+                            <Tab label="🍦 아이스크림 🍦" href={"/iorder"}/>
+                            <Tab label="🥤 기타 음료 🥤" href={"/eorder"}/>
+                        </Tabs>
+                    </Paper>
+
+                </Grid>
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
                         <Card className={classes.card}>
@@ -156,3 +184,4 @@ export default function CenteredGrid() {
         </div>
     );
 }
+

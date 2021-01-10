@@ -8,6 +8,8 @@ import SLUGS from "../resources/links";
 import basicLogin from "./firstpage/LoginPage";
 import NoTask from "./firstpage/NoTask";
 import Create from "./firstpage/Create";
+import IceBoard from "./orderboard/IceBoard"
+import etcBoard from "./orderboard/etcBoard"
 
 const OrderboardComponent = lazy(() => import('./orderboard/OrderBoardComponent'));
 
@@ -17,6 +19,8 @@ function PrivateRoutes() {
 
             <Switch>
                 <Route exact path={LINKS.orderboard} component={OrderboardComponent}/>
+                <Route exact path={LINKS.iceboard} component={IceBoard}/>
+                <Route exact path={LINKS.etcboard} component={etcBoard}/>
                 <Route exact path={LINKS.tickets} component={PaymentboardComponent}/>
                 <Route exact path={LINKS.settings} component={UserboardComponent}/>
                 <Route exact path={LINKS.create} component={Create}/>
