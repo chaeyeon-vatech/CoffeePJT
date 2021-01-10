@@ -110,7 +110,8 @@ export const AllUserQuery = gql`
         allUsers{
             _id
             username
-            idNum
+            position
+            status
         }
     }
 `
@@ -150,6 +151,7 @@ export const Ordermen = gql`
     query{
         includedOrdermen{
             username
+            _id
         }
     }`
 

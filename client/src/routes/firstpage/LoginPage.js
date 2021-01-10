@@ -3,8 +3,6 @@ import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
-import {MeMutation} from "../../graphql/mutation";
-
 
 const useStyles = createUseStyles((theme) => ({
 
@@ -111,12 +109,15 @@ const AuthenticationForm = () => {
     const [result, setResult] = useState();
     const [tasks, setTasks] = useState();
 
+
     const {data} = useQuery(SearchQuery, {
         variables: {
             word: search
         },
 
     });
+
+    console.log("data", data);
 
     const {data: task} = useQuery(TaskQuery);
 
@@ -136,8 +137,6 @@ const AuthenticationForm = () => {
     }, [task]);
 
 
-    // console.log("tasks");
-
     return (
         <div className={classes.root}>
             <div className={classes.loginwrap}>
@@ -154,6 +153,8 @@ const AuthenticationForm = () => {
 
                         <div className={classes.group}>
                             <label>주문자 </label>
+
+
                             <input type='text' placeholder='이름을 입력하세요.' onChange={e => setSearch(e.target.value)}
                             />
 

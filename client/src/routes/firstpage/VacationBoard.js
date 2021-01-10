@@ -149,27 +149,7 @@ function TodayTrendsComponent() {
         >
 
             <TransferList/>
-            {/*<Column*/}
-            {/*    wrap*/}
-            {/*    flexGrow={5}*/}
-            {/*    flexBasis='735px'*/}
-            {/*    className={classes.graphSection}*/}
-            {/*    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}*/}
-            {/*>*/}
-            {/*    <SearchTable/>*/}
-            {/*</Column>*/}
-            {/*<Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>*/}
-            {/*    <div/>*/}
-            {/*</Column>*/}
-            {/*<Column*/}
-            {/*    wrap*/}
-            {/*    flexGrow={5}*/}
-            {/*    flexBasis='735px'*/}
-            {/*    className={classes.graphSection}*/}
-            {/*    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}*/}
-            {/*>*/}
-            {/*    <VacationTable/>*/}
-            {/*</Column>*/}
+
         </Row>
     );
 }

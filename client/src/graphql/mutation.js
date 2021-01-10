@@ -91,13 +91,9 @@ export const MeMutation = gql`
 
 
 export const BackUserMutation = gql`
-    mutation($id:ID!){
-        getbackUser(_id:$id){
-            username
-            status
-            position
-        }
-    }
+    mutation updatePosition($ids:[ID])
+    
+    {updatePosition(ids:$ids)}
 
 `
 

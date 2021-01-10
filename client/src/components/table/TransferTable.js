@@ -60,7 +60,6 @@ export default function TransferList() {
         }
     }, [user]);
 
-
     const {data: order} = useQuery(Ordermen);
 
     useEffect(() => {
@@ -69,8 +68,20 @@ export default function TransferList() {
         }
     }, [order]);
 
+
     const mutation = BackUserMutation;
 
+    const [deletePostOrMutation, {loading}] = useMutation(mutation, {
+            refetchQueries: [{query: Ordermen, VacationQuery}],
+            variables: {ids: checked.map((c) => (c._id))},
+            onCompleted: () => {
+
+                alert("휴가자로 전환되었습니다!");
+                window.location.href = '/create';
+
+            }
+        }
+    )
 
 
     const leftChecked = intersection(checked, left);
@@ -110,6 +121,10 @@ export default function TransferList() {
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
     };
+
+
+    console.log(checked.map((c) => (c._id)))
+
 
     const customList = (title, items) => (
         <Card>
@@ -153,6 +168,7 @@ export default function TransferList() {
         </Card>
     );
 
+
     return (
         <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
             <Grid item>{customList('주문자', left)}</Grid>
@@ -162,12 +178,13 @@ export default function TransferList() {
                         variant="outlined"
                         size="small"
                         className={classes.button}
-                        onClick={handleCheckedRight}
+                        onClick={deletePostOrMutation}
                         disabled={leftChecked.length === 0}
                         aria-label="move selected right"
                     >
                         &gt;
                     </Button>
+
                     <Button
                         variant="outlined"
                         size="small"
@@ -181,6 +198,9 @@ export default function TransferList() {
                 </Grid>
             </Grid>
             <Grid item>{customList('휴가자', right)}</Grid>
+
         </Grid>
+
+
     );
 }
