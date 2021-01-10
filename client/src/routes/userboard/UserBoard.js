@@ -80,10 +80,10 @@ function Create(props) {
     const [create, {loading}] = useMutation(CreateUserMutation, {
             refetchQueries: [{query: UserSearchQuery}],
             variables: {
-                username:title
+                username: title
             },
             onCompleted: (data) => {
-
+                alert("유저 추가가 완료되었습니다.")
             },
 
             onError: () => {
