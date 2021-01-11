@@ -348,7 +348,7 @@ const resolvers = {
 
                 return result;
             } catch (e) {
-                throw new Error('Error: ds', e);
+                throw new Error('Error: 이미 다른 주문이 진행중입니다. 주문이 완료되면 그때 다시 시도해주세요', e);
             }
         },
         removeTask: async (_, {_id, userid}) => {
@@ -411,11 +411,13 @@ const resolvers = {
         },
         getbackUser: async (_, args) => {
             try{    
-                const id = args._id;
-                const position = "주문자"
-
-                const getbackPosition = await users.findByIdAndUpdate(id,{$set:{position}}).exec()
-                return getbackPosition
+                const ids = args.ids;
+                for (let i = 0; i < ids.length; i++) {
+                    
+                    await users.findByIdAndUpdate(ids[i],{$set:{"position":"주문자"}})
+                    
+                }
+                return "해당 인원은 주문자로 다시 바뀌었습니다."
 
             } catch(error){
                 throw new Error(error.message)
