@@ -13,7 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {Ordermen, VacationQuery} from "../../graphql/query";
 import UserBackButton from "../button/UserBackButton";
-import {BackUserMutation} from "../../graphql/mutation";
+import {BackUserMutation, OrderBackMutation} from "../../graphql/mutation";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -69,14 +69,25 @@ export default function TransferList() {
     }, [order]);
 
 
-    const mutation = BackUserMutation;
-
-    const [deletePostOrMutation, {loading}] = useMutation(mutation, {
+    const [vacationback, {loading}] = useMutation(BackUserMutation, {
             refetchQueries: [{query: Ordermen, VacationQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
 
                 alert("휴가자로 전환되었습니다!");
+                window.location.href = '/create';
+
+            }
+        }
+    )
+
+
+    const [orderback] = useMutation(OrderBackMutation, {
+            refetchQueries: [{query: Ordermen, VacationQuery}],
+            variables: {ids: checked.map((c) => (c._id))},
+            onCompleted: () => {
+
+                alert("주문자로 전환되었습니다!");
                 window.location.href = '/create';
 
             }
@@ -178,7 +189,7 @@ export default function TransferList() {
                         variant="outlined"
                         size="small"
                         className={classes.button}
-                        onClick={deletePostOrMutation}
+                        onClick={vacationback}
                         disabled={leftChecked.length === 0}
                         aria-label="move selected right"
                     >
@@ -189,7 +200,7 @@ export default function TransferList() {
                         variant="outlined"
                         size="small"
                         className={classes.button}
-                        onClick={handleCheckedLeft}
+                        onClick={orderback}
                         disabled={rightChecked.length === 0}
                         aria-label="move selected left"
                     >

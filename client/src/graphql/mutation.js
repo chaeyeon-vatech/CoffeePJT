@@ -119,3 +119,10 @@ export const UserDeleteMutation = gql`
 
 
 `
+
+export const OrderBackMutation = gql`
+    mutation getbackUser($ids:[ID])
+
+    {getbackUser(ids:$ids)}
+
+`

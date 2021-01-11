@@ -3,6 +3,8 @@ import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
+import {Autocomplete} from "@material-ui/lab";
+import {TextField} from "@material-ui/core";
 
 const useStyles = createUseStyles((theme) => ({
 
@@ -136,6 +138,8 @@ const AuthenticationForm = () => {
         }
     }, [task]);
 
+    console.log(tasks)
+
 
     return (
         <div className={classes.root}>
@@ -153,6 +157,15 @@ const AuthenticationForm = () => {
 
                         <div className={classes.group}>
                             <label>주문자 </label>
+
+
+                            {/*<Autocomplete*/}
+                            {/*    id="combo-box-demo"*/}
+                            {/*    options={task}*/}
+                            {/*    getOptionLabel={(option) => option.title}*/}
+                            {/*    style={{ width: 300 }}*/}
+                            {/*    renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}*/}
+                            {/*/>*/}
 
 
                             <input type='text' placeholder='이름을 입력하세요.' onChange={e => setSearch(e.target.value)}

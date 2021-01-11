@@ -149,28 +149,6 @@ function TodayTrendsComponent() {
         }
     )
 
-    // const [self, setSelf] = useState();
-
-    // const {or} = useQuery(OrderSearch,{variables:{id:localStorage.getItem('getData')}});
-    //
-    // useEffect(() => {
-    //     if (or) {
-    //         setId(or);
-    //     }
-    // }, [or]);
-    //
-    // console.log(or)
-
-    // const [vac, setVac] = useState();
-    // const {data: vacation} = useQuery(VacationArray);
-    //
-    // useEffect(() => {
-    //     if (vacation) {
-    //         setVac(vacation.includedNothing);
-    //     }
-    // }, [vacation]);
-
-
     function renderLegend(color, title) {
         return (
             <Row vertical='center'>
