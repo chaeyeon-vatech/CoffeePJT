@@ -97,11 +97,7 @@ const resolvers = {
                     
                     sum+=2000;
                 }
-                else if(orders[i].menu === "카페모카"){
-                    
-                    sum+=2500;
-                }
-                else if(orders[i].menu === "아이스티"){
+                else if(orders[i].menu === "카페라떼"){
                     
                     sum+=2500;
                 }
@@ -109,39 +105,44 @@ const resolvers = {
                     
                     sum+=3000;
                 }
+                else if(orders[i].menu === "카페모카"){
+                    
+                    sum+=3000;
+                }
+                else if(orders[i].menu === "아시나요"){
+                    
+                    sum+=3000;
+                }
+                else if(orders[i].menu === "돼지콘"){
+                    
+                    sum+=3000;
+                }
+                else if(orders[i].menu === "브라보"){
+                    
+                    sum+=3000;
+                }
+                else if(orders[i].menu === "녹차마루"){
+                    
+                    sum+=3000;
+                }
+                else if(orders[i].menu === "아이스티"){
+                    
+                    sum+=2000;
+                }
+                else if(orders[i].menu === "망고 요거트 스무디"){
+                    
+                    sum+=3400;
+                }
+                else if(orders[i].menu === "딸기 요거트 스무디"){
+                    
+                    sum+=3400;
+                }
+                else if(orders[i].menu === "플레인 요거트 스무디"){
+                    
+                    sum+=3400;
+                }
             }
             return sum;
-        },
-        coffeeAmount: async(_,args)=>{
-            let coffee = [0,0,0,0,0,0,0,0];
-            const orders = await Order.find();
-            for(let i=0; i<orders.length; i++){
-                if(orders[i].menu === "아메리카노" && orders[i].hi === "hot"){
-                    coffee[0]++;
-                }
-                else if(orders[i].menu === "아메리카노" && orders[i].hi === "ice"){
-                    coffee[1]++;
-                }
-                else if(orders[i].menu === "카페모카" && orders[i].hi === "hot"){
-                    coffee[2]++;
-                }
-                else if(orders[i].menu === "카페모카" && orders[i].hi === "ice"){
-                    coffee[3]++;
-                }
-                else if(orders[i].menu === "아이스티"&& orders[i].hi === "hot"){
-                    coffee[4]++;
-                }
-                else if(orders[i].menu === "아이스티" && orders[i].hi === "ice"){
-                    coffee[5]++;
-                }
-                else if(orders[i].menu === "바닐라라떼" && orders[i].hi === "hot"){
-                    coffee[6]++;
-                }
-                else if(orders[i].menu === "바닐라라떼" && orders[i].hi === "ice"){
-                    coffee[7]++;
-                }
-            }
-            return coffee;
         },
         includedCoffee: async(_,args)=>{
             const menu = args.menu;
@@ -161,7 +162,9 @@ const resolvers = {
             return result
         },
         includedNothing: async(_,args)=>{
-            const result = users.find({"status":{$eq:""},"position":{$ne:"휴가자"}})
+            const status = "대기중"
+            const position = "휴가자"
+            const result = users.find({"status":{$eq:status},"position":{$ne:position}})
             return result
         },
         receipt: async(_,args)=>{
@@ -327,7 +330,7 @@ const resolvers = {
             const renualUser = await users.find();
             
             for (let index = 0; index < renualUser.length; index++) {
-                await users.findByIdAndUpdate(renualUser[index].id,{status:"", position:"주문자"})  
+                await users.findByIdAndUpdate(renualUser[index].id,{status:"대기중", position:"주문자"})  
             }
 
             return "완료 처리 되었습니다. 맛있게 드세요!"
