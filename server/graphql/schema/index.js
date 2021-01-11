@@ -49,7 +49,7 @@ const typeDefs = gql`
         registerUser(username:String!):User!
         updatePosition(ids:[ID]):String!
         updateUser(_id:ID!, username:String!):User!
-        getbackUser(ids:[ID):String!
+        getbackUser(ids:[ID]):String!
         deleteUser(_id:ID!):User!
         mee(userid: ID!):User!
     }
