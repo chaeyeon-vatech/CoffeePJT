@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -9,8 +9,16 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import {Tab, Tabs} from "@material-ui/core";
+import {Tab, Tabs, useTheme} from "@material-ui/core";
 import {TabPanel} from "@material-ui/lab";
+import {useQuery, useMutation} from "@apollo/react-hooks";
+import {MeQuery, OrderSearch} from "../../graphql/query";
+import {CreateMutation} from "../../graphql/mutation";
+import CreateOrder from "./useMutation";
+import MenuItem from "../../components/sidebar/MenuItemComponent";
+import Menu from "../../components/sidebar/MenuComponent";
+import UserTable from "../../components/table/UserTable";
+import AfterOrder from "./AfterOrder";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,25 +30,75 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.text.secondary,
     },
     card: {maxWidth: 345},
-    color:{
-        brown:"#6d4c41"
+    color: {
+        brown: "#6d4c41"
     }
 }));
 
 export default function CorderBoard() {
+    const theme = useTheme();
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
+    const [menu, setMenu] = useState();
+    const [hi, setHi] = useState();
+    const [position, setPosition] = useState();
+    const [status, setStatus] = useState();
+    const [username, setName] = useState();
+    const [check,setCheck] = useState();
+
+    const {data} = useQuery(MeQuery, {
+        variables: {
+            userid: localStorage.getItem('myData')
+        }
+    });
+
+
+    useEffect(() => {
+        if (data) {
+            setName(data.me.username);
+            setPosition(data.me.position);
+            setStatus(data.me.status);
+
+        }
+    }, [data]);
+
+    console.log(username, position, status, menu, hi)
+
+    const createmutation = CreateMutation;
+
+
+    const [create, error] = useMutation(createmutation, {
+            refetchQueries: [{query: OrderSearch, MeQuery}],
+            variables: {
+                id: localStorage.getItem('myData'),
+                menu: menu,
+                hi: hi
+            },
+            onCompleted: (data) => {
+                alert("주문이 완료되었습니다!")
+                window.location.href = '/order';
+
+
+            },
+            onError: () => {
+                alert("메뉴를 선택해주세요.")
+            },
+        }
+    )
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+
     };
 
-
     return (
+
+
         <div className={classes.root}>
 
             <Grid container spacing={3}>
                 <Grid item xs={12}>
+                    {status!="주문완료" &&
                     <Paper className={classes.root}>
                         <Tabs
                             value={value}
@@ -54,9 +112,12 @@ export default function CorderBoard() {
                             <Tab label="🥤 기타 음료 🥤" href={"/eorder"}/>
                         </Tabs>
                     </Paper>
+                    }
+                    {status=="주문완료" && <AfterOrder/>}
 
                 </Grid>
                 <Grid item xs={3}>
+                    {status!="주문완료" &&
                     <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
@@ -71,23 +132,18 @@ export default function CorderBoard() {
                                     <Typography gutterBottom variant="h5" component="h2">
                                         아메리카노
                                     </Typography>
-                                    <Typography variant="body2" color="textSecondary" component="p">
-
-                                    </Typography>
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <Button size="middle" color="secondary" margin-left="30px">
-                                    Hot
-                                </Button>
-                                <Button size="middle" color="primary">
-                                    Ice
-                                </Button>
+                                <CreateOrder hi="hot" menu="아메리카노" color="secondary"/>
+                                <CreateOrder hi="ice" menu="아메리카노" color="primary"/>
                             </CardActions>
                         </Card>
                     </Paper>
+                    }
                 </Grid>
                 <Grid item xs={3}>
+                    {status!="주문완료" &&
                     <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
@@ -108,18 +164,14 @@ export default function CorderBoard() {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <Button size="middle" color="secondary" margin-left="30px">
-                                    Hot
-                                </Button>
-                                <Button size="middle" color="primary">
-                                    Ice
-                                </Button>
+                                <CreateOrder hi="hot" menu="카페라떼" color="secondary"/>
+                                <CreateOrder hi="ice" menu="카페라떼" color="primary"/>
                             </CardActions>
                         </Card>
-                    </Paper>
+                    </Paper>}
                 </Grid>
                 <Grid item xs={3}>
-                    <Paper className={classes.paper}>
+                    {status!="주문완료" && <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
                                 <CardMedia
@@ -139,18 +191,14 @@ export default function CorderBoard() {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <Button size="middle" color="secondary" margin-left="30px">
-                                    Hot
-                                </Button>
-                                <Button size="middle" color="primary">
-                                    Ice
-                                </Button>
+                                <CreateOrder hi="hot" menu="바닐라라떼" color="secondary"/>
+                                <CreateOrder hi="ice" menu="바닐라라떼" color="primary"/>
                             </CardActions>
                         </Card>
-                    </Paper>
+                    </Paper>}
                 </Grid>
                 <Grid item xs={3}>
-                    <Paper className={classes.paper}>
+                    {status!="주문완료" && <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
                                 <CardMedia
@@ -170,18 +218,16 @@ export default function CorderBoard() {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <Button size="middle" color="secondary" margin-left="30px">
-                                    Hot
-                                </Button>
-                                <Button size="middle" color="primary">
-                                    Ice
-                                </Button>
+                                <CreateOrder hi="hot" menu="카페모카" color="secondary"/>
+                                <CreateOrder hi="ice" menu="카페모카" color="primary"/>
                             </CardActions>
                         </Card>
                     </Paper>
+                    }
                 </Grid>
             </Grid>
         </div>
+
     );
 }
 

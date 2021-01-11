@@ -1,75 +1,73 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, UserSearchQuery} from "../../graphql/query";
+import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import DeleteButton from "../button/DeleteButton";
+import Button from "@material-ui/core/Button";
+
 
 function BoardTable() {
 
     const [contents, setContents] = useState('');
-    const [name, setName] = useState();
-
-    const {data: da} = useQuery(MeQuery);
-
-    useEffect(() => {
-        if (da) {
-            setName(da.me.username);
-        }
-    }, [da]);
+    const [id, setId] = useState();
 
 
-    const {data} = useQuery(UserSearchQuery, {
+    const {data} = useQuery(OrderSearch, {
         variables: {
-            search: name
+            id: localStorage.getItem('myData')
 
         }
     });
 
     useEffect(() => {
         if (data) {
-            setContents(data.orders);
+            setContents(data.orderMine);
         }
     }, [data]);
 
+    console.log(contents, "Id", id)
+
+
     return (
+        <>
+
+            <table>
+                <caption>User 관리</caption>
+                <thead>
+                <tr>
+                    <th scope="col">사용자 이름</th>
+                    <th scope="col">메뉴</th>
+                    <th scope="col">Hot/Ice</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {contents &&
+                contents.map((content) => (
+                    <tr key={content._id} style={{marginBottom: 20}}>
+                        <td>{content.username}</td>
+                        <td>{content.menu}</td>
+                        <td>{content.hi}</td>
+                    </tr>
 
 
-        <table>
-            <caption>User 관리</caption>
-            <thead>
-            <tr>
-                <th scope="col">사용자 이름</th>
-                <th scope="col">메뉴</th>
-                <th scope="col">Hot/Ice</th>
-                <th scope="col">주문취소</th>
+                ))}
 
 
-            </tr>
-            </thead>
-            <tbody>
-            {/*{contents &&*/}
-            {/*contents.map((content) => (*/}
-            {/*    <tr key={content._id} style={{marginBottom: 20}}>*/}
-            {/*        <td>{content.username}</td>*/}
-            {/*        <td>{content.menu}</td>*/}
-            {/*        <td>{content.hi}</td>*/}
-            {/*        <td><DeleteButton post_id={content._id}/></td>*/}
+                </tbody>
 
 
-            {/*    </tr>*/}
+            </table>
 
-            {/*))}*/}
-            <tr>
+            {contents &&
+            contents.map((content) => (
+                <DeleteButton userid={localStorage.getItem("myData")} orderid={content._id}/>
 
-                <th>박채연</th>
-                <th>아메리카노</th>
-                <th>Ice</th>
-                <th>주문취소</th>
+            ))}
 
-            </tr>
 
-            </tbody>
-        </table>
+        </>
+
 
     )
 }

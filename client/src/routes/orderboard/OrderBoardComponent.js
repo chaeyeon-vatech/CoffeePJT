@@ -99,10 +99,6 @@ function OrderBoardComponent() {
                 <OrderBoard/>
             </div>
 
-            {/*<div className={classes.todayTrends}>*/}
-            {/*    <AfterOrder/>*/}
-            {/*</div>*/}
-
         </Column>
     );
 }

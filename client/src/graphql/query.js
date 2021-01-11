@@ -31,6 +31,7 @@ export const MeQuery = gql`
         me(userid:$userid){
             username
             position
+            status
         }
     }
 
@@ -159,14 +160,13 @@ export const Ordermen = gql`
 export const OrderSearch = gql`
     query orderMine($id:ID!){
         orderMine(_id:$id){
+            _id
             username
             hi
             menu
         }
     }
 `
-
-
 
 
 

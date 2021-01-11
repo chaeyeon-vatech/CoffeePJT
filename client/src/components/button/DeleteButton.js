@@ -3,16 +3,30 @@ import {useMutation} from '@apollo/react-hooks';
 import TextField from "@material-ui/core/TextField";
 import {RemoveMutation} from "../../graphql/mutation";
 import {MeQuery, UserSearchQuery} from "../../graphql/query";
+import Button from "@material-ui/core/Button";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+        selfAlign: "center",
+        marginTop: "30px",
+
+    }
+
+}));
 
 
-function DeleteButton(post_id) {
+function DeleteButton(userid) {
 
-
+    const classes = useStyles();
     const mutation = RemoveMutation;
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
-            variables: {id: String(Object.values(post_id))},
+            variables: {
+                userid: userid.userid,
+                orderid: userid.orderid
+            },
             onCompleted: (data) => {
                 window.location.href = '/order';
             }
@@ -25,10 +39,13 @@ function DeleteButton(post_id) {
 
             <form action="#">
 
-                <TextField type='submit'
-                           onClick={deletePostOrMutation}
-                           disabled={loading}
-                           value="↳주문 취소"/>
+                <Button variant="contained" type='submit'
+                        onClick={deletePostOrMutation}
+                        disabled={loading}
+                        className={classes.button}
+                        value="↳주문 취소">
+                    주문 변경
+                </Button>
 
             </form>
 

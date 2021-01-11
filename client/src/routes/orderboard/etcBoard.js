@@ -15,6 +15,7 @@ import {Column, Row} from "simple-flexbox";
 import OrderBoard from "./OrderBoard";
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
+import CreateOrder from "./useMutation";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -131,9 +132,8 @@ export default function CorderBoard() {
                                     </CardActionArea>
                                     <CardActions>
 
-                                        <Button size="big" color="primary" className={classes.button}>
-                                            Select
-                                        </Button>
+                                        <CreateOrder hi="etc" menu="아이스티" color="primary" className={classes.button}/>
+
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -159,9 +159,8 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <Button size="big" color="primary" className={classes.button}>
-                                            Select
-                                        </Button>
+                                        <CreateOrder hi="etc" menu="망고 요거트 스무디" color="primary" className={classes.button}/>
+
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -187,9 +186,7 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <Button size="big" color="primary" className={classes.button}>
-                                            Select
-                                        </Button>
+                                        <CreateOrder hi="etc" menu="딸기 요거트 스무디" color="primary" className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -215,9 +212,8 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <Button size="big" color="primary" className={classes.button}>
-                                            Select
-                                        </Button>
+                                        <CreateOrder hi="etc" menu="플레인 요거트 스무디" color="primary" className={classes.button}/>
+
                                     </CardActions>
                                 </Card>
                             </Paper>

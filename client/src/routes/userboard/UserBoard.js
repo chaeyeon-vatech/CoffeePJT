@@ -10,7 +10,7 @@ import PaymentTable from "../../components/table/PaymentTable";
 import {IconCheckboxOff, IconCheckboxOn} from "../../components/icons";
 import PaymentBoard from "../paymentboard/PaymentBoard";
 import VacationBoard from "../firstpage/VacationBoard";
-import BoardTable from "../../components/table/BoardTable";
+import UserManageTable from "../../components/table/UserManageTable";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: "30px"},
@@ -135,7 +135,7 @@ function Create(props) {
                 <Row>
                     <Row horizontal='space-between' vertical='center'>
                         <Row>
-                            <BoardTable/>
+                            <UserManageTable/>
 
                         </Row>
                     </Row>

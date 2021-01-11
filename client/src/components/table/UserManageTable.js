@@ -5,7 +5,7 @@ import {AllUserQuery, IndexQuery, MeQuery, UserSearchQuery} from "../../graphql/
 import UserDeleteButton from "../button/UserDeleteButton";
 
 
-function BoardTable() {
+function UserManageTable() {
 
 
     const [length, setLength] = useState();
@@ -31,6 +31,7 @@ function BoardTable() {
             <thead>
             <tr>
                 <th scope="col">사용자 이름</th>
+                <th scope="col">변경</th>
                 <th scope="col">삭제</th>
 
 
@@ -44,6 +45,7 @@ function BoardTable() {
 
                 <tr style={{marginBottom: 20}}>
                     <td>{content.username}</td>
+                    <td>변경</td>
                     <td><UserDeleteButton post_id={content._id}/></td>
 
 
@@ -61,4 +63,4 @@ function BoardTable() {
     )
 }
 
-export default BoardTable;
+export default UserManageTable;
