@@ -9,7 +9,7 @@ const userSchema = new Schema({
     },
     status: {
         type:String,
-        required:false
+        default:"대기중"
     },
     position: {
         type: String,
