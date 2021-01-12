@@ -47,9 +47,10 @@ export const TaskCreateMutation = gql`
 
 //Task Update
 
-export const UpdateMutation = gql`
-    mutation($id:ID!){
-        updatePosition(_id:$id){
+export const UpdateUserMutation = gql`
+    mutation updateUser($id:ID! $username:String!){
+        updateUser(_id:$id, username:$username){
+            _id
             username
         }
     }
@@ -92,7 +93,7 @@ export const MeMutation = gql`
 
 export const BackUserMutation = gql`
     mutation updatePosition($ids:[ID])
-    
+
     {updatePosition(ids:$ids)}
 
 `

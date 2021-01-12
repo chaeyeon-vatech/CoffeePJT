@@ -6,7 +6,7 @@ import {
     AllUserQuery,
     CostQuery,
     CountQuery,
-    MeQuery, OrderSearch,
+    MeQuery, NotQuery, OrderSearch,
     SearchQuery,
     UserSearchQuery
 } from "../../graphql/query";
@@ -78,6 +78,9 @@ const useStyles = createUseStyles((theme) => ({
         ...theme.typography.title,
         textAlign: 'center',
         color: theme.color.veryDarkGrayishBlue
+    },
+    a:{
+        color:"black"
     }
 }));
 
@@ -131,6 +134,22 @@ function TodayTrendsComponent() {
         }
     }, [da]);
 
+    const [pa, setPa] = useState();
+
+    const {data: people} = useQuery(NotQuery);
+
+    console.log(people);
+
+    useEffect(() => {
+        if (people) {
+            setPa(people.includedNothing)
+        }
+    })
+
+
+    // console.log(pa.toLocaleString());
+    console.log(typeof (pa))
+    console.log(String(pa))
     const mutation = OrderConfirmMutation;
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
@@ -138,7 +157,7 @@ function TodayTrendsComponent() {
             variables: {creater: id},
             onCompleted: (data) => {
                 alert("주문이 초기화되었습니다.")
-                window.location.href = '/order';
+                window.location.href = '/';
 
 
             },
@@ -194,12 +213,14 @@ function TodayTrendsComponent() {
             </Column>
             <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
                 {renderStat('누적 금액', money)}
-                {renderStat('미주문자', <a onMouseEnter={() => setIsShown(true)}
+                {renderStat('미주문자', <a className={classes.a} onMouseEnter={() => setIsShown(true)}
                                        onMouseLeave={() => setIsShown(false)}>{order[3]}</a>)}
 
                 {isShown && (
-                    <div>
-                        {renderStat('미주문자 명단', money)}                    </div>
+                    <table>
+                    <th>{pa.map((p) => p.username ).join(',')}</th>
+                    </table>
+
                 )
                 }
                 {renderStat('결제 완료', <TextField type='submit'

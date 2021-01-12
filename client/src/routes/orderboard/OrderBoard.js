@@ -19,6 +19,8 @@ import MenuItem from "../../components/sidebar/MenuItemComponent";
 import Menu from "../../components/sidebar/MenuComponent";
 import UserTable from "../../components/table/UserTable";
 import AfterOrder from "./AfterOrder";
+import GiveupButton from "../../components/button/GiveupButton";
+import DeleteButton from "../../components/button/DeleteButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,7 +46,7 @@ export default function CorderBoard() {
     const [position, setPosition] = useState();
     const [status, setStatus] = useState();
     const [username, setName] = useState();
-    const [check,setCheck] = useState();
+    const [check, setCheck] = useState();
 
     const {data} = useQuery(MeQuery, {
         variables: {
@@ -98,7 +100,7 @@ export default function CorderBoard() {
 
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    {status!="주문완료" &&
+                    {status != "주문완료" && status != "주문포기" &&
                     <Paper className={classes.root}>
                         <Tabs
                             value={value}
@@ -113,11 +115,12 @@ export default function CorderBoard() {
                         </Tabs>
                     </Paper>
                     }
-                    {status=="주문완료" && <AfterOrder/>}
+                    {status == "주문완료" && <AfterOrder/>}
+
 
                 </Grid>
                 <Grid item xs={3}>
-                    {status!="주문완료" &&
+                    {status != "주문완료" && status != "주문포기" &&
                     <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
@@ -143,7 +146,7 @@ export default function CorderBoard() {
                     }
                 </Grid>
                 <Grid item xs={3}>
-                    {status!="주문완료" &&
+                    {status != "주문완료" && status != "주문포기" &&
                     <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
@@ -171,7 +174,7 @@ export default function CorderBoard() {
                     </Paper>}
                 </Grid>
                 <Grid item xs={3}>
-                    {status!="주문완료" && <Paper className={classes.paper}>
+                    {status != "주문완료" && status != "주문포기" && <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
                                 <CardMedia
@@ -198,7 +201,7 @@ export default function CorderBoard() {
                     </Paper>}
                 </Grid>
                 <Grid item xs={3}>
-                    {status!="주문완료" && <Paper className={classes.paper}>
+                    {status != "주문완료" && status != "주문포기" && <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
                                 <CardMedia
@@ -225,6 +228,8 @@ export default function CorderBoard() {
                     </Paper>
                     }
                 </Grid>
+                <GiveupButton userid={localStorage.getItem("myData")}/>
+
             </Grid>
         </div>
 

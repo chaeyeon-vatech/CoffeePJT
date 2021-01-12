@@ -54,8 +54,8 @@ const useStyles = createUseStyles((theme) => ({
             '&:nth-child(n) > label,input,button,a,table': {
                 width: "100%",
                 color: "#fff",
-                display: "block",
-                margin: "10px 10px"
+                // display: "block",
+                // margin: "10px 10px"
             },
             '&:nth-child(n) > input,button,table,tr': {
                 border: "none",
@@ -151,22 +151,12 @@ const AuthenticationForm = () => {
                         <h3>{task.creater}님의 주문이 진행 중입니다.</h3>
                     ))}
 
-                    <h5 className={classes.h5}>주문하시겠습니까?</h5>
+                    <h5 className={classes.h5}>이름을 검색 후 클릭해주세요!</h5>
 
                     <div className={classes.loginform}>
 
                         <div className={classes.group}>
                             <label>주문자 </label>
-
-
-                            {/*<Autocomplete*/}
-                            {/*    id="combo-box-demo"*/}
-                            {/*    options={task}*/}
-                            {/*    getOptionLabel={(option) => option.title}*/}
-                            {/*    style={{ width: 300 }}*/}
-                            {/*    renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}*/}
-                            {/*/>*/}
-
 
                             <input type='text' placeholder='이름을 입력하세요.' onChange={e => setSearch(e.target.value)}
                             />
@@ -176,18 +166,15 @@ const AuthenticationForm = () => {
                                 result.map((content) => (
                                     <tr style={{marginBottom: 20}}>
 
-                                        <td>{content.username}</td>
                                         <td>
                                             <a type="submit" onClick={() => handleClick(content.username, content._id)}
-                                            >선택</a>
+                                            >{content.username}</a>
                                         </td>
                                     </tr>
 
                                 ), this)}
 
                             </table>
-
-                            <a>이름을 입력하시고<br/> 선택 버튼을 누르세요!</a>
                         </div>
 
 

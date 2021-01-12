@@ -4,12 +4,12 @@ import {useQuery} from "@apollo/react-hooks";
 import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import DeleteButton from "../button/DeleteButton";
 import Button from "@material-ui/core/Button";
+import GiveupButton from "../button/GiveupButton";
 
 
 function BoardTable() {
 
     const [contents, setContents] = useState('');
-    const [id, setId] = useState();
 
 
     const {data} = useQuery(OrderSearch, {
@@ -24,8 +24,6 @@ function BoardTable() {
             setContents(data.orderMine);
         }
     }, [data]);
-
-    console.log(contents, "Id", id)
 
 
     return (
@@ -42,6 +40,7 @@ function BoardTable() {
                 </tr>
                 </thead>
                 <tbody>
+
                 {contents &&
                 contents.map((content) => (
                     <tr key={content._id} style={{marginBottom: 20}}>
@@ -54,6 +53,11 @@ function BoardTable() {
                 ))}
 
 
+                {/*{status=="주문포기"&&*/}
+                {/*<tr>*/}
+                {/*    <td>주문을 포기하셨습니다. <br/> 재주문을 원하시면 주문 변경을 눌러주세요.</td>*/}
+                {/*</tr>}*/}
+
                 </tbody>
 
 
@@ -62,7 +66,6 @@ function BoardTable() {
             {contents &&
             contents.map((content) => (
                 <DeleteButton userid={localStorage.getItem("myData")} orderid={content._id}/>
-
             ))}
 
 

@@ -53,9 +53,7 @@ const useStyles = createUseStyles((theme) => ({
             marginBottom: "15px",
             '&:nth-child(n) > label,input,button,a,table': {
                 width: "100%",
-                color: "#fff",
-                display: "block",
-                margin: "10px 10px"
+                color: "#fff"
             },
             '&:nth-child(n) > input,button,table,tr': {
                 border: "none",
@@ -149,10 +147,9 @@ const AuthenticationForm = () => {
                                 result.map((content) => (
                                     <tr style={{marginBottom: 20}}>
 
-                                        <td>{content.username}</td>
                                         <td>
                                             <a type="submit" onClick={() => handleClick(content.username, content._id)}
-                                            >선택</a>
+                                            >{content.username}</a>
                                         </td>
                                     </tr>
 
@@ -160,7 +157,6 @@ const AuthenticationForm = () => {
 
                             </table>
 
-                            <a>이름을 입력하시고<br/> 선택 버튼을 누르세요!</a>
                         </div>
 
 
