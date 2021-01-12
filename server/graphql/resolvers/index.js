@@ -430,7 +430,7 @@ const resolvers = {
             try{    
                 const id = args._id;
                      
-                await users.findByIdAndUpdate(ids[i],{$set:{"status":"대기중"}})
+                await users.findByIdAndUpdate(id,{$set:{"status":"대기중"}})
                     
   
                 return "해당 인원은 주문포기에서 대기중으로 다시 바뀌었습니다."
