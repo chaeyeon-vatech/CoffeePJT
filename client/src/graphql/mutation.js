@@ -127,3 +127,9 @@ export const OrderBackMutation = gql`
     {getbackUser(ids:$ids)}
 
 `
+
+export const getBackGiveup = gql`
+    mutation getbackStatus($id:ID!){
+        getbackStatus(_id:$id)
+    }
+`

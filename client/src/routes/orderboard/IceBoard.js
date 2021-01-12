@@ -118,7 +118,7 @@ export default function CorderBoard() {
                                             component="img"
                                             alt="Contemplative Reptile"
                                             height="200"
-                                            image="https://lh3.googleusercontent.com/proxy/3E3fr4CJkTkj2n_LtIhLKFOmiMFbRbV4pRfFtNqNzWfSTW4vDx56RbOXtbgNaNuKAlotVJVcizhmQwWk4MQBAAsGDtOzeQ4HK3KDuSmaSp5zOYbnHf2TDC-gjcsTLFFlCMg"
+                                            image="https://m.iceplanet.co.kr/web/product/big/201905/392ef164b0a2c8c2edb6f1462c3f6cdf.jpg"
                                             title="Contemplative Reptile"
                                         />
                                         <CardContent>

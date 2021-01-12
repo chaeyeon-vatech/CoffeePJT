@@ -1,7 +1,7 @@
 import React from 'react';
 import {useMutation} from '@apollo/react-hooks';
 import TextField from "@material-ui/core/TextField";
-import {OrderGiveupMutation, RemoveMutation} from "../../graphql/mutation";
+import {getBackGiveup, OrderGiveupMutation, RemoveMutation} from "../../graphql/mutation";
 import {MeQuery, UserSearchQuery} from "../../graphql/query";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
@@ -10,23 +10,23 @@ const useStyles = makeStyles((theme) => ({
     button: {
         selfAlign: "center",
         marginTop: "30px",
-        marginLeft: "20px"
+        marginLeft: "450px",
+        padding: "30px 80px 30px 80px",
+        textAlign: "center"
 
     }
 
 }));
 
 
-function DeleteButton(userid) {
+function ChangeGiveupButton(userid) {
 
     const classes = useStyles();
-    const mutation = RemoveMutation;
 
-    const [deletePostOrMutation, {loading}] = useMutation(mutation, {
+    const [giveup] = useMutation(getBackGiveup, {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
             variables: {
-                userid: userid.userid,
-                orderid: userid.orderid
+                id: userid.userid
             },
             onCompleted: (data) => {
                 window.location.href = '/order';
@@ -34,17 +34,7 @@ function DeleteButton(userid) {
         }
     )
 
-    const [giveup] = useMutation(OrderGiveupMutation, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
-            variables: {
-                userid: userid.userid
-            },
-            onCompleted: (data) => {
-                window.location.href = '/order';
-            }
-        }
-    )
-
+    console.log(userid.userid)
 
     return (
         <>
@@ -52,11 +42,10 @@ function DeleteButton(userid) {
             <form action="#">
 
                 <Button variant="contained" type='submit'
-                        onClick={deletePostOrMutation}
-                        disabled={loading}
+                        onClick={giveup}
                         className={classes.button}
                         value="↳주문 취소">
-                    주문 변경
+                    주문을 포기하셨습니다.<br/>재주문하시려면 클릭해주세요.
                 </Button>
 
             </form>
@@ -66,4 +55,4 @@ function DeleteButton(userid) {
 }
 
 
-export default DeleteButton;
+export default ChangeGiveupButton;

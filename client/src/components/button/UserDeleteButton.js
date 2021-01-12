@@ -28,7 +28,7 @@ function DeleteButton(post_id) {
                 <TextField type='submit'
                            onClick={deletePostOrMutation}
                            disabled={loading}
-                           value="X"/>
+                           value="🗑"/>
 
             </form>
 

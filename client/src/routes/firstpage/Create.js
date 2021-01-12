@@ -127,10 +127,11 @@ function Create(props) {
                 <Row horizontal='space-between' vertical='center'>
 
                     <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
-                        <input type="text" placeholder="어떤 이유로 커피를 사시나요?" onChange={e => setTitle(e.target.value)}
-                               className={classes.input}/>
+
+                        {contents==null && <input type="text" placeholder="어떤 이유로 커피를 사시나요?" onChange={e => setTitle(e.target.value)}
+                                                  className={classes.input}/>}
                     </span>
-                    {renderAddButton()}
+                    {contents==null &&renderAddButton()}
                     {/*<a href="/order">주문자 페이지로 이동</a>*/}
                 </Row>,
                 <Row>

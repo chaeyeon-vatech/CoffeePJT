@@ -226,7 +226,7 @@ function TodayTrendsComponent() {
                 {renderStat('결제 완료', <TextField type='submit'
                                                 onClick={deletePostOrMutation}
                                                 disabled={loading}
-                                                value="Reset"/>)}
+                                                value='결제 완료'/>)}
             </Column>
         </Row>
 

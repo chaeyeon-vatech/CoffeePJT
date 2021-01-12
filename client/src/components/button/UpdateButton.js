@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: "10px",
         border: "none",
         borderBottom: "2px solid grey",
-        textAlign:"center",
+        textAlign: "center",
         outline: "none"
 
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
     sbutton: {
         marginLeft: theme.spacing(3),
-        padding:"3px 30px"
+        padding: "3px 30px"
     }
 
 }));
@@ -80,7 +80,8 @@ function UpdateButton(username) {
 
                 )
                 }
-                {click && (<Button variant="contained" type='submit' className={classes.sbutton} onClick={() => setClick(false)}>취소</Button>)}
+                {click && (<Button variant="contained" type='submit' className={classes.sbutton}
+                                   onClick={() => setClick(false)}>취소</Button>)}
 
             </td>
 

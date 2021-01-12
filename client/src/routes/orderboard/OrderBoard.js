@@ -8,19 +8,15 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
 import {Tab, Tabs, useTheme} from "@material-ui/core";
-import {TabPanel} from "@material-ui/lab";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {MeQuery, OrderSearch} from "../../graphql/query";
 import {CreateMutation} from "../../graphql/mutation";
 import CreateOrder from "./useMutation";
-import MenuItem from "../../components/sidebar/MenuItemComponent";
-import Menu from "../../components/sidebar/MenuComponent";
-import UserTable from "../../components/table/UserTable";
 import AfterOrder from "./AfterOrder";
 import GiveupButton from "../../components/button/GiveupButton";
-import DeleteButton from "../../components/button/DeleteButton";
+import ChangeGiveupButton from "../../components/button/ChangeGiveup";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,8 +59,6 @@ export default function CorderBoard() {
 
         }
     }, [data]);
-
-    console.log(username, position, status, menu, hi)
 
     const createmutation = CreateMutation;
 
@@ -228,7 +222,17 @@ export default function CorderBoard() {
                     </Paper>
                     }
                 </Grid>
-                <GiveupButton userid={localStorage.getItem("myData")}/>
+                {status == "대기중" && (
+
+                    <GiveupButton userid={localStorage.getItem("myData")}/>
+                )}
+
+
+                {status == "주문포기" && (
+
+                    <ChangeGiveupButton userid={localStorage.getItem("myData")}/>
+                )}
+
 
             </Grid>
         </div>
