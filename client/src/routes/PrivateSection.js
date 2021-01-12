@@ -4,9 +4,6 @@ import {Column, Row} from 'simple-flexbox';
 import {SidebarComponent, SidebarContext} from 'components/sidebar';
 import HeaderComponent from 'components/header/HeaderComponent';
 import PrivateRoutes from './PrivateRoutes';
-import {Route, Switch} from "react-router-dom";
-import LINKS from "../resources/links";
-import Create from "./firstpage/Create";
 
 const useStyles = createUseStyles({
     container: {
@@ -40,6 +37,7 @@ function PrivateSection() {
                     </div>
                 </Column>
             </Row>
+
         </SidebarContext>
     );
 }
