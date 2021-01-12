@@ -426,6 +426,19 @@ const resolvers = {
                 throw new Error(error.message)
             }
         },
+        getbackStatus:async(_,args)=>{
+            try{    
+                const id = args._id;
+                     
+                await users.findByIdAndUpdate(ids[i],{$set:{"status":"대기중"}})
+                    
+  
+                return "해당 인원은 주문포기에서 대기중으로 다시 바뀌었습니다."
+
+            } catch(error){
+                throw new Error(error.message)
+            }
+        },
         deleteUser:async(_,args)=>{
             const removedUser = await users.findByIdAndRemove(args._id).exec()
             return removedUser
