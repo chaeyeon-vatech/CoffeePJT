@@ -45,12 +45,13 @@ const resolvers = {
         user: async(_, args) => {
             const word = args.word;
             const category = args.category;
+            const result=[]
             if(category == 1){
-                if(word == "") return null
+                if(word == "") return result
                 return await users.find({"username":{$regex:word}})  
             }
             else{
-                if(word == "") return null
+                if(word == "") return result
                 return await users.find({"username":{$regex:word},"position":{$eq:"주문자"}})
             }
             
