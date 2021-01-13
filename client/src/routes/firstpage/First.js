@@ -11,13 +11,14 @@ import {Input, TextField} from "@material-ui/core";
 
 const useStyles = createUseStyles((theme) => ({
         focused: {
+            textAlign: "center",
             "& $notchedOutline": {
                 borderColor: "yellow"
             }
         },
         loginwrap: {
             color: "white",
-            fontWeight: "lighter",
+            fontWeight: "bold",
             textAlign: "center",
             paddingTop: "10px",
             width: "100%",
@@ -32,7 +33,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "80px 70px 50px 70px",
-            backgroundColor: "rgb(42,47,34,0.9)"
+            backgroundColor: "rgba(140,83,83,0.9)"
 
         },
 
@@ -63,7 +64,7 @@ const useStyles = createUseStyles((theme) => ({
             position: "relative",
             perspective: "1000px",
             transformStyle: "preserve-3d",
-            backgroundColor: "rgb(42,47,34,0.9)"
+            backgroundColor: "rgba(140,83,83,0.9)"
         },
 
         group: {
@@ -71,6 +72,7 @@ const useStyles = createUseStyles((theme) => ({
             '&:nth-child(n) > TextField,label,input,button,a,table': {
                 width: "100%",
                 color: "#fff",
+                textAlign: "center"
             },
             '&:nth-child(n) > TextField,input,button,table,tr': {
                 border: "none",
@@ -206,7 +208,7 @@ const AuthenticationForm = () => {
                                                         {...params}
                                                         id="standard-basic"
                                                         margin="normal"
-                                                        color="success.main"
+                                                        color={"secondary"}
                                                         onChange={e => setSearch(e.target.value)}
                                                         InputProps={{
                                                             ...params.InputProps,

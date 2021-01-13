@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function CorderBoard() {
+export default function EtcBoard() {
     const classes = useStyles();
     const [value, setValue] = React.useState(2);
 
