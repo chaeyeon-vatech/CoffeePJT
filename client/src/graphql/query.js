@@ -169,7 +169,7 @@ export const OrderSearch = gql`
 `
 
 export const Receipt = gql`
-query {receipt}
+    query {receipt}
 `
 
 
