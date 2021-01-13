@@ -175,18 +175,15 @@ const resolvers = {
             for (let i = 0; i < orders.length; i++) {
                 if (orders[i].menu === "아메리카노" && orders[i].hi === "hot") {
                     orderV[0]++;
-                    result[0] = orders.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "hot" } })
                 }
                 else if (orders[i].menu === "아메리카노" && orders[i].hi === "ice") {
                     orderV[1]++;
-                    result[1] = orders.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "ice" } })
                 }
                 else if (orders[i].menu === "카페라떼" && orders[i].hi === "hot") {
                     orderV[2]++;
                 }
                 else if (orders[i].menu === "카페라떼" && orders[i].hi === "ice") {
                     orderV[3]++;
-                    result[3] = orders.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "ice" } })
                 }
                 else if (orders[i].menu === "바닐라라떼" && orders[i].hi === "hot") {
                     orderV[4]++;
