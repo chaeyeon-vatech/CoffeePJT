@@ -4,11 +4,17 @@ import {SearchQuery, TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import {Autocomplete} from "@material-ui/lab";
-import {TextField} from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
+
+import {Input, TextField} from "@material-ui/core";
 
 
 const useStyles = createUseStyles((theme) => ({
-
+        focused: {
+            "& $notchedOutline": {
+                borderColor: "yellow"
+            }
+        },
         loginwrap: {
             color: "white",
             fontWeight: "lighter",
@@ -62,11 +68,11 @@ const useStyles = createUseStyles((theme) => ({
 
         group: {
             marginBottom: "15px",
-            '&:nth-child(n) > label,input,button,a,table': {
+            '&:nth-child(n) > TextField,label,input,button,a,table': {
                 width: "100%",
-                color: "#fff"
+                color: "#fff",
             },
-            '&:nth-child(n) > input,button,table,tr': {
+            '&:nth-child(n) > TextField,input,button,table,tr': {
                 border: "none",
                 padding: "15px 20px",
                 borderRadius: "25px",
@@ -74,13 +80,17 @@ const useStyles = createUseStyles((theme) => ({
                 textAlign: "center",
                 alignContent: "center"
             },
-            '&:nth-child(n) > tr,td': {
+            '&:nth-child(n) > TextField': {
+                outline: "none",
+            },
+
+            '&:nth-child(n) > tr,td, TextField': {
                 width: "50%",
                 padding: "15px 60px",
                 alignContent: "center",
                 marginTop: 10,
                 border: "none",
-                margin: "20px"
+                margin: "20px",
             },
 
             '&:nth-child(n) > a': {
@@ -96,21 +106,28 @@ const useStyles = createUseStyles((theme) => ({
             '&:nth-child(n) > label ': {
                 color: "#aaa",
                 fontSize: "12px"
-            }
-        },
-
-
+            },
+            palette: {
+                primary: {
+                    main: 'rgba(255,255,255,.1)',
+                },
+                secondary: {
+                    main: '#030303',
+                },
+            },
+        }
     }))
 ;
 
 const handleClick = (name, id) => {
-    if (window.confirm(name + '님 새로운 주문을 생성하시겠습니까?')) {
+    // if (window.confirm(name + '님 새로운 주문을 생성하시겠습니까?')) {
 
-        localStorage.setItem('myData', id)
-        localStorage.setItem('name', name)
-        window.location.href = '/'
-    }
+    localStorage.setItem('myData', id)
+    localStorage.setItem('name', name)
+    window.location.href = '/'
+    // }
 }
+
 
 // const options = ['Option 1', 'Option 2'];
 
@@ -122,6 +139,7 @@ const AuthenticationForm = () => {
 
     const [search, setSearch] = useState();
     const [result, setResult] = useState([]);
+    const [inputValue, setInputValue] = useState();
 
     const {task} = useQuery(TaskQuery);
 
@@ -132,6 +150,8 @@ const AuthenticationForm = () => {
 
     });
 
+    console.log(inputValue, result);
+
     useEffect(() => {
         if (data) {
             setResult(data.user);
@@ -139,18 +159,6 @@ const AuthenticationForm = () => {
         }
     }, [data]);
 
-    console.log(result);
-
-    const top100Films = [
-        {title: 'The Shawshank Redemption', year: 1994},
-        {title: 'The Godfather', year: 1972},
-        {title: 'The Godfather: Part II', year: 1974},
-        {title: 'The Dark Knight', year: 2008},
-        {title: '12 Angry Men', year: 1957},
-        {title: "Schindler's List", year: 1993},
-        {title: 'Pulp Fiction', year: 1994},
-        {title: 'The Lord of the Rings: The Return of the King', year: 2003},
-       ]
 
     return (
         <div className={classes.root}>
@@ -176,57 +184,45 @@ const AuthenticationForm = () => {
 
                             <div className={classes.loginhtml}>
                                 <h3>현재 주문이 없습니다.</h3>
-                                <h5 className={classes.h5}>주문을 생성하시려면<br/>이름 검색 후 클릭해주세요!</h5>
+                                <h5 className={classes.h5}>주문을 생성하시려면<br/>로그인해주세요!</h5>
 
                                 <div className={classes.loginform}>
 
                                     <div className={classes.group}>
                                         <label>결제자 </label>
-                                        {/*<Autocomplete*/}
-                                        {/*    id="combo-box-demo"*/}
-                                        {/*    options={result}*/}
-                                        {/*    getOptionLabel={(option) => option.username}*/}
-                                        {/*    style={{ width: 300 }}*/}
-                                        {/*    renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}*/}
-                                        {/*/>*/}
+                                        <Typography component="div" variant="body1">
 
-                                        <input type='text' placeholder='이름을 입력하세요.'
-                                               onChange={e => setSearch(e.target.value)}
-                                        />
+                                            <Autocomplete
+                                                freeSolo
+                                                id="free-solo-2-demo"
+                                                disableClearable
+                                                options={result.map((content) => content.username)}
+                                                inputValue={inputValue}
+                                                onInputChange={(event, newInputValue) => {
+                                                    setInputValue(newInputValue);
+                                                }}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        id="standard-basic"
+                                                        margin="normal"
+                                                        color="success.main"
+                                                        onChange={e => setSearch(e.target.value)}
+                                                        InputProps={{
+                                                            ...params.InputProps,
+                                                            type: 'search',
+                                                            className: classes.focused
+                                                        }}
+                                                    />
+                                                )}
+                                            />
+                                        </Typography>
 
-                                        <Autocomplete
-                                            freeSolo
-                                            id="free-solo-2-demo"
-                                            disableClearable
-                                            options={result.map((content) => content.username)}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    label="Search input"
-                                                    margin="normal"
-                                                    variant="outlined"
-                                                    onChange={e => setSearch(e.target.value)}
-                                                    InputProps={{...params.InputProps, type: 'search'}}
-                                                />
-                                            )}
-                                        />
 
-                                        <table>
-                                            {result &&
-                                            result.map((content) => (
-                                                <tr style={{marginBottom: 20}}>
+                                        <a type="submit"
+                                           onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
+                                        >로그인</a>
 
-                                                    <td>
-
-                                                        <a type="submit"
-                                                           onClick={() => handleClick(content.username, content._id)}
-                                                        >{content.username}</a>
-                                                    </td>
-                                                </tr>
-
-                                            ), this)}
-
-                                        </table>
                                     </div>
 
 

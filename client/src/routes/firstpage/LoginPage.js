@@ -26,7 +26,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "90px 70px 50px 70px",
-            backgroundColor: "rgba(47,34,34,0.8)"
+            backgroundColor: "rgb(42,47,34,0.9)"
 
         },
 
