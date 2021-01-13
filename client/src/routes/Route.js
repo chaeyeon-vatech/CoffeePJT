@@ -24,13 +24,10 @@ function PrivateRoutes() {
                 <Route exact path={LINKS.tickets} component={PaymentboardComponent}/>
                 <Route exact path={LINKS.settings} component={UserboardComponent}/>
                 <Route exact path={LINKS.create} component={Create}/>
-                {!localStorage.getItem("myData") && (
-                    <Route exact path={LINKS.login} component={basicLogin}/>
-                )}
-                {!localStorage.getItem("myData") && (
-                    <Redirect to={LINKS.login} component={basicLogin}/>
-                )}
-                <Redirect to={LINKS.orderboard} component={OrderboardComponent}/>
+
+                <Route exact path={LINKS.login} component={basicLogin}/>
+
+                <Redirect to={LINKS.login} component={basicLogin}/>
 
             </Switch>
         </Suspense>
