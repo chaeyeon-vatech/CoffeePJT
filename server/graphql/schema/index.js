@@ -15,6 +15,7 @@ const typeDefs = gql`
         includedVacation:[User!]
         includedNothing:[User!]
         receipt:[String]
+        receiptUsers(receiptNum:Int!):[String!]
     }
     type User {
         _id: ID
