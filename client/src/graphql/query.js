@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import {userQueryGQL} from "../routes/firstpage/mutation";
 
 
 //Pagination할 전체 목록
@@ -30,6 +31,7 @@ export const MeQuery = gql`
         me(userid:$userid){
             username
             position
+            status
         }
     }
 
@@ -109,7 +111,8 @@ export const AllUserQuery = gql`
         allUsers{
             _id
             username
-            idNum
+            position
+            status
         }
     }
 `
@@ -135,7 +138,39 @@ export const OrderQuery = gql`
 `
 
 
+export const NotQuery = gql`
+    query {
+        includedNothing{
+            username
+        }
+    }
 
+
+`
+
+export const Ordermen = gql`
+    query{
+        includedOrdermen{
+            username
+            _id
+        }
+    }`
+
+
+export const OrderSearch = gql`
+    query orderMine($id:ID!){
+        orderMine(_id:$id){
+            _id
+            username
+            hi
+            menu
+        }
+    }
+`
+
+export const Receipt = gql`
+query {receipt}
+`
 
 
 

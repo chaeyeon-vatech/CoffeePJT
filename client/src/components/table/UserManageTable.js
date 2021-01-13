@@ -3,12 +3,15 @@ import './table.css';
 import {useQuery} from "@apollo/react-hooks";
 import {AllUserQuery, IndexQuery, MeQuery, UserSearchQuery} from "../../graphql/query";
 import UserDeleteButton from "../button/UserDeleteButton";
+import {Column} from "simple-flexbox";
+import UpdateButton from "../button/UpdateButton";
 
 
-function BoardTable() {
+function UserManageTable() {
 
 
     const [length, setLength] = useState();
+    const [click, setClick] = useState(false);
 
     const {data: user} = useQuery(UserSearchQuery)
 
@@ -21,7 +24,6 @@ function BoardTable() {
     }, [user]);
 
 
-
     return (
 
 
@@ -31,6 +33,7 @@ function BoardTable() {
             <thead>
             <tr>
                 <th scope="col">사용자 이름</th>
+                <th scope="col">변경</th>
                 <th scope="col">삭제</th>
 
 
@@ -44,6 +47,7 @@ function BoardTable() {
 
                 <tr style={{marginBottom: 20}}>
                     <td>{content.username}</td>
+                    <td><UpdateButton id={content._id} username={content.username}/></td>
                     <td><UserDeleteButton post_id={content._id}/></td>
 
 
@@ -61,4 +65,4 @@ function BoardTable() {
     )
 }
 
-export default BoardTable;
+export default UserManageTable;

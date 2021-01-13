@@ -14,6 +14,7 @@ function DeleteButton(post_id) {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
             variables: {id: String(Object.values(post_id))},
             onCompleted: (data) => {
+                alert("유저 삭제가 완료되었습니다.")
                 // window.location.href = '/order';
             }
         }
@@ -27,7 +28,7 @@ function DeleteButton(post_id) {
                 <TextField type='submit'
                            onClick={deletePostOrMutation}
                            disabled={loading}
-                           value="X"/>
+                           value="🗑"/>
 
             </form>
 

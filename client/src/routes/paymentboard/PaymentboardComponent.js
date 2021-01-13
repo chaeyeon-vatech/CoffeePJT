@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import PaymentBoard from './PaymentBoard';
+import {useQuery} from "@apollo/react-hooks";
+import {TaskQuery} from "../../graphql/query";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -59,18 +61,29 @@ const useStyles = createUseStyles((theme) => ({
 function PaymentboardComponent() {
     const classes = useStyles();
 
+    const [contents, setContents] = useState('');
+    const {data} = useQuery(TaskQuery);
+    useEffect(() => {
+        if (data) {
+            setContents(data.tasks);
+
+        }
+    }, [data]);
+
+    console.log(contents)
+
 
     return (
-
 
 
         <Column>
             <table className={classes.border}>
 
                 {/*오늘은 ""님이 ""기념으로 "" 쏩니다!*/}
-                <td><span className={classes.itemTitle}>Task Title: 👏  오늘은 ""님이 "" 기념으로 커피 쏩니다! 👏</span></td>
-                <td><span className={classes.itemTitle}>결제자 : OOO 님</span></td>
-                {/*<td><span className={classes.itemTitle}>주문 마감 기한: </span></td>*/}
+                {contents && contents.map((content) => (
+                    <td><span
+                        className={classes.itemTitle}>👏  결제자 {content.creater}님 환영합니다!👏</span>
+                    </td>))}
             </table>
 
             <div className={classes.todayTrends}>

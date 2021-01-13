@@ -3,8 +3,8 @@ import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
-import {MeMutation} from "../../graphql/mutation";
-
+import {Autocomplete} from "@material-ui/lab";
+import {TextField} from "@material-ui/core";
 
 const useStyles = createUseStyles((theme) => ({
 
@@ -26,7 +26,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "90px 70px 50px 70px",
-            background: "rgb(95, 59, 59)"
+            backgroundColor: "rgb(42,47,34,0.9)"
 
         },
 
@@ -54,8 +54,8 @@ const useStyles = createUseStyles((theme) => ({
             '&:nth-child(n) > label,input,button,a,table': {
                 width: "100%",
                 color: "#fff",
-                display: "block",
-                margin: "10px 10px"
+                // display: "block",
+                // margin: "10px 10px"
             },
             '&:nth-child(n) > input,button,table,tr': {
                 border: "none",
@@ -111,12 +111,14 @@ const AuthenticationForm = () => {
     const [result, setResult] = useState();
     const [tasks, setTasks] = useState();
 
+
     const {data} = useQuery(SearchQuery, {
         variables: {
             word: search
         },
 
     });
+
 
     const {data: task} = useQuery(TaskQuery);
 
@@ -135,8 +137,8 @@ const AuthenticationForm = () => {
         }
     }, [task]);
 
+    console.log(search)
 
-    // console.log("tasks");
 
     return (
         <div className={classes.root}>
@@ -148,12 +150,13 @@ const AuthenticationForm = () => {
                         <h3>{task.creater}님의 주문이 진행 중입니다.</h3>
                     ))}
 
-                    <h5 className={classes.h5}>주문하시겠습니까?</h5>
+                    <h5 className={classes.h5}>이름을 검색 후 클릭해주세요!</h5>
 
                     <div className={classes.loginform}>
 
                         <div className={classes.group}>
                             <label>주문자 </label>
+
                             <input type='text' placeholder='이름을 입력하세요.' onChange={e => setSearch(e.target.value)}
                             />
 
@@ -162,18 +165,15 @@ const AuthenticationForm = () => {
                                 result.map((content) => (
                                     <tr style={{marginBottom: 20}}>
 
-                                        <td>{content.username}</td>
                                         <td>
                                             <a type="submit" onClick={() => handleClick(content.username, content._id)}
-                                            >선택</a>
+                                            >{content.username}</a>
                                         </td>
                                     </tr>
 
                                 ), this)}
 
                             </table>
-
-                            <a>이름을 입력하시고<br/> 선택 버튼을 누르세요!</a>
                         </div>
 
 

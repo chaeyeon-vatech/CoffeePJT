@@ -10,29 +10,19 @@ const useStyles = makeStyles((theme) => ({
     button: {
         selfAlign: "center",
         marginTop: "30px",
-        marginLeft: "20px"
+        marginLeft: "450px",
+        padding: "10px 40px 10px 40px",
+        textAlign: "center"
 
     }
 
 }));
 
 
-function DeleteButton(userid) {
+function GiveupButton(userid) {
 
     const classes = useStyles();
     const mutation = RemoveMutation;
-
-    const [deletePostOrMutation, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
-            variables: {
-                userid: userid.userid,
-                orderid: userid.orderid
-            },
-            onCompleted: (data) => {
-                window.location.href = '/order';
-            }
-        }
-    )
 
     const [giveup] = useMutation(OrderGiveupMutation, {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
@@ -40,6 +30,7 @@ function DeleteButton(userid) {
                 userid: userid.userid
             },
             onCompleted: (data) => {
+                alert("주문을 포기하셨습니다.")
                 window.location.href = '/order';
             }
         }
@@ -52,11 +43,10 @@ function DeleteButton(userid) {
             <form action="#">
 
                 <Button variant="contained" type='submit'
-                        onClick={deletePostOrMutation}
-                        disabled={loading}
+                        onClick={giveup}
                         className={classes.button}
                         value="↳주문 취소">
-                    주문 변경
+                    주문하지 않겠습니다.
                 </Button>
 
             </form>
@@ -66,4 +56,4 @@ function DeleteButton(userid) {
 }
 
 
-export default DeleteButton;
+export default GiveupButton;

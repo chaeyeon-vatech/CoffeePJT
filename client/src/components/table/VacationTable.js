@@ -21,7 +21,6 @@ function BoardTable() {
 
 
     const [length, setLength] = useState();
-
     const {data: user} = useQuery(VacationQuery)
 
     useEffect(() => {
@@ -56,8 +55,9 @@ function BoardTable() {
                     <td><UserBackButton post_id={content._id}/></td>
                 </tr>
 
-
             ))}
+
+
 
 
             </tbody>

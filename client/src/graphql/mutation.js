@@ -47,9 +47,10 @@ export const TaskCreateMutation = gql`
 
 //Task Update
 
-export const UpdateMutation = gql`
-    mutation($id:ID!){
-        updateUser(_id:$id){
+export const UpdateUserMutation = gql`
+    mutation updateUser($id:ID! $username:String!){
+        updateUser(_id:$id, username:$username){
+            _id
             username
         }
     }
@@ -75,8 +76,8 @@ export const OrderGiveupMutation = gql`
 
 //주문 초기화
 export const OrderConfirmMutation = gql`
-    mutation confirmOrders($creater:String!) {
-        confirmOrders(creater:$creater)
+    mutation {
+        confirmOrders
     }
 `
 
@@ -91,13 +92,9 @@ export const MeMutation = gql`
 
 
 export const BackUserMutation = gql`
-    mutation($id:ID!){
-        getbackUser(_id:$id){
-            username
-            status
-            position
-        }
-    }
+    mutation updatePosition($ids:[ID])
+
+    {updatePosition(ids:$ids)}
 
 `
 
@@ -122,4 +119,17 @@ export const UserDeleteMutation = gql`
     }
 
 
+`
+
+export const OrderBackMutation = gql`
+    mutation getbackUser($ids:[ID])
+
+    {getbackUser(ids:$ids)}
+
+`
+
+export const getBackGiveup = gql`
+    mutation getbackStatus($id:ID!){
+        getbackStatus(_id:$id)
+    }
 `

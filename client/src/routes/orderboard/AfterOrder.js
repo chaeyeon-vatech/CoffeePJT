@@ -1,7 +1,9 @@
 import React from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import BoardTable from '../../components/table/BoardTable';
+import UserManageTable from '../../components/table/UserManageTable';
+import UserTable from "../../components/table/UserTable";
+import DeleteButton from "../../components/button/DeleteButton";
 
 
 
@@ -37,7 +39,7 @@ function OrderBoard() {
                 className={classes.graphSection}
                 breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
             >
-                <BoardTable/>
+                <UserTable/>
             </Column>
 
 

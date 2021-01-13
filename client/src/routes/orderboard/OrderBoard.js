@@ -1,94 +1,48 @@
 import React, {useEffect, useState} from 'react';
-import {Column, Row} from 'simple-flexbox';
-import {createUseStyles, useTheme} from 'react-jss';
-import BoardTable from '../../components/table/BoardTable';
-import {CreateMutation, OrderGiveupMutation} from "../../graphql/mutation";
-import {MeQuery, OrderQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
+import {makeStyles} from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import CardActions from "@material-ui/core/CardActions";
+import {Tab, Tabs, useTheme} from "@material-ui/core";
 import {useQuery, useMutation} from "@apollo/react-hooks";
-import {TextField} from "@material-ui/core";
-import {ObjectId} from "bson";
+import {MeQuery, OrderSearch} from "../../graphql/query";
+import {CreateMutation} from "../../graphql/mutation";
+import CreateOrder from "./useMutation";
+import AfterOrder from "./AfterOrder";
+import GiveupButton from "../../components/button/GiveupButton";
+import ChangeGiveupButton from "../../components/button/ChangeGiveup";
 
 
-const useStyles = createUseStyles((theme) => ({
-    container: {
-        backgroundColor: '#FFFFFF',
-        border: `5px solid ${theme.color.darkRed}`,
-        borderRadius: 5,
-        cursor: 'pointer'
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
     },
-    graphContainer: {
-        marginTop: 24,
-        marginLeft: 0,
-        marginRight: 0,
-        width: '100%'
-    },
-    graphSection: {
-        padding: 24
-    },
-    graphSubtitle: {
-        ...theme.typography.smallSubtitle,
-        color: theme.color.grayishBlue2,
-        marginTop: 4,
-        marginRight: 8
-    },
-    graphTitle: {
-        ...theme.typography.cardTitle,
-        color: theme.color.veryDarkGrayishBlue
-    },
-    legendTitle: {
-        ...theme.typography.smallSubtitle,
-        fontWeight: '600',
-        color: theme.color.grayishBlue2,
-        marginLeft: 8
-    },
-    separator: {
-        backgroundColor: theme.color.lightGrayishBlue2,
-        width: 1,
-        minWidth: 1
-    },
-    statContainer: {
-        borderBottom: `1px solid ${theme.color.lightGrayishBlue2}`,
-        padding: '48px 64px 48px 64px',
-        height: 'calc(114px - 48px)',
-        '&:last-child': {
-            border: 'none'
-        }
-    },
-    stats: {
-        borderTop: `1px solid ${theme.color.lightGrayishBlue2}`,
-        width: '100%'
-    },
-    statTitle: {
-        fontWeight: '600',
-        fontSize: 16,
-        lineHeight: '22px',
-        letterSpacing: '0.3px',
+    paper: {
+        padding: theme.spacing(5),
         textAlign: 'center',
-        color: theme.color.grayishBlue2,
-        whiteSpace: 'nowrap',
-        marginBottom: 6
+        color: theme.palette.text.secondary,
     },
-    statValue: {
-        ...theme.typography.title,
-        textAlign: 'left',
-        color: theme.color.veryDarkGrayishBlue
-    },
-    statValue2: {
-        ...theme.typography.title,
-        textAlign: 'right',
-        color: theme.color.veryDarkGrayishBlue
+    card: {maxWidth: 345},
+    color: {
+        brown: "#6d4c41"
     }
 }));
 
-function OrderBoard() {
+export default function CorderBoard() {
     const theme = useTheme();
-    const classes = useStyles({theme});
-    const [id, setId] = useState();
+    const classes = useStyles();
+    const [value, setValue] = useState(0);
     const [menu, setMenu] = useState();
     const [hi, setHi] = useState();
+    const [position, setPosition] = useState();
     const [status, setStatus] = useState();
     const [username, setName] = useState();
-
+    const [check, setCheck] = useState();
 
     const {data} = useQuery(MeQuery, {
         variables: {
@@ -100,23 +54,24 @@ function OrderBoard() {
     useEffect(() => {
         if (data) {
             setName(data.me.username);
-            setStatus(data.me.position);
+            setPosition(data.me.position);
+            setStatus(data.me.status);
 
         }
     }, [data]);
-
 
     const createmutation = CreateMutation;
 
 
     const [create, error] = useMutation(createmutation, {
-            refetchQueries: [{query: OrderQuery}],
+            refetchQueries: [{query: OrderSearch, MeQuery}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: menu,
                 hi: hi
             },
             onCompleted: (data) => {
+                alert("주문이 완료되었습니다!")
                 window.location.href = '/order';
 
 
@@ -127,119 +82,161 @@ function OrderBoard() {
         }
     )
 
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
 
-    console.log(Object(localStorage.getItem('myData')));
-    const [giveup] = useMutation(OrderGiveupMutation, {
-            refetchQueries: [{query: OrderQuery}],
-            variables: {id: String(Object.values(localStorage.getItem('myData')))},
-            onCompleted: (data) => {
-                window.location.href = '/order';
-
-
-            }
-        }
-    )
-
-
-    function renderStat(title, value, value2) {
-        return (
-
-            <Column
-                flexGrow={1}
-                className={classes.statContainer}
-                vertical='center'
-                horizontal='center'
-            >
-                <span className={classes.statTitle}>{title}</span>
-                <span className={classes.statValue}>{value}</span>
-                <span className={classes.statValue2}>{value2}</span>
-            </Column>
-        );
-    }
-
+    };
 
     return (
 
-        <Row
-            flexGrow={1}
-            className={classes.container}
-            horizontal='center'
-            breakpoints={{1024: 'column'}}
-        >
 
-            <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
-                <div/>
-            </Column>
-            <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
-                {renderStat('Select 버튼을 클릭하세요!', '주문하기')}
-                {renderStat('☕ 아메리카노 ☕', <TextField type='submit'
-                                                    onClick={() => {
-                                                        setMenu("아메리카노")
-                                                        setHi("hot")
-                                                    }}
-                                                    value="hot"/>,
-                    <TextField type='submit'
-                               onClick={() => {
-                                   setMenu("아메리카노")
-                                   setHi("ice")
-                               }}
-                               value="Ice"/>)}
+        <div className={classes.root}>
+
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    {status != "주문완료" && status != "주문포기" &&
+                    <Paper className={classes.root}>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            indicatorColor="secondary"
+                            textColor="secondary"
+                            centered
+                        >
+                            <Tab label="☕ 커피 ☕" href={"/order"}/>
+                            <Tab label="🍦 아이스크림 🍦" href={"/iorder"}/>
+                            <Tab label="🥤 기타 음료 🥤" href={"/eorder"}/>
+                        </Tabs>
+                    </Paper>
+                    }
+                    {status == "주문완료" && <AfterOrder/>}
 
 
-                {renderStat('☕ 카페모카 ☕', <TextField type='submit'
-                                                   onClick={() => {
-                                                       setMenu("카페모카")
-                                                       setHi("hot")
-                                                   }}
-                                                   value="Hot"/>,
-                    <TextField type='submit'
-                               onClick={() => {
-                                   setMenu("카페모카")
-                                   setHi("ice")
-                               }}
-                               value="Ice"/>)}
+                </Grid>
+                <Grid item xs={3}>
+                    {status != "주문완료" && status != "주문포기" &&
+                    <Paper className={classes.paper}>
+                        <Card className={classes.card}>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    alt="Contemplative Reptile"
+                                    height="200"
+                                    image="https://images.unsplash.com/photo-1593231269103-6667d6905882?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80"
+                                    title="Contemplative Reptile"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        아메리카노
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                                <CreateOrder hi="hot" menu="아메리카노" color="secondary"/>
+                                <CreateOrder hi="ice" menu="아메리카노" color="primary"/>
+                            </CardActions>
+                        </Card>
+                    </Paper>
+                    }
+                </Grid>
+                <Grid item xs={3}>
+                    {status != "주문완료" && status != "주문포기" &&
+                    <Paper className={classes.paper}>
+                        <Card className={classes.card}>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    alt="Contemplative Reptile"
+                                    height="200"
+                                    image="https://images.unsplash.com/photo-1556484245-2c765becb8eb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
+                                    title="Contemplative Reptile"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        카페라떼
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
 
-                {renderStat('☕ 아이스티 ☕', <TextField type='submit'
-                                                   onClick={() => {
-                                                       setMenu("아이스티")
-                                                       setHi("ice")
-                                                   }}
-                                                   value="Ice"/>,
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                                <CreateOrder hi="hot" menu="카페라떼" color="secondary"/>
+                                <CreateOrder hi="ice" menu="카페라떼" color="primary"/>
+                            </CardActions>
+                        </Card>
+                    </Paper>}
+                </Grid>
+                <Grid item xs={3}>
+                    {status != "주문완료" && status != "주문포기" && <Paper className={classes.paper}>
+                        <Card className={classes.card}>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    alt="Contemplative Reptile"
+                                    height="200"
+                                    image="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80"
+                                    title="Contemplative Reptile"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        바닐라라떼
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                                <CreateOrder hi="hot" menu="바닐라라떼" color="secondary"/>
+                                <CreateOrder hi="ice" menu="바닐라라떼" color="primary"/>
+                            </CardActions>
+                        </Card>
+                    </Paper>}
+                </Grid>
+                <Grid item xs={3}>
+                    {status != "주문완료" && status != "주문포기" && <Paper className={classes.paper}>
+                        <Card className={classes.card}>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    alt="Contemplative Reptile"
+                                    height="200"
+                                    image="https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
+                                    title="Contemplative Reptile"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        카페 모카
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                                <CreateOrder hi="hot" menu="카페모카" color="secondary"/>
+                                <CreateOrder hi="ice" menu="카페모카" color="primary"/>
+                            </CardActions>
+                        </Card>
+                    </Paper>
+                    }
+                </Grid>
+                {status == "대기중" && (
+
+                    <GiveupButton userid={localStorage.getItem("myData")}/>
                 )}
 
 
-                {renderStat('☕ 바닐라라떼 ☕', <TextField type='submit'
-                                                    onClick={() => {
-                                                        setMenu("바닐라라떼")
-                                                        setHi("hot")
-                                                    }}
-                                                    value="Hot"/>,
-                    <TextField type='submit'
-                               onClick={() => {
-                                   setMenu("바닐라라떼")
-                                   setHi("ice")
-                               }}
-                               value="Ice"/>)}
+                {status == "주문포기" && (
+
+                    <ChangeGiveupButton userid={localStorage.getItem("myData")}/>
+                )}
 
 
-                {status != "주문완료" &&
-                renderStat(<TextField type='submit'
-                                      onClick={create}
-                                      value="Select"/>, <TextField type='submit'
-                                                                   onClick={giveup}
-                                                                   value="주문 포기"/>)}
-
-                {status == "주문완료" &&
-                renderStat("주문 취소는 유저 페이지에서 가능", "주문 완료")}
-
-            </Column>
-
-        </Row>
-
+            </Grid>
+        </div>
 
     );
-
-
 }
 
-export default OrderBoard;

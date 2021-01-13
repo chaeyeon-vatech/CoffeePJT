@@ -4,9 +4,10 @@ import {Column, Row} from 'simple-flexbox';
 import {SidebarComponent, SidebarContext} from 'components/sidebar';
 import HeaderComponent from 'components/header/HeaderComponent';
 import PrivateRoutes from './PrivateRoutes';
-import {Redirect, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import LINKS from "../resources/links";
-import basicLogin from "./firstpage/LoginPage";
+import Create from "./firstpage/Create";
+import PublicRoutes from "./PublicRoutes";
 
 const useStyles = createUseStyles({
     container: {
@@ -25,27 +26,23 @@ const useStyles = createUseStyles({
     }
 });
 
-function PrivateSection() {
+function PublicSection() {
     const theme = useTheme();
     const classes = useStyles({theme});
-    // return task ? <PrivateSection/> : <PublicRoutes/>;
 
-    return localStorage.getItem('myData') ? (
+    return (
         <SidebarContext>
             <Row className={classes.container}>
                 <SidebarComponent/>
                 <Column flexGrow={1} className={classes.mainBlock}>
                     <HeaderComponent/>
                     <div className={classes.contentBlock}>
-                        <PrivateRoutes/>
+                        <PublicRoutes/>
                     </div>
                 </Column>
             </Row>
-
         </SidebarContext>
-    ) : (
-       <PrivateRoutes/>
     );
 }
 
-export default PrivateSection;
+export default PublicSection;
