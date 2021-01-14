@@ -5,11 +5,13 @@ import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import DeleteButton from "../button/DeleteButton";
 import Button from "@material-ui/core/Button";
 import GiveupButton from "../button/GiveupButton";
+import ChangeGiveupButton from "../button/ChangeGiveup";
 
 
 function BoardTable() {
 
     const [contents, setContents] = useState('');
+    const [status, setStatus] = useState();
 
 
     const {data} = useQuery(OrderSearch, {
@@ -25,10 +27,35 @@ function BoardTable() {
         }
     }, [data]);
 
+    const {data: me} = useQuery(MeQuery, {
+        variables: {
+            userid: localStorage.getItem('myData')
+        }
+    });
 
-    return (
+
+    useEffect(() => {
+        if (me) {
+            setStatus(me.me.status);
+
+        }
+    }, [me]);
+
+
+    return status === "주문포기" ? (
         <>
+            <table>
+                <caption>User 관리</caption>
 
+                <tr>
+                    <th><ChangeGiveupButton userid={localStorage.getItem("myData")}/></th>
+                </tr>
+
+
+                {/*<th><ChangeGiveupButton userid={localStorage.getItem("myData")}/></th>*/}
+            </table>
+        </>) : (
+        <>
             <table>
                 <caption>User 관리</caption>
                 <thead>
@@ -63,11 +90,9 @@ function BoardTable() {
                 <DeleteButton userid={localStorage.getItem("myData")} orderid={content._id}/>
             ))}
 
+        </>)
 
-        </>
 
-
-    )
 }
 
 export default BoardTable;

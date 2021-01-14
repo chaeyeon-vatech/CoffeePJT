@@ -162,6 +162,7 @@ function TodayTrendsComponent() {
             variables: {creater: id},
             onCompleted: (data) => {
                 alert("주문이 초기화되었습니다.")
+                localStorage.clear();
                 window.location.href = '/';
 
 

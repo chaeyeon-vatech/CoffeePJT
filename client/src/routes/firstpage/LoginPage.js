@@ -6,6 +6,7 @@ import '../../components/table/table.css';
 import {Autocomplete} from "@material-ui/lab";
 import {TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 const useStyles = createUseStyles((theme) => ({
         focused: {
@@ -91,7 +92,7 @@ const useStyles = createUseStyles((theme) => ({
                 margin: "20px",
             },
 
-            '&:nth-child(n) > a': {
+            '&:nth-child(n) > button': {
                 marginTop: "50px",
                 border: "none",
                 padding: "50px 50px",
@@ -205,9 +206,9 @@ const AuthenticationForm = () => {
                             </Typography>
 
 
-                            <a type="submit"
+                            <Button type="submit"
                                onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
-                            >로그인</a>
+                            >로그인</Button>
 
                         </div>
 

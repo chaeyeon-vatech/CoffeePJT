@@ -74,7 +74,7 @@ export default function TransferList() {
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
 
-                alert("휴가자로 전환되었습니다!");
+                alert("미주문자로 전환되었습니다!");
                 window.location.href = '/create';
 
             }
@@ -208,7 +208,7 @@ export default function TransferList() {
                     </Button>
                 </Grid>
             </Grid>
-            <Grid item>{customList('휴가자', right)}</Grid>
+            <Grid item>{customList('미주문자', right)}</Grid>
 
         </Grid>
 

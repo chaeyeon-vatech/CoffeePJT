@@ -12,7 +12,7 @@ import PaymentBoard from "../paymentboard/PaymentBoard";
 import VacationBoard from "./VacationBoard";
 
 const useStyles = createUseStyles((theme) => ({
-    root: {marginTop: "30px"},
+    root: {marginTop: -160},
 
     addButton: {
         backgroundColor: theme.color.darkRed,

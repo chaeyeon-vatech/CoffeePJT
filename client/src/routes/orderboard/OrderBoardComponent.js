@@ -13,9 +13,9 @@ const useStyles = createUseStyles((theme) => ({
         marginRight: -30,
         // marginTop: -30
     },
-    background:{
+    background: {
         backgroundColor: 'rgba(246,244,244,0.9)',
-        padding:"45px 45px 45px 45px"
+        padding: "45px 45px 45px 45px"
     },
     cardRow: {
         '@media (max-width: 768px)': {
@@ -58,7 +58,7 @@ const useStyles = createUseStyles((theme) => ({
         borderRadius: 5,
     },
     itemTitle: {
-        ...theme.typography.itemTitle,
+        // ...theme.typography.itemTitle,
         color: theme.color.veryDarkGrayishBlue,
         width: "50%"
     }

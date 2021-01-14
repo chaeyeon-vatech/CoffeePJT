@@ -174,7 +174,7 @@ export const Receipt = gql`
 
 
 export const ReceiptUsers = gql`
-    query receiptUsers($num:Int!){receiptUsers(receiptNum:$num)}
+    query receiptUsers{receiptUsers}
 `
 
 

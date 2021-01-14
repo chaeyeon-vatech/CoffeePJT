@@ -57,11 +57,16 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: "#6d4c41",
     },
-    card: {maxWidth: 345},
+    card: {maxWidth: 250},
     color: {
         backgroundColor: 'rgb(219,150,26)',
         fontSize: 10,
-        marginTop:"-30px"
+        marginLeft: "23px",
+        width: "1079px",
+        height: "50px",
+        marginBottom: "-24px"
+
+        // marginTop:"-30px"
     }
 }));
 
@@ -103,7 +108,7 @@ export default function MenuBoard() {
 
         <div className={classes.root}>
             <AppBar position="static" className={classes.color}>
-                <Tabs value={value} onChange={handleChange} aria-label="wrapped label tabs example">
+                <Tabs value={value} onChange={handleChange}>
                     <Tab
                         value="one"
                         label="☕ 커피 ☕"

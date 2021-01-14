@@ -45,7 +45,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     title: {
         ...theme.typography.title,
-        color:"white",
+        color: "white",
         '@media (max-width: 1080px)': {
             marginLeft: 50
         },
@@ -88,9 +88,13 @@ function HeaderComponent() {
             title = '결제자 페이지';
             break;
 
+
+        case currentItem === SLUGS.create:
+            title = '주문 관리 페이지';
+            break;
+
         case currentItem === SLUGS.settings:
-            title = '유저 페이지';
-            title = '유저 페이지';
+            title = '유저 관리 페이지';
             break;
         default:
             title = '';

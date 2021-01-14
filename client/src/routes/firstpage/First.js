@@ -7,6 +7,7 @@ import {Autocomplete} from "@material-ui/lab";
 import Typography from '@material-ui/core/Typography';
 
 import {Input, TextField} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -95,7 +96,7 @@ const useStyles = createUseStyles((theme) => ({
                 margin: "20px",
             },
 
-            '&:nth-child(n) > a': {
+            '&:nth-child(n) > button': {
                 marginTop: "50px",
                 border: "none",
                 padding: "50px 50px",
@@ -186,7 +187,7 @@ const AuthenticationForm = () => {
 
                             <div className={classes.loginhtml}>
                                 <h3>현재 주문이 없습니다.</h3>
-                                <h5 className={classes.h5}>주문을 생성하시려면<br/>로그인해주세요!</h5>
+                                <h5 className={classes.h5}>주문을 생성하시려면<br/>이름을 입력해주세요!</h5>
 
                                 <div className={classes.loginform}>
 
@@ -206,7 +207,6 @@ const AuthenticationForm = () => {
                                                 renderInput={(params) => (
                                                     <TextField
                                                         {...params}
-                                                        id="standard-basic"
                                                         margin="normal"
                                                         color={"secondary"}
                                                         onChange={e => setSearch(e.target.value)}
@@ -221,9 +221,9 @@ const AuthenticationForm = () => {
                                         </Typography>
 
 
-                                        <a type="submit"
+                                        <Button type="submit"
                                            onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
-                                        >로그인</a>
+                                        >로그인</Button>
 
                                     </div>
 

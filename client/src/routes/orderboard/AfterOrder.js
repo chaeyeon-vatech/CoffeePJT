@@ -60,29 +60,7 @@ function OrderBoard() {
     console.log(name, position, status);
 
 
-    return position === "주문포기" ? (
-
-        <Row
-            horizontal='space-between'
-            className={classes.lastRow}
-            breakpoints={{1024: 'column'}}
-        >
-            <table className={classes.border}>
-
-                {contents && contents.map((content) => (
-                    <td><span
-                        className={classes.itemTitle}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
-                    </td>))}
-            </table>
-
-        </Row>,
-
-            <div className={classes.todayTrends}>
-                <ChangeGiveupButton userid={localStorage.getItem("myData")}/>
-            </div>
-
-    ) : (
-
+    return(
         <Row
             flexGrow={1}
             className={classes.container}
