@@ -515,12 +515,12 @@ const resolvers = {
 
         confirmOrders: async (_, args) => {
 
-            await Order.deleteMany({});
-            await Task.deleteMany({});
+            Order.deleteMany({});
+            Task.deleteMany({});
             const renualUser = await users.find();
 
             for (let index = 0; index < renualUser.length; index++) {
-                await users.findByIdAndUpdate(renualUser[index].id, { status: "대기중", position: "주문자" })
+                users.findByIdAndUpdate(renualUser[index].id, { status: "대기중", position: "주문자" })
             }
 
             return "완료 처리 되었습니다. 맛있게 드세요!"
