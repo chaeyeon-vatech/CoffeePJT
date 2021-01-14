@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
         flexGrow: 1,
         marginRight: 30,
         '@media (max-width: 768px)': {
-            marginTop: 30,
+            // marginTop: 30,
             maxWidth: 'none'
         }
     },

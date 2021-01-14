@@ -7,10 +7,8 @@ import LogoComponent from './LogoComponent';
 import Menu from './MenuComponent';
 import MenuItem from './MenuItemComponent';
 import {useAuthToken} from '../../routes/firstpage/authToken';
-import {useApolloClient, useMutation, useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/react-hooks';
 import {MeQuery} from "../../graphql/query";
-import {Row} from "simple-flexbox";
-import {LogoutMutation} from "../../graphql/mutation";
 
 const useStyles = createUseStyles({
     separator: {
@@ -25,7 +23,7 @@ const handleClick = () => {
     if (window.confirm('로그아웃하시겠습니까?')) {
 
         localStorage.clear()
-        window.location.href = '/'
+        window.location.href = '/login'
     }
 }
 

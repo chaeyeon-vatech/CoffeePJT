@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +9,10 @@ import Box from '@material-ui/core/Box';
 import OrderBoard from "./AfterOrder";
 import IceBoard from "./IceBoard";
 import EtcBoard from "./etcBoard";
+import OrderBoardComponent from "./OrderBoardComponent";
+import {useQuery} from "@apollo/react-hooks";
+import {MeQuery} from "../../graphql/query";
+import AfterOrder from "./AfterOrder";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -45,43 +49,73 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1
+        flexGrow: 2,
+        // width:"1000px"
     },
     paper: {
-        padding: theme.spacing(5),
+        // padding: theme.spacing(3),
         textAlign: 'center',
         color: "#6d4c41",
     },
     card: {maxWidth: 345},
     color: {
-        brown: "#6d4c41"
+        backgroundColor: 'rgb(219,150,26)',
+        fontSize: 10,
+        marginTop:"-30px"
     }
 }));
 
 export default function MenuBoard() {
     const classes = useStyles();
     const [value, setValue] = React.useState('one');
+    const [name, setName] = useState();
+    const [position, setPosition] = useState();
+    const [status, setStatus] = useState();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    return (
+    const {data} = useQuery(MeQuery, {
+        variables: {
+            userid: localStorage.getItem('myData')
+        }
+    });
+
+
+    useEffect(() => {
+        if (data) {
+            setName(data.me.username);
+            setPosition(data.me.position);
+            setStatus(data.me.status);
+
+        }
+    }, [data]);
+
+    console.log(name, position, status);
+
+
+    return status === "주문완료" || status === "주문포기" ? (
+        <>
+            <AfterOrder/>
+        </>
+    ) : (
+
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="static" className={classes.color}>
                 <Tabs value={value} onChange={handleChange} aria-label="wrapped label tabs example">
                     <Tab
                         value="one"
-                        label="커피"
+                        label="☕ 커피 ☕"
                         wrapped
                         {...a11yProps('one')}
                     />
-                    <Tab value="two" label="아이스크림" {...a11yProps('two')} />
-                    <Tab value="three" label="기타 음료" {...a11yProps('three')} />
+                    <Tab value="two" label="🍦 아이스크림 🍦" {...a11yProps('two')} />
+                    <Tab value="three" label="🥤 기타 음료 🥤" {...a11yProps('three')} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index="one">
-                <OrderBoard/>
+                <OrderBoardComponent/>
             </TabPanel>
             <TabPanel value={value} index="two">
                 <IceBoard/>
@@ -90,5 +124,5 @@ export default function MenuBoard() {
                 <EtcBoard/>
             </TabPanel>
         </div>
-    );
+    )
 }

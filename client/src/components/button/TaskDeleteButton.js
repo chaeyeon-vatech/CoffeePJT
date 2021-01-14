@@ -30,6 +30,8 @@ function TaskDeleteButton(post_id, user_id) {
             variables: {id: post_id.post_id, userid: post_id.user_id},
             onCompleted: (data) => {
                 alert("주문이 취소되었습니다.");
+                window.location.href = '/';
+
 
 
             }

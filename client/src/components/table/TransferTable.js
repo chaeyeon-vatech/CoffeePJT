@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1, 2),
     },
     list: {
-        width: 200,
+        width: 400,
         height: 230,
         backgroundColor: theme.palette.background.paper,
         overflow: 'auto',

@@ -55,7 +55,7 @@ export function CreateOrder(hi) {
                 type='submit'
                 color={hi.color}
                 onClick={create}>
-                {hi.hi}
+                {hi.label}
             </Button>
         </>
 

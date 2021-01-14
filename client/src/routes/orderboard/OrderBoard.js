@@ -13,9 +13,8 @@ import {useQuery, useMutation} from "@apollo/react-hooks";
 import {MeQuery, OrderSearch} from "../../graphql/query";
 import {CreateMutation} from "../../graphql/mutation";
 import CreateOrder from "./useMutation";
-import AfterOrder from "./AfterOrder";
 import GiveupButton from "../../components/button/GiveupButton";
-import ChangeGiveupButton from "../../components/button/ChangeGiveup";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +71,6 @@ export default function CorderBoard() {
             },
             onCompleted: (data) => {
                 alert("주문이 완료되었습니다!")
-                window.location.href = '/order';
 
 
             },
@@ -93,28 +91,9 @@ export default function CorderBoard() {
         <div className={classes.root}>
 
             <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    {status != "주문완료" && status != "주문포기" &&
-                    <Paper className={classes.root}>
-                        <Tabs
-                            value={value}
-                            onChange={handleChange}
-                            indicatorColor="secondary"
-                            textColor="secondary"
-                            centered
-                        >
-                            <Tab label="☕ 커피 ☕" href={"/order"}/>
-                            <Tab label="🍦 아이스크림 🍦" href={"/iorder"}/>
-                            <Tab label="🥤 기타 음료 🥤" href={"/eorder"}/>
-                        </Tabs>
-                    </Paper>
-                    }
-                    {status == "주문완료" && <AfterOrder/>}
 
-
-                </Grid>
                 <Grid item xs={3}>
-                    {status != "주문완료" && status != "주문포기" &&
+
                     <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
@@ -132,15 +111,14 @@ export default function CorderBoard() {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <CreateOrder hi="hot" menu="아메리카노" color="secondary"/>
-                                <CreateOrder hi="ice" menu="아메리카노" color="primary"/>
+                                <CreateOrder hi="hot" menu="아메리카노" color="secondary" label="Hot"/>
+                                <CreateOrder hi="ice" menu="아메리카노" color="primary" label="Ice"/>
                             </CardActions>
                         </Card>
                     </Paper>
-                    }
                 </Grid>
                 <Grid item xs={3}>
-                    {status != "주문완료" && status != "주문포기" &&
+
                     <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
@@ -161,14 +139,14 @@ export default function CorderBoard() {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <CreateOrder hi="hot" menu="카페라떼" color="secondary"/>
-                                <CreateOrder hi="ice" menu="카페라떼" color="primary"/>
+                                <CreateOrder hi="hot" menu="카페라떼" color="secondary" label="Hot"/>
+                                <CreateOrder hi="ice" menu="카페라떼" color="primary" label="Ice"/>
                             </CardActions>
                         </Card>
-                    </Paper>}
+                    </Paper>
                 </Grid>
                 <Grid item xs={3}>
-                    {status != "주문완료" && status != "주문포기" && <Paper className={classes.paper}>
+                    <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
                                 <CardMedia
@@ -188,14 +166,14 @@ export default function CorderBoard() {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <CreateOrder hi="hot" menu="바닐라라떼" color="secondary"/>
-                                <CreateOrder hi="ice" menu="바닐라라떼" color="primary"/>
+                                <CreateOrder hi="hot" menu="바닐라라떼" color="secondary" label="Hot"/>
+                                <CreateOrder hi="ice" menu="바닐라라떼" color="primary" label="Ice"/>
                             </CardActions>
                         </Card>
-                    </Paper>}
+                    </Paper>
                 </Grid>
                 <Grid item xs={3}>
-                    {status != "주문완료" && status != "주문포기" && <Paper className={classes.paper}>
+                    <Paper className={classes.paper}>
                         <Card className={classes.card}>
                             <CardActionArea>
                                 <CardMedia
@@ -215,24 +193,17 @@ export default function CorderBoard() {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <CreateOrder hi="hot" menu="카페모카" color="secondary"/>
-                                <CreateOrder hi="ice" menu="카페모카" color="primary"/>
+                                <CreateOrder hi="hot" menu="카페모카" color="secondary" label="Hot"/>
+                                <CreateOrder hi="ice" menu="카페모카" color="primary" label="Ice"/>
                             </CardActions>
                         </Card>
                     </Paper>
-                    }
-                </Grid>
-                {status == "대기중" && (
 
+                </Grid>
+
+                {status === "대기중" && (
                     <GiveupButton userid={localStorage.getItem("myData")}/>
                 )}
-
-
-                {status == "주문포기" && (
-
-                    <ChangeGiveupButton userid={localStorage.getItem("myData")}/>
-                )}
-
 
             </Grid>
         </div>

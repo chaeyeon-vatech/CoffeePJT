@@ -18,7 +18,7 @@ const useStyles = createUseStyles((theme) => ({
         },
         loginwrap: {
             color: "white",
-            fontWeight: "bold",
+            fontWeight: "lighter",
             textAlign: "center",
             paddingTop: "10px",
             width: "100%",

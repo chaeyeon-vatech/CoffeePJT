@@ -5,6 +5,7 @@ import {AllUserQuery, IndexQuery, MeQuery, UserSearchQuery} from "../../graphql/
 import UserDeleteButton from "../button/UserDeleteButton";
 import {Column} from "simple-flexbox";
 import UpdateButton from "../button/UpdateButton";
+import FormDialog from "../../routes/userboard/Dialog";
 
 
 function UserManageTable() {
@@ -47,8 +48,9 @@ function UserManageTable() {
 
                 <tr style={{marginBottom: 20}}>
                     <td>{content.username}</td>
-                    <td><UpdateButton id={content._id} username={content.username}/></td>
+                    <td><FormDialog id={content._id} username={content.username}/></td>
                     <td><UserDeleteButton post_id={content._id}/></td>
+                    {/*<td><UpdateButton id={content._id} username={content.username}/></td>*/}
 
 
                 </tr>
