@@ -141,8 +141,8 @@ function Create(props) {
 
                                 <thead>
                                 <tr>
-                                    <th scope="col">Task 내용</th>
-                                    <th scope="col">Task 재작성</th>
+                                    <th scope="col">게시글 내용</th>
+                                    <th scope="col">게시글 삭제</th>
 
 
                                 </tr>

@@ -48,7 +48,7 @@ function TaskDeleteButton(post_id, user_id) {
                     className={[classes.addButton].join(' ')}
                     onClick={deletePostOrMutation}
                 >
-                    재작성
+                    삭제
                 </Row>
 
             </form>
