@@ -515,8 +515,8 @@ const resolvers = {
 
         confirmOrders: async (_, args) => {
 
-            Order.deleteMany({});
-            Task.deleteMany({});
+            await Order.deleteMany({});
+            await Task.deleteMany({});
             const renualUser = await users.find();
 
             for (let index = 0; index < renualUser.length; index++) {
@@ -580,7 +580,7 @@ const resolvers = {
                 throw new Error(error.message)
             }
         },
-        updatePosition: async (_, args) => {
+        updatePosition:async (_, args) => {
             try {
                 const ids = args.ids;
                 for (let i = 0; i < ids.length; i++) {
