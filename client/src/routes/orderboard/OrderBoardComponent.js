@@ -11,12 +11,15 @@ import AfterOrder from "./AfterOrder";
 const useStyles = createUseStyles((theme) => ({
     cardsContainer: {
         marginRight: -30,
-        marginTop: -30
+        // marginTop: -30
+    },
+    background: {
+        backgroundColor: 'rgba(246,244,244,0.9)',
+        padding: "45px 45px 45px 45px"
     },
     cardRow: {
-        marginTop: 30,
         '@media (max-width: 768px)': {
-            marginTop: 0
+            // marginTop: 0
         }
     },
     miniCardContainer: {
@@ -30,9 +33,9 @@ const useStyles = createUseStyles((theme) => ({
     todayTrends: {
         marginTop: 30
     },
-    lastRow: {
-        marginTop: 30
-    },
+    // lastRow: {
+    //     marginTop: 30,
+    // },
     unresolvedTickets: {
         marginRight: 30,
         '@media (max-width: 1024px)': {
@@ -55,7 +58,7 @@ const useStyles = createUseStyles((theme) => ({
         borderRadius: 5,
     },
     itemTitle: {
-        ...theme.typography.itemTitle,
+        // ...theme.typography.itemTitle,
         color: theme.color.veryDarkGrayishBlue,
         width: "50%"
     }
@@ -80,10 +83,10 @@ function OrderBoardComponent() {
 
 
     return (
-        <Column>
+        <Column className={classes.background}>
+
             <Row
                 horizontal='space-between'
-                className={classes.lastRow}
                 breakpoints={{1024: 'column'}}
             >
                 <table className={classes.border}>
@@ -98,6 +101,7 @@ function OrderBoardComponent() {
             <div className={classes.todayTrends}>
                 <OrderBoard/>
             </div>
+
 
         </Column>
     );

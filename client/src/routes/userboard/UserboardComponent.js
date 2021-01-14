@@ -6,10 +6,10 @@ import UserBoard from './UserBoard';
 const useStyles = createUseStyles({
     cardsContainer: {
         marginRight: -30,
-        marginTop: -30
+        marginTop: -50
     },
     cardRow: {
-        marginTop: 30,
+        // marginTop: 30,
         '@media (max-width: 768px)': {
             marginTop: 0
         }
@@ -18,16 +18,16 @@ const useStyles = createUseStyles({
         flexGrow: 1,
         marginRight: 30,
         '@media (max-width: 768px)': {
-            marginTop: 30,
+            // marginTop: 30,
             maxWidth: 'none'
         }
     },
     todayTrends: {
-        marginTop: 30
+        marginTop: 0
     },
-    lastRow: {
-        marginTop: 30
-    },
+    // lastRow: {
+    //     marginTop: 30
+    // },
     unresolvedTickets: {
         marginRight: 30,
         '@media (max-width: 1024px)': {
@@ -37,7 +37,7 @@ const useStyles = createUseStyles({
     tasks: {
         marginTop: 0,
         '@media (max-width: 1024px)': {
-            marginTop: 30
+            // marginTop: 30
         }
     }
 });

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import UserManageTable from '../../components/table/UserManageTable';
 import UserTable from "../../components/table/UserTable";
 import DeleteButton from "../../components/button/DeleteButton";
-
+import ChangeGiveupButton from "../../components/button/ChangeGiveup";
+import Grid from "@material-ui/core/Grid";
+import {useQuery} from "@apollo/react-hooks";
+import {MeQuery, TaskQuery} from "../../graphql/query";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -22,10 +25,42 @@ const useStyles = createUseStyles((theme) => ({
 function OrderBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
+    const [name, setName] = useState();
+    const [position, setPosition] = useState();
+    const [status, setStatus] = useState();
+
+    const [contents, setContents] = useState('');
+    const [count, setCount] = useState('');
+
+    const {data: task} = useQuery(TaskQuery);
+    useEffect(() => {
+        if (task) {
+            setContents(data.tasks);
+
+        }
+    }, [task]);
 
 
-    return (
+    const {data} = useQuery(MeQuery, {
+        variables: {
+            userid: localStorage.getItem('myData')
+        }
+    });
 
+
+    useEffect(() => {
+        if (data) {
+            setName(data.me.username);
+            setPosition(data.me.position);
+            setStatus(data.me.status);
+
+        }
+    }, [data]);
+
+    console.log(name, position, status);
+
+
+    return(
         <Row
             flexGrow={1}
             className={classes.container}
@@ -46,8 +81,7 @@ function OrderBoard() {
         </Row>
 
 
-
-    );
+    )
 
 
 }

@@ -9,7 +9,7 @@ import {TaskQuery} from "../../graphql/query";
 const useStyles = createUseStyles((theme) => ({
     cardsContainer: {
         marginRight: -30,
-        marginTop: -30
+        // marginTop: -30
     },
     cardRow: {
         marginTop: 30,
@@ -19,18 +19,18 @@ const useStyles = createUseStyles((theme) => ({
     },
     miniCardContainer: {
         flexGrow: 1,
-        marginRight: 30,
+        // marginRight: 30,
         '@media (max-width: 768px)': {
-            marginTop: 30,
+            // marginTop: 30,
             maxWidth: 'none'
         }
     },
     todayTrends: {
         marginTop: 30
     },
-    lastRow: {
-        marginTop: 30
-    },
+    // lastRow: {
+    //     marginTop: 30
+    // },
     unresolvedTickets: {
         marginRight: 30,
         '@media (max-width: 1024px)': {
@@ -40,7 +40,7 @@ const useStyles = createUseStyles((theme) => ({
     tasks: {
         marginTop: 0,
         '@media (max-width: 1024px)': {
-            marginTop: 30
+            // marginTop: 30
         }
     },
     border: {
@@ -70,16 +70,12 @@ function PaymentboardComponent() {
         }
     }, [data]);
 
-    console.log(contents)
-
-
     return (
 
 
         <Column>
             <table className={classes.border}>
 
-                {/*오늘은 ""님이 ""기념으로 "" 쏩니다!*/}
                 {contents && contents.map((content) => (
                     <td><span
                         className={classes.itemTitle}>👏  결제자 {content.creater}님 환영합니다!👏</span>

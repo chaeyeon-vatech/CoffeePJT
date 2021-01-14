@@ -7,10 +7,12 @@ import {Autocomplete} from "@material-ui/lab";
 import Typography from '@material-ui/core/Typography';
 
 import {Input, TextField} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 
 const useStyles = createUseStyles((theme) => ({
         focused: {
+            textAlign: "center",
             "& $notchedOutline": {
                 borderColor: "yellow"
             }
@@ -32,7 +34,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "80px 70px 50px 70px",
-            backgroundColor: "rgb(42,47,34,0.9)"
+            backgroundColor: "rgba(140,83,83,0.9)"
 
         },
 
@@ -63,7 +65,7 @@ const useStyles = createUseStyles((theme) => ({
             position: "relative",
             perspective: "1000px",
             transformStyle: "preserve-3d",
-            backgroundColor: "rgb(42,47,34,0.9)"
+            backgroundColor: "rgba(140,83,83,0.9)"
         },
 
         group: {
@@ -71,6 +73,7 @@ const useStyles = createUseStyles((theme) => ({
             '&:nth-child(n) > TextField,label,input,button,a,table': {
                 width: "100%",
                 color: "#fff",
+                textAlign: "center"
             },
             '&:nth-child(n) > TextField,input,button,table,tr': {
                 border: "none",
@@ -93,7 +96,7 @@ const useStyles = createUseStyles((theme) => ({
                 margin: "20px",
             },
 
-            '&:nth-child(n) > a': {
+            '&:nth-child(n) > button': {
                 marginTop: "50px",
                 border: "none",
                 padding: "50px 50px",
@@ -184,7 +187,7 @@ const AuthenticationForm = () => {
 
                             <div className={classes.loginhtml}>
                                 <h3>현재 주문이 없습니다.</h3>
-                                <h5 className={classes.h5}>주문을 생성하시려면<br/>로그인해주세요!</h5>
+                                <h5 className={classes.h5}>주문을 생성하시려면<br/>이름을 입력해주세요!</h5>
 
                                 <div className={classes.loginform}>
 
@@ -204,9 +207,8 @@ const AuthenticationForm = () => {
                                                 renderInput={(params) => (
                                                     <TextField
                                                         {...params}
-                                                        id="standard-basic"
                                                         margin="normal"
-                                                        color="success.main"
+                                                        color={"secondary"}
                                                         onChange={e => setSearch(e.target.value)}
                                                         InputProps={{
                                                             ...params.InputProps,
@@ -219,9 +221,9 @@ const AuthenticationForm = () => {
                                         </Typography>
 
 
-                                        <a type="submit"
+                                        <Button type="submit"
                                            onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
-                                        >로그인</a>
+                                        >로그인</Button>
 
                                     </div>
 

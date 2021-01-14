@@ -8,14 +8,11 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
-import {Tab, Tabs} from "@material-ui/core";
-import {TabPanel} from "@material-ui/lab";
 import {Column, Row} from "simple-flexbox";
-import OrderBoard from "./OrderBoard";
 import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../graphql/query";
+import {MeQuery, TaskQuery} from "../../graphql/query";
 import CreateOrder from "./useMutation";
+import GiveupButton from "../../components/button/GiveupButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,12 +23,13 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
-    card: {maxWidth: 345},
+    card: {maxWidth: 345,},
     color: {
         brown: "#6d4c41"
     },
-    lastRow: {
-        marginTop: 30
+    background: {
+        backgroundColor: 'rgba(246,244,244,0.9)',
+        padding: "45px 45px 45px 45px"
     },
     border: {
         backgroundColor: "whitesmoke",
@@ -54,12 +52,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function CorderBoard() {
+export default function EtcBoard() {
     const classes = useStyles();
     const [value, setValue] = React.useState(2);
 
     const [contents, setContents] = useState('');
     const [count, setCount] = useState('');
+
+    const [status, setStatus] = useState();
+
 
     const {data} = useQuery(TaskQuery);
     useEffect(() => {
@@ -69,13 +70,14 @@ export default function CorderBoard() {
         }
     }, [data]);
 
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
 
     return (
-        <Column>
+        <Column className={classes.background}>
             <Row
                 horizontal='space-between'
                 className={classes.lastRow}
@@ -94,22 +96,7 @@ export default function CorderBoard() {
                 <div className={classes.root}>
 
                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Paper className={classes.root}>
-                                <Tabs
-                                    value={value}
-                                    onChange={handleChange}
-                                    indicatorColor="secondary"
-                                    textColor="secondary"
-                                    centered
-                                >
-                                    <Tab label="☕ 커피 ☕" href="/order"/>
-                                    <Tab label="🍦 아이스크림 🍦" href="/iorder"/>
-                                    <Tab label="🥤 기타 음료 🥤" href="/eorder"/>
-                                </Tabs>
-                            </Paper>
 
-                        </Grid>
                         <Grid item xs={3}>
                             <Paper className={classes.paper}>
                                 <Card className={classes.card}>
@@ -117,9 +104,8 @@ export default function CorderBoard() {
                                         <CardMedia
                                             component="img"
                                             alt="Contemplative Reptile"
-                                            height="200"
+                                            height="230"
                                             image="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1949&q=80"
-                                            title="Contemplative Reptile"
                                         />
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="h2">
@@ -132,7 +118,8 @@ export default function CorderBoard() {
                                     </CardActionArea>
                                     <CardActions>
 
-                                        <CreateOrder hi="etc" menu="아이스티" color="primary" className={classes.button}/>
+                                        <CreateOrder hi="etc" menu="아이스티" color="primary" label="아이스티 선택"
+                                                     className={classes.button}/>
 
                                     </CardActions>
                                 </Card>
@@ -147,11 +134,10 @@ export default function CorderBoard() {
                                             alt="Contemplative Reptile"
                                             height="200"
                                             image="https://images.unsplash.com/photo-1524156868115-e696b44983db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1946&q=80"
-                                            title="Contemplative Reptile"
                                         />
                                         <CardContent>
                                             <Typography gutterBottom variant="h6" component="h2">
-                                                망고 요거트 스무디
+                                                망고 요거트<br/> 스무디
                                             </Typography>
                                             <Typography variant="body2" color="textSecondary" component="p">
 
@@ -159,7 +145,8 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="etc" menu="망고 요거트 스무디" color="primary" className={classes.button}/>
+                                        <CreateOrder hi="etc" menu="망고 요거트 스무디" color="primary" label="스무디 선택"
+                                                     className={classes.button}/>
 
                                     </CardActions>
                                 </Card>
@@ -178,7 +165,7 @@ export default function CorderBoard() {
                                         />
                                         <CardContent>
                                             <Typography gutterBottom variant="h6" component="h2">
-                                                딸기 요거트 스무디
+                                                딸기 요거트<br/> 스무디
                                             </Typography>
                                             <Typography variant="body2" color="textSecondary" component="p">
 
@@ -186,7 +173,8 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="etc" menu="딸기 요거트 스무디" color="primary" className={classes.button}/>
+                                        <CreateOrder hi="etc" menu="딸기 요거트 스무디" color="primary" label="스무디 선택"
+                                                     className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -204,7 +192,7 @@ export default function CorderBoard() {
                                         />
                                         <CardContent>
                                             <Typography gutterBottom variant="h6" component="h2">
-                                                요거트 스무디
+                                                플레인 요거트<br/> 스무디
                                             </Typography>
                                             <Typography variant="body2" color="textSecondary" component="p">
 
@@ -212,12 +200,17 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="etc" menu="플레인 요거트 스무디" color="primary" className={classes.button}/>
+                                        <CreateOrder hi="etc" menu="플레인 요거트 스무디" color="primary" label="스무디 선택"
+                                                     className={classes.button}/>
 
                                     </CardActions>
                                 </Card>
                             </Paper>
                         </Grid>
+                        {status === "대기중" && (
+                            <GiveupButton userid={localStorage.getItem("myData")}/>
+                        )}
+
                     </Grid>
                 </div>
             </div>

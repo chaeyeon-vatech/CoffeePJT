@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     button: {
         selfAlign: "center",
         marginTop: "30px",
-        marginLeft: "450px",
         padding: "30px 80px 30px 80px",
         textAlign: "center"
 

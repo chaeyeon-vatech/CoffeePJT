@@ -12,8 +12,9 @@ import {
 } from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
 import {OrderConfirmMutation, OrderGiveupMutation} from "../../graphql/mutation";
-import {TextField} from "@material-ui/core";
+import {TextField, Tooltip} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
+import Button from "@material-ui/core/Button";
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -79,8 +80,12 @@ const useStyles = createUseStyles((theme) => ({
         textAlign: 'center',
         color: theme.color.veryDarkGrayishBlue
     },
-    a:{
-        color:"black"
+    a: {
+        color: "black"
+    },
+    text: {
+        fontSize: "20px",
+        color: "brown"
     }
 }));
 
@@ -157,6 +162,7 @@ function TodayTrendsComponent() {
             variables: {creater: id},
             onCompleted: (data) => {
                 alert("주문이 초기화되었습니다.")
+                localStorage.clear();
                 window.location.href = '/';
 
 
@@ -213,16 +219,11 @@ function TodayTrendsComponent() {
             </Column>
             <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
                 {renderStat('누적 금액', money)}
-                {renderStat('미주문자', <a className={classes.a} onMouseEnter={() => setIsShown(true)}
-                                       onMouseLeave={() => setIsShown(false)}>{order[3]}</a>)}
+                {renderStat('미주문자', <Tooltip title={pa &&
+                pa.map((content) => content.username).join(',')} placement="top" className={classes.text}>
+                    <Button>{order[3]}</Button>
+                </Tooltip>)}
 
-                {isShown && (
-                    <table>
-                    <th>{pa.map((p) => p.username ).join(',')}</th>
-                    </table>
-
-                )
-                }
                 {renderStat('결제 완료', <TextField type='submit'
                                                 onClick={deletePostOrMutation}
                                                 disabled={loading}

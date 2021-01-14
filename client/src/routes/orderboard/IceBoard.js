@@ -26,13 +26,17 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
+    background:{
+        backgroundColor: 'rgba(246,244,244,0.9)',
+        padding:"45px 45px 45px 45px"
+    },
     card: {maxWidth: 345},
     color: {
         brown: "#6d4c41"
     },
-    lastRow: {
-        marginTop: 30
-    },
+    // lastRow: {
+    //     marginTop: 30
+    // },
     border: {
         backgroundColor: "whitesmoke",
         fontSize: '15px !important',
@@ -54,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function CorderBoard() {
+export default function IceBoard() {
     const classes = useStyles();
     const [value, setValue] = React.useState(1);
 
@@ -75,7 +79,7 @@ export default function CorderBoard() {
 
 
     return (
-        <Column>
+        <Column className={classes.background}>
             <Row
                 horizontal='space-between'
                 className={classes.lastRow}
@@ -94,22 +98,6 @@ export default function CorderBoard() {
                 <div className={classes.root}>
 
                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Paper className={classes.root}>
-                                <Tabs
-                                    value={value}
-                                    onChange={handleChange}
-                                    indicatorColor="secondary"
-                                    textColor="secondary"
-                                    centered
-                                >
-                                    <Tab label="☕ 커피 ☕" href="/order"/>
-                                    <Tab label="🍦 아이스크림 🍦" href="/iorder"/>
-                                    <Tab label="🥤 기타 음료 🥤" href="/eorder"/>
-                                </Tabs>
-                            </Paper>
-
-                        </Grid>
                         <Grid item xs={3}>
                             <Paper className={classes.paper}>
                                 <Card className={classes.card}>
@@ -131,7 +119,7 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="아시나요" color="primary"
+                                        <CreateOrder hi="icecream" menu="아시나요" color="primary" label="아시나요 선택"
                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
@@ -158,7 +146,7 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="돼지콘" color="primary"
+                                        <CreateOrder hi="icecream" menu="돼지콘" color="primary" label="돼지콘 선택"
                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
@@ -185,7 +173,7 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="브라보" color="primary"
+                                        <CreateOrder hi="icecream" menu="브라보" color="primary" label="브라보 선택"
                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
@@ -212,7 +200,8 @@ export default function CorderBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="녹차마루" color="primary" className={classes.button}/>
+                                        <CreateOrder hi="icecream" menu="녹차마루" color="primary" label="녹차마루 선택"
+                                                     className={classes.button}/>
 
 
                                     </CardActions>

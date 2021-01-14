@@ -26,7 +26,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "90px 70px 50px 70px",
-            backgroundColor: "rgb(42,47,34,0.9)"
+            backgroundColor: "rgba(140,83,83,0.9)"
 
 
         },
@@ -38,8 +38,8 @@ const useStyles = createUseStyles((theme) => ({
         },
         h5: {
             color: "white",
+            fontWeight:"lighter",
             marginBottom: "30px",
-            fontWeight: "lighter",
             textAlign: "center"
         },
         loginform: {
@@ -64,6 +64,13 @@ const useStyles = createUseStyles((theme) => ({
                 background: "rgba(255,255,255,.1)",
                 textAlign: "center",
                 alignContent: "center"
+            },
+            '&:nth-child(n) > input': {
+                '&::placeholder': {
+                    color:"rgba(184,171,171,0.9)",
+                    fontWeight:"bolder"
+                }
+
             },
             '&:nth-child(n) > tr,td': {
                 width: "50%",
@@ -127,6 +134,7 @@ const AuthenticationForm = () => {
             },
             onCompleted: (data) => {
                 alert("주문이 생성되었습니다!");
+                window.location.href = '/create';
 
 
             },
@@ -162,7 +170,7 @@ const AuthenticationForm = () => {
     const handleClick = () => {
 
         localStorage.clear()
-        window.location.href = '/create'
+        window.location.href = '/'
 
     }
 
@@ -174,7 +182,7 @@ const AuthenticationForm = () => {
             <div className={classes.loginwrap}>
                 <div className={classes.loginhtml}>
 
-                    <h3>{localStorage.getItem('name')}님 환영합니다.</h3>
+                    <h2>👨🏻‍💻{localStorage.getItem('name')}님 환영합니다.👨🏻‍💻️</h2>
                     <h5 className={classes.h5}>어떤 이유로 커피를 사시나요?</h5>
 
                     <div className={classes.loginform}>

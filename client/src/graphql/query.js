@@ -169,8 +169,12 @@ export const OrderSearch = gql`
 `
 
 export const Receipt = gql`
-query {receipt}
+    query {receipt}
 `
 
+
+export const ReceiptUsers = gql`
+    query receiptUsers{receiptUsers}
+`
 
 

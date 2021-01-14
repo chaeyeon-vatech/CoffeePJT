@@ -56,7 +56,7 @@ function DeleteButton(userid) {
                         disabled={loading}
                         className={classes.button}
                         value="↳주문 취소">
-                    주문 변경
+                    주문 취소
                 </Button>
 
             </form>

@@ -4,11 +4,10 @@ import {createUseStyles, useTheme} from 'react-jss';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
-        backgroundColor: '#faf8f8',
+        backgroundColor: 'rgba(246,244,244,0.9)',
         border: `5px solid ${theme.color.darkRed}`,
         borderRadius: 5,
         padding: '12px 32px 0px 10px',
-        margin: "30px",
         height: '100%'
     },
     containerMobile: {
