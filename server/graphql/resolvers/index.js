@@ -60,7 +60,7 @@ const resolvers = {
         // 모든 유저 검색
         allUsers: async (_, args) => {
             try {
-                return users.find().sort({"username":1})
+                return users.find().sort({ "username": 1 })
             } catch (error) {
                 throw new Error(error.message)
             }
@@ -277,138 +277,193 @@ const resolvers = {
         },
         receiptUsers: async (_, args) => {
             const receiptNum = args.receiptNum;
-            
-            if (receiptNum == 1) {
-                const orders = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "hot" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
+            const result = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+
+            const orders0 = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "hot" } })
+
+            for (let i = 0; i < orders0.length; i++) {
+                if (i == orders0.length - 1) {
+                    result[0] += orders0[i].username
                 }
-                return result
-                
-            }
-            else if (receiptNum == 2) {
-                const orders = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "ice" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
+                else {
+                    result[0] += orders0[i].username + ", "
                 }
-                return result
-            }
-            else if (receiptNum == 3) {
-                const orders = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "hot" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 4) {
-                const orders = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "ice" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 5) {
-                const orders = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "hot" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 6) {
-                const orders = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "ice" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 7) {
-                const orders = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "hot" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 8) {
-                const orders = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "ice" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 9) {
-                const orders = await Order.find({ "menu": { $eq: "아시나요" }, "hi": { $eq: "icecream" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 10) {
-                const orders = await Order.find({ "menu": { $eq: "돼지콘" }, "hi": { $eq: "icecream" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 11) {
-                const orders = await Order.find({ "menu": { $eq: "브라보" }, "hi": { $eq: "icecream" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 12) {
-                const orders = await Order.find({ "menu": { $eq: "녹차마루" }, "hi": { $eq: "icecream" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 13) {
-                const orders = await Order.find({ "menu": { $eq: "아이스티" }, "hi": { $eq: "etc" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 14) {
-                const orders = await Order.find({ "menu": { $eq: "망고 요거트 스무디" }, "hi": { $eq: "etc" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 15) {
-                const orders = await Order.find({ "menu": { $eq: "딸기 요거트 스무디" }, "hi": { $eq: "etc" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
-            }
-            else if (receiptNum == 16) {
-                const orders = await Order.find({ "menu": { $eq: "플레인 요거트 스무디" }, "hi": { $eq: "etc" } })
-                let result = new Array(orders.length)
-                for (let i = 0; i < orders.length; i++) {
-                    result[i] = orders[i].username
-                }
-                return result
+
             }
 
-            return "해당 커피/아이스크림/음료 를 주문한 사람이 없습니다."
+
+
+            const orders1 = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "ice" } })
+            for (let i = 0; i < orders1.length; i++) {
+                if (i == orders1.length - 1) {
+                    result[1] += orders1[i].username
+                }
+                else {
+                    result[1] += orders1[i].username + ", "
+                }
+
+            }
+
+
+            const orders2 = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "hot" } })
+            for (let i = 0; i < orders2.length; i++) {
+                if (i == orders2.length - 1) {
+                    result[2] += orders2[i].username
+                }
+                else {
+                    result[2] += orders2[i].username + ", "
+                }
+
+            }
+
+
+            const orders3 = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "ice" } })
+            for (let i = 0; i < orders3.length; i++) {
+                if (i == orders3.length - 1) {
+                    result[3] += orders3[i].username
+                }
+                else {
+                    result[3] += orders3[i].username + ", "
+                }
+
+            }
+
+
+            const orders4 = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "hot" } })
+            for (let i = 0; i < orders4.length; i++) {
+                if (i == orders4.length - 1) {
+                    result[4] += orders4[i].username
+                }
+                else {
+                    result[4] += orders4[i].username + ", "
+                }
+
+            }
+
+
+            const orders5 = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "ice" } })
+            for (let i = 0; i < orders5.length; i++) {
+                if (i == orders5.length - 1) {
+                    result[5] += orders5[i].username
+                }
+                else {
+                    result[5] += orders5[i].username + ", "
+                }
+
+            }
+
+            const orders6 = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "hot" } })
+            for (let i = 0; i < orders6.length; i++) {
+                if (i == orders6.length - 1) {
+                    result[6] += orders6[i].username
+                }
+                else {
+                    result[6] += orders6[i].username + ", "
+                }
+
+            }
+
+            const orders7 = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "ice" } })
+            for (let i = 0; i < orders7.length; i++) {
+                if (i == orders7.length - 1) {
+                    result[7] += orders7[i].username
+                }
+                else {
+                    result[7] += orders7[i].username + ", "
+                }
+
+            }
+
+            const orders8 = await Order.find({ "menu": { $eq: "아시나요" }, "hi": { $eq: "icecream" } })
+            for (let i = 0; i < orders8.length; i++) {
+                if (i == orders8.length - 1) {
+                    result[8] += orders8[i].username
+                }
+                else {
+                    result[8] += orders8[i].username + ", "
+                }
+
+            }
+
+            const orders9 = await Order.find({ "menu": { $eq: "돼지콘" }, "hi": { $eq: "icecream" } })
+            for (let i = 0; i < orders9.length; i++) {
+                if (i == orders9.length - 1) {
+                    result[9] += orders9[i].username
+                }
+                else {
+                    result[9] += orders9[i].username + ", "
+                }
+
+            }
+
+            const orders10 = await Order.find({ "menu": { $eq: "브라보" }, "hi": { $eq: "icecream" } })
+            for (let i = 0; i < orders10.length; i++) {
+                if (i == orders10.length - 1) {
+                    result[10] += orders10[i].username
+                }
+                else {
+                    result[10] += orders10[i].username + ", "
+                }
+
+            }
+
+            const orders11 = await Order.find({ "menu": { $eq: "녹차마루" }, "hi": { $eq: "icecream" } })
+            for (let i = 0; i < orders11.length; i++) {
+                if (i == orders11.length - 1) {
+                    result[11] += orders11[i].username
+                }
+                else {
+                    result[11] += orders11[i].username + ", "
+                }
+
+            }
+
+            const orders12 = await Order.find({ "menu": { $eq: "아이스티" }, "hi": { $eq: "etc" } })
+            for (let i = 0; i < orders12.length; i++) {
+                if (i == orders12.length - 1) {
+                    result[12] += orders12[i].username
+                }
+                else {
+                    result[12] += orders12[i].username + ", "
+                }
+
+            }
+
+            const orders13 = await Order.find({ "menu": { $eq: "망고 요거트 스무디" }, "hi": { $eq: "etc" } })
+            for (let i = 0; i < orders13.length; i++) {
+                if (i == orders13.length - 1) {
+                    result[13] += orders13[i].username
+                }
+                else {
+                    result[13] += orders13[i].username + ", "
+                }
+
+            }
+
+            const orders14 = await Order.find({ "menu": { $eq: "딸기 요거트 스무디" }, "hi": { $eq: "etc" } })
+            for (let i = 0; i < orders14.length; i++) {
+                if (i == orders14.length - 1) {
+                    result[14] += orders14[i].username
+                }
+                else {
+                    result[14] += orders14[i].username + ", "
+                }
+
+            }
+
+            const orders15 = await Order.find({ "menu": { $eq: "플레인 요거트 스무디" }, "hi": { $eq: "etc" } })
+            for (let i = 0; i < orders15.length; i++) {
+                if (i == orders15.length - 1) {
+                    result[15] += orders15[i].username
+                }
+                else {
+                    result[15] += orders15[i].username + ", "
+                }
+
+            }
+
+
+            return result
         }
 
     },
