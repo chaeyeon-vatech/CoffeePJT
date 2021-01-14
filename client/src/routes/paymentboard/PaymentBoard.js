@@ -63,7 +63,9 @@ const useStyles = createUseStyles((theme) => ({
     },
     stats: {
         borderTop: `1px solid ${theme.color.lightGrayishBlue2}`,
-        width: '100%'
+        width: '100%',
+        marginTop:10,
+        marginBottom:20
     },
     statTitle: {
         fontWeight: '600',
@@ -83,10 +85,9 @@ const useStyles = createUseStyles((theme) => ({
     a: {
         color: "black"
     },
-    text: {
-        fontSize: "20px",
-        color: "brown"
-    }
+    // text: {
+    //     padding:"20 20 20 20"
+    // }
 }));
 
 function changeBackground(e) {
@@ -151,10 +152,6 @@ function TodayTrendsComponent() {
         }
     })
 
-
-    // console.log(pa.toLocaleString());
-    console.log(typeof (pa))
-    console.log(String(pa))
     const mutation = OrderConfirmMutation;
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
@@ -220,8 +217,8 @@ function TodayTrendsComponent() {
             <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
                 {renderStat('누적 금액', money)}
                 {renderStat('미주문자', <Tooltip title={pa &&
-                pa.map((content) => content.username).join(',')} placement="top" className={classes.text}>
-                    <Button>{order[3]}</Button>
+                pa.map((content) => content.username).join(',')} placement="top">
+                    <Button variant="contained">{order[3]}</Button>
                 </Tooltip>)}
 
                 {renderStat('결제 완료', <TextField type='submit'

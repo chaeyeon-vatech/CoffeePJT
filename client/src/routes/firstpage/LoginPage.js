@@ -126,6 +126,7 @@ const handleClick = (name, id) => {
     }
 }
 
+
 const AuthenticationForm = () => {
 
     const theme = useTheme();
@@ -205,9 +206,8 @@ const AuthenticationForm = () => {
                                 />
                             </Typography>
 
-
                             <Button type="submit"
-                               onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
+                                    onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
                             >로그인</Button>
 
                         </div>
