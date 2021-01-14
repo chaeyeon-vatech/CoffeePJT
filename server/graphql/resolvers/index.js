@@ -60,7 +60,7 @@ const resolvers = {
         // 모든 유저 검색
         allUsers: async (_, args) => {
             try {
-                return users.find()
+                return users.find().sort({"username":1})
             } catch (error) {
                 throw new Error(error.message)
             }
