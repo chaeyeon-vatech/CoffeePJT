@@ -6,25 +6,25 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
+import SettingsIcon from '@material-ui/icons/Settings';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import First from "./First";
 import Second from "./Second";
+import Third from "./Third";
+import VacationBoard from "./VacationBoard";
 
 const QontoConnector = withStyles({
-    root: {
-        backgroundColor: 'transparent',
-        boxShadow: 'none',
-    },
     alternativeLabel: {
         top: 10,
         left: 'calc(-50% + 16px)',
-        right: 'calc(50% + 16px)'
+        right: 'calc(50% + 16px)',
     },
     active: {
         '& $line': {
-            borderColor: '#352626',
+            borderColor: '#784af4',
         },
     },
     completed: {
@@ -39,18 +39,17 @@ const QontoConnector = withStyles({
     },
 })(StepConnector);
 
-//icon 디자인
-
 const useQontoStepIconStyles = makeStyles({
     root: {
         color: '#eaeaf0',
         display: 'flex',
         height: 22,
         alignItems: 'center',
-        background: "transparent"
+        backgroundColor: "black",
+
     },
     active: {
-        color: '#0e0e0d',
+        color: '#784af4',
     },
     circle: {
         width: 8,
@@ -59,7 +58,7 @@ const useQontoStepIconStyles = makeStyles({
         backgroundColor: 'currentColor',
     },
     completed: {
-        color: '#0a0a0a',
+        color: '#784af4',
         zIndex: 1,
         fontSize: 18,
     },
@@ -81,74 +80,135 @@ function QontoStepIcon(props) {
 }
 
 QontoStepIcon.propTypes = {
-
+    /**
+     * Whether this step is active.
+     */
     active: PropTypes.bool,
+    /**
+     * Mark the step as completed. Is passed to child components.
+     */
     completed: PropTypes.bool,
 };
 
+const ColorlibConnector = withStyles({
+    alternativeLabel: {
+        top: 20,
+        backgroundColor: "black"
+    },
+    active: {
+        '& $line': {
+            backgroundImage:
+                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+        },
+    },
+    completed: {
+        '& $line': {
+            backgroundImage:
+                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+        },
+    },
+    line: {
+        height: 3,
+        border: 0,
+        backgroundColor: '#eaeaf0',
+        borderRadius: 1,
+    },
+})(StepConnector);
+
+const useColorlibStepIconStyles = makeStyles({
+    root: {
+        backgroundColor: "black",
+        zIndex: 1,
+        color: '#fff',
+        width: 50,
+        height: 50,
+        display: 'flex',
+        borderRadius: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    active: {
+        backgroundImage:
+            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 25%, rgb(138,35,135) 50%)',
+        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+    },
+    completed: {
+        backgroundImage:
+            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+    },
+});
+
+function ColorlibStepIcon(props) {
+    const classes = useColorlibStepIconStyles();
+    const {active, completed} = props;
+
+    const icons = {
+        1: <GroupAddIcon/>,
+        2: <SettingsIcon/>
+    };
+
+    return (
+        <div
+            className={clsx(classes.root, {
+                [classes.active]: active,
+                [classes.completed]: completed,
+            })}
+        >
+            {icons[String(props.icon)]}
+        </div>
+    );
+}
+
+ColorlibStepIcon.propTypes = {
+    /**
+     * Whether this step is active.
+     */
+    active: PropTypes.bool,
+    /**
+     * Mark the step as completed. Is passed to child components.
+     */
+    completed: PropTypes.bool,
+    /**
+     * The label displayed in the step icon.
+     */
+    icon: PropTypes.node,
+};
+
 const useStyles = makeStyles((theme) => ({
-        body: {
-            backgroundColor: 'rgba(255,255,255,0.5)',
-            boxShadow: 'none',
-            color: "white"
-        },
-        root: {
-            width: '100%',
+    root: {
+        width: '100%',
+        height: "70%"
 
-        },
-        wrapper: {
-            textAlign: "center",
-        },
+    },
+    button: {
+        marginRight: theme.spacing(1),
+    },
+    instructions: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
+    background: {
+        backgroundColor: "rgba(169,162,162,0.9)"
+    }
 
-        button1: {
-            width: "200px",
-            height: "40px",
-            marginRight: "20px"
-        },
-        button2: {
-            width: "100px",
-            height: "40px"
-        },
-        container: {
-            textAlign: "center"
-        },
-
-        button: {
-            position: "absolute",
-            top: "50%",
-            backgroundColor: "rgba(103,69,69,0.5)",
-            display: "inline"
-        },
-        margin: {
-            marginRight: "40px"
-        },
-        instructions: {
-            marginTop: theme.spacing(1),
-            marginBottom: theme.spacing(1),
-
-        }
-        ,
-
-    }))
-;
+}));
 
 function getSteps() {
-    return ['이름으로 결제자 로그인', '주문 생성', '완료!'];
+    return ['주문자/미주문자 관리', '주문 생성'];
 }
 
 function getStepContent(step) {
     switch (step) {
         case 0:
-            return <First/>;
+            return <Third/>;
         case 1:
             return <Second/>;
         case 2:
-            return '주문 생성 완료';
+            return 'This is the bit I really care about!';
         default:
             return 'Unknown step';
     }
 }
-
 
 export default function CustomizedSteppers() {
     const classes = useStyles();
@@ -166,47 +226,45 @@ export default function CustomizedSteppers() {
     const handleReset = () => {
         setActiveStep(0);
     };
-    const handleClick = () => {
-
-        localStorage.clear()
-        window.location.href = '/'
-
-    }
-
 
     return (
-
         <div className={classes.root}>
-            <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector/>} className={classes.body}>
+
+            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}
+                     className={classes.background}>
                 {steps.map((label) => (
                     <Step key={label}>
-                        <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+                        <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
                     </Step>
                 ))}
             </Stepper>
-
             <div>
-                <div>
-                    <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                    {localStorage.getItem('name') && activeStep === 0 && (
-                        <div className={classes.container}>
-
-                            <Button variant="contained"
-                                    onClick={handleClick}
-                                    className={classes.button1}>{localStorage.getItem('name')}님이 아닙니다.</Button>
+                {activeStep === steps.length ? (
+                    <div>
+                        <Typography className={classes.instructions}>
+                            All steps completed - you&apos;re finished
+                        </Typography>
+                        <Button onClick={handleReset} className={classes.button}>
+                            Reset
+                        </Button>
+                    </div>
+                ) : (
+                    <div>
+                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                        <div className={classes.margin}>
+                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                                Back
+                            </Button>
                             <Button
                                 variant="contained"
-
                                 onClick={handleNext}
-                                className={classes.button2}
+                                className={classes.button}
                             >
-                                맞습니다.
+                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                             </Button>
-
                         </div>
-                    )}
-
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     );

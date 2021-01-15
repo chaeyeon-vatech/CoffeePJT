@@ -11,6 +11,8 @@ import {IconCheckboxOff, IconCheckboxOn} from "../../components/icons";
 import PaymentBoard from "../paymentboard/PaymentBoard";
 import VacationBoard from "../firstpage/VacationBoard";
 import UserManageTable from "../../components/table/UserManageTable";
+import Button from "@material-ui/core/Button";
+import FormDialog from "./Dialog";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: "30px"},
@@ -56,6 +58,10 @@ const useStyles = createUseStyles((theme) => ({
         justifyContent: "center",
         LeftMargin: "30px",
         alignSelf: "center"
+    },
+    text: {
+        textAlign: "center",
+        margin: "none"
     }
 
 }));
@@ -123,7 +129,7 @@ function Create(props) {
 
             items={[
 
-
+                <h3 className={classes.text}>유저 관리</h3>,
                 <Row horizontal='space-between' vertical='center'>
 
                     <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
@@ -131,8 +137,18 @@ function Create(props) {
                                className={classes.input}/>
                     </span>
                     {renderAddButton()}
+
                 </Row>,
+                <Row horizontal='space-between' vertical='center'>
+                    <Row>
+                        <FormDialog/>
+                        <FormDialog/>
+                        <FormDialog/>
+                    </Row>
+                </Row>,
+                ,
                 <Row>
+
                     <Row horizontal='space-between' vertical='center'>
                         <Row>
                             <UserManageTable/>

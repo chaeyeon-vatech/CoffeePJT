@@ -6,6 +6,7 @@ import DeleteButton from "../button/DeleteButton";
 import Button from "@material-ui/core/Button";
 import GiveupButton from "../button/GiveupButton";
 import ChangeGiveupButton from "../button/ChangeGiveup";
+import {Checkbox, FormControlLabel} from "@material-ui/core";
 
 
 function BoardTable() {
@@ -42,6 +43,8 @@ function BoardTable() {
     }, [me]);
 
 
+
+
     return status === "주문포기" ? (
         <>
             <table>
@@ -60,6 +63,7 @@ function BoardTable() {
                 <caption>User 관리</caption>
                 <thead>
                 <tr>
+
                     <th scope="col">사용자 이름</th>
                     <th scope="col">메뉴</th>
                     <th scope="col">Hot/Ice</th>
