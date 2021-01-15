@@ -52,7 +52,7 @@ const typeDefs = gql`
         updateUser(_id:ID!, username:String!):User!
         getbackUser(ids:[ID]):String!
         getbackStatus(_id:ID!):String!
-        deleteUser(_id:ID!):User!
+        deleteUser(ids:[ID]):String!
         mee(userid: ID!):User!
     }
 `;

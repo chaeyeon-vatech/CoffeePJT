@@ -631,8 +631,14 @@ const resolvers = {
             }
         },
         deleteUser: async (_, args) => {
-            const removedUser = await users.findByIdAndRemove(args._id).exec()
-            return removedUser
+            const arr = args.ids
+            console.log(args.ids)
+            for (let i = 0; i < arr.length; i++) {
+                
+                const removedUser = await users.findByIdAndRemove(arr[i]).exec()    
+            }
+            
+            return "선택한 유저가 모두 삭제 되었습니다."
         },
         mee: async (_, args) => {
             return await users.findById(args.userid)
