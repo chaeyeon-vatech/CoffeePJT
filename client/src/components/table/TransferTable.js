@@ -134,9 +134,6 @@ export default function TransferList() {
     };
 
 
-    console.log(checked.map((c) => (c._id)))
-
-
     const customList = (title, items) => (
         <Card>
             <CardHeader
