@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 
 
 const useStyles = createUseStyles((theme) => ({
+
         focused: {
             textAlign: "center",
             "& $notchedOutline": {
@@ -27,14 +28,27 @@ const useStyles = createUseStyles((theme) => ({
             maxWidth: "525px",
             minHeight: "300px",
             position: "relative",
-            boxShadow: "0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19)"
+            boxShadow: "0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19)",
+        },
+
+        confirmwrap: {
+            color: "white",
+            fontWeight: "lighter",
+            textAlign: "center",
+            paddingTop: "10px",
+            width: "100%",
+            margin: "auto",
+            maxWidth: "525px",
+            minHeight: "300px",
+            position: "relative",
         },
         loginhtml: {
             width: "100%",
             height: "100%",
             position: "center",
-            padding: "80px 70px 50px 70px",
-            backgroundColor: "rgba(140,83,83,0.9)"
+            padding: "100px 70px 50px 70px",
+            backgroundColor: "rgba(140,83,83,0.9)",
+            marginTop: "70px"
 
         },
 
@@ -60,12 +74,29 @@ const useStyles = createUseStyles((theme) => ({
         },
 
         loginafter: {
-            marginTop: "50px",
+            marginTop: "200px",
             minHeight: "200px",
             position: "relative",
-            perspective: "1000px",
+            // perspective: "1000px",
             transformStyle: "preserve-3d",
-            backgroundColor: "rgba(140,83,83,0.9)"
+            backgroundColor: "rgba(140,83,83,0.9)",
+            marginBottom: "20px",
+            padding:"20 20 20 20",
+            '&:nth-child(n) > button': {
+                width: "100%",
+                margin: "none",
+                color: "#fff",
+                border: "none",
+                padding: "10px 20px",
+                borderRadius: "25px",
+                background: "rgba(255,255,255,.1)",
+                textAlign: "center",
+                alignContent: "center",
+                marginTop: "30px",
+                display: "block",
+                marginBottom:"30px"
+            }
+
         },
 
         group: {
@@ -101,10 +132,11 @@ const useStyles = createUseStyles((theme) => ({
                 border: "none",
                 padding: "50px 50px",
                 borderRadius: "25px",
-                background: "rgba(255,255,255,.1)",
+                backgroundColor: "rgba(212,184,184,0.9)",
                 width: "100%",
-                color: "#fff",
-                display: "block"
+                color: "black",
+                display: "block",
+                fontSize:"15px"
             },
             '&:nth-child(n) > label ': {
                 color: "#aaa",
@@ -118,6 +150,12 @@ const useStyles = createUseStyles((theme) => ({
                     main: '#030303',
                 },
             },
+
+        },
+        button: {
+            display: "inline-block",
+            marginRight: "5px",
+            padding: 20
         }
     }))
 ;
@@ -131,6 +169,13 @@ const handleClick = (name, id) => {
     // }
 }
 
+
+const handleLogout = () => {
+
+    localStorage.clear()
+    window.location.href = '/'
+
+}
 
 // const options = ['Option 1', 'Option 2'];
 
@@ -153,8 +198,6 @@ const AuthenticationForm = () => {
 
     });
 
-    console.log(inputValue, result);
-
     useEffect(() => {
         if (data) {
             setResult(data.user);
@@ -168,16 +211,21 @@ const AuthenticationForm = () => {
             <div>
                 {localStorage.getItem('name') ? (
                     <div className={classes.root}>
-                        <div className={classes.loginwrap}>
+                        <div className={classes.confirmwrap}>
 
                             <div className={classes.loginafter}>
                                 <h3 className={classes.h5}>{localStorage.getItem('name') + "님 환영합니다"}</h3>
                                 <h5 className={classes.h5}>{localStorage.getItem('name') + "님이 맞으신가요?"}</h5>
-                                <div className={classes.group}>
 
-                                </div>
+                                <Button variant="contained" id='logout' onClick={()=>window.location.href = '/create'}
+                                        className={classes.button}>{localStorage.getItem('name') + "님이 맞습니다!"}</Button>
+                                <Button variant="contained" id='logout' onClick={handleLogout}
+                                        className={classes.button}>아닙니다.</Button>
 
+                                {/*</div>*/}
                             </div>
+
+
                         </div>
 
                     </div>
@@ -222,8 +270,8 @@ const AuthenticationForm = () => {
 
 
                                         <Button type="submit"
-                                           onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
-                                        >로그인</Button>
+                                                onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
+                                        >Login</Button>
 
                                     </div>
 

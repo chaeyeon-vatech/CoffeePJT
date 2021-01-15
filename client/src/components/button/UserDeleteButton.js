@@ -13,9 +13,8 @@ function DeleteButton(post_id) {
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
             variables: {id: String(Object.values(post_id))},
-            onCompleted: (data) => {
+            onCompleted: () => {
                 alert("유저 삭제가 완료되었습니다.")
-                // window.location.href = '/order';
             }
         }
     )

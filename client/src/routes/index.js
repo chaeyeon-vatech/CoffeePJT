@@ -19,7 +19,7 @@ function Routes() {
     }, [pathname]);
 
 
-    const {data} = useQuery(TaskQuery);
+    const {data, loading} = useQuery(TaskQuery);
 
     useEffect(() => {
         if (data) {
