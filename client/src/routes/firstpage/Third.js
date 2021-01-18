@@ -171,6 +171,8 @@ const AuthenticationForm = () => {
         );
     }
 
+
+
     const handleClick = () => {
 
         localStorage.clear()

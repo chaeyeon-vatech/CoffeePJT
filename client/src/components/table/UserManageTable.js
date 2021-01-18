@@ -10,13 +10,23 @@ import {Checkbox, FormControlLabel} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 
+
 function UserManageTable() {
 
 
     const [length, setLength] = useState();
     const [click, setClick] = useState(false);
+    const [items,setItems] = useState();
 
     const {data: user} = useQuery(UserSearchQuery)
+
+    function onCheckboxClick(index) {
+        setItems((prev) => {
+            const newItems = [...prev];
+            newItems[index].checked = newItems[index].checked ? false : true;
+            return newItems;
+        });
+    }
 
 
     useEffect(() => {
@@ -29,10 +39,10 @@ function UserManageTable() {
     const [state, setState] = React.useState({checkedB: false});
 
     const handleChange = (event) => {
-        setState({...state, [event.target.name]: event.target.checked});
+        setState({...state, [event.target.label]: event.target.checked});
     };
 
-
+    console.log(state);
     return (
 
         <>
@@ -61,10 +71,10 @@ function UserManageTable() {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={state.checkedB}
+                                        onCheckboxClick={onCheckboxClick}
+                                        // checked={state.checkedB}
                                         onChange={handleChange}
-                                        name="checkedB"
-                                        color="primary"
+                                        name={content.username}
                                     />
                                 }
                                 label={content.username}

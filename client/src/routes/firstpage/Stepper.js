@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -9,12 +9,17 @@ import Check from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
+import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Second from "./Second";
 import Third from "./Third";
 import VacationBoard from "./VacationBoard";
+import {useMutation} from "@apollo/react-hooks";
+import {TaskCreateMutation} from "../../graphql/mutation";
+import {TaskQuery} from "../../graphql/query";
+import {CheckCircleIcon} from "@material-ui/data-grid";
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -177,18 +182,50 @@ ColorlibStepIcon.propTypes = {
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        height: "70%"
+        height: "70%",
+
 
     },
     button: {
-        marginRight: theme.spacing(1),
+        marginLeft: "70px",
+        marginTop: "-400px",
+        margin: "none",
+        cursor: "pointer",
+        position: "relative",
+        display: "block",
+        width: "100px",
+        height: "100px",
+        border: "solid 6px #9e344d",
+        borderRadius: "100%",
+        transition: "all .2s linear",
+        "&:hover": {
+            backgroundColor: 'rgb(12,12,12,0.8)'
+        }
+
     },
-    instructions: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
+    nbutton: {
+        marginLeft: "1300px",
+        marginTop: "-100px",
+        margin: "none",
+        cursor: "pointer",
+        position: "relative",
+        display: "block",
+        width: "100px",
+        height: "100px",
+        backgroundColor: "#9e344d",
+        border: "solid 6px #9e344d",
+        borderRadius: "100%",
+        transition: "all .2s linear",
+        "&:hover": {
+            backgroundColor: 'rgb(12,12,12,0.8)'
+        }
+
+
     },
+
     background: {
-        backgroundColor: "rgba(169,162,162,0.9)"
+        backgroundColor: "rgba(169,162,162,0.9)",
+
     }
 
 }));
@@ -203,21 +240,20 @@ function getStepContent(step) {
             return <Third/>;
         case 1:
             return <Second/>;
-        case 2:
-            return 'This is the bit I really care about!';
-        default:
-            return 'Unknown step';
+
     }
 }
 
 export default function CustomizedSteppers() {
     const classes = useStyles();
+    const [step, setStep] = useState(0);
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
+
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -227,38 +263,110 @@ export default function CustomizedSteppers() {
         setActiveStep(0);
     };
 
-    return (
+    const [create, {loading}] = useMutation(TaskCreateMutation, {
+            refetchQueries: [{query: TaskQuery}],
+            variables: {
+                title: localStorage.getItem('task'),
+                userid: localStorage.getItem('myData')
+            },
+            onCompleted: (data) => {
+                alert("주문이 생성되었습니다!");
+                localStorage.setItem('num', 0);
+                // window.location.href = '/create';
+
+
+            },
+
+            onError: () => {
+                alert("주문 내용을 정확히 작성해주세요.")
+            },
+        }
+    )
+
+    return localStorage.getItem('task') ? (
+
         <div className={classes.root}>
+
 
             <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}
                      className={classes.background}>
+
+
+                <Step>
+
+                    <StepLabel StepIconComponent={AssignmentTurnedInTwoToneIcon}>Completed</StepLabel>
+                </Step>
+
+
+            </Stepper>
+            <div>
+                <div>
+
+                    <div>
+
+                        <Typography className={classes.instructions}>
+
+                            <Second/></Typography>
+
+                    </div>
+                </div>
+                )}
+            </div>
+        </div>
+    ) : (
+        <div className={classes.root}>
+
+
+            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}
+                     className={classes.background}>
+
                 {steps.map((label) => (
                     <Step key={label}>
+
                         <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
                     </Step>
                 ))}
+
+
             </Stepper>
             <div>
-                {activeStep === steps.length ? (
+                {activeStep === 0 ? (
                     <div>
-                        <Typography className={classes.instructions}>
-                            All steps completed - you&apos;re finished
-                        </Typography>
-                        <Button onClick={handleReset} className={classes.button}>
-                            Reset
-                        </Button>
-                    </div>
-                ) : (
-                    <div>
-                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                        <div className={classes.margin}>
+
+                        <div>
+
+                            <Typography className={classes.instructions}>
+
+                                {getStepContent(activeStep)}</Typography>
+
                             <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                                 Back
                             </Button>
                             <Button
                                 variant="contained"
                                 onClick={handleNext}
-                                className={classes.button}
+                                className={classes.nbutton}
+                            >
+                                Next
+                            </Button>
+                        </div>
+                    </div>
+                ) : (
+                    <div>
+
+                        <div>
+
+                            <Typography className={classes.instructions}>
+
+                                {getStepContent(activeStep)}</Typography>
+
+                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                                Back
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={create}
+                                className={classes.nbutton}
                             >
                                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                             </Button>

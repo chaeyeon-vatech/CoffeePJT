@@ -14,7 +14,10 @@ import {MeQuery, OrderSearch} from "../../graphql/query";
 import {CreateMutation} from "../../graphql/mutation";
 import CreateOrder from "./useMutation";
 import GiveupButton from "../../components/button/GiveupButton";
-
+import {convertlinksToUrl} from "../../resources/utilities";
+import SLUGS from 'resources/links';
+import {useHistory} from "react-router-dom";
+import MenuItem from "../../components/sidebar/MenuItemComponent";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,8 +36,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CorderBoard() {
+
     const theme = useTheme();
-    const classes = useStyles();
+    const classes = useStyles({theme});
+    const {push} = useHistory();
+    const isMobile = window.innerWidth <= 1080;
     const [value, setValue] = useState(0);
     const [menu, setMenu] = useState();
     const [hi, setHi] = useState();
@@ -42,6 +48,7 @@ export default function CorderBoard() {
     const [status, setStatus] = useState();
     const [username, setName] = useState();
     const [check, setCheck] = useState();
+
 
     const {data} = useQuery(MeQuery, {
         variables: {
@@ -59,6 +66,7 @@ export default function CorderBoard() {
         }
     }, [data]);
 
+
     const createmutation = CreateMutation;
 
 
@@ -71,6 +79,7 @@ export default function CorderBoard() {
             },
             onCompleted: (data) => {
                 alert("주문이 완료되었습니다!")
+                onClick(SLUGS.orderboard);
 
 
             },
@@ -84,6 +93,10 @@ export default function CorderBoard() {
         setValue(newValue);
 
     };
+
+    function onClick(slug, parameters = {}) {
+        push(convertlinksToUrl(slug, parameters));
+    }
 
     return (
 

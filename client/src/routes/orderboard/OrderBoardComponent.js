@@ -79,8 +79,6 @@ function OrderBoardComponent() {
         }
     }, [data]);
 
-    console.log(contents)
-
 
     return (
         <Column className={classes.background}>

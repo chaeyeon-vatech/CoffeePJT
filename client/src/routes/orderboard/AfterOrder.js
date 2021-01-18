@@ -58,9 +58,7 @@ function OrderBoard() {
 
         }
     }, [data]);
-
-    console.log(name, position, status);
-
+    
 
     return(
         <Row

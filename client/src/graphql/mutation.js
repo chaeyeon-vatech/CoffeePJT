@@ -133,3 +133,9 @@ export const getBackGiveup = gql`
         getbackStatus(_id:$id)
     }
 `
+
+export const multipleDelete = gql`
+mutation deleteUser($ids:[ID]!){
+    deleteUser(ids:$ids)
+}
+`

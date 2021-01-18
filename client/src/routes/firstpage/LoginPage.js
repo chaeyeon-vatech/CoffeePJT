@@ -7,6 +7,8 @@ import {Autocomplete} from "@material-ui/lab";
 import {TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import {browserHistory} from "react-router";
+
 
 const useStyles = createUseStyles((theme) => ({
         focused: {
@@ -20,18 +22,21 @@ const useStyles = createUseStyles((theme) => ({
             textAlign: "center",
             paddingTop: "10px",
             width: "100%",
-            margin: "auto",
+            margin:"none",
             maxWidth: "525px",
             minHeight: "300px",
             position: "relative",
-            boxShadow: "0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19)"
+            boxShadow: "0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19)",
+
         },
         loginhtml: {
             width: "100%",
             height: "100%",
             position: "center",
+            marginLeft:"150px",
+            marginTop:"-50px",
             padding: "80px 70px 50px 70px",
-            backgroundColor: "rgba(140,83,83,0.9)"
+            backgroundColor: "rgba(140,83,83,0.9)",
 
         },
 
@@ -126,11 +131,12 @@ const handleClick = (name, id) => {
     }
 }
 
+
 const AuthenticationForm = () => {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const primary = "rgb(42,47,34,0.9)";
+    // const primary = "rgb(42,47,34,0.9)";
 
     const [search, setSearch] = useState();
     const [result, setResult] = useState([]);
@@ -205,9 +211,8 @@ const AuthenticationForm = () => {
                                 />
                             </Typography>
 
-
                             <Button type="submit"
-                               onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
+                                    onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
                             >로그인</Button>
 
                         </div>

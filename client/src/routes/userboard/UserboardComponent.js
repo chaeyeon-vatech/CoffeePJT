@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import UserBoard from './UserBoard';
+import UserEditTable from "../../components/table/UserEditTable";
 
 const useStyles = createUseStyles({
     cardsContainer: {

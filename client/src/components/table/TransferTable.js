@@ -73,9 +73,8 @@ export default function TransferList() {
             refetchQueries: [{query: Ordermen, VacationQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
-
                 alert("미주문자로 전환되었습니다!");
-                window.location.href = '/create';
+                window.location.reload();
 
             }
         }

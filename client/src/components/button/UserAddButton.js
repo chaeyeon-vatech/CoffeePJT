@@ -6,11 +6,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {UpdateUserMutation} from "../../graphql/mutation";
+import {CreateUserMutation, UpdateUserMutation} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
 import {MeQuery, UserSearchQuery} from "../../graphql/query";
 
-export default function FormDialog(username) {
+export default function UserAddButton(username) {
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState('');
     const [click, setClick] = useState(false);
@@ -20,18 +20,20 @@ export default function FormDialog(username) {
 
 
     // $userid:ID! $orderid:ID! $menu:String! $hi:String!
-    const [update, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
+    const [create, {loading}] = useMutation(CreateUserMutation, {
+            refetchQueries: [{query: UserSearchQuery}],
             variables: {
-                id: username.id,
                 username: content
             },
             onCompleted: (data) => {
-
-                alert("정보 수정이 완료되었습니다.")
+                alert("유저 추가가 완료되었습니다.")
                 setOpen(false);
-                window.location.href = '/settings';
-            }
+
+            },
+
+            onError: () => {
+                alert("같은 이름은 등록하실 수 없습니다!")
+            },
         }
     )
 
@@ -46,20 +48,19 @@ export default function FormDialog(username) {
     return (
         <div>
             <Button variant="outlined" onClick={handleClickOpen}>
-                유저 이름 수정
+                유저 추가
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">유저 이름 수정</DialogTitle>
+                <DialogTitle id="form-dialog-title">유저 추가</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {username.username}님의 이름을 변경하시겠습니까?
+                        추가하실 이름을 입력해주세요!
                     </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
                         id="name"
-                        label="수정하실 이름을 입력해주세요."
-                        defaultValue={username.username}
+                        // label="추가하실 이름을 입력해주세요."
                         type="email"
                         onChange={e => setContent(e.target.value)}
                         fullWidth
@@ -67,10 +68,10 @@ export default function FormDialog(username) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                       취소
+                        취소
                     </Button>
-                    <Button  onClick={update} color="primary">
-                        변경
+                    <Button onClick={create} color="primary">
+                        추가
                     </Button>
                 </DialogActions>
             </Dialog>
