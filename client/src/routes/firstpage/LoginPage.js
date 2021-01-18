@@ -22,7 +22,7 @@ const useStyles = createUseStyles((theme) => ({
             textAlign: "center",
             paddingTop: "10px",
             width: "100%",
-            margin:"none",
+            margin: "none",
             maxWidth: "525px",
             minHeight: "300px",
             position: "relative",
@@ -33,8 +33,8 @@ const useStyles = createUseStyles((theme) => ({
             width: "100%",
             height: "100%",
             position: "center",
-            marginLeft:"150px",
-            marginTop:"-50px",
+            marginLeft: "150px",
+            marginTop: "-50px",
             padding: "80px 70px 50px 70px",
             backgroundColor: "rgba(140,83,83,0.9)",
 
@@ -147,12 +147,10 @@ const AuthenticationForm = () => {
 
     const {data} = useQuery(SearchQuery, {
         variables: {
-            word: search
+            word: inputValue
         },
 
     });
-
-    console.log(inputValue, result);
 
     useEffect(() => {
         if (data) {
