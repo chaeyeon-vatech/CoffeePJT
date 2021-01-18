@@ -11,7 +11,7 @@ import {useMutation, useQuery} from "@apollo/react-hooks";
 import {MeQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
 import FormDialog from "../../routes/userboard/Dialog";
 import UserDeleteButton from "./UserDeleteButton";
-import {Checkbox, FormControlLabel} from "@material-ui/core";
+
 
 export default function SearchButton() {
     const [open, setOpen] = React.useState(false);
@@ -45,9 +45,8 @@ export default function SearchButton() {
                 username: content
             },
             onCompleted: (data) => {
-                alert("유저 추가가 완료되었습니다.")
+                alert("유저 추가가 완료되었습니다.");
                 setOpen(false);
-
             },
 
             onError: () => {
@@ -112,15 +111,7 @@ export default function SearchButton() {
 
                         </table>
                     </>
-                    {/*<TextField*/}
-                    {/*    autoFocus*/}
-                    {/*    margin="dense"*/}
-                    {/*    id="name"*/}
-                    {/*    // label="추가하실 이름을 입력해주세요."*/}
-                    {/*    type="email"*/}
-                    {/*    onChange={e => setContent(e.target.value)}*/}
-                    {/*    fullWidth*/}
-                    {/*/>*/}
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
