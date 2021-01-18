@@ -13,22 +13,23 @@ import FormDialog from "../../routes/userboard/Dialog";
 import UserDeleteButton from "./UserDeleteButton";
 
 
-export default function SearchButton() {
+export default function SearchButton(search) {
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState('');
     const [click, setClick] = useState(false);
     const [result, setResult] = useState();
-    const [search, setSearch] = useState();
 
     const mutation = UpdateUserMutation;
 
 
     const {data: se} = useQuery(SearchQuery, {
         variables: {
-            word: search
+            word: search.search
         },
 
     });
+
+    console.log(search)
 
 
     useEffect(() => {
@@ -38,22 +39,6 @@ export default function SearchButton() {
         }
     }, [se]);
 
-    // $userid:ID! $orderid:ID! $menu:String! $hi:String!
-    const [create, {loading}] = useMutation(CreateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery}],
-            variables: {
-                username: content
-            },
-            onCompleted: (data) => {
-                alert("유저 추가가 완료되었습니다.");
-                setOpen(false);
-            },
-
-            onError: () => {
-                alert("같은 이름은 등록하실 수 없습니다!")
-            },
-        }
-    )
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -115,10 +100,7 @@ export default function SearchButton() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        취소
-                    </Button>
-                    <Button onClick={create} color="primary">
-                        추가
+                        완료
                     </Button>
                 </DialogActions>
             </Dialog>

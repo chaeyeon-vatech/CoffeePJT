@@ -154,7 +154,7 @@ function Create(props) {
                         <input type="text" placeholder="유저를 검색해주세요" onChange={e => setSearch(e.target.value)}
                                className={classes.input}/>
                     </span>
-                    <SearchButton/>
+                    <SearchButton search={search}/>
 
                 </Row>,
                 <Row>
