@@ -11,24 +11,25 @@ import {useMutation, useQuery} from "@apollo/react-hooks";
 import {MeQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
 import FormDialog from "../../routes/userboard/Dialog";
 import UserDeleteButton from "./UserDeleteButton";
-import {Checkbox, FormControlLabel} from "@material-ui/core";
 
-export default function SearchButton() {
+
+export default function SearchButton(search) {
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState('');
     const [click, setClick] = useState(false);
     const [result, setResult] = useState();
-    const [search, setSearch] = useState();
 
     const mutation = UpdateUserMutation;
 
 
     const {data: se} = useQuery(SearchQuery, {
         variables: {
-            word: search
+            word: search.search
         },
 
     });
+
+    console.log(search)
 
 
     useEffect(() => {
@@ -38,23 +39,6 @@ export default function SearchButton() {
         }
     }, [se]);
 
-    // $userid:ID! $orderid:ID! $menu:String! $hi:String!
-    const [create, {loading}] = useMutation(CreateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery}],
-            variables: {
-                username: content
-            },
-            onCompleted: (data) => {
-                alert("유저 추가가 완료되었습니다.")
-                setOpen(false);
-
-            },
-
-            onError: () => {
-                alert("같은 이름은 등록하실 수 없습니다!")
-            },
-        }
-    )
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -112,22 +96,11 @@ export default function SearchButton() {
 
                         </table>
                     </>
-                    {/*<TextField*/}
-                    {/*    autoFocus*/}
-                    {/*    margin="dense"*/}
-                    {/*    id="name"*/}
-                    {/*    // label="추가하실 이름을 입력해주세요."*/}
-                    {/*    type="email"*/}
-                    {/*    onChange={e => setContent(e.target.value)}*/}
-                    {/*    fullWidth*/}
-                    {/*/>*/}
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        취소
-                    </Button>
-                    <Button onClick={create} color="primary">
-                        추가
+                        완료
                     </Button>
                 </DialogActions>
             </Dialog>
