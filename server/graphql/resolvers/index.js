@@ -48,11 +48,11 @@ const resolvers = {
             const result = []
             if (category == 1) {
                 if (word == "") return result
-                return await users.find({ "username": { $regex: word } })
+                return await users.find({ "username": { $regex: word } }).sort({ "username": 1 })
             }
             else {
                 if (word == "") return result
-                return await users.find({ "username": { $regex: word }, "position": { $eq: "주문자" } })
+                return await users.find({ "username": { $regex: word }, "position": { $eq: "주문자" } }).sort({ "username": 1 })
             }
 
         },
@@ -148,7 +148,7 @@ const resolvers = {
         includedCoffee: async (_, args) => {
             const menu = args.menu;
             const hi = args.hi;
-            const result = Order.find({ "menu": { $eq: menu }, "hi": { $eq: hi } })
+            const result = Order.find({ "menu": { $eq: menu }, "hi": { $eq: hi } }).sort({ "username": 1 })
 
             return result
         },
