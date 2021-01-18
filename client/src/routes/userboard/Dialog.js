@@ -59,6 +59,7 @@ export default function FormDialog(username) {
                         margin="dense"
                         id="name"
                         label="수정하실 이름을 입력해주세요."
+                        defaultValue={username.username}
                         type="email"
                         onChange={e => setContent(e.target.value)}
                         fullWidth

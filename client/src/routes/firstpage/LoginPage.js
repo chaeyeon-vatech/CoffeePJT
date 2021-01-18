@@ -136,7 +136,7 @@ const AuthenticationForm = () => {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const primary = "rgb(42,47,34,0.9)";
+    // const primary = "rgb(42,47,34,0.9)";
 
     const [search, setSearch] = useState();
     const [result, setResult] = useState([]);

@@ -110,9 +110,6 @@ export default function UserEditTable() {
         }
     )
 
-
-    console.log(checked.map((c) => (c._id)).toString());
-
     const [orderback] = useMutation(OrderBackMutation, {
             refetchQueries: [{query: Ordermen, VacationQuery}],
             variables: {ids: checked.map((c) => (c._id))},
@@ -262,6 +259,7 @@ export default function UserEditTable() {
                                 {checked.map((c) => (c.username))}님의 이름을 변경하시겠습니까?
                             </DialogContentText>
                             <TextField
+                                defaultValue={checked.map((c) => (c.username))}
                                 autoFocus
                                 margin="dense"
                                 id="name"
