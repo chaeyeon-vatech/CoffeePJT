@@ -84,7 +84,7 @@ function SidebarComponent() {
             {user == "결제자" && <MenuItem
                 id={SLUGS.create}
                 title='주문 관리'
-                onClick={() => onClick(SLUGS.create)}
+                onClick={() => onClick(SLUGS.reset)}
             />}
             {user == "결제자" &&
             <MenuItem
@@ -93,7 +93,6 @@ function SidebarComponent() {
                 onClick={() => onClick(SLUGS.settings)}
             />}
 
-            {/*{!data && <MenuItem id='login' title='로그인'   onClick={() => onClick(SLUGS.login)}/>}*/}
             <div className={classes.separator}></div>
             {localStorage.getItem('myData') && <MenuItem id='logout' title='로그아웃' onClick={handleClick}/>}
 

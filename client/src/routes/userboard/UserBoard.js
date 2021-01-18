@@ -13,6 +13,7 @@ import VacationBoard from "../firstpage/VacationBoard";
 import UserManageTable from "../../components/table/UserManageTable";
 import Button from "@material-ui/core/Button";
 import FormDialog from "./Dialog";
+import UserEditTable from "../../components/table/UserEditTable";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: "30px"},
@@ -139,19 +140,11 @@ function Create(props) {
                     {renderAddButton()}
 
                 </Row>,
-                <Row horizontal='space-between' vertical='center'>
-                    <Row>
-                        <FormDialog/>
-                        <FormDialog/>
-                        <FormDialog/>
-                    </Row>
-                </Row>,
-                ,
                 <Row>
 
                     <Row horizontal='space-between' vertical='center'>
                         <Row>
-                            <UserManageTable/>
+                            <UserEditTable/>
 
                         </Row>
                     </Row>

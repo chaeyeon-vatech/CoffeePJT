@@ -7,6 +7,7 @@ import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../graphql/query";
 import PublicSection from "./PublicSection";
 import PrivateRoutes from "./PrivateRoutes";
+import LoadingComponent from "../components/loading";
 
 function Routes() {
     const {pathname} = useLocation();
@@ -24,6 +25,9 @@ function Routes() {
     useEffect(() => {
         if (data) {
             setTask(data.tasks);
+        }
+        if (loading){
+
         }
     }, [data]);
 

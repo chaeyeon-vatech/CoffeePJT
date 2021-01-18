@@ -7,7 +7,7 @@ import CustomizedSteppers from "./firstpage/Stepper";
 
 function PublicRoutes() {
 
-    return localStorage.getItem('myData') ? (
+    return localStorage.getItem('name') ? (
         <Switch>
             <Route exact path={LINKS.create} component={CustomizedSteppers}/>
             <Redirect to={LINKS.create} component={CustomizedSteppers}/>

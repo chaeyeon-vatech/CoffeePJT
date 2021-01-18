@@ -43,9 +43,6 @@ function BoardTable() {
         }
     })
 
-    console.log("data", data)
-    console.log("user", user)
-
     return (
 
 
