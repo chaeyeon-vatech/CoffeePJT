@@ -63,39 +63,4 @@ export function CreateOrder(hi) {
     )
 }
 
-
-// export function Menu() {
-//
-//     const [value, setValue] = useState(0);
-//     const theme = useTheme();
-//     const classes = useStyles();
-//
-//     const handleChange = (event, newValue) => {
-//         setValue(newValue);
-//
-//     };
-//
-//
-//     return (
-//         <>
-//             <Grid item xs={12}>
-//                 <Paper className={classes.root}>
-//                     <Tabs
-//                         value={value}
-//                         onChange={handleChange}
-//                         indicatorColor="secondary"
-//                         textColor="secondary"
-//                         centered
-//                     >
-//                         <Tab label="☕ 커피 ☕" href={"/order"}/>
-//                         <Tab label="🍦 아이스크림 🍦" href={"/iorder"}/>
-//                         <Tab label="🥤 기타 음료 🥤" href={"/eorder"}/>
-//                     </Tabs>
-//                 </Paper>
-//
-//             </Grid>
-//         </>
-//     )
-// }
-
 export default CreateOrder;

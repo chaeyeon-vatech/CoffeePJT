@@ -3,23 +3,20 @@ import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import CardComponent from 'components/cards/CardComponent';
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import {TaskQuery, UserSearchQuery} from "../../graphql/query";
+import {SearchQuery, TaskQuery, UserSearchQuery} from "../../graphql/query";
 import {CreateUserMutation, TaskCreateMutation} from "../../graphql/mutation";
-import TaskDeleteButton from "../../components/button/TaskDeleteButton";
-import PaymentTable from "../../components/table/PaymentTable";
-import {IconCheckboxOff, IconCheckboxOn} from "../../components/icons";
-import PaymentBoard from "../paymentboard/PaymentBoard";
-import VacationBoard from "../firstpage/VacationBoard";
-import UserManageTable from "../../components/table/UserManageTable";
+import UserEditTable from "../../components/table/UserEditTable";
+import UserAddButton from "../../components/button/UserAddButton";
+import SearchButton from "../../components/button/Searchbutton";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: "30px"},
 
     addButton: {
-        backgroundColor: theme.color.darkRed,
+        backgroundColor: theme.color.darkgreen,
         color: theme.color.grayishBlue2,
-        fontSize: '20px !important',
-        padding: '7px !important',
+        fontSize: '15px !important',
+        padding: '10px !important',
         width: "fit-content"
     },
     itemTitle: {
@@ -56,6 +53,10 @@ const useStyles = createUseStyles((theme) => ({
         justifyContent: "center",
         LeftMargin: "30px",
         alignSelf: "center"
+    },
+    text: {
+        textAlign: "center",
+        margin: "none"
     }
 
 }));
@@ -66,6 +67,8 @@ function Create(props) {
     const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
     const [title, setTitle] = useState();
     const [contents, setContents] = useState();
+    const [result, setResult] = useState();
+    const [search, setSearch] = useState();
 
 
     const {data} = useQuery(TaskQuery);
@@ -75,6 +78,21 @@ function Create(props) {
             setContents(data.tasks);
         }
     })
+
+    const {data: se} = useQuery(SearchQuery, {
+        variables: {
+            word: search
+        },
+
+    });
+
+
+    useEffect(() => {
+        if (se) {
+            setResult(se.user);
+
+        }
+    }, [se]);
 
 
     const [create, {loading}] = useMutation(CreateUserMutation, {
@@ -100,6 +118,12 @@ function Create(props) {
         });
     }
 
+    function onClick() {
+        return (
+            console.log(result)
+        );
+    }
+
 
     function renderAddButton() {
         return (
@@ -107,9 +131,9 @@ function Create(props) {
                 horizontal='center'
                 vertical='center'
                 className={[classes.addButton].join(' ')}
-                onClick={create}
+                onClick={onClick}
             >
-                +
+                검색
             </Row>
         );
     }
@@ -123,19 +147,21 @@ function Create(props) {
 
             items={[
 
-
+                <h3 className={classes.text}>유저 관리</h3>,
                 <Row horizontal='space-between' vertical='center'>
 
                     <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
-                        <input type="text" placeholder="유저를 추가해주세요" onChange={e => setTitle(e.target.value)}
+                        <input type="text" placeholder="유저를 검색해주세요" onChange={e => setSearch(e.target.value)}
                                className={classes.input}/>
                     </span>
-                    {renderAddButton()}
+                    <SearchButton/>
+
                 </Row>,
                 <Row>
+
                     <Row horizontal='space-between' vertical='center'>
                         <Row>
-                            <UserManageTable/>
+                            <UserEditTable/>
 
                         </Row>
                     </Row>

@@ -4,6 +4,10 @@ import {TaskRemoveMutation} from "../../graphql/mutation";
 import {TaskQuery} from "../../graphql/query";
 import {Row} from "simple-flexbox";
 import {createUseStyles, useTheme} from "react-jss";
+import {useHistory} from "react-router-dom";
+import {convertlinksToUrl} from "../../resources/utilities";
+import SLUGS from 'resources/links';
+
 
 const useStyles = createUseStyles((theme) => ({
     addButton: {
@@ -19,19 +23,22 @@ const useStyles = createUseStyles((theme) => ({
 function TaskDeleteButton(post_id, user_id) {
 
     const user = localStorage.getItem('myData');
+    const {push} = useHistory();
 
 
     const theme = useTheme();
     const classes = useStyles({theme});
     const mutation = TaskRemoveMutation;
 
+    function onClick(slug, parameters = {}) {
+        push(convertlinksToUrl(slug, parameters));
+    }
+
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
             refetchQueries: [{query: TaskQuery}],
             variables: {id: post_id.post_id, userid: post_id.user_id},
             onCompleted: (data) => {
                 alert("주문이 취소되었습니다.");
-                window.location.href = '/';
-
 
 
             }
@@ -48,7 +55,7 @@ function TaskDeleteButton(post_id, user_id) {
                     className={[classes.addButton].join(' ')}
                     onClick={deletePostOrMutation}
                 >
-                    재작성
+                    삭제
                 </Row>
 
             </form>

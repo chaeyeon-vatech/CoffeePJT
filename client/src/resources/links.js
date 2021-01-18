@@ -1,6 +1,7 @@
 export default {
     // private
     orderboard: '/order',
+    after:'/after',
     tickets: '/pay',
     settings: '/settings',
     notask:'/notask',
@@ -8,5 +9,6 @@ export default {
     login: '/',
     ologin:'/login',
     signup: '/signup',
-    create:'/create'
+    create:'/create',
+    reset:'/reset'
 };

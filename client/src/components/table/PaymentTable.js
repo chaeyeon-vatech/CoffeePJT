@@ -43,9 +43,6 @@ function BoardTable() {
         }
     })
 
-    console.log("data", data)
-    console.log("user", user)
-
     return (
 
 
@@ -57,7 +54,7 @@ function BoardTable() {
             content.map((content, index) => (
                 content != "" && <tr className={classes.content}>
                     <Tooltip title={user && user[index]} placement="top">
-                        <Button> {content}</Button>
+                        <Button variant="contained"> {content}</Button>
                     </Tooltip>
                 </tr>
 
