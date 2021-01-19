@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import {SearchQuery, TaskQuery} from "../../graphql/query";
+import {TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
-import {MeMutation, TaskCreateMutation} from "../../graphql/mutation";
+import {TaskCreateMutation} from "../../graphql/mutation";
 import {Row} from "simple-flexbox";
 import Button from "@material-ui/core/Button";
 

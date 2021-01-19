@@ -80,7 +80,7 @@ const useStyles = createUseStyles((theme) => ({
             transformStyle: "preserve-3d",
             backgroundColor: "rgba(140,83,83,0.9)",
             marginBottom: "20px",
-            padding:"20 20 20 20",
+            padding: "20 20 20 20",
             '&:nth-child(n) > button': {
                 width: "100%",
                 margin: "none",
@@ -93,7 +93,7 @@ const useStyles = createUseStyles((theme) => ({
                 alignContent: "center",
                 marginTop: "30px",
                 display: "block",
-                marginBottom:"30px"
+                marginBottom: "30px"
             }
 
         },
@@ -135,7 +135,7 @@ const useStyles = createUseStyles((theme) => ({
                 width: "100%",
                 color: "black",
                 display: "block",
-                fontSize:"15px"
+                fontSize: "15px"
             },
             '&:nth-child(n) > label ': {
                 color: "#aaa",
@@ -216,7 +216,7 @@ const AuthenticationForm = () => {
                                 <h3 className={classes.h5}>{localStorage.getItem('name') + "님 환영합니다"}</h3>
                                 <h5 className={classes.h5}>{localStorage.getItem('name') + "님이 맞으신가요?"}</h5>
 
-                                <Button variant="contained" id='logout' onClick={()=>window.location.href = '/create'}
+                                <Button variant="contained" id='logout' onClick={() => window.location.href = '/create'}
                                         className={classes.button}>{localStorage.getItem('name') + "님이 맞습니다!"}</Button>
                                 <Button variant="contained" id='logout' onClick={handleLogout}
                                         className={classes.button}>아닙니다.</Button>
@@ -261,6 +261,19 @@ const AuthenticationForm = () => {
                                                             ...params.InputProps,
                                                             type: 'search',
                                                             className: classes.focused
+                                                        }}
+                                                        onKeyPress={(ev) => {
+                                                            const listener = event => {
+                                                                if (event.code === "Enter" || event.code === "NumpadEnter") {
+                                                                    handleClick(search, result.map((content) => (content._id)))
+
+                                                                }
+                                                            };
+                                                            document.addEventListener("keypress", listener);
+                                                            return () => {
+                                                                document.removeEventListener("keypress", listener);
+                                                            };
+
                                                         }}
                                                     />
                                                 )}

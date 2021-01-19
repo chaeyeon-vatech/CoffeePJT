@@ -2,7 +2,7 @@ import React from 'react';
 import {useMutation} from '@apollo/react-hooks';
 import TextField from "@material-ui/core/TextField";
 import {OrderGiveupMutation, RemoveMutation} from "../../graphql/mutation";
-import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
+import {MeQuery, OrderSearch, Receipt, ReceiptUsers, UserSearchQuery} from "../../graphql/query";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";

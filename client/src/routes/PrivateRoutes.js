@@ -4,8 +4,6 @@ import LINKS from 'resources/links';
 import LoadingComponent from 'components/loading';
 import AfterOrder from "./orderboard/AfterOrder";
 
-// const OrderboardComponent = lazy(() => import('./orderboard/OrderBoardComponent'));
-
 const MenuBoard = lazy(() => import('./orderboard/Menu'))
 const Create = lazy(() => import('./firstpage/Create'))
 const basicLogin = lazy(() => import('./firstpage/LoginPage'))
@@ -15,10 +13,6 @@ const PaymentboardComponent = lazy(() => import('./paymentboard'))
 
 function PrivateRoutes() {
 
-    const upvote = (e) => {
-        e.stopPropagation();
-        e.nativeEvent.stopImmediatePropagation();
-    }
 
     return localStorage.getItem('myData') ? (
         <Suspense fallback={<LoadingComponent loading/>}>
@@ -34,14 +28,15 @@ function PrivateRoutes() {
 
             </Switch>
 
-
         </Suspense>
     ) : (
         <Suspense fallback={<LoadingComponent loading/>}>
 
             <Switch>
+
                 <Route exact path={LINKS.login} component={basicLogin}/>
                 <Redirect to={LINKS.login} component={basicLogin}/>
+
             </Switch>
 
         </Suspense>

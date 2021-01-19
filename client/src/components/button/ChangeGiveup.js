@@ -33,8 +33,6 @@ function ChangeGiveupButton(userid) {
         }
     )
 
-    console.log(userid.userid)
-
     return (
         <>
 
