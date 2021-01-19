@@ -35,11 +35,7 @@ export default function CorderBoard() {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const {push} = useHistory();
-    const isMobile = window.innerWidth <= 1080;
-    const [position, setPosition] = useState();
     const [status, setStatus] = useState();
-    const [username, setName] = useState();
 
 
     const {data} = useQuery(MeQuery, {
@@ -51,16 +47,18 @@ export default function CorderBoard() {
 
     useEffect(() => {
         if (data) {
-            setName(data.me.username);
-            setPosition(data.me.position);
             setStatus(data.me.status);
-
         }
     }, [data]);
 
+    const menu = ["아메리카노", "카페라떼", "바닐라라떼", "카페모카"]
+    const image = ["https://images.unsplash.com/photo-1593231269103-6667d6905882?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80",
+        "https://images.unsplash.com/photo-1556484245-2c765becb8eb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",
+        "https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80",
+        "https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
+    ]
+
     return (
-
-
         <div className={classes.root}>
 
             <Grid container spacing={3}>
@@ -72,7 +70,6 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
-                                    alt="Contemplative Reptile"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1593231269103-6667d6905882?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80"
                                     title="아메리카노"
@@ -97,7 +94,6 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
-                                    alt="Contemplative Reptile"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1556484245-2c765becb8eb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
                                     title="카페라떼"
@@ -124,7 +120,6 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
-                                    alt="바닐라라떼"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80"
                                     title="바닐라라떼"
@@ -151,7 +146,6 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
-                                    alt="카페 모카"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
                                     title="Contemplative Reptile"

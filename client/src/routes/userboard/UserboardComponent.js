@@ -21,7 +21,7 @@ const useStyles = createUseStyles({
             maxWidth: 'none'
         }
     },
-    todayTrends: {
+    container: {
         marginTop: 0
     },
 
@@ -43,7 +43,7 @@ function UserboardComponent() {
 
     return (
         <Column>
-            <div className={classes.todayTrends}>
+            <div className={classes.container}>
                 <UserBoard/>
             </div>
         </Column>

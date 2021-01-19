@@ -63,9 +63,7 @@ const useStyles = createUseStyles((theme) => ({
 
 function OrderBoardComponent() {
     const classes = useStyles();
-
     const [contents, setContents] = useState('');
-    const [count, setCount] = useState('');
 
     const {data} = useQuery(TaskQuery);
     useEffect(() => {

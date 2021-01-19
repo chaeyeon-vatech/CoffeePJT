@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import CardComponent from 'components/cards/CardComponent';
-import {useMutation, useQuery} from "@apollo/react-hooks";
-import {SearchQuery, TaskQuery, UserSearchQuery} from "../../graphql/query";
-import {CreateUserMutation} from "../../graphql/mutation";
+import {useQuery} from "@apollo/react-hooks";
+import {SearchQuery, TaskQuery} from "../../graphql/query";
 import UserEditTable from "../../components/table/UserEditTable";
 import SearchButton from "../../components/button/Searchbutton";
 
@@ -63,8 +62,6 @@ const useStyles = createUseStyles((theme) => ({
 function Create(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
-    const [title, setTitle] = useState();
     const [contents, setContents] = useState();
     const [result, setResult] = useState();
     const [search, setSearch] = useState();
@@ -88,12 +85,6 @@ function Create(props) {
 
         }
     });
-
-    function onClick() {
-        return (
-            console.log(result)
-        );
-    }
 
     return (
         <CardComponent
