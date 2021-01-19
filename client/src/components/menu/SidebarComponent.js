@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {createUseStyles, useTheme} from 'react-jss';
 import {useHistory} from 'react-router-dom';
-import SLUGS from 'resources/links';
+import LINKS from 'resources/links';
 import {convertlinksToUrl} from 'resources/utilities';
 import LogoComponent from './LogoComponent';
 import Menu from './MenuComponent';
@@ -54,8 +54,8 @@ function SidebarComponent() {
     }, [data]);
 
 
-    function onClick(slug, parameters = {}) {
-        push(convertlinksToUrl(slug, parameters));
+    function onClick(link, parameters = {}) {
+        push(convertlinksToUrl(link, parameters));
     }
 
 
@@ -69,29 +69,29 @@ function SidebarComponent() {
 
             {localStorage.getItem('myData') &&
             <MenuItem
-                id={SLUGS.orderboard}
+                id={LINKS.orderboard}
                 title='주문자 페이지'
-                onClick={() => onClick(SLUGS.orderboard)}
+                onClick={() => onClick(LINKS.orderboard)}
             />}
 
             <div className={classes.separator}></div>
             {user == "결제자" && <MenuItem
-                id={SLUGS.tickets}
+                id={LINKS.tickets}
                 title='결제자 페이지'
-                onClick={() => onClick(SLUGS.tickets)}
+                onClick={() => onClick(LINKS.tickets)}
             />}
 
 
             {user == "결제자" && <MenuItem
-                id={SLUGS.create}
+                id={LINKS.create}
                 title='주문 관리'
-                onClick={() => onClick(SLUGS.reset)}
+                onClick={() => onClick(LINKS.reset)}
             />}
             {user == "결제자" &&
             <MenuItem
-                id={SLUGS.settings}
+                id={LINKS.settings}
                 title='유저 관리'
-                onClick={() => onClick(SLUGS.settings)}
+                onClick={() => onClick(LINKS.settings)}
             />}
 
             <div className={classes.separator}></div>

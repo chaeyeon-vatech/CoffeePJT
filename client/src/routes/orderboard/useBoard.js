@@ -1,27 +1,9 @@
 import {CreateMutation} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
-import {MeQuery, OrderSearch, Receipt, ReceiptUsers} from "../../graphql/query";
+import {MeQuery, OrderSearch, Receipt} from "../../graphql/query";
 import React from "react";
-import {Snackbar, useTheme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import {Alert} from "@material-ui/lab";
-import CheckIcon from "@material-ui/icons/Check";
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(5),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    },
-    card: {maxWidth: 345},
-    color: {
-        brown: "#6d4c41"
-    }
-}));
 
 export function CreateOrder(hi) {
 
@@ -37,7 +19,8 @@ export function CreateOrder(hi) {
                 menu: hi.menu,
                 hi: hi.hi
             },
-            onCompleted: () => {},
+            onCompleted: () => {
+            },
             onError: () => {
                 alert("메뉴를 선택해주세요.")
             },

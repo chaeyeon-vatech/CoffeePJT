@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import LINKS from 'resources/links';
 import NoTask from "./firstpage/Stepper";
-import First from "./firstpage/First";
+import First from "./firstpage/NoTask";
 import CustomizedSteppers from "./firstpage/Stepper";
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../graphql/query";
@@ -24,7 +24,6 @@ function PublicRoutes() {
         }
     }, [data]);
 
-    console.log(task)
 
     return localStorage.getItem('name') ? (
         <Switch>
@@ -37,8 +36,7 @@ function PublicRoutes() {
         <Switch>
 
             <Route path={LINKS.ologin} component={First}/>
-            {task === null&& <Redirect to={LINKS.ologin} component={First}/>}
-
+            {task === null && <Redirect to={LINKS.ologin} component={First}/>}
 
         </Switch>
 

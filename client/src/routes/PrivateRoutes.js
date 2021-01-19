@@ -5,7 +5,7 @@ import LoadingComponent from 'components/loading';
 import AfterOrder from "./orderboard/AfterOrder";
 
 const MenuBoard = lazy(() => import('./orderboard/Menu'))
-const Create = lazy(() => import('./firstpage/Create'))
+const Create = lazy(() => import('./paymentboard/Create'))
 const basicLogin = lazy(() => import('./firstpage/LoginPage'))
 const UserboardComponent = lazy(() => import('./userboard/UserboardComponent'))
 const PaymentboardComponent = lazy(() => import('./paymentboard'))

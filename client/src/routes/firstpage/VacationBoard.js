@@ -1,15 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import {useQuery, useMutation} from "@apollo/react-hooks";
+import {useQuery} from "@apollo/react-hooks";
 import {
-    AllUserQuery,
-    CostQuery,
-    CountQuery,
-    MeQuery,
     SearchQuery,
-    TaskQuery,
-    UserSearchQuery
+    TaskQuery
 } from "../../graphql/query";
 import TransferList from "../../components/table/TransferTable";
 
@@ -87,53 +82,9 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function TodayTrendsComponent() {
+function VacationBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
-
-    const [search, setSearch] = useState();
-    const [result, setResult] = useState();
-
-    const {task} = useQuery(TaskQuery);
-
-    const {data} = useQuery(SearchQuery, {
-        variables: {
-            word: search
-        },
-
-    });
-
-    useEffect(() => {
-        if (data) {
-            setResult(data.user);
-
-        }
-    }, [data]);
-
-
-    function renderLegend(color, title) {
-        return (
-            <Row vertical='center'>
-                <div style={{width: 16, border: '2px solid', borderColor: color}}></div>
-
-                <span className={classes.legendTitle}>{title}</span>
-            </Row>
-        );
-    }
-
-    function renderStat(title, value) {
-        return (
-            <Column
-                flexGrow={1}
-                className={classes.statContainer}
-                vertical='center'
-                horizontal='center'
-            >
-                <span className={classes.statTitle}>{title}</span>
-                <span className={classes.statValue}>{value}</span>
-            </Column>
-        );
-    }
 
     return (
         <Row
@@ -149,4 +100,4 @@ function TodayTrendsComponent() {
     );
 }
 
-export default TodayTrendsComponent;
+export default VacationBoard;

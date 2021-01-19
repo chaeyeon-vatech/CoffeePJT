@@ -10,9 +10,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import {useMutation, useQuery} from "@apollo/react-hooks";
+import {useQuery} from "@apollo/react-hooks";
 import {Ordermen, VacationQuery} from "../../graphql/query";
-import {BackUserMutation, OrderBackMutation} from "../../graphql/mutation";
+import {OrderBack, VacationBack} from "../../graphql/useMutation";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,45 +50,17 @@ export default function TransferList() {
     const [left, setLeft] = React.useState([1, 2, 3]);
     const [right, setRight] = React.useState([4, 5, 6, 7]);
 
-    const {data: user} = useQuery(VacationQuery)
+    const {data: user} = useQuery(VacationQuery);
+    const {data: order} = useQuery(Ordermen);
 
     useEffect(() => {
         if (user) {
             setRight(user.includedVacation);
         }
-    }, [user]);
-
-    const {data: order} = useQuery(Ordermen);
-
-    useEffect(() => {
         if (order) {
             setLeft(order.includedOrdermen);
         }
-    }, [order]);
-
-
-    const [vacationback] = useMutation(BackUserMutation, {
-            refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
-            variables: {ids: checked.map((c) => (c._id))},
-            onCompleted: () => {
-                alert("미주문자로 전환되었습니다!");
-
-            }
-        }
-    )
-
-
-    const [orderback] = useMutation(OrderBackMutation, {
-            refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
-            variables: {ids: checked.map((c) => (c._id))},
-            onCompleted: () => {
-                // window.location.href = '/reset';
-                alert("주문자로 전환되었습니다!");
-
-            }
-        }
-    )
-
+    });
 
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
@@ -115,19 +87,6 @@ export default function TransferList() {
             setChecked(union(checked, items));
         }
     };
-
-    const handleCheckedRight = () => {
-        setRight(right.concat(leftChecked));
-        setLeft(not(left, leftChecked));
-        setChecked(not(checked, leftChecked));
-    };
-
-    const handleCheckedLeft = () => {
-        setLeft(left.concat(rightChecked));
-        setRight(not(right, rightChecked));
-        setChecked(not(checked, rightChecked));
-    };
-
 
     const customList = (title, items) => (
         <Card>
@@ -181,7 +140,7 @@ export default function TransferList() {
                         variant="outlined"
                         size="small"
                         className={classes.button}
-                        onClick={vacationback}
+                        onClick={VacationBack(checked)}
                         disabled={leftChecked.length === 0}
                         aria-label="move selected right"
                     >
@@ -192,7 +151,7 @@ export default function TransferList() {
                         variant="outlined"
                         size="small"
                         className={classes.button}
-                        onClick={orderback}
+                        onClick={OrderBack(checked)}
                         disabled={rightChecked.length === 0}
                         aria-label="move selected left"
                     >

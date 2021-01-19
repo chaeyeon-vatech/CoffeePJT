@@ -22,19 +22,14 @@ function BoardTable() {
     const [content, setContent] = useState();
     const [user, setUser] = useState();
     const {data: receipt} = useQuery(Receipt)
+    const {data} = useQuery(ReceiptUsers);
 
     useEffect(() => {
         if (receipt) {
             setContent(receipt.receipt)
         }
-    })
-
-    const {data} = useQuery(ReceiptUsers)
-
-    useEffect(() => {
         if (data) {
             setUser(data.receiptUsers)
-
         }
     })
 

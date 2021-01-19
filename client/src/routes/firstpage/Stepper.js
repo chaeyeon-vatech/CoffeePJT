@@ -12,34 +12,12 @@ import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedIn
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Second from "./Second";
-import Third from "./Third";
+import Second from "./SecondStep";
+import Third from "./FirstStep";
 import {useMutation} from "@apollo/react-hooks";
 import {TaskCreateMutation} from "../../graphql/mutation";
 import {TaskQuery} from "../../graphql/query";
 
-const QontoConnector = withStyles({
-    alternativeLabel: {
-        top: 10,
-        left: 'calc(-50% + 16px)',
-        right: 'calc(50% + 16px)',
-    },
-    active: {
-        '& $line': {
-            borderColor: '#784af4',
-        },
-    },
-    completed: {
-        '& $line': {
-            borderColor: '#784af4',
-        },
-    },
-    line: {
-        borderColor: '#eaeaf0',
-        borderTopWidth: 3,
-        borderRadius: 1,
-    },
-})(StepConnector);
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -245,7 +223,11 @@ export default function CustomizedSteppers() {
 
 
     const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        if (window.confirm('결제자를 변경하시겠습니까?')) {
+            setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            localStorage.clear();
+            window.location.href = '/login'
+        }
     };
 
 
@@ -274,10 +256,10 @@ export default function CustomizedSteppers() {
             <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}
                      className={classes.background}>
 
-
                 <Step>
 
                     <StepLabel StepIconComponent={AssignmentTurnedInTwoToneIcon}>Completed</StepLabel>
+
                 </Step>
 
 
@@ -287,9 +269,7 @@ export default function CustomizedSteppers() {
 
                     <div>
 
-                        <Typography className={classes.instructions}>
-
-                            <Second/></Typography>
+                        <Typography><Second/></Typography>
 
                     </div>
                 </div>
@@ -307,6 +287,7 @@ export default function CustomizedSteppers() {
                     <Step key={label}>
 
                         <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+
                     </Step>
                 ))}
 
@@ -322,7 +303,7 @@ export default function CustomizedSteppers() {
 
                                 {getStepContent(activeStep)}</Typography>
 
-                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                            <Button onClick={handleBack} className={classes.button}>
                                 Back
                             </Button>
                             <Button

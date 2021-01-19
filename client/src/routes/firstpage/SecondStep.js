@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {useMutation, useQuery} from "@apollo/react-hooks";
+import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery, VacationQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
-import {TaskCreateMutation} from "../../graphql/mutation";
-import {Row} from "simple-flexbox";
 import Button from "@material-ui/core/Button";
+import {TaskCreate} from "../../graphql/useMutation";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -119,18 +118,10 @@ const useStyles = createUseStyles((theme) => ({
     }))
 ;
 
-const handleClick = (name, id) => {
-
-    localStorage.setItem('myData', id)
-    localStorage.setItem('name', name)
-    window.location.href = '/create'
-}
-
 const AuthenticationForm = () => {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
     const [title, setTitle] = useState();
     const [right, setRight] = useState();
     const [contents, setContents] = useState();
@@ -150,49 +141,6 @@ const AuthenticationForm = () => {
         }
     })
 
-
-    const [create, {loading}] = useMutation(TaskCreateMutation, {
-            refetchQueries: [{query: TaskQuery}],
-            variables: {
-                title: localStorage.getItem('task'),
-                userid: localStorage.getItem('myData')
-            },
-            onCompleted: (data) => {
-                alert("주문이 생성되었습니다!");
-                window.location.href = '/create';
-
-
-            },
-
-            onError: () => {
-                alert("주문 내용을 작성해주세요.")
-            },
-        }
-    )
-
-    function onCheckboxClick(index) {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems[index].checked = newItems[index].checked ? false : true;
-            return newItems;
-        });
-    }
-
-
-    function renderAddButton() {
-        return (
-            <Row
-                horizontal='center'
-                vertical='center'
-                className={[classes.addButton].join(' ')}
-                onClick={create}
-            >
-                +
-            </Row>
-        );
-    }
-
-
     const handleClick = () => {
 
         localStorage.clear()
@@ -205,17 +153,13 @@ const AuthenticationForm = () => {
         if (window.confirm("주문 내용을 재작성하시겠습니까?")) {
 
             localStorage.removeItem('task')
-            window.location.reload(false);
+
         }
 
     }
 
-
     const taskClick = () => {
-
         localStorage.setItem('task', title)
-        window.location.reload();
-
     }
 
 
@@ -230,7 +174,7 @@ const AuthenticationForm = () => {
 
                     <Button variant="contained" id='logout' onClick={changeClick} className={classes.button}>주문
                         변경</Button>
-                    <Button variant="contained" color={"secondary"} id='logout' onClick={create}
+                    <Button variant="contained" color={"secondary"} id='logout' onClick={TaskCreate()}
                             className={classes.button}>완료!</Button>
                 </div>
             </div>

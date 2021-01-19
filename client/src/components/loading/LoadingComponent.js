@@ -1,8 +1,8 @@
 import React from 'react';
 import {createUseStyles, useTheme} from 'react-jss';
 import {Column, Row} from 'simple-flexbox';
-import {SidebarComponent} from "../sidebar";
-import HeaderComponent from "../header/HeaderComponent";
+import {SidebarComponent} from "../menu";
+import HeaderComponent from "../menu/HeaderComponent";
 
 const useStyles = createUseStyles({
     '@keyframes loadingSpin': {
