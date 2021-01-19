@@ -77,56 +77,6 @@ function AfterCreate(props) {
         }
     })
 
-
-    const [create, {loading}] = useMutation(TaskCreateMutation, {
-            refetchQueries: [{query: TaskQuery}],
-            variables: {
-                title: title,
-                userid: localStorage.getItem('myData')
-            },
-            onCompleted: (data) => {
-                alert("주문이 생성되었습니다!");
-                window.location.href = '/after'
-
-
-            },
-
-            onError: () => {
-                alert("주문 내용을 작성해주세요.")
-            },
-        }
-    )
-
-    function onCheckboxClick(index) {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems[index].checked = newItems[index].checked ? false : true;
-            return newItems;
-        });
-    }
-
-
-    function renderAddButton() {
-        return (
-            <Row
-                horizontal='center'
-                vertical='center'
-                className={[classes.addButton].join(' ')}
-                onClick={create}
-            >
-                +
-            </Row>
-        );
-    }
-
-    const handleClick = () => {
-        if (window.confirm('사용자를 전환하시겠습니까?')) {
-
-            localStorage.clear()
-            window.location.href = '/'
-        }
-    }
-
     return (
         <CardComponent
             containerStyles={props.containerStyles}
@@ -135,27 +85,7 @@ function AfterCreate(props) {
             subtitle='주문 재작성 혹은 휴가자인 사람을 등록할 수 있습니다.'
 
             items={[
-                <Row>
-                    {contents == null && <Button variant="contained" id='logout' onClick={handleClick}
-                                                 className={classes.button}>{localStorage.getItem('name')}님이
-                        맞으신가요?</Button>}
 
-                </Row>,
-
-
-                <Row horizontal='space-between' vertical='center'>
-
-
-
-                    <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
-
-                        {contents == null &&
-                        <input type="text" placeholder="어떤 이유로 커피를 사시나요?" onChange={e => setTitle(e.target.value)}
-                               className={classes.input}/>}
-                    </span>
-                    {contents == null && renderAddButton()}
-                    {/*<a href="/order">주문자 페이지로 이동</a>*/}
-                </Row>,
                 <Row>
                     <Row horizontal='space-between' vertical='center'>
                         <Row>
@@ -165,7 +95,6 @@ function AfterCreate(props) {
                                 <tr>
                                     <th scope="col">Task 내용</th>
                                     <th scope="col">Task 재작성</th>
-
 
                                 </tr>
                                 </thead>

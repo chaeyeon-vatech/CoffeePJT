@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import UserTable from "../../components/table/UserTable";
+import UserTable from "../../components/table/AfterTable";
 import {useQuery} from "@apollo/react-hooks";
 import {MeQuery, TaskQuery} from "../../graphql/query";
 import {Snackbar} from "@material-ui/core";

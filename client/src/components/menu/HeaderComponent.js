@@ -5,7 +5,6 @@ import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import {SidebarContext} from 'resources/hooks/useSidebar';
 import SLUGS from 'resources/links';
-import DropdownComponent from 'components/dropdown';
 import {useQuery} from "@apollo/react-hooks";
 import {MeQuery} from "../../graphql/query";
 

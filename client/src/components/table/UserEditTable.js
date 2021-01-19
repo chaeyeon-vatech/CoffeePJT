@@ -8,9 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import {useMutation, useQuery} from "@apollo/react-hooks";
-import {AllUserQuery, MeQuery, Ordermen, UserSearchQuery, VacationQuery} from "../../graphql/query";
-import {multipleDelete, UpdateUserMutation} from "../../graphql/mutation";
+import {useQuery} from "@apollo/react-hooks";
+import {AllUserQuery} from "../../graphql/query";
 import FormDialog from "../../routes/userboard/Dialog";
 import UserDeleteButton from "../button/UserDeleteButton";
 import Dialog from "@material-ui/core/Dialog";
@@ -20,6 +19,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import UserAddButton from "../button/UserAddButton";
+import {MultipleUserDelete, UpdateUser} from "../../graphql/useMutation";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,54 +59,20 @@ function union(a, b) {
 
 export default function UserEditTable() {
     const classes = useStyles();
-    const [checked, setChecked] = React.useState([]);
-    const [left, setLeft] = React.useState([1, 2, 3]);
-    const [right, setRight] = React.useState([4, 5, 6, 7]);
-    const [open, setOpen] = React.useState(false);
+    const [checked, setChecked] = useState([]);
+    const [list, setList] = useState([]);
+    const [open, setOpen] = useState(false);
     const [content, setContent] = useState('');
-
 
     const {data: order} = useQuery(AllUserQuery);
 
     useEffect(() => {
         if (order) {
-            setLeft(order.allUsers);
+            setList(order.allUsers);
         }
     }, [order]);
 
-
-    const [mdelete] = useMutation(multipleDelete, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
-            variables: {ids: checked.map((c) => (c._id))},
-            onCompleted: () => {
-                alert("선택하신 유저가 삭제되었습니다.");
-            },
-            onError: () => {
-                alert("다시 시도해주세요!")
-            }
-        }
-    )
-
-    const [update] = useMutation(UpdateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
-            variables: {
-                id: checked.map((c) => (c._id)).toString(),
-                username: content
-            },
-            onCompleted: () => {
-
-                alert("정보 수정이 완료되었습니다.")
-                setOpen(false);
-            },
-            onError: () => {
-                alert("다시 시도해주세요!")
-            }
-        }
-    )
-
-
-    const leftChecked = intersection(checked, left);
-    const rightChecked = intersection(checked, right);
+    const listChecked = intersection(checked, list);
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -129,18 +95,6 @@ export default function UserEditTable() {
         } else {
             setChecked(union(checked, items));
         }
-    };
-
-    const handleCheckedRight = () => {
-        setRight(right.concat(leftChecked));
-        setLeft(not(left, leftChecked));
-        setChecked(not(checked, leftChecked));
-    };
-
-    const handleCheckedLeft = () => {
-        setLeft(left.concat(rightChecked));
-        setRight(not(right, rightChecked));
-        setChecked(not(checked, rightChecked));
     };
 
     const handleClickOpen = () => {
@@ -210,8 +164,8 @@ export default function UserEditTable() {
                     <td>
                         <Button
                             variant="outlined"
-                            onClick={mdelete}
-                            disabled={leftChecked.length === 0}
+                            onClick={MultipleUserDelete(checked)}
+                            disabled={listChecked.length === 0}
                             aria-label="move selected right"
                             color="secondary"
                         >
@@ -224,7 +178,7 @@ export default function UserEditTable() {
                             variant="outlined"
                             className={classes.button}
                             onClick={handleClickOpen}
-                            disabled={leftChecked.length === 0 || leftChecked.length > 1}
+                            disabled={listChecked.length === 0 || listChecked.length > 1}
                             aria-label="move selected right"
                             color="primary"
                         >
@@ -253,7 +207,7 @@ export default function UserEditTable() {
                             <Button onClick={handleClose} color="primary">
                                 취소
                             </Button>
-                            <Button onClick={update} color="primary">
+                            <Button onClick={UpdateUser(checked, content, setOpen)} color="primary">
                                 변경
                             </Button>
                         </DialogActions>
@@ -262,7 +216,7 @@ export default function UserEditTable() {
                 </th>
             </table>
 
-            <Grid item>{customList('주문자', left)}</Grid>
+            <Grid item>{customList('주문자', list)}</Grid>
 
         </Grid>
 

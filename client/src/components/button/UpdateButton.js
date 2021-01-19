@@ -43,15 +43,16 @@ function UpdateButton(username) {
     const mutation = UpdateUserMutation;
 
     const [update, {loading}] = useMutation(mutation, {
-        refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-            , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],            variables: {
+            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}], variables: {
                 id: username.id,
                 username: content
             },
-            onCompleted: (data) => {
+            onCompleted: () => {
 
                 alert("정보 수정이 완료되었습니다.")
                 setClick(false)
+
             }
         }
     )
