@@ -57,9 +57,7 @@ const useStyles = makeStyles((theme) => ({
 export default function IceBoard() {
     const classes = useStyles();
     const [value, setValue] = React.useState(1);
-
     const [contents, setContents] = useState('');
-    const [count, setCount] = useState('');
 
     const {data} = useQuery(TaskQuery);
     useEffect(() => {
@@ -68,10 +66,6 @@ export default function IceBoard() {
 
         }
     }, [data]);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
 
 
     return (
@@ -207,11 +201,6 @@ export default function IceBoard() {
                     </Grid>
                 </div>
             </div>
-
-            {/*<div className={classes.todayTrends}>*/}
-            {/*    <AfterOrder/>*/}
-            {/*</div>*/}
-
         </Column>
 
 

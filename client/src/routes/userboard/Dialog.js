@@ -14,9 +14,7 @@ export default function FormDialog(username) {
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState('');
 
-
     const mutation = UpdateUserMutation;
-
 
     const [update] = useMutation(mutation, {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],

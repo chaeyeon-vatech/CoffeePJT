@@ -33,9 +33,7 @@ const useStyles = createUseStyles({
     },
     tasks: {
         marginTop: 0,
-        '@media (max-width: 1024px)': {
-            // marginTop: 30
-        }
+        '@media (max-width: 1024px)': {}
     }
 });
 

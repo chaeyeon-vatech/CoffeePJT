@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import {Column, Row} from "simple-flexbox";
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, TaskQuery} from "../../graphql/query";
+import {TaskQuery} from "../../graphql/query";
 import CreateButton from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
 
@@ -54,13 +54,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EtcBoard() {
     const classes = useStyles();
-    const [value, setValue] = React.useState(2);
-
     const [contents, setContents] = useState('');
-    const [count, setCount] = useState('');
-
     const [status, setStatus] = useState();
-
 
     const {data} = useQuery(TaskQuery);
     useEffect(() => {
@@ -69,12 +64,6 @@ export default function EtcBoard() {
 
         }
     }, [data]);
-
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
 
     return (
         <Column className={classes.background}>

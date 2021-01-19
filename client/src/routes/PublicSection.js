@@ -3,10 +3,6 @@ import {createUseStyles, useTheme} from 'react-jss';
 import {Column, Row} from 'simple-flexbox';
 import {SidebarComponent, SidebarContext} from 'components/menu';
 import HeaderComponent from 'components/menu/HeaderComponent';
-import PrivateRoutes from './PrivateRoutes';
-import {Route, Switch} from "react-router-dom";
-import LINKS from "../resources/links";
-import Create from "./paymentboard/Create";
 import PublicRoutes from "./PublicRoutes";
 
 const useStyles = createUseStyles({

@@ -58,7 +58,6 @@ const useStyles = createUseStyles((theme) => ({
 function Task(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
     const [title, setTitle] = useState();
     const [contents, setContents] = useState();
 
