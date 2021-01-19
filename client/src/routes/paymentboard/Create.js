@@ -6,7 +6,7 @@ import {useMutation, useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
 import {TaskCreateMutation} from "../../graphql/mutation";
 import TaskDeleteButton from "../../components/button/TaskDeleteButton";
-import VacationBoard from "./VacationBoard";
+import VacationBoard from "../firstpage/VacationBoard";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: -160},
@@ -59,10 +59,7 @@ const useStyles = createUseStyles((theme) => ({
 function Create(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
-    const [title, setTitle] = useState();
     const [contents, setContents] = useState();
-
 
     const {data} = useQuery(TaskQuery);
 
@@ -72,47 +69,6 @@ function Create(props) {
         }
     })
 
-
-    const [create, {loading}] = useMutation(TaskCreateMutation, {
-            refetchQueries: [{query: TaskQuery}],
-            variables: {
-                title: title,
-                userid: localStorage.getItem('myData')
-            },
-            onCompleted: (data) => {
-                alert("주문이 생성되었습니다!");
-
-
-            },
-
-            onError: () => {
-                alert("주문 내용을 작성해주세요.")
-            },
-        }
-    )
-
-    function onCheckboxClick(index) {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems[index].checked = newItems[index].checked ? false : true;
-            return newItems;
-        });
-    }
-
-
-    function renderAddButton() {
-        return (
-            <Row
-                horizontal='center'
-                vertical='center'
-                className={[classes.addButton].join(' ')}
-                onClick={create}
-            >
-                +
-            </Row>
-        );
-    }
-
     return (
         <CardComponent
             containerStyles={props.containerStyles}
@@ -121,17 +77,6 @@ function Create(props) {
             subtitle='(예시) 사유를 적어주시면 👏오늘은 OOO님이 @@ 기념으로 커피 삽니다!👏 로 주문자 화면에 보여집니다!'
 
             items={[
-                <Row horizontal='space-between' vertical='center'>
-
-                    <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
-
-                        {contents == null &&
-                        <input type="text" placeholder="어떤 이유로 커피를 사시나요?" onChange={e => setTitle(e.target.value)}
-                               className={classes.input}/>}
-                    </span>
-                    {contents == null && renderAddButton()}
-                    {/*<a href="/order">주문자 페이지로 이동</a>*/}
-                </Row>,
                 <Row>
                     <Row horizontal='space-between' vertical='center'>
                         <Row>

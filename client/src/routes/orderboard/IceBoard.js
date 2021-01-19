@@ -11,7 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import {Column, Row} from "simple-flexbox";
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
-import CreateOrder from "./useMutation";
+import CreateButton from "./useBoard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -115,8 +115,8 @@ export default function IceBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="아시나요" color="primary" label="아시나요 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="icecream" menu="아시나요" color="primary" label="아시나요 선택"
+                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -142,8 +142,8 @@ export default function IceBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="돼지콘" color="primary" label="돼지콘 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="icecream" menu="돼지콘" color="primary" label="돼지콘 선택"
+                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -169,8 +169,8 @@ export default function IceBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="브라보" color="primary" label="브라보 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="icecream" menu="브라보" color="primary" label="브라보 선택"
+                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -196,8 +196,8 @@ export default function IceBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="녹차마루" color="primary" label="녹차마루 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="icecream" menu="녹차마루" color="primary" label="녹차마루 선택"
+                                                      className={classes.button}/>
 
 
                                     </CardActions>

@@ -11,7 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import {Column, Row} from "simple-flexbox";
 import {useQuery} from "@apollo/react-hooks";
 import {MeQuery, TaskQuery} from "../../graphql/query";
-import CreateOrder from "./useMutation";
+import CreateButton from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
 
 const useStyles = makeStyles((theme) => ({
@@ -118,8 +118,8 @@ export default function EtcBoard() {
                                     </CardActionArea>
                                     <CardActions>
 
-                                        <CreateOrder hi="etc" menu="아이스티" color="primary" label="아이스티 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="etc" menu="아이스티" color="primary" label="아이스티 선택"
+                                                      className={classes.button}/>
 
                                     </CardActions>
                                 </Card>
@@ -145,8 +145,8 @@ export default function EtcBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="etc" menu="망고 요거트 스무디" color="primary" label="스무디 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="etc" menu="망고 요거트 스무디" color="primary" label="스무디 선택"
+                                                      className={classes.button}/>
 
                                     </CardActions>
                                 </Card>
@@ -173,8 +173,8 @@ export default function EtcBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="etc" menu="딸기 요거트 스무디" color="primary" label="스무디 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="etc" menu="딸기 요거트 스무디" color="primary" label="스무디 선택"
+                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -200,8 +200,8 @@ export default function EtcBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="etc" menu="플레인 요거트 스무디" color="primary" label="스무디 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="etc" menu="플레인 요거트 스무디" color="primary" label="스무디 선택"
+                                                      className={classes.button}/>
 
                                     </CardActions>
                                 </Card>

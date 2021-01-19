@@ -5,7 +5,7 @@ import LoadingComponent from 'components/loading';
 import PaymentboardComponent from "./paymentboard";
 import UserboardComponent from "./userboard";
 import basicLogin from "./firstpage/LoginPage";
-import Create from "./firstpage/Create";
+import Create from "./paymentboard/Create";
 import IceBoard from "./orderboard/IceBoard"
 import etcBoard from "./orderboard/etcBoard"
 

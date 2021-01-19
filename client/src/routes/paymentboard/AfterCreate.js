@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import CardComponent from 'components/cards/CardComponent';
-import {useMutation, useQuery} from "@apollo/react-hooks";
+import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
-import {TaskCreateMutation} from "../../graphql/mutation";
 import TaskDeleteButton from "../../components/button/TaskDeleteButton";
-import VacationBoard from "./VacationBoard";
-import Button from "@material-ui/core/Button";
+import VacationBoard from "../firstpage/VacationBoard";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: "30px"},
@@ -64,11 +62,7 @@ const useStyles = createUseStyles((theme) => ({
 function AfterCreate(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
-    const [title, setTitle] = useState();
     const [contents, setContents] = useState();
-
-
     const {data} = useQuery(TaskQuery);
 
     useEffect(() => {

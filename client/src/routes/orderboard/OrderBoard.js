@@ -12,7 +12,7 @@ import {Snackbar, Tab, Tabs, useTheme} from "@material-ui/core";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import {CreateMutation} from "../../graphql/mutation";
-import CreateOrder from "./useMutation";
+import CreateOrder from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
 import {useHistory} from "react-router-dom";
 

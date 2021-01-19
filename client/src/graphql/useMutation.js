@@ -1,10 +1,10 @@
 import {useMutation} from "@apollo/react-hooks";
 import {
-    BackUserMutation,
+    BackUserMutation, CreateMutation,
     CreateUserMutation,
     getBackGiveup, multipleDelete, OrderBackMutation,
     OrderGiveupMutation,
-    RemoveMutation,
+    RemoveMutation, TaskCreateMutation,
     TaskRemoveMutation, UpdateUserMutation
 } from "./mutation";
 import {MeQuery, Ordermen, OrderSearch, Receipt, TaskQuery, UserSearchQuery, VacationQuery} from "./query";
@@ -26,6 +26,35 @@ export function ChangeGiveup(userid) {
 
     return giveup
 }
+
+
+//주문 생성
+
+export function CreateOrder(hi){
+    const createmutation = CreateMutation;
+
+
+    const [create] = useMutation(createmutation, {
+            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}],
+            variables: {
+                id: localStorage.getItem('myData'),
+                menu: hi.menu,
+                hi: hi.hi
+            },
+            onCompleted: () => {},
+            onError: () => {
+                alert("메뉴를 선택해주세요.")
+            },
+        }
+    )
+
+    return create;
+
+
+}
+
 
 //주문 삭제
 export function DeleteOrder(userid) {
@@ -65,6 +94,28 @@ export function Giveup(userid) {
 }
 
 
+//주문 생성
+
+export function TaskCreate() {
+    const [create] = useMutation(TaskCreateMutation, {
+            refetchQueries: [{query: TaskQuery}],
+            variables: {
+                title: localStorage.getItem('task'),
+                userid: localStorage.getItem('myData')
+            },
+            onCompleted: (data) => {
+                alert("주문이 생성되었습니다!");
+            },
+
+            onError: () => {
+                alert("주문 내용을 작성해주세요.")
+            },
+        }
+    )
+    return create
+}
+
+
 //주문 재작성
 export function TaskDelete(post_id, user_id) {
 
@@ -83,7 +134,6 @@ export function TaskDelete(post_id, user_id) {
 //유저 생성
 
 export function UserAdd(username, content, setOpen) {
-    // const [open, setOpen] = React.useState(false);
 
     const [create] = useMutation(CreateUserMutation, {
             refetchQueries: [{query: UserSearchQuery}],
@@ -108,7 +158,7 @@ export function UserAdd(username, content, setOpen) {
 
 export function UserDelete(post_id) {
 
-    const [deleteMutation, {loading}] = useMutation(multipleDelete, {
+    const [deleteMutation] = useMutation(multipleDelete, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
                 {query: Receipt}],
@@ -143,7 +193,7 @@ export function MultipleUserDelete(checked) {
 }
 
 //유저 정보 업데이트
-export function UpdateUser(checked,content,setOpen){
+export function UpdateUser(checked, content, setOpen) {
     const [update] = useMutation(UpdateUserMutation, {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
             variables: {
@@ -164,7 +214,6 @@ export function UpdateUser(checked,content,setOpen){
     return update
 
 }
-
 
 
 //주문자 => 미주문자로
@@ -200,7 +249,7 @@ export function OrderBack(checked) {
 
 export default {
     ChangeGiveup, DeleteOrder, Giveup,
-    TaskDelete,
+    TaskDelete, TaskCreate,
     UserAdd, UserDelete, MultipleUserDelete,
     VacationBack, OrderBack
 };
