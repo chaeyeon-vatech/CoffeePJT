@@ -24,8 +24,8 @@ const resolvers = {
         orderMine: async (_, args) => {
             try {
                 const user = await users.findById(args._id)
-
                 const word = user.username
+
                 return await Order.find({ "username": { $eq: word } })
             } catch (err) {
                 console.log(err);
@@ -56,7 +56,6 @@ const resolvers = {
             }
 
         },
-
         // 모든 유저 검색
         allUsers: async (_, args) => {
             try {
@@ -72,7 +71,6 @@ const resolvers = {
             const number = [0, 0, 0, 0];
             const people = await users.find()
             for (let i = 0; i < people.length; i++) {
-
                 if (people[i].status === "주문완료") {
                     number[0]++;
                 }
@@ -148,24 +146,16 @@ const resolvers = {
         includedCoffee: async (_, args) => {
             const menu = args.menu;
             const hi = args.hi;
-            const result = Order.find({ "menu": { $eq: menu }, "hi": { $eq: hi } }).sort({ "username": 1 })
-
-            return result
+            return await Order.find({ "menu": { $eq: menu }, "hi": { $eq: hi } }).sort({ "username": 1 })
         },
         includedOrdermen: async (_, args) => {
-            const result = users.find({ "position": { $eq: "주문자" } }).sort({ "username": 1 })
-            return result
+            return await users.find({ "position": { $eq: "주문자" } }).sort({ "username": 1 })
         },
         includedVacation: async (_, args) => {
-
-            const result = users.find({ "position": { $eq: "휴가자" } }).sort({ "username": 1 })
-
-            return result
+            return await users.find({ "position": { $eq: "휴가자" } }).sort({ "username": 1 })
         },
         includedNothing: async (_, args) => {
-            const status = "대기중"
-            const position = "휴가자"
-            const result = users.find({ "status": { $eq: status }, "position": { $ne: position } }).sort({ "username": 1 })
+            const result = users.find({ "status": { $eq: "대기중" }, "position": { $ne: "휴가자" } }).sort({ "username": 1 })
             return result
         },
         receipt: async (_, args) => {
@@ -276,6 +266,7 @@ const resolvers = {
             return mention
         },
         receiptUsers: async (_, args) => {
+            let start = new Date();
             const receiptNum = args.receiptNum;
             const result = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
 
@@ -460,7 +451,9 @@ const resolvers = {
                 }
 
             }
-            console.log(result)
+            let end = new Date()
+            console.log(end-start, "밀리초")
+            
 
             return result
         }
