@@ -1,6 +1,6 @@
 import React from 'react';
 import {useMutation} from '@apollo/react-hooks';
-import {BackUserMutation, TaskRemoveMutation} from "../../graphql/mutation";
+import {BackUserMutation} from "../../graphql/mutation";
 import {Row} from "simple-flexbox";
 import {createUseStyles, useTheme} from "react-jss";
 import {Ordermen, VacationQuery} from "../../graphql/query";
@@ -18,22 +18,17 @@ const useStyles = createUseStyles((theme) => ({
 
 function TaskDeleteButton(user) {
 
-    // const user = localStorage.getItem('myData');
-
-    // const name = user.map((u) => u._id);
-
     const theme = useTheme();
     const classes = useStyles({theme});
     const mutation = BackUserMutation;
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: Ordermen,VacationQuery}],
+            refetchQueries: [{query: Ordermen, VacationQuery}],
             variables: {ids: user},
             onCompleted: (data) => {
                 alert("휴가자로 전환되었습니다!");
 
                 window.location.href = '/create';
-
 
 
             }

@@ -23,16 +23,9 @@ const useStyles = createUseStyles((theme) => ({
 function TaskDeleteButton(post_id, user_id) {
 
     const user = localStorage.getItem('myData');
-    const {push} = useHistory();
-
-
     const theme = useTheme();
     const classes = useStyles({theme});
     const mutation = TaskRemoveMutation;
-
-    function onClick(slug, parameters = {}) {
-        push(convertlinksToUrl(slug, parameters));
-    }
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
             refetchQueries: [{query: TaskQuery}],

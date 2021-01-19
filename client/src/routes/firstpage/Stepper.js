@@ -8,18 +8,15 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import VideoLabelIcon from '@material-ui/icons/VideoLabel';
-import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
+import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Second from "./Second";
 import Third from "./Third";
-import VacationBoard from "./VacationBoard";
 import {useMutation} from "@apollo/react-hooks";
 import {TaskCreateMutation} from "../../graphql/mutation";
 import {TaskQuery} from "../../graphql/query";
-import {CheckCircleIcon} from "@material-ui/data-grid";
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -165,17 +162,9 @@ function ColorlibStepIcon(props) {
 }
 
 ColorlibStepIcon.propTypes = {
-    /**
-     * Whether this step is active.
-     */
+
     active: PropTypes.bool,
-    /**
-     * Mark the step as completed. Is passed to child components.
-     */
     completed: PropTypes.bool,
-    /**
-     * The label displayed in the step icon.
-     */
     icon: PropTypes.node,
 };
 
@@ -259,22 +248,16 @@ export default function CustomizedSteppers() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
 
-    const [create, {loading}] = useMutation(TaskCreateMutation, {
+    const [create] = useMutation(TaskCreateMutation, {
             refetchQueries: [{query: TaskQuery}],
             variables: {
                 title: localStorage.getItem('task'),
                 userid: localStorage.getItem('myData')
             },
-            onCompleted: (data) => {
+            onCompleted: () => {
                 alert("주문이 생성되었습니다!");
                 localStorage.setItem('num', 0);
-                // window.location.href = '/create';
-
-
             },
 
             onError: () => {

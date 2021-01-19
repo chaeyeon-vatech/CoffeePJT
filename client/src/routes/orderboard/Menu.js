@@ -6,7 +6,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import OrderBoard from "./AfterOrder";
 import IceBoard from "./IceBoard";
 import EtcBoard from "./etcBoard";
 import OrderBoardComponent from "./OrderBoardComponent";
@@ -65,8 +64,6 @@ const useStyles = makeStyles((theme) => ({
         width: "1079px",
         height: "50px",
         marginBottom: "-24px"
-
-        // marginTop:"-30px"
     }
 }));
 
@@ -96,8 +93,6 @@ export default function MenuBoard() {
 
         }
     }, [data]);
-
-    console.log(name, position, status);
 
 
     return status === "주문완료" || status === "주문포기" ? (

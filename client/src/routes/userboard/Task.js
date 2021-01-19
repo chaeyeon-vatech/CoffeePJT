@@ -72,7 +72,7 @@ function Task(props) {
     }, [data]);
 
 
-    const [create, {loading}] = useMutation(TaskCreateMutation, {
+    const [create] = useMutation(TaskCreateMutation, {
             refetchQueries: [{query: TaskQuery}],
             variables: {
                 title: title
@@ -83,15 +83,6 @@ function Task(props) {
             },
         }
     )
-
-    function onCheckboxClick(index) {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems[index].checked = newItems[index].checked ? false : true;
-            return newItems;
-        });
-    }
-
 
     function renderAddButton() {
         return (

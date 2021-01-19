@@ -128,8 +128,6 @@ const AuthenticationForm = () => {
             },
             onCompleted: (data) => {
                 alert("주문이 생성되었습니다!");
-
-
             },
 
             onError: () => {

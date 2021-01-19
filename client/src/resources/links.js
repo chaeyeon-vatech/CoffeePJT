@@ -1,14 +1,14 @@
 export default {
     // private
     orderboard: '/order',
-    after:'/after',
+    after: '/after',
     tickets: '/pay',
     settings: '/settings',
-    notask:'/notask',
+    notask: '/notask',
     // firstpage
     login: '/',
-    ologin:'/login',
+    ologin: '/login',
     signup: '/signup',
-    create:'/create',
-    reset:'/reset'
+    create: '/create',
+    reset: '/reset'
 };

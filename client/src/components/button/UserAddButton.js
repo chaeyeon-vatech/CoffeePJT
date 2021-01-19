@@ -6,21 +6,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {CreateUserMutation, UpdateUserMutation} from "../../graphql/mutation";
+import {CreateUserMutation} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
-import {MeQuery, UserSearchQuery} from "../../graphql/query";
+import {UserSearchQuery} from "../../graphql/query";
 
 export default function UserAddButton(username) {
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState('');
-    const [click, setClick] = useState(false);
 
-
-    const mutation = UpdateUserMutation;
-
-
-    // $userid:ID! $orderid:ID! $menu:String! $hi:String!
-    const [create, {loading}] = useMutation(CreateUserMutation, {
+    const [create] = useMutation(CreateUserMutation, {
             refetchQueries: [{query: UserSearchQuery}],
             variables: {
                 username: content
@@ -60,7 +54,6 @@ export default function UserAddButton(username) {
                         autoFocus
                         margin="dense"
                         id="name"
-                        // label="추가하실 이름을 입력해주세요."
                         type="email"
                         onChange={e => setContent(e.target.value)}
                         fullWidth

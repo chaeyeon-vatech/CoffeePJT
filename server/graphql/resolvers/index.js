@@ -279,7 +279,7 @@ const resolvers = {
             const receiptNum = args.receiptNum;
             const result = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
 
-            const orders0 = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "hot" } })
+            const orders0 = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "hot" } }).sort({ "username": 1 })
 
             for (let i = 0; i < orders0.length; i++) {
                 if (i == orders0.length - 1) {
@@ -292,8 +292,7 @@ const resolvers = {
             }
 
 
-
-            const orders1 = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "ice" } })
+            const orders1 = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "ice" } }).sort({ "username": 1 })
             for (let i = 0; i < orders1.length; i++) {
                 if (i == orders1.length - 1) {
                     result[1] += orders1[i].username
@@ -305,7 +304,7 @@ const resolvers = {
             }
 
 
-            const orders2 = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "hot" } })
+            const orders2 = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "hot" } }).sort({ "username": 1 })
             for (let i = 0; i < orders2.length; i++) {
                 if (i == orders2.length - 1) {
                     result[2] += orders2[i].username
@@ -317,7 +316,7 @@ const resolvers = {
             }
 
 
-            const orders3 = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "ice" } })
+            const orders3 = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "ice" } }).sort({ "username": 1 })
             for (let i = 0; i < orders3.length; i++) {
                 if (i == orders3.length - 1) {
                     result[3] += orders3[i].username
@@ -329,7 +328,7 @@ const resolvers = {
             }
 
 
-            const orders4 = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "hot" } })
+            const orders4 = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "hot" } }).sort({ "username": 1 })
             for (let i = 0; i < orders4.length; i++) {
                 if (i == orders4.length - 1) {
                     result[4] += orders4[i].username
@@ -341,7 +340,7 @@ const resolvers = {
             }
 
 
-            const orders5 = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "ice" } })
+            const orders5 = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "ice" } }).sort({ "username": 1 })
             for (let i = 0; i < orders5.length; i++) {
                 if (i == orders5.length - 1) {
                     result[5] += orders5[i].username
@@ -352,7 +351,7 @@ const resolvers = {
 
             }
 
-            const orders6 = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "hot" } })
+            const orders6 = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "hot" } }).sort({ "username": 1 })
             for (let i = 0; i < orders6.length; i++) {
                 if (i == orders6.length - 1) {
                     result[6] += orders6[i].username
@@ -363,7 +362,7 @@ const resolvers = {
 
             }
 
-            const orders7 = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "ice" } })
+            const orders7 = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "ice" } }).sort({ "username": 1 })
             for (let i = 0; i < orders7.length; i++) {
                 if (i == orders7.length - 1) {
                     result[7] += orders7[i].username
@@ -374,7 +373,7 @@ const resolvers = {
 
             }
 
-            const orders8 = await Order.find({ "menu": { $eq: "아시나요" }, "hi": { $eq: "icecream" } })
+            const orders8 = await Order.find({ "menu": { $eq: "아시나요" }, "hi": { $eq: "icecream" } }).sort({ "username": 1 })
             for (let i = 0; i < orders8.length; i++) {
                 if (i == orders8.length - 1) {
                     result[8] += orders8[i].username
@@ -385,7 +384,7 @@ const resolvers = {
 
             }
 
-            const orders9 = await Order.find({ "menu": { $eq: "돼지콘" }, "hi": { $eq: "icecream" } })
+            const orders9 = await Order.find({ "menu": { $eq: "돼지콘" }, "hi": { $eq: "icecream" } }).sort({ "username": 1 })
             for (let i = 0; i < orders9.length; i++) {
                 if (i == orders9.length - 1) {
                     result[9] += orders9[i].username
@@ -396,7 +395,7 @@ const resolvers = {
 
             }
 
-            const orders10 = await Order.find({ "menu": { $eq: "브라보" }, "hi": { $eq: "icecream" } })
+            const orders10 = await Order.find({ "menu": { $eq: "브라보" }, "hi": { $eq: "icecream" } }).sort({ "username": 1 })
             for (let i = 0; i < orders10.length; i++) {
                 if (i == orders10.length - 1) {
                     result[10] += orders10[i].username
@@ -407,7 +406,7 @@ const resolvers = {
 
             }
 
-            const orders11 = await Order.find({ "menu": { $eq: "녹차마루" }, "hi": { $eq: "icecream" } })
+            const orders11 = await Order.find({ "menu": { $eq: "녹차마루" }, "hi": { $eq: "icecream" } }).sort({ "username": 1 })
             for (let i = 0; i < orders11.length; i++) {
                 if (i == orders11.length - 1) {
                     result[11] += orders11[i].username
@@ -418,7 +417,7 @@ const resolvers = {
 
             }
 
-            const orders12 = await Order.find({ "menu": { $eq: "아이스티" }, "hi": { $eq: "etc" } })
+            const orders12 = await Order.find({ "menu": { $eq: "아이스티" }, "hi": { $eq: "etc" } }).sort({ "username": 1 })
             for (let i = 0; i < orders12.length; i++) {
                 if (i == orders12.length - 1) {
                     result[12] += orders12[i].username
@@ -429,7 +428,7 @@ const resolvers = {
 
             }
 
-            const orders13 = await Order.find({ "menu": { $eq: "망고 요거트 스무디" }, "hi": { $eq: "etc" } })
+            const orders13 = await Order.find({ "menu": { $eq: "망고 요거트 스무디" }, "hi": { $eq: "etc" } }).sort({ "username": 1 })
             for (let i = 0; i < orders13.length; i++) {
                 if (i == orders13.length - 1) {
                     result[13] += orders13[i].username
@@ -440,7 +439,7 @@ const resolvers = {
 
             }
 
-            const orders14 = await Order.find({ "menu": { $eq: "딸기 요거트 스무디" }, "hi": { $eq: "etc" } })
+            const orders14 = await Order.find({ "menu": { $eq: "딸기 요거트 스무디" }, "hi": { $eq: "etc" } }).sort({ "username": 1 })
             for (let i = 0; i < orders14.length; i++) {
                 if (i == orders14.length - 1) {
                     result[14] += orders14[i].username
@@ -451,7 +450,7 @@ const resolvers = {
 
             }
 
-            const orders15 = await Order.find({ "menu": { $eq: "플레인 요거트 스무디" }, "hi": { $eq: "etc" } })
+            const orders15 = await Order.find({ "menu": { $eq: "플레인 요거트 스무디" }, "hi": { $eq: "etc" } }).sort({ "username": 1 })
             for (let i = 0; i < orders15.length; i++) {
                 if (i == orders15.length - 1) {
                     result[15] += orders15[i].username
@@ -461,7 +460,7 @@ const resolvers = {
                 }
 
             }
-
+            console.log(result)
 
             return result
         }
@@ -517,11 +516,9 @@ const resolvers = {
 
             await Order.deleteMany({});
             await Task.deleteMany({});
-            const renualUser = await users.find();
+            await users.updateMany({$set:{"status":"대기중", "position":"주문자"}});
 
-            for (let index = 0; index < renualUser.length; index++) {
-                await users.findByIdAndUpdate(renualUser[index].id, { status: "대기중", position: "주문자" })
-            }
+            
 
             return "완료 처리 되었습니다. 맛있게 드세요!"
         },

@@ -6,12 +6,11 @@ import {
     AllUserQuery,
     CostQuery,
     CountQuery,
-    MeQuery, NotQuery, OrderSearch,
-    SearchQuery,
-    UserSearchQuery
+    MeQuery, NotQuery,
+    SearchQuery
 } from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
-import {OrderConfirmMutation, OrderGiveupMutation} from "../../graphql/mutation";
+import {OrderConfirmMutation} from "../../graphql/mutation";
 import {TextField, Tooltip} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
 import Button from "@material-ui/core/Button";
@@ -64,8 +63,8 @@ const useStyles = createUseStyles((theme) => ({
     stats: {
         borderTop: `1px solid ${theme.color.lightGrayishBlue2}`,
         width: '100%',
-        marginTop:10,
-        marginBottom:20
+        marginTop: 10,
+        marginBottom: 20
     },
     statTitle: {
         fontWeight: '600',
@@ -106,8 +105,6 @@ function TodayTrendsComponent() {
         }
     }, [data]);
 
-    const [isShown, setIsShown] = useState(false);
-
     const [order, setOrder] = useState('');
     const [count, setCount] = useState('');
     const {data: na} = useQuery(CountQuery);
@@ -116,8 +113,6 @@ function TodayTrendsComponent() {
             setOrder(na.howmany);
         }
     }, [na]);
-
-    console.log(order[3])
 
     const {data: user} = useQuery(AllUserQuery)
 
@@ -144,8 +139,6 @@ function TodayTrendsComponent() {
 
     const {data: people} = useQuery(NotQuery);
 
-    console.log(people);
-
     useEffect(() => {
         if (people) {
             setPa(people.includedNothing)
@@ -160,7 +153,7 @@ function TodayTrendsComponent() {
             onCompleted: (data) => {
                 alert("주문이 초기화되었습니다.")
                 localStorage.clear();
-                window.location.href = '/';
+                window.location.href = '/login';
 
 
             },
@@ -171,14 +164,6 @@ function TodayTrendsComponent() {
         }
     )
 
-    function renderLegend(color, title) {
-        return (
-            <Row vertical='center'>
-                <div style={{width: 16, border: '2px solid', borderColor: color}}></div>
-                <span className={classes.legendTitle}>{title}</span>
-            </Row>
-        );
-    }
 
     function renderStat(title, value) {
         return (

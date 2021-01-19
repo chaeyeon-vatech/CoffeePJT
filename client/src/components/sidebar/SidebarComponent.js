@@ -23,7 +23,7 @@ const handleClick = () => {
     if (window.confirm('로그아웃하시겠습니까?')) {
 
         localStorage.clear()
-        window.location.href = '/login'
+        window.location.href = '/'
     }
 }
 
@@ -57,6 +57,7 @@ function SidebarComponent() {
     function onClick(slug, parameters = {}) {
         push(convertlinksToUrl(slug, parameters));
     }
+
 
     return (
 

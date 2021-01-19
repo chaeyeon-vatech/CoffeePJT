@@ -8,11 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
-import {Tab, Tabs} from "@material-ui/core";
-import {TabPanel} from "@material-ui/lab";
 import {Column, Row} from "simple-flexbox";
-import OrderBoard from "./OrderBoard";
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
 import CreateOrder from "./useMutation";
@@ -26,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
-    background:{
+    background: {
         backgroundColor: 'rgba(246,244,244,0.9)',
-        padding:"45px 45px 45px 45px"
+        padding: "45px 45px 45px 45px"
     },
     card: {maxWidth: 345},
     color: {

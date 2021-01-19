@@ -7,7 +7,6 @@ import {Autocomplete} from "@material-ui/lab";
 import {TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import {browserHistory} from "react-router";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -136,7 +135,6 @@ const AuthenticationForm = () => {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    // const primary = "rgb(42,47,34,0.9)";
 
     const [search, setSearch] = useState();
     const [result, setResult] = useState([]);

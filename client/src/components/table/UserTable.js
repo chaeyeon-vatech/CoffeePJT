@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
+import {MeQuery, OrderSearch} from "../../graphql/query";
 import DeleteButton from "../button/DeleteButton";
-import Button from "@material-ui/core/Button";
-import GiveupButton from "../button/GiveupButton";
 import ChangeGiveupButton from "../button/ChangeGiveup";
-import {Checkbox, FormControlLabel} from "@material-ui/core";
-
 
 function BoardTable() {
 
@@ -41,8 +37,6 @@ function BoardTable() {
 
         }
     }, [me]);
-
-
 
 
     return status === "주문포기" ? (

@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
-import MiniCardComponent from 'components/cards/MiniCardComponent';
 import OrderBoard from './OrderBoard';
-import Task from './Task';
 import {useQuery} from "@apollo/react-hooks";
-import {AllUserQuery, CountQuery, TaskQuery} from "../../graphql/query";
-import AfterOrder from "./AfterOrder";
+import {TaskQuery} from "../../graphql/query";
 
 const useStyles = createUseStyles((theme) => ({
     cardsContainer: {
@@ -58,7 +55,6 @@ const useStyles = createUseStyles((theme) => ({
         borderRadius: 5,
     },
     itemTitle: {
-        // ...theme.typography.itemTitle,
         color: theme.color.veryDarkGrayishBlue,
         width: "50%"
     }
@@ -90,7 +86,7 @@ function OrderBoardComponent() {
                 <table className={classes.border}>
 
                     {contents && contents.map((content) => (
-                        <td><span className={classes.itemTitle}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
+                        <td><span className={classes.itemTitle}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 삽니다! 👏</span>
                         </td>))}
                 </table>
 

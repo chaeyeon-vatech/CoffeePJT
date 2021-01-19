@@ -25,14 +25,6 @@ export const RemoveMutation = gql`
     }
 `
 
-
-//로그아웃
-export const LogoutMutation = gql`
-    mutation logout{
-        logout
-    }
-`
-
 //Task Create
 export const TaskCreateMutation = gql`
     mutation($userid:ID!, $title:String!){
@@ -108,19 +100,6 @@ export const CreateUserMutation = gql`
 
 
 `
-
-
-export const UserDeleteMutation = gql`
-    mutation deleteUser($id: ID!){
-        deleteUser(_id:$id){
-            username
-            position
-        }
-    }
-
-
-`
-
 export const OrderBackMutation = gql`
     mutation getbackUser($ids:[ID])
 

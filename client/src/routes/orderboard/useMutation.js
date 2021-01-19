@@ -1,12 +1,12 @@
 import {CreateMutation} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
-import {MeQuery, Ordermine, OrderSearch} from "../../graphql/query";
-import React, {useState} from "react";
-import {Tab, Tabs, TextField, useTheme} from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
+import {MeQuery, OrderSearch} from "../../graphql/query";
+import React from "react";
+import {useTheme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import {Alert} from "@material-ui/lab";
+import CheckIcon from "@material-ui/icons/Check";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,20 +26,19 @@ const useStyles = makeStyles((theme) => ({
 export function CreateOrder(hi) {
 
     const createmutation = CreateMutation;
-    const theme = useTheme();
-    const classes = useStyles();
 
-    const [create, error] = useMutation(createmutation, {
-            refetchQueries: [{query: OrderSearch, MeQuery}],
+    const [create] = useMutation(createmutation, {
+            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,
                 hi: hi.hi
             },
             onCompleted: (data) => {
-                alert("주문이 완료되었습니다!")
-                window.location.href = '/order';
-
+                window.alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
+                    This is a success alert — check it out!
+                </Alert>)
 
             },
             onError: () => {

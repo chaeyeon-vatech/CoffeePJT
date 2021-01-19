@@ -13,24 +13,23 @@ import {MeQuery, UserSearchQuery} from "../../graphql/query";
 export default function FormDialog(username) {
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState('');
-    const [click, setClick] = useState(false);
 
 
     const mutation = UpdateUserMutation;
 
 
-    // $userid:ID! $orderid:ID! $menu:String! $hi:String!
-    const [update, {loading}] = useMutation(mutation, {
+    const [update] = useMutation(mutation, {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
             variables: {
                 id: username.id,
                 username: content
             },
             onCompleted: (data) => {
-
                 alert("정보 수정이 완료되었습니다.")
                 setOpen(false);
-                window.location.href = '/settings';
+            },
+            onError: () => {
+                alert("다시 시도해주세요!")
             }
         }
     )
@@ -67,9 +66,9 @@ export default function FormDialog(username) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                       취소
+                        취소
                     </Button>
-                    <Button  onClick={update} color="primary">
+                    <Button onClick={update} color="primary">
                         변경
                     </Button>
                 </DialogActions>
