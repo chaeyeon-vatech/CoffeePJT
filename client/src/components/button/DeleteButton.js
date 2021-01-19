@@ -2,7 +2,7 @@ import React from 'react';
 import {useMutation} from '@apollo/react-hooks';
 import TextField from "@material-ui/core/TextField";
 import {OrderGiveupMutation, RemoveMutation} from "../../graphql/mutation";
-import {MeQuery, UserSearchQuery} from "../../graphql/query";
+import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
@@ -32,13 +32,14 @@ function DeleteButton(userid) {
     }
 
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
+            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
             variables: {
                 userid: userid.userid,
                 orderid: userid.orderid
             },
-            onCompleted: () => {
-                window.location.href = "/order";
+            onError: () => {
+                alert("다시 시도해주세요!")
             }
         }
     )

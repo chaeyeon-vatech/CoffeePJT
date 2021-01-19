@@ -9,16 +9,14 @@ function PublicRoutes() {
 
     return localStorage.getItem('name') ? (
         <Switch>
-            <Route path={LINKS.create} component={CustomizedSteppers} render={() => (
-                <Redirect to={LINKS.create} component={CustomizedSteppers}/>
-            )}/>
+            <Route path={LINKS.create} component={CustomizedSteppers}/>
+            <Redirect to={LINKS.create} component={CustomizedSteppers}/>
 
         </Switch>
     ) : (
         <Switch>
-            <Route path={LINKS.ologin} component={First} render={() => (
-                <Redirect to={LINKS.ologin} component={LINKS.ologin}/>
-            )}/>
+            <Route path={LINKS.ologin} component={First}/>
+            <Redirect to={LINKS.ologin} component={LINKS.ologin}/>
 
         </Switch>
 

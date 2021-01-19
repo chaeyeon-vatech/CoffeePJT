@@ -67,12 +67,11 @@ export default function TransferList() {
     }, [order]);
 
 
-    const [vacationback, {loading}] = useMutation(BackUserMutation, {
-            refetchQueries: [{query: Ordermen, VacationQuery}],
+    const [vacationback] = useMutation(BackUserMutation, {
+            refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
                 alert("미주문자로 전환되었습니다!");
-                window.location.reload();
 
             }
         }
@@ -80,12 +79,11 @@ export default function TransferList() {
 
 
     const [orderback] = useMutation(OrderBackMutation, {
-            refetchQueries: [{query: Ordermen, VacationQuery}],
+            refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
-
+                // window.location.href = '/reset';
                 alert("주문자로 전환되었습니다!");
-                window.location.href = '/create';
 
             }
         }

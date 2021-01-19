@@ -12,15 +12,6 @@ import {TaskQuery} from "../graphql/query";
 function Routes() {
     const {pathname} = useLocation();
     const [width, height] = useWindowSize();
-    // const body = document.querySelector('body');
-    // body.addEventListener('click', this.handleBodyClick);
-
-
-    // function propagation(e) {
-    //     // e.preventDefault(pathname);
-    //     e.stopPropagation();
-    //     e.nativeEvent.stopImmediatePropagation();
-    // }
 
     const [task, setTask] = useState();
 

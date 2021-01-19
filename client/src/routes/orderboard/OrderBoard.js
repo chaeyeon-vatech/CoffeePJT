@@ -8,15 +8,18 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
-import {useTheme} from "@material-ui/core";
+import {Tab, Tabs, useTheme} from "@material-ui/core";
 import {useQuery, useMutation} from "@apollo/react-hooks";
-import {MeQuery, OrderSearch} from "../../graphql/query";
+import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import {CreateMutation} from "../../graphql/mutation";
 import CreateOrder from "./useMutation";
 import GiveupButton from "../../components/button/GiveupButton";
 import {convertlinksToUrl} from "../../resources/utilities";
 import SLUGS from 'resources/links';
 import {useHistory} from "react-router-dom";
+import {Alert} from "@material-ui/lab";
+import CheckIcon from '@material-ui/icons/Check';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,6 +48,8 @@ export default function CorderBoard() {
     const [position, setPosition] = useState();
     const [status, setStatus] = useState();
     const [username, setName] = useState();
+    const [check, setCheck] = useState();
+
 
     const {data} = useQuery(MeQuery, {
         variables: {
@@ -67,15 +72,16 @@ export default function CorderBoard() {
 
 
     const [create, error] = useMutation(createmutation, {
-            refetchQueries: [{query: OrderSearch, MeQuery}],
+            refetchQueries: [{query: OrderSearch, MeQuery, UserSearchQuery}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: menu,
                 hi: hi
             },
             onCompleted: (data) => {
-                alert("주문이 완료되었습니다!")
-                onClick(SLUGS.orderboard);
+                alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
+                    This is a success alert — check it out!
+                </Alert>)
 
 
             },
@@ -84,15 +90,6 @@ export default function CorderBoard() {
             },
         }
     )
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-
-    };
-
-    function onClick(slug, parameters = {}) {
-        push(convertlinksToUrl(slug, parameters));
-    }
 
     return (
 
@@ -111,7 +108,7 @@ export default function CorderBoard() {
                                     alt="Contemplative Reptile"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1593231269103-6667d6905882?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80"
-                                    title="Contemplative Reptile"
+                                    title="아메리카노"
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
@@ -136,7 +133,7 @@ export default function CorderBoard() {
                                     alt="Contemplative Reptile"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1556484245-2c765becb8eb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
-                                    title="Contemplative Reptile"
+                                    title="카페라떼"
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
@@ -160,10 +157,10 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
-                                    alt="Contemplative Reptile"
+                                    alt="바닐라라떼"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80"
-                                    title="Contemplative Reptile"
+                                    title="바닐라라떼"
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
@@ -187,7 +184,7 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
-                                    alt="Contemplative Reptile"
+                                    alt="카페 모카"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
                                     title="Contemplative Reptile"
@@ -219,4 +216,3 @@ export default function CorderBoard() {
 
     );
 }
-
