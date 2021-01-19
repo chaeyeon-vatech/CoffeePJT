@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {Ordermen, VacationQuery} from "../../graphql/query";
-import UserBackButton from "../button/UserBackButton";
 import {BackUserMutation, OrderBackMutation} from "../../graphql/mutation";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +47,6 @@ function union(a, b) {
 export default function TransferList() {
     const classes = useStyles();
     const [checked, setChecked] = React.useState([]);
-    const [id, setId] = React.useState([]);
     const [left, setLeft] = React.useState([1, 2, 3]);
     const [right, setRight] = React.useState([4, 5, 6, 7]);
 
@@ -69,12 +67,11 @@ export default function TransferList() {
     }, [order]);
 
 
-    const [vacationback, {loading}] = useMutation(BackUserMutation, {
-            refetchQueries: [{query: Ordermen, VacationQuery}],
+    const [vacationback] = useMutation(BackUserMutation, {
+            refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
                 alert("미주문자로 전환되었습니다!");
-                window.location.reload();
 
             }
         }
@@ -82,12 +79,11 @@ export default function TransferList() {
 
 
     const [orderback] = useMutation(OrderBackMutation, {
-            refetchQueries: [{query: Ordermen, VacationQuery}],
+            refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
-
+                // window.location.href = '/reset';
                 alert("주문자로 전환되었습니다!");
-                window.location.href = '/create';
 
             }
         }

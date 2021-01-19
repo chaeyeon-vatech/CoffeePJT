@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import {Ordermen, SearchQuery, TaskQuery, VacationQuery} from "../../graphql/query";
+import {TaskQuery, VacationQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
-import {MeMutation, TaskCreateMutation} from "../../graphql/mutation";
+import {TaskCreateMutation} from "../../graphql/mutation";
 import {Row} from "simple-flexbox";
 import Button from "@material-ui/core/Button";
 
@@ -132,7 +132,6 @@ const AuthenticationForm = () => {
     const classes = useStyles({theme});
     const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
     const [title, setTitle] = useState();
-    const [left, setLeft] = useState();
     const [right, setRight] = useState();
     const [contents, setContents] = useState();
     const {data: user} = useQuery(VacationQuery)
@@ -197,7 +196,7 @@ const AuthenticationForm = () => {
     const handleClick = () => {
 
         localStorage.clear()
-        window.location.href = '/'
+        window.location.href = '/login'
 
     }
 

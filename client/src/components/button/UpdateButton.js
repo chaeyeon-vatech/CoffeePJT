@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {useMutation, useQuery} from '@apollo/react-hooks';
-import TextField from "@material-ui/core/TextField";
+import React, {useState} from 'react';
+import {useMutation} from '@apollo/react-hooks';
 import {UpdateUserMutation} from "../../graphql/mutation";
-import {MeQuery, UserSearchQuery} from "../../graphql/query";
+import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 
@@ -37,19 +36,15 @@ const useStyles = makeStyles((theme) => ({
 function UpdateButton(username) {
 
     const classes = useStyles();
-
-    const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [click, setClick] = useState(false);
 
 
     const mutation = UpdateUserMutation;
 
-
-    // $userid:ID! $orderid:ID! $menu:String! $hi:String!
     const [update, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
-            variables: {
+        refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+            , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],            variables: {
                 id: username.id,
                 username: content
             },
@@ -57,7 +52,6 @@ function UpdateButton(username) {
 
                 alert("정보 수정이 완료되었습니다.")
                 setClick(false)
-                window.location.href = '/settings';
             }
         }
     )

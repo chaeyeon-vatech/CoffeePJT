@@ -11,11 +11,6 @@ import {
     TaskQuery,
     UserSearchQuery
 } from "../../graphql/query";
-import PaymentTable from "../../components/table/PaymentTable";
-import {OrderConfirmMutation, OrderGiveupMutation} from "../../graphql/mutation";
-import {TextField} from "@material-ui/core";
-import VacationTable from "../../components/table/VacationTable";
-import SearchTable from "../../components/table/SearchTable";
 import TransferList from "../../components/table/TransferTable";
 
 const useStyles = createUseStyles((theme) => ({

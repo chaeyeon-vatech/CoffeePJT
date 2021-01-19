@@ -6,5 +6,5 @@ import registerServiceWorker from './registerServiceWorker';
 import ApolloProvider from './ApolloProvider';
 
 
-ReactDOM.render(ApolloProvider, document.getElementById('root'));
+ReactDOM.render(ApolloProvider, document.getElementById('root'))
 registerServiceWorker();

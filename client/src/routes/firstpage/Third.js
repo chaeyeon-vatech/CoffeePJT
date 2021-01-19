@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import {SearchQuery, TaskQuery} from "../../graphql/query";
+import {TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import {TaskCreateMutation} from "../../graphql/mutation";
@@ -15,7 +15,6 @@ const useStyles = createUseStyles((theme) => ({
             fontWeight: "lighter",
             textAlign: "center",
             width: "100%",
-            // margin: "auto",
             marginLeft: "230px",
             maxWidth: "525px",
             minHeight: "670px",
@@ -30,21 +29,20 @@ const useStyles = createUseStyles((theme) => ({
             padding: "90px 30px 50px 10px",
             backgroundColor: "rgba(140,83,83,0.9)"
 
-
         },
 
         h3: {
             color: "white",
             marginBottom: "30px",
             textAlign: "center",
-            fontSize:"30px"
+            fontSize: "30px"
         },
         h5: {
             color: "white",
             fontWeight: "lighter",
             marginBottom: "30px",
             textAlign: "center",
-            fontSize:"18px"
+            fontSize: "18px"
         },
         loginform: {
             minHeight: "345px",
@@ -116,8 +114,6 @@ const AuthenticationForm = () => {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
-    const [title, setTitle] = useState();
     const [contents, setContents] = useState();
 
 
@@ -128,57 +124,6 @@ const AuthenticationForm = () => {
             setContents(data.tasks);
         }
     })
-
-
-    const [create, {loading}] = useMutation(TaskCreateMutation, {
-            refetchQueries: [{query: TaskQuery}],
-            variables: {
-                title: title,
-                userid: localStorage.getItem('myData')
-            },
-            onCompleted: (data) => {
-                alert("주문이 생성되었습니다!");
-                window.location.href = '/create';
-
-
-            },
-
-            onError: () => {
-                alert("주문 내용을 작성해주세요.")
-            },
-        }
-    )
-
-    function onCheckboxClick(index) {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems[index].checked = newItems[index].checked ? false : true;
-            return newItems;
-        });
-    }
-
-
-    function renderAddButton() {
-        return (
-            <Row
-                horizontal='center'
-                vertical='center'
-                className={[classes.addButton].join(' ')}
-                onClick={create}
-            >
-                +
-            </Row>
-        );
-    }
-
-
-
-    const handleClick = () => {
-
-        localStorage.clear()
-        window.location.href = '/'
-
-    }
 
 
     return (

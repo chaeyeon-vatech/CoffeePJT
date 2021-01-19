@@ -4,9 +4,8 @@ import {Column, Row} from 'simple-flexbox';
 import {SidebarComponent, SidebarContext} from 'components/sidebar';
 import HeaderComponent from 'components/header/HeaderComponent';
 import PrivateRoutes from './PrivateRoutes';
-import {Redirect, Route, Switch, useLocation} from "react-router-dom";
-import LINKS from "../resources/links";
-import basicLogin from "./firstpage/LoginPage";
+import {useLocation} from "react-router-dom";
+
 
 const useStyles = createUseStyles({
     container: {
@@ -31,13 +30,12 @@ function PrivateSection() {
     const classes = useStyles({theme});
     const {pathname} = useLocation();
 
-    // return task ? <PrivateSection/> : <PublicRoutes/>;
 
     return (
         <>
             <SidebarContext>
                 <Row className={classes.container}>
-                    {pathname&&pathname === '/login'? null : (
+                    {pathname && pathname === '/' ? null : (
                         <SidebarComponent/>
                     )}
 

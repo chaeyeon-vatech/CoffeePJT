@@ -5,8 +5,7 @@ import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import {Autocomplete} from "@material-ui/lab";
 import Typography from '@material-ui/core/Typography';
-
-import {Input, TextField} from "@material-ui/core";
+import {TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 
@@ -165,7 +164,7 @@ const handleClick = (name, id) => {
 
     localStorage.setItem('myData', id)
     localStorage.setItem('name', name)
-    window.location.href = '/'
+    window.location.href = '/create'
     // }
 }
 
@@ -173,7 +172,7 @@ const handleClick = (name, id) => {
 const handleLogout = () => {
 
     localStorage.clear()
-    window.location.href = '/'
+    window.location.href = '/create'
 
 }
 

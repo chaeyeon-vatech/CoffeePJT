@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Column, Row} from 'simple-flexbox';
+import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import PaymentBoard from './PaymentBoard';
 import {useQuery} from "@apollo/react-hooks";
@@ -28,9 +28,6 @@ const useStyles = createUseStyles((theme) => ({
     todayTrends: {
         marginTop: 30
     },
-    // lastRow: {
-    //     marginTop: 30
-    // },
     unresolvedTickets: {
         marginRight: 30,
         '@media (max-width: 1024px)': {
