@@ -37,20 +37,12 @@ function DeleteButton(userid) {
                 userid: userid.userid,
                 orderid: userid.orderid
             },
-            onCompleted: (data) => {
+            onCompleted: () => {
                 window.location.href = "/order";
             }
         }
     )
 
-
-    const [giveup] = useMutation(OrderGiveupMutation, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
-            variables: {
-                userid: userid.userid
-            }
-        }
-    )
 
     return (
         <>

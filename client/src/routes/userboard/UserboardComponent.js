@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {Column, Row} from 'simple-flexbox';
+import React from 'react';
+import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import UserBoard from './UserBoard';
-import UserEditTable from "../../components/table/UserEditTable";
 
 const useStyles = createUseStyles({
     cardsContainer: {
@@ -10,7 +9,6 @@ const useStyles = createUseStyles({
         marginTop: -50
     },
     cardRow: {
-        // marginTop: 30,
         '@media (max-width: 768px)': {
             marginTop: 0
         }
@@ -26,9 +24,7 @@ const useStyles = createUseStyles({
     todayTrends: {
         marginTop: 0
     },
-    // lastRow: {
-    //     marginTop: 30
-    // },
+
     unresolvedTickets: {
         marginRight: 30,
         '@media (max-width: 1024px)': {

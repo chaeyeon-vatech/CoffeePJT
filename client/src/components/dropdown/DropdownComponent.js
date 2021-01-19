@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {arrayOf, element, func, number, oneOfType, shape, string} from 'prop-types';
 import {Column} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import {IconArrowUp} from 'components/icons';
 
 const useStyles = createUseStyles((theme) => ({
     arrowContainer: {
@@ -82,15 +81,8 @@ function DropdownComponent({label, options, position}) {
                             key={`option-${index}`}
                             className={classes.dropdownItem}
                             // onClick={() => onItemClick(option.onClick)}
-                        >
-                            {option.label}
-                            {index === 0 && (
-                                <div className={classes.arrowContainer}>
-                                    <IconArrowUp/>
-                                </div>
-                            )}
-                        </button>
-                    ))}
+                        />
+                        ))}
                 </Column>
             )}
         </Column>

@@ -9,8 +9,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import {MeQuery, Ordermen, UserSearchQuery, VacationQuery} from "../../graphql/query";
-import {BackUserMutation, multipleDelete, OrderBackMutation, UpdateUserMutation} from "../../graphql/mutation";
+import {AllUserQuery, MeQuery, Ordermen, UserSearchQuery, VacationQuery} from "../../graphql/query";
+import {multipleDelete, UpdateUserMutation} from "../../graphql/mutation";
 import FormDialog from "../../routes/userboard/Dialog";
 import UserDeleteButton from "../button/UserDeleteButton";
 import Dialog from "@material-ui/core/Dialog";
@@ -20,8 +20,6 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import UserAddButton from "../button/UserAddButton";
-// import UserAddButton from "../button/UserAddButton";
-// import Divider from '@material-ui/core/Divider';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,18 +35,12 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         overflow: 'auto',
     },
-    button: {
-        // margin: theme.spacing(0.5, 0),
-
-    },
     border: {
         border: "none"
 
     },
     addbutton: {
         justify: "flex-end",
-        // display: "flex",
-        // textAlign:"right",
         float: "right"
     }
 }));
@@ -68,29 +60,29 @@ function union(a, b) {
 export default function UserEditTable() {
     const classes = useStyles();
     const [checked, setChecked] = React.useState([]);
-    const [id, setId] = React.useState([]);
     const [left, setLeft] = React.useState([1, 2, 3]);
     const [right, setRight] = React.useState([4, 5, 6, 7]);
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState('');
 
 
-    const {data: order} = useQuery(Ordermen);
+    const {data: order} = useQuery(AllUserQuery);
 
     useEffect(() => {
         if (order) {
-            setLeft(order.includedOrdermen);
+            setLeft(order.allUsers);
         }
     }, [order]);
 
 
-    const [mdelete, {loading}] = useMutation(multipleDelete, {
+    const [mdelete] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
-                alert("미주문자로 전환되었습니다!");
-                window.location.reload();
-
+                alert("선택하신 유저가 삭제되었습니다.");
+            },
+            onError: () => {
+                alert("다시 시도해주세요!")
             }
         }
     )
@@ -101,23 +93,13 @@ export default function UserEditTable() {
                 id: checked.map((c) => (c._id)).toString(),
                 username: content
             },
-            onCompleted: (data) => {
+            onCompleted: () => {
 
                 alert("정보 수정이 완료되었습니다.")
                 setOpen(false);
-                window.location.href = '/settings';
-            }
-        }
-    )
-
-    const [orderback] = useMutation(OrderBackMutation, {
-            refetchQueries: [{query: Ordermen, VacationQuery}],
-            variables: {ids: checked.map((c) => (c._id))},
-            onCompleted: () => {
-
-                alert("주문자로 전환되었습니다!");
-                window.location.href = '/create';
-
+            },
+            onError: () => {
+                alert("다시 시도해주세요!")
             }
         }
     )
@@ -160,8 +142,6 @@ export default function UserEditTable() {
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
     };
-
-    const [length, setLength] = useState();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -230,7 +210,6 @@ export default function UserEditTable() {
                     <td>
                         <Button
                             variant="outlined"
-                            className={classes.button}
                             onClick={mdelete}
                             disabled={leftChecked.length === 0}
                             aria-label="move selected right"

@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useMutation, useQuery} from '@apollo/react-hooks';
-import TextField from "@material-ui/core/TextField";
+import React, {useState} from 'react';
+import {useMutation} from '@apollo/react-hooks';
 import {UpdateUserMutation} from "../../graphql/mutation";
 import {MeQuery, UserSearchQuery} from "../../graphql/query";
 import Button from "@material-ui/core/Button";
@@ -37,16 +36,12 @@ const useStyles = makeStyles((theme) => ({
 function UpdateButton(username) {
 
     const classes = useStyles();
-
-    const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [click, setClick] = useState(false);
 
 
     const mutation = UpdateUserMutation;
 
-
-    // $userid:ID! $orderid:ID! $menu:String! $hi:String!
     const [update, {loading}] = useMutation(mutation, {
             refetchQueries: [{query: UserSearchQuery, MeQuery}],
             variables: {

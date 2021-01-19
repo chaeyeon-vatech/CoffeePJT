@@ -8,7 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
-import {Tab, Tabs, useTheme} from "@material-ui/core";
+import {useTheme} from "@material-ui/core";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {MeQuery, OrderSearch} from "../../graphql/query";
 import {CreateMutation} from "../../graphql/mutation";
@@ -17,8 +17,6 @@ import GiveupButton from "../../components/button/GiveupButton";
 import {convertlinksToUrl} from "../../resources/utilities";
 import SLUGS from 'resources/links';
 import {useHistory} from "react-router-dom";
-import MenuItem from "../../components/sidebar/MenuItemComponent";
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,8 +45,6 @@ export default function CorderBoard() {
     const [position, setPosition] = useState();
     const [status, setStatus] = useState();
     const [username, setName] = useState();
-    const [check, setCheck] = useState();
-
 
     const {data} = useQuery(MeQuery, {
         variables: {

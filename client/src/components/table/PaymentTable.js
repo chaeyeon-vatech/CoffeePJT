@@ -19,13 +19,8 @@ const useStyles = createUseStyles((theme) => ({
 function BoardTable() {
 
     const classes = useStyles();
-
-    const [count, setCount] = useState();
-
     const [content, setContent] = useState();
-
     const [user, setUser] = useState();
-
     const {data: receipt} = useQuery(Receipt)
 
     useEffect(() => {
@@ -34,12 +29,12 @@ function BoardTable() {
         }
     })
 
-
     const {data} = useQuery(ReceiptUsers)
 
     useEffect(() => {
         if (data) {
             setUser(data.receiptUsers)
+
         }
     })
 

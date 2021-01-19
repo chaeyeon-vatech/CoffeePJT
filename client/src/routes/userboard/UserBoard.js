@@ -4,9 +4,8 @@ import {createUseStyles, useTheme} from 'react-jss';
 import CardComponent from 'components/cards/CardComponent';
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery, UserSearchQuery} from "../../graphql/query";
-import {CreateUserMutation, TaskCreateMutation} from "../../graphql/mutation";
+import {CreateUserMutation} from "../../graphql/mutation";
 import UserEditTable from "../../components/table/UserEditTable";
-import UserAddButton from "../../components/button/UserAddButton";
 import SearchButton from "../../components/button/Searchbutton";
 
 const useStyles = createUseStyles((theme) => ({

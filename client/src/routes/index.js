@@ -5,13 +5,22 @@ import PrivateSection from 'routes/PrivateSection';
 import PublicRoutes from 'routes/PublicRoutes';
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../graphql/query";
-import PublicSection from "./PublicSection";
-import PrivateRoutes from "./PrivateRoutes";
-import LoadingComponent from "../components/loading";
+
+
+
 
 function Routes() {
     const {pathname} = useLocation();
     const [width, height] = useWindowSize();
+    // const body = document.querySelector('body');
+    // body.addEventListener('click', this.handleBodyClick);
+
+
+    // function propagation(e) {
+    //     // e.preventDefault(pathname);
+    //     e.stopPropagation();
+    //     e.nativeEvent.stopImmediatePropagation();
+    // }
 
     const [task, setTask] = useState();
 
@@ -20,18 +29,17 @@ function Routes() {
     }, [pathname]);
 
 
-    const {data, loading} = useQuery(TaskQuery);
+    const {data} = useQuery(TaskQuery);
 
     useEffect(() => {
         if (data) {
             setTask(data.tasks);
         }
-        if (loading){
-
-        }
     }, [data]);
 
-    return task ? <PrivateSection/> : <PublicRoutes/>;
+    return task ?
+
+        <PrivateSection/> : <PublicRoutes/>;
 
 }
 

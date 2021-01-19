@@ -1,25 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {CreateUserMutation, UpdateUserMutation} from "../../graphql/mutation";
-import {useMutation, useQuery} from "@apollo/react-hooks";
-import {MeQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
+import {UpdateUserMutation} from "../../graphql/mutation";
+import {useQuery} from "@apollo/react-hooks";
+import {SearchQuery} from "../../graphql/query";
 import FormDialog from "../../routes/userboard/Dialog";
 import UserDeleteButton from "./UserDeleteButton";
 
 
 export default function SearchButton(search) {
-    const [open, setOpen] = React.useState(false);
-    const [content, setContent] = useState('');
-    const [click, setClick] = useState(false);
-    const [result, setResult] = useState();
 
-    const mutation = UpdateUserMutation;
+
+    const [open, setOpen] = React.useState(false);
+    const [result, setResult] = useState();
 
 
     const {data: se} = useQuery(SearchQuery, {
@@ -28,8 +25,6 @@ export default function SearchButton(search) {
         },
 
     });
-
-    console.log(search)
 
 
     useEffect(() => {
@@ -61,7 +56,6 @@ export default function SearchButton(search) {
                     </DialogContentText>
                     <>
                         <table>
-                            {/*<caption>유저 추가/삭제</caption>*/}
 
                             <thead>
                             <tr>
@@ -82,8 +76,6 @@ export default function SearchButton(search) {
                                     <td>{content.username}</td>
                                     <td><FormDialog id={content._id} username={content.username}/></td>
                                     <td><UserDeleteButton post_id={content._id}/></td>
-                                    {/*<td><UpdateButton id={content._id} username={content.username}/></td>*/}
-
 
                                 </tr>
 

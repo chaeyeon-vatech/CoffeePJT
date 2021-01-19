@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {Ordermen, VacationQuery} from "../../graphql/query";
-import UserBackButton from "../button/UserBackButton";
 import {BackUserMutation, OrderBackMutation} from "../../graphql/mutation";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +47,6 @@ function union(a, b) {
 export default function TransferList() {
     const classes = useStyles();
     const [checked, setChecked] = React.useState([]);
-    const [id, setId] = React.useState([]);
     const [left, setLeft] = React.useState([1, 2, 3]);
     const [right, setRight] = React.useState([4, 5, 6, 7]);
 

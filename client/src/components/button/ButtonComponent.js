@@ -45,8 +45,9 @@ function MenuItemComponent({children, id, items = [], level = 1, onClick, title}
 
     function onItemClicked(e) {
         if (onClick) {
+            e.stopPropagation();
+            e.nativeEvent.stopImmediatePropagation();
             onClick(e);
-
         }
         onItemClick();
     }

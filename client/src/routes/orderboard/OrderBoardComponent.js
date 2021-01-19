@@ -90,7 +90,7 @@ function OrderBoardComponent() {
                 <table className={classes.border}>
 
                     {contents && contents.map((content) => (
-                        <td><span className={classes.itemTitle}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
+                        <td><span className={classes.itemTitle}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 삽니다! 👏</span>
                         </td>))}
                 </table>
 
