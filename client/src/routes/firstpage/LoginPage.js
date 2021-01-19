@@ -128,6 +128,7 @@ const handleClick = (name, id) => {
         localStorage.setItem('myData', id)
         window.location.href = '/order'
     }
+
 }
 
 
@@ -164,6 +165,21 @@ const AuthenticationForm = () => {
         }
     }, [task]);
 
+    // useEffect(() => {
+    //     const listener = event => {
+    //         if (event.code === "Enter" || event.code === "NumpadEnter") {
+    //             handleClick(inputValue, result.map((content) => (content._id)))
+    //
+    //         }
+    //     };
+    //     document.addEventListener("keypress", listener);
+    //     return () => {
+    //         document.removeEventListener("keypress", listener);
+    //     };
+    // }, []);
+
+    // console.log(inputValue)
+
 
     return (
         <div className={classes.root}>
@@ -197,6 +213,19 @@ const AuthenticationForm = () => {
                                             margin="normal"
                                             color={"secondary"}
                                             onChange={e => setSearch(e.target.value)}
+                                            onKeyPress={(ev) => {
+                                                const listener = event => {
+                                                    if (event.code === "Enter" || event.code === "NumpadEnter") {
+                                                        handleClick(search, result.map((content) => (content._id)))
+
+                                                    }
+                                                };
+                                                document.addEventListener("keypress", listener);
+                                                return () => {
+                                                    document.removeEventListener("keypress", listener);
+                                                };
+
+                                            }}
                                             InputProps={{
                                                 ...params.InputProps,
                                                 type: 'search',

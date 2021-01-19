@@ -106,24 +106,6 @@ function HeaderComponent() {
             <span className={classes.title}>{title}</span>
             <Row vertical='center'>
                 <div className={classes.separator}></div>
-                {username &&
-                <DropdownComponent
-                    label={
-                        <>
-
-                            <span className={classes.name}>{username}님🧑‍💻 오늘도 좋은 하루 보내세요!</span>
-                            <img
-                                src='https://www.vatech.co.kr/files/attach/site_image/site_image.1519883211.png'
-                                alt='avatar'
-                                className={classes.avatar}
-                            />
-                        </>
-                    }
-                    position={{
-                        top: 52,
-                        right: -6
-                    }}
-                />}
             </Row>
         </Row>
     );

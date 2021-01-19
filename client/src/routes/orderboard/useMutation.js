@@ -1,8 +1,8 @@
 import {CreateMutation} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
-import {MeQuery, OrderSearch} from "../../graphql/query";
+import {MeQuery, OrderSearch, Receipt, ReceiptUsers} from "../../graphql/query";
 import React from "react";
-import {useTheme} from "@material-ui/core";
+import {Snackbar, useTheme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import {Alert} from "@material-ui/lab";
@@ -27,20 +27,17 @@ export function CreateOrder(hi) {
 
     const createmutation = CreateMutation;
 
+
     const [create] = useMutation(createmutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,
                 hi: hi.hi
             },
-            onCompleted: (data) => {
-                window.alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
-                    This is a success alert — check it out!
-                </Alert>)
-
-            },
+            onCompleted: () => {},
             onError: () => {
                 alert("메뉴를 선택해주세요.")
             },
@@ -50,6 +47,7 @@ export function CreateOrder(hi) {
 
     return (
         <>
+
             <Button
                 type='submit'
                 color={hi.color}

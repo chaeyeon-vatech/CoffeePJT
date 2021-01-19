@@ -23,11 +23,11 @@ function GiveupButton(userid) {
     const classes = useStyles();
     const [giveup] = useMutation(OrderGiveupMutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}], variables: {
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+            variables: {
                 userid: userid.userid
             },
             onCompleted: (data) => {
-                alert("주문을 포기하셨습니다.")
             }
         }
     )

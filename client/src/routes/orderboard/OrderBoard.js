@@ -8,17 +8,13 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
-import {Tab, Tabs, useTheme} from "@material-ui/core";
+import {Snackbar, Tab, Tabs, useTheme} from "@material-ui/core";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import {CreateMutation} from "../../graphql/mutation";
 import CreateOrder from "./useMutation";
 import GiveupButton from "../../components/button/GiveupButton";
-import {convertlinksToUrl} from "../../resources/utilities";
-import SLUGS from 'resources/links';
 import {useHistory} from "react-router-dom";
-import {Alert} from "@material-ui/lab";
-import CheckIcon from '@material-ui/icons/Check';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,11 +75,6 @@ export default function CorderBoard() {
                 hi: hi
             },
             onCompleted: (data) => {
-                alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
-                    This is a success alert — check it out!
-                </Alert>)
-
-
             },
             onError: () => {
                 alert("메뉴를 선택해주세요.")
@@ -97,6 +88,7 @@ export default function CorderBoard() {
         <div className={classes.root}>
 
             <Grid container spacing={3}>
+
 
                 <Grid item xs={3}>
 
@@ -187,7 +179,7 @@ export default function CorderBoard() {
                                     alt="카페 모카"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
-                                    title="Contemplative Reptile"
+                                    title="카페모카"
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
