@@ -7,6 +7,20 @@ import Button from "@material-ui/core/Button";
 import {Alert} from "@material-ui/lab";
 import CheckIcon from "@material-ui/icons/Check";
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(5),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+    card: {maxWidth: 345},
+    color: {
+        brown: "#6d4c41"
+    }
+}));
 
 export function CreateOrder(hi) {
 
@@ -20,7 +34,11 @@ export function CreateOrder(hi) {
                 menu: hi.menu,
                 hi: hi.hi
             },
-            onCompleted: () => {
+            onCompleted: (data) => {
+                window.alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
+                    This is a success alert — check it out!
+                </Alert>)
+
             },
             onError: () => {
                 alert("메뉴를 선택해주세요.")

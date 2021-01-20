@@ -7,8 +7,6 @@ import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../graphql/query";
 
 
-
-
 function Routes() {
     const {pathname} = useLocation();
     const [width, height] = useWindowSize();

@@ -30,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
     color: {
         brown: "#6d4c41"
     },
-    // lastRow: {
-    //     marginTop: 30
-    // },
     border: {
         backgroundColor: "whitesmoke",
         fontSize: '15px !important',

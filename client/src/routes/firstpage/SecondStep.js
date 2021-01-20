@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import {TaskCreate} from "../../graphql/useMutation";
 
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles(() => ({
 
         loginwrap: {
             color: "white",

@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import CardComponent from 'components/cards/CardComponent';
-import {useMutation, useQuery} from "@apollo/react-hooks";
+import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
-import {TaskCreateMutation} from "../../graphql/mutation";
 import TaskDeleteButton from "../../components/button/TaskDeleteButton";
 import VacationBoard from "../firstpage/VacationBoard";
 

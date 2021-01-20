@@ -8,7 +8,7 @@ import {
     TaskRemoveMutation, UpdateUserMutation
 } from "./mutation";
 import {MeQuery, Ordermen, OrderSearch, Receipt, TaskQuery, UserSearchQuery, VacationQuery} from "./query";
-import React from "react";
+import React, {useState} from "react";
 
 //주문 포기=> 재주문 상태로
 export function ChangeGiveup(userid) {
@@ -56,7 +56,6 @@ export function CreateOrder(hi) {
 
 
 }
-
 
 //주문 삭제
 export function DeleteOrder(userid) {
@@ -219,6 +218,29 @@ export function UpdateUser(checked, content, setOpen) {
 
 }
 
+//유저 정보 선택적 업데이트
+export function SelectUpdate(username, content, setClick) {
+
+    const mutation = UpdateUserMutation;
+
+    const [update, {loading}] = useMutation(mutation, {
+            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}], variables: {
+                id: username.id,
+                username: content
+            },
+            onCompleted: () => {
+
+                alert("정보 수정이 완료되었습니다.")
+                setClick(false)
+
+            }
+        }
+    )
+    return update
+}
+
+
 //선택적 수정
 export function DUpdateUser(username, content, setOpen) {
     const [update] = useMutation(UpdateUserMutation, {
@@ -275,6 +297,6 @@ export function OrderBack(checked) {
 export default {
     ChangeGiveup, DeleteOrder, Giveup,
     TaskDelete, TaskCreate,
-    UserAdd, UserDelete, MultipleUserDelete,
+    UserAdd, UserDelete, MultipleUserDelete, UpdateUser, SelectUpdate,
     VacationBack, OrderBack
 };

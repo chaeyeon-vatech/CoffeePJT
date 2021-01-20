@@ -9,11 +9,13 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import {useTheme} from "@material-ui/core";
-import {useQuery} from "@apollo/react-hooks";
-import {MeQuery} from "../../graphql/query";
+import {useQuery, useMutation} from "@apollo/react-hooks";
+import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
+import {CreateMutation} from "../../graphql/mutation";
 import CreateOrder from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
-import {useHistory} from "react-router-dom";
+import {Alert} from "@material-ui/lab";
+import CheckIcon from '@material-ui/icons/Check';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +37,8 @@ export default function CorderBoard() {
 
     const theme = useTheme();
     const classes = useStyles({theme});
+    const [menu, setMenu] = useState();
+    const [hi, setHi] = useState();
     const [status, setStatus] = useState();
 
 
@@ -51,14 +55,33 @@ export default function CorderBoard() {
         }
     }, [data]);
 
-    const menu = ["아메리카노", "카페라떼", "바닐라라떼", "카페모카"]
-    const image = ["https://images.unsplash.com/photo-1593231269103-6667d6905882?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80",
-        "https://images.unsplash.com/photo-1556484245-2c765becb8eb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",
-        "https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80",
-        "https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
-    ]
+
+    const createmutation = CreateMutation;
+
+
+    const [create, error] = useMutation(createmutation, {
+            refetchQueries: [{query: OrderSearch, MeQuery, UserSearchQuery}],
+            variables: {
+                id: localStorage.getItem('myData'),
+                menu: menu,
+                hi: hi
+            },
+            onCompleted: (data) => {
+                alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
+                    This is a success alert — check it out!
+                </Alert>)
+
+
+            },
+            onError: () => {
+                alert("메뉴를 선택해주세요.")
+            },
+        }
+    )
 
     return (
+
+
         <div className={classes.root}>
 
             <Grid container spacing={3}>
@@ -70,6 +93,7 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
+                                    alt="Contemplative Reptile"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1593231269103-6667d6905882?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80"
                                     title="아메리카노"
@@ -94,6 +118,7 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
+                                    alt="Contemplative Reptile"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1556484245-2c765becb8eb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
                                     title="카페라떼"
@@ -120,6 +145,7 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
+                                    alt="바닐라라떼"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80"
                                     title="바닐라라떼"
@@ -146,6 +172,7 @@ export default function CorderBoard() {
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
+                                    alt="카페 모카"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
                                     title="Contemplative Reptile"
