@@ -4,12 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@types/helmet": "^4.0.0",
     "apollo-server": "^2.19.0",
-    "bcryptjs": "^2.4.3",
-    "bson": "^4.2.2",
-    "dotenv": "^8.2.0",
     "graphql": "^15.4.0",
-    "jsonwebtoken": "^8.5.1",
+    "helmet": "^3.23.3",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.6"
   },

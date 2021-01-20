@@ -3,18 +3,18 @@ import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import CardComponent from 'components/cards/CardComponent';
 import {useQuery} from "@apollo/react-hooks";
-import {SearchQuery, TaskQuery} from "../../graphql/query";
-import UserEditTable from "../../components/table/UserEditTable";
-import SearchButton from "../../components/button/Searchbutton";
+import {TaskQuery} from "../../graphql/query";
+import TaskDeleteButton from "../../components/button/TaskDeleteButton";
+import VacationBoard from "../firstpage/VacationBoard";
 
 const useStyles = createUseStyles((theme) => ({
-    root: {marginTop: "30px"},
+    root: {marginTop: -160},
 
     addButton: {
-        backgroundColor: theme.color.darkgreen,
+        backgroundColor: theme.color.darkRed,
         color: theme.color.grayishBlue2,
-        fontSize: '15px !important',
-        padding: '10px !important',
+        fontSize: '20px !important',
+        padding: '7px !important',
         width: "fit-content"
     },
     itemTitle: {
@@ -51,10 +51,6 @@ const useStyles = createUseStyles((theme) => ({
         justifyContent: "center",
         LeftMargin: "30px",
         alignSelf: "center"
-    },
-    text: {
-        textAlign: "center",
-        margin: "none"
     }
 
 }));
@@ -63,55 +59,57 @@ function Create(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
     const [contents, setContents] = useState();
-    const [result, setResult] = useState();
-    const [search, setSearch] = useState();
-
 
     const {data} = useQuery(TaskQuery);
-
-    const {data: se} = useQuery(SearchQuery, {
-        variables: {
-            word: search
-        },
-
-    });
 
     useEffect(() => {
         if (data) {
             setContents(data.tasks);
         }
-        if (se) {
-            setResult(se.user);
-
-        }
-    });
+    })
 
     return (
         <CardComponent
             containerStyles={props.containerStyles}
             className={classes.root}
+            title='📋 주문 생성 및 휴가자 관리 📋'
+            subtitle='(예시) 사유를 적어주시면 👏오늘은 OOO님이 @@ 기념으로 커피 삽니다!👏 로 주문자 화면에 보여집니다!'
 
             items={[
-
-                <h3 className={classes.text}>유저 관리</h3>,
-                <Row horizontal='space-between' vertical='center'>
-
-                    <span className={[classes.itemTitle, classes.greyTitle].join(' ')}>
-                        <input type="text" placeholder="유저를 검색해주세요" onChange={e => setSearch(e.target.value)}
-                               className={classes.input}/>
-                    </span>
-                    <SearchButton search={search}/>
-
-                </Row>,
                 <Row>
-
                     <Row horizontal='space-between' vertical='center'>
                         <Row>
-                            <UserEditTable/>
+                            <table>
+
+                                <thead>
+                                <tr>
+                                    <th scope="col">게시글 내용</th>
+                                    <th scope="col">게시글 삭제</th>
+
+
+                                </tr>
+                                </thead>
+
+                                {contents && contents.map((content) => (
+
+
+                                    <tbody>
+                                    <td><span className={classes.itemTitle}>
+                                        👏오늘은 {content.creater}님이 {content.title} 기념으로 커피 삽니다!👏</span></td>
+                                    <td><TaskDeleteButton post_id={content._id}
+                                                          user_id={localStorage.getItem('myData')}/></td>
+
+                                    </tbody>
+
+
+                                ))}
+                            </table>
 
                         </Row>
                     </Row>
-                </Row>
+                </Row>,
+
+                <VacationBoard/>
 
 
             ]}

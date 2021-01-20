@@ -11,7 +11,7 @@ const color = {
     paleBlue: '#DDE2FF',
     paleBlueTransparent: 'rgba(221, 226, 255, 0.08)',
     veryDarkGrayishBlue: '#373a47',
-    darkgreen: "#063014",
+    darkgreen: "rgba(65,81,54,0.9)",
     lightyellow: "#d2cdc1"
 };
 

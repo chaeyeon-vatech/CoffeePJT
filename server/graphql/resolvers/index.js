@@ -1,440 +1,638 @@
+import { extendResolversFromInterfaces } from 'apollo-server';
 import Order from '../../models/order.js';
 import Task from '../../models/task.js';
 import users from '../../models/user.js';
-import bcrypt from 'bcryptjs';
-import jsonwebtoken from 'jsonwebtoken';
-import { ObjectID } from 'bson';
 // resolver에서 mutation을 정의하고 구현하는 걸 보니 가장 중요한 부분이 아닐까 싶다. service 단이라고 생각하자
 const resolvers = {
     Query: {
-        async orders(_, args,{user}) {
+        orders: async (_, args) => {
             try {
-                if (!user) throw new Error('You are not authenticated')
-                let orders = await Order.find().sort({createdAt: -1});
-                const search = args.search || "";
-                const category = args.category;
-                const index = args.index;
-                const hasNext = args.hasNext;
-                const acdc = args.acdc;
-                if(acdc === "menu"){
-                    orders = await Order.find().sort({menu:1});
+                if (args.hi == "icecream") {
+                    return await Order.find({ "hi": { $eq: "icecream" } })
                 }
-                else if(acdc === "hi"){
-                    orders = await Order.find().sort({hi:1});
+                else if (args.hi == "etc") {
+                    return await Order.find({ "hi": { $eq: "etc" } })
                 }
-                else if(acdc === 'username'){
-                    orders = await Order.find().sort({username:1});
+                else {
+                    return await Order.find({ "hi": { $nin: ["icecream", "etc"] } })
                 }
-                else if(acdc === "createdAt"){
-                    orders = await Order.find().sort({createdAt:1});
-                }
-                let result = []
-                if (category == 1) {
-
-                    for (let i = 0; i < orders.length; i++) {
-
-                        if (orders[i].menu.indexOf(search) > -1) {
-                            result.push(orders[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } else if (category == 2) {
-                    for (let i = 0; i < orders.length; i++) {
-
-                        if (orders[i].hi.indexOf(search) > -1) {
-                            result.push(orders[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } else if(category == 3){
-                    for (let i = 0; i < orders.length; i++) {
-
-                        if (orders[i].username.indexOf(search) > -1) {
-                            result.push(orders[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } else if(category == 4){
-                    for (let i = 0; i < orders.length; i++) {
-
-                        if (orders[i].username===search) {
-                            result.push(orders[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } 
-                else{
-                    result = orders;
-                }
-                return result;
             } catch (err) {
                 console.log(err);
                 throw err;
             }
         },
-        // 로그인 되어 있는 나
-        async me(_, args, {user}) {
-            if (!user) throw new Error('You are not authenticated')
-            return await users.findById(user.id)
-        },
-        async tasks(_, args,{user}) {
+        orderMine: async (_, args) => {
             try {
-                if (!user) throw new Error('You are not authenticated')
-                let tasks = await Task.find().sort({createdAt: -1});
-                const search = args.search || "";
-                const category = args.category;
-                const index = args.index;
-                const hasNext = args.hasNext;
-                const acdc = args.acdc;
-                if(acdc === "creater"){
-                    tasks = await Task.find().sort({creater:1});
-                }
-                else if(acdc === "title"){
-                    tasks = await Task.find().sort({title:1});
-                }
-                else if(acdc === "createdAt"){
-                    tasks = await Task.find().sort({createdAt:1});
-                }
-                let result = []
-                if (category == 1) {
+                const user = await users.findById(args._id)
+                const word = user.username
 
-                    for (let i = 0; i < tasks.length; i++) {
-
-                        if (tasks[i].creater.indexOf(search) > -1) {
-                            result.push(tasks[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } else if (category == 2) {
-                    for (let i = 0; i < tasks.length; i++) {
-
-                        if (tasks[i].title.indexOf(search) > -1) {
-                            result.push(tasks[i]);
-                        }
-                    }
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                } 
-                else{
-                    result = tasks;
-                    if (hasNext == false) {
-                        result = result.slice(10 * (index - 1), result.length);
-                    } else {
-                        result = result.slice(10 * (index - 1), 10 * (index));
-                    }
-                }
-                return result;
+                return await Order.find({ "username": { $eq: word } })
             } catch (err) {
                 console.log(err);
                 throw err;
             }
-        },        // id로 검색
-        async user(root, {id}, {user}) {
+        },
+        tasks: async (_, args) => {
             try {
-                if (!user) throw new Error('You are not authenticated!')
-                return users.findById(id)
-            } catch (error) {
-                throw new Error(error.message)
+                let tasks = await Task.find();
+                if (tasks.length == 0) return null;
+                return tasks;
+            } catch (err) {
+                console.log(err);
+                throw err;
             }
+        },
+        user: async (_, args) => {
+            const word = args.word;
+            const category = args.category;
+            const result = []
+            if (category == 1) {
+                if (word == "") return result
+                return await users.find({ "username": { $regex: word } }).sort({ "username": 1 })
+            }
+            else {
+                if (word == "") return result
+                return await users.find({ "username": { $regex: word }, "position": { $eq: "주문자" } }).sort({ "username": 1 })
+            }
+
         },
         // 모든 유저 검색
-        async allUsers(root, args, {user}) {
+        allUsers: async (_, args) => {
             try {
-                if (!user) throw new Error('You are not authenticated!')
-                return users.find()
+                return users.find().sort({ "username": 1 })
             } catch (error) {
                 throw new Error(error.message)
             }
         },
-        howmany: async(_,args)=>{
-            const number = [0,0,0];
+        me: async (_, args) => {
+            return await users.findById(args.userid)
+        },
+        howmany: async (_, args) => {
+            const number = [0, 0, 0, 0];
             const people = await users.find()
             for (let i = 0; i < people.length; i++) {
-
                 if (people[i].status === "주문완료") {
                     number[0]++;
                 }
-                else if(people[i].status === "주문취소"){
+                else if (people[i].status === "주문취소") {
                     number[1]++;
                 }
-                else if(people[i].status === "주문포기"){
+                else if (people[i].status === "주문포기") {
                     number[2]++;
+                }
+                else {
+                    number[3]++;
                 }
             }
             return number;
 
         },
-        howmuch: async(_,args)=>{
-            let sum=0;
+        howmuch: async (_, args) => {
+            let sum = 0;
             const orders = await Order.find();
             console.log(orders.length)
-            for(let i=0; i<orders.length; i++){
-                if(orders[i].menu === "아메리카노"){
-                    
-                    sum+=2000;
+            for (let i = 0; i < orders.length; i++) {
+                if (orders[i].menu === "아메리카노") {
+
+                    sum += 2000;
                 }
-                else if(orders[i].menu === "카페모카"){
-                    
-                    sum+=2500;
+                else if (orders[i].menu === "카페라떼") {
+
+                    sum += 2500;
                 }
-                else if(orders[i].menu === "아이스티"){
-                    
-                    sum+=2500;
+                else if (orders[i].menu === "바닐라라떼") {
+
+                    sum += 3000;
                 }
-                else if(orders[i].menu === "바닐라라떼"){
-                    
-                    sum+=3000;
+                else if (orders[i].menu === "카페모카") {
+
+                    sum += 3000;
+                }
+                else if (orders[i].menu === "아시나요") {
+
+                    sum += 3000;
+                }
+                else if (orders[i].menu === "돼지콘") {
+
+                    sum += 3000;
+                }
+                else if (orders[i].menu === "브라보") {
+
+                    sum += 3000;
+                }
+                else if (orders[i].menu === "녹차마루") {
+
+                    sum += 3000;
+                }
+                else if (orders[i].menu === "아이스티") {
+
+                    sum += 2000;
+                }
+                else if (orders[i].menu === "망고 요거트 스무디") {
+
+                    sum += 3400;
+                }
+                else if (orders[i].menu === "딸기 요거트 스무디") {
+
+                    sum += 3400;
+                }
+                else if (orders[i].menu === "플레인 요거트 스무디") {
+
+                    sum += 3400;
                 }
             }
             return sum;
         },
-        coffeeAmount: async(_,args)=>{
-            let coffee = [0,0,0,0,0,0,0,0];
-            const orders = await Order.find();
-            for(let i=0; i<orders.length; i++){
-                if(orders[i].menu === "아메리카노" && orders[i].hi === "hot"){
-                    coffee[0]++;
+        includedCoffee: async (_, args) => {
+            const menu = args.menu;
+            const hi = args.hi;
+            return await Order.find({ "menu": { $eq: menu }, "hi": { $eq: hi } }).sort({ "username": 1 })
+        },
+        includedOrdermen: async (_, args) => {
+            return await users.find({ "position": { $eq: "주문자" } }).sort({ "username": 1 })
+        },
+        includedVacation: async (_, args) => {
+            return await users.find({ "position": { $eq: "휴가자" } }).sort({ "username": 1 })
+        },
+        includedNothing: async (_, args) => {
+            const result = users.find({ "status": { $eq: "대기중" }, "position": { $ne: "휴가자" } }).sort({ "username": 1 })
+            return result
+        },
+        receipt: async (_, args) => {
+            const orders = await Order.find()
+            const orderV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            let mention = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+            for (let i = 0; i < orders.length; i++) {
+                if (orders[i].menu === "아메리카노" && orders[i].hi === "hot") {
+                    orderV[0]++;
                 }
-                else if(orders[i].menu === "아메리카노" && orders[i].hi === "ice"){
-                    coffee[1]++;
+                else if (orders[i].menu === "아메리카노" && orders[i].hi === "ice") {
+                    orderV[1]++;
                 }
-                else if(orders[i].menu === "카페모카" && orders[i].hi === "hot"){
-                    coffee[2]++;
-                    
+                else if (orders[i].menu === "카페라떼" && orders[i].hi === "hot") {
+                    orderV[2]++;
                 }
-                else if(orders[i].menu === "카페모카" && orders[i].hi === "ice"){
-                    coffee[3]++;
+                else if (orders[i].menu === "카페라떼" && orders[i].hi === "ice") {
+                    orderV[3]++;
                 }
-                else if(orders[i].menu === "아이스티"&& orders[i].hi === "hot"){
-                    coffee[4]++;
+                else if (orders[i].menu === "바닐라라떼" && orders[i].hi === "hot") {
+                    orderV[4]++;
                 }
-                else if(orders[i].menu === "아이스티" && orders[i].hi === "ice"){
-                    coffee[5]++;
+                else if (orders[i].menu === "바닐라라떼" && orders[i].hi === "ice") {
+                    orderV[5]++;
                 }
-                else if(orders[i].menu === "바닐라라떼" && orders[i].hi === "hot"){
-                    coffee[6]++;
+                else if (orders[i].menu === "카페모카" && orders[i].hi === "hot") {
+                    orderV[6]++;
                 }
-                else if(orders[i].menu === "바닐라라떼" && orders[i].hi === "ice"){
-                    coffee[7]++;
+                else if (orders[i].menu === "카페모카" && orders[i].hi === "ice") {
+                    orderV[7]++;
+                }
+                else if (orders[i].menu === "아시나요" && orders[i].hi === "icecream") {
+                    orderV[8]++;
+                }
+                else if (orders[i].menu === "돼지콘" && orders[i].hi === "icecream") {
+                    orderV[9]++;
+                }
+                else if (orders[i].menu === "브라보" && orders[i].hi === "icecream") {
+                    orderV[10]++;
+                }
+                else if (orders[i].menu === "녹차마루" && orders[i].hi === "icecream") {
+                    orderV[11]++;
+                }
+                else if (orders[i].menu === "아이스티" && orders[i].hi === "etc") {
+                    orderV[12]++;
+                }
+                else if (orders[i].menu === "망고 요거트 스무디" && orders[i].hi === "etc") {
+                    orderV[13]++;
+                }
+                else if (orders[i].menu === "딸기 요거트 스무디" && orders[i].hi === "etc") {
+                    orderV[14]++;
+                }
+                else if (orders[i].menu === "플레인 요거트 스무디" && orders[i].hi === "etc") {
+                    orderV[15]++;
                 }
             }
-            return coffee;
+
+            for (let i = 0; i < orderV.length; i++) {
+                if (orderV[i] != 0 && i == 0) {
+                    mention[i] = "hot 아메리카노 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 1) {
+                    mention[i] = "ice 아메리카노 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 2) {
+                    mention[i] = "hot 카페라떼 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 3) {
+                    mention[i] = "ice 카페라떼 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 4) {
+                    mention[i] = "hot 바닐라라떼 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 5) {
+                    mention[i] = "ice 바닐라라떼 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 6) {
+                    mention[i] = "hot 카페모카 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 7) {
+                    mention[i] = "ice 카페모카 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 8) {
+                    mention[i] = "아시나요 : " + orderV[i] + "개"
+                }
+                else if (orderV[i] != 0 && i == 9) {
+                    mention[i] = "돼지콘 : " + orderV[i] + "개"
+                }
+                else if (orderV[i] != 0 && i == 10) {
+                    mention[i] = "브라보 : " + orderV[i] + "개"
+                }
+                else if (orderV[i] != 0 && i == 11) {
+                    mention[i] = "녹차마루 : " + orderV[i] + "개"
+                }
+                else if (orderV[i] != 0 && i == 12) {
+                    mention[i] = "아이스티 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 13) {
+                    mention[i] = "망고 요거트 스무디 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 14) {
+                    mention[i] = "딸기 요거트 스무디 : " + orderV[i] + "잔"
+                }
+                else if (orderV[i] != 0 && i == 15) {
+                    mention[i] = "플레인 요거트 스무디 : " + orderV[i] + "잔"
+                }
+            }
+            return mention
+        },
+        receiptUsers: async (_, args) => {
+            let start = new Date();
+            const receiptNum = args.receiptNum;
+            const result = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+
+            const orders0 = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "hot" } }).sort({ "username": 1 })
+
+            for (let i = 0; i < orders0.length; i++) {
+                if (i == orders0.length - 1) {
+                    result[0] += orders0[i].username
+                }
+                else {
+                    result[0] += orders0[i].username + ", "
+                }
+
+            }
+
+
+            const orders1 = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "ice" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders1.length; i++) {
+                if (i == orders1.length - 1) {
+                    result[1] += orders1[i].username
+                }
+                else {
+                    result[1] += orders1[i].username + ", "
+                }
+
+            }
+
+
+            const orders2 = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "hot" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders2.length; i++) {
+                if (i == orders2.length - 1) {
+                    result[2] += orders2[i].username
+                }
+                else {
+                    result[2] += orders2[i].username + ", "
+                }
+
+            }
+
+
+            const orders3 = await Order.find({ "menu": { $eq: "카페라떼" }, "hi": { $eq: "ice" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders3.length; i++) {
+                if (i == orders3.length - 1) {
+                    result[3] += orders3[i].username
+                }
+                else {
+                    result[3] += orders3[i].username + ", "
+                }
+
+            }
+
+
+            const orders4 = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "hot" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders4.length; i++) {
+                if (i == orders4.length - 1) {
+                    result[4] += orders4[i].username
+                }
+                else {
+                    result[4] += orders4[i].username + ", "
+                }
+
+            }
+
+
+            const orders5 = await Order.find({ "menu": { $eq: "바닐라라떼" }, "hi": { $eq: "ice" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders5.length; i++) {
+                if (i == orders5.length - 1) {
+                    result[5] += orders5[i].username
+                }
+                else {
+                    result[5] += orders5[i].username + ", "
+                }
+
+            }
+
+            const orders6 = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "hot" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders6.length; i++) {
+                if (i == orders6.length - 1) {
+                    result[6] += orders6[i].username
+                }
+                else {
+                    result[6] += orders6[i].username + ", "
+                }
+
+            }
+
+            const orders7 = await Order.find({ "menu": { $eq: "카페모카" }, "hi": { $eq: "ice" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders7.length; i++) {
+                if (i == orders7.length - 1) {
+                    result[7] += orders7[i].username
+                }
+                else {
+                    result[7] += orders7[i].username + ", "
+                }
+
+            }
+
+            const orders8 = await Order.find({ "menu": { $eq: "아시나요" }, "hi": { $eq: "icecream" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders8.length; i++) {
+                if (i == orders8.length - 1) {
+                    result[8] += orders8[i].username
+                }
+                else {
+                    result[8] += orders8[i].username + ", "
+                }
+
+            }
+
+            const orders9 = await Order.find({ "menu": { $eq: "돼지콘" }, "hi": { $eq: "icecream" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders9.length; i++) {
+                if (i == orders9.length - 1) {
+                    result[9] += orders9[i].username
+                }
+                else {
+                    result[9] += orders9[i].username + ", "
+                }
+
+            }
+
+            const orders10 = await Order.find({ "menu": { $eq: "브라보" }, "hi": { $eq: "icecream" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders10.length; i++) {
+                if (i == orders10.length - 1) {
+                    result[10] += orders10[i].username
+                }
+                else {
+                    result[10] += orders10[i].username + ", "
+                }
+
+            }
+
+            const orders11 = await Order.find({ "menu": { $eq: "녹차마루" }, "hi": { $eq: "icecream" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders11.length; i++) {
+                if (i == orders11.length - 1) {
+                    result[11] += orders11[i].username
+                }
+                else {
+                    result[11] += orders11[i].username + ", "
+                }
+
+            }
+
+            const orders12 = await Order.find({ "menu": { $eq: "아이스티" }, "hi": { $eq: "etc" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders12.length; i++) {
+                if (i == orders12.length - 1) {
+                    result[12] += orders12[i].username
+                }
+                else {
+                    result[12] += orders12[i].username + ", "
+                }
+
+            }
+
+            const orders13 = await Order.find({ "menu": { $eq: "망고 요거트 스무디" }, "hi": { $eq: "etc" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders13.length; i++) {
+                if (i == orders13.length - 1) {
+                    result[13] += orders13[i].username
+                }
+                else {
+                    result[13] += orders13[i].username + ", "
+                }
+
+            }
+
+            const orders14 = await Order.find({ "menu": { $eq: "딸기 요거트 스무디" }, "hi": { $eq: "etc" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders14.length; i++) {
+                if (i == orders14.length - 1) {
+                    result[14] += orders14[i].username
+                }
+                else {
+                    result[14] += orders14[i].username + ", "
+                }
+
+            }
+
+            const orders15 = await Order.find({ "menu": { $eq: "플레인 요거트 스무디" }, "hi": { $eq: "etc" } }).sort({ "username": 1 })
+            for (let i = 0; i < orders15.length; i++) {
+                if (i == orders15.length - 1) {
+                    result[15] += orders15[i].username
+                }
+                else {
+                    result[15] += orders15[i].username + ", "
+                }
+
+            }
+            let end = new Date()
+            console.log(end-start, "밀리초")
+            
+
+            return result
         }
-    },
-    Order: {
-        _id(_, args) {
-            return _._id;
-        },
-        menu(_, args) {
-            return _.menu;
-        },
-        hi(_, args) {
-            return _.hi;
-        },
-        createdAt(_, args) {
-            return _.createdAt;
-        },
-        username(_, args){
-            return _.username;
-        }
+
     },
     Mutation: {
-        createOrder: async (_, args, {user}) => {
+        createOrder: async (_, args) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                console.log(user);
-                console.log(user.id);
-                const us = await users.findById(user.id)
+                const us = await users.findById(args._id)
                 const confirm = us.status
-                console.log(us)
-                console.log(confirm)
-                if(confirm === "주문완료") throw error("이미 주문 하셨습니다.");
-                const order = new Order({
-                    ...args.orderInput
-                })
-                
-                await users.findByIdAndUpdate(user.id,{status:"주문완료"});
+                if (confirm === "주문완료") throw new Error("이미 주문 하셨습니다.");
+
+                const username = us.username
+                const menu = args.menu;
+                const hi = args.hi
+                const order = new Order({ username, menu, hi });
+
+                await users.findByIdAndUpdate(args._id, { status: "주문완료" });
                 const result = await order.save();
+
                 return result;
             } catch (e) {
                 throw new Error('Error: ', e);
             }
         },
-        removeOrder: async (_, args,{user}) => {
+        removeOrder: async (_, args) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                await users.findByIdAndUpdate(user.id,{status:"주문취소"});
-                const removedorder = await Order.findByIdAndRemove(args._id).exec()
+                await users.findByIdAndUpdate(args.userid, { status: "주문취소" });
+                const removedorder = await Order.findByIdAndRemove(args.orderid).exec()
                 return removedorder
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
-        updateOrder: async (_, {_id, menu, hi},{user}) => {
+        updateOrder: async (_, { userid, orderid, menu, hi }, { user }) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                await users.findByIdAndUpdate(user.id,{status:"주문완료"});
-                const updatedOrder = await Order.findByIdAndUpdate(_id, {
-                    $set: {menu, hi}
+                await users.findByIdAndUpdate(userid, { status: "주문완료" });
+                const updatedOrder = await Order.findByIdAndUpdate(orderid, {
+                    $set: { menu, hi }
                 }).exec()
                 return updatedOrder
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
-        giveupOrder: async (_, args,{user})=>{
-            if(!user) throw error("로그인 되어 있지 않습니다.");
-            await users.findByIdAndUpdate(user.id,{status:"주문포기"});
+        giveupOrder: async (_, args) => {
+            await users.findByIdAndUpdate(args.userid, { status: "주문포기" });
             return "주문을 포기하셨습니다."
         },
-        
-        
-        confirmOrders: async(_,args,{user})=>{
-            if(!user) return "로그인 되어 있지 않습니다.";
-            if(user.id != args.creater) return "결제자가 아닙니다.";
-            console.log("결제자네? ㅎㅇ");
-            
+
+
+        confirmOrders: async (_, args) => {
+
             await Order.deleteMany({});
-            const renualUser = await users.find();
+            await Task.deleteMany({});
+            await users.updateMany({$set:{"status":"대기중", "position":"주문자"}});
+
             
-            for (let index = 0; index < renualUser.length; index++) {
-                await users.findByIdAndUpdate(renualUser[index].id,{status:""})  
-            }
 
             return "완료 처리 되었습니다. 맛있게 드세요!"
         },
-        createTask: async (_, args, {user}) => {
+        createTask: async (_, { userid, title }) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                
+                const isthere = await Task.find()
+                if (isthere.length != 0) {
+                    throw new Error
+                }
+                const us = await users.findById(userid);
+                const creater = us.username;
                 const task = new Task({
-                    ...args.taskInput
+                    creater,
+                    title
                 })
                 const result = await task.save();
-                const us = await users.findById(user.id);
-                console.log(user.id);
-                await Task.findByIdAndUpdate(result._id,{creater:user.id})
-                
+                await users.findByIdAndUpdate(userid, { position: "결제자" })
+
                 return result;
             } catch (e) {
-                throw new Error('Error: ', e);
+                throw new Error('Error: 이미 다른 주문이 진행중입니다. 주문이 완료되면 그때 다시 시도해주세요', e);
             }
         },
-        removeTask: async (_, {_id},{user}) => {
+        removeTask: async (_, { _id, userid }) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                // if(user._id != creater) throw error("게시물 작성자가 아니어서 삭제할 수 없습니다.");
                 const removedTask = await Task.findByIdAndRemove(_id).exec()
+                await users.findByIdAndUpdate(userid, { position: "주문자" })
                 return removedTask
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
-        updateTask: async (_, {_id, title},{user}) => {
+        updateTask: async (_, { _id, title }, { user }) => {
             try {
-                if(!user) throw error("로그인 되어 있지 않습니다.");
-                // if(user._id != creater) throw error("게시물 작성자가 아니어서 수정할 수 없습니다.");
-                
+
                 const updatedTask = await Task.findByIdAndUpdate(_id, {
-                    $set: {title}
+                    $set: { title }
                 }).exec()
                 return updatedTask
             } catch (e) {
                 throw new Error('Error: ', e)
             }
         },
-        searchByID: async (_, args) => {
-            try {
-                const searchOrder = await Order.findById(args._id).exec()
-                return searchOrder
-            } catch (e) {
-                throw new Error('Error: ', e)
-            }
-        },
         // 회원가입
-        registerUser: async (root, {username, idNum, password}) => {
+        registerUser: async (_, args) => {
             try {
-                // 이메일 중복 체크
-                const userConfirm = await users.findOne({idNum: idNum})
-                if (userConfirm != null) {
-                    return "Already registered idNum.";
-                }
-                const user = await users.create({
-                    username,
-                    idNum,
-                    password: await bcrypt.hash(password, 10)
+                const username = args.username;
+                const user = new users({
+                    username
                 })
-                const token = jsonwebtoken.sign(
-                    {id: user.id, idNum: user.idNum},
-                    "somereallylongsecret",
-                    {expiresIn: '1y'}
-                )
-                return {
-                    token, id: user.id, username: user.username, idNum: user.idNum, message: "Authentication succesfull"
-                }
-            } catch (error) {
-                throw new Error(error.message)
-            }
-        },
-        login: async (_, {idNum, password}) => {
-            try {
-                // 유저 이메일 정보 확인 후 로그인
-                const user = await users.findOne({idNum: idNum})
-                console.log(user);
-                console.log(idNum);
-                if (!user) {
-                    throw new Error('No user with that email')
-                }
-                const isValid = await bcrypt.compare(password, user.password)
-                if (!isValid) {
-                    throw new Error('Incorrect password')
-                }
-                // return jwt
-                const token = jsonwebtoken.sign(
-                    {id: user.id, idNum: user.idNum},
-                    "somereallylongsecret",
-                    {expiresIn: '1d'}
-                )
-                return {
-                    token, user
-                }
-            } catch (error) {
-                throw new Error(error.message)
-            }
-        },
-        logout: async (_, __, {user}) => {
-            if (!user) {
-                return false;
-            } else { // 로그인 상태라면(토큰이 존재하면) 토큰 비워주기
-                console.log(user.token);
-                user.token = '';
-                return true;
-            }
+                const re = await users.find({ "username": { $eq: username } })
+                if (re.length != 0) throw new Error("이미 있는 유저입니다.");
 
-        }
+                return await user.save();
+            } catch (error) {
+                throw new Error(error.message)
+            }
+        },
+        updatePosition:async (_, args) => {
+            try {
+                const ids = args.ids;
+                for (let i = 0; i < ids.length; i++) {
+
+                    await users.findByIdAndUpdate(ids[i], { $set: { "position": "휴가자" } })
+
+                }
+
+                return "휴가자 등록이 완료 되었습니다."
+
+            } catch (error) {
+                throw new Error(error.message)
+            }
+        },
+        updateUser: async (_, { _id, username }) => {
+            try {
+
+                return await users.findByIdAndUpdate(_id, { $set: { username } }).exec()
+            } catch (error) {
+                throw new Error(error.message)
+            }
+        },
+        getbackUser: async (_, args) => {
+            try {
+                const ids = args.ids;
+                for (let i = 0; i < ids.length; i++) {
+
+                    await users.findByIdAndUpdate(ids[i], { $set: { "position": "주문자" } })
+
+                }
+                return "해당 인원은 주문자로 다시 바뀌었습니다."
+
+            } catch (error) {
+                throw new Error(error.message)
+            }
+        },
+        getbackStatus: async (_, args) => {
+            try {
+                const id = args._id;
+
+                await users.findByIdAndUpdate(id, { $set: { "status": "대기중" } })
+
+
+                return "해당 인원은 주문포기에서 대기중으로 다시 바뀌었습니다."
+
+            } catch (error) {
+                throw new Error(error.message)
+            }
+        },
+        deleteUser: async (_, args) => {
+            const arr = args.ids
+            console.log(args.ids)
+            for (let i = 0; i < arr.length; i++) {
+                
+                const removedUser = await users.findByIdAndRemove(arr[i]).exec()    
+            }
+            
+            return "선택한 유저가 모두 삭제 되었습니다."
+        },
+        mee: async (_, args) => {
+            return await users.findById(args.userid)
+        },
     }
 };
 

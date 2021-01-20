@@ -1,17 +1,39 @@
-import React from 'react';
-import { Route, Switch} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import LINKS from 'resources/links';
-import SLUGS from '../resources/links';
-import basicLogin from './auth/LoginPage';
-import RegisterPage from './auth/RegisterPage';
+import First from "./firstpage/NoTask";
+import CustomizedSteppers from "./firstpage/Stepper";
+import {useQuery} from "@apollo/react-hooks";
+import {TaskQuery} from "../graphql/query";
 
 function PublicRoutes() {
-    return (
+
+    const [task, setTask] = useState();
+    const {data} = useQuery(TaskQuery);
+
+    useEffect(() => {
+        if (data) {
+            setTask(data.tasks);
+        }
+    }, [data]);
+
+
+    return localStorage.getItem('name') ? (
         <Switch>
-            <Route exact path={SLUGS.login} component={basicLogin}/>
-            <Route path={LINKS.signup} component={RegisterPage}/>
+            <Route path={LINKS.create} component={CustomizedSteppers}/>
+            {task === null &&
+            <Redirect to={LINKS.create} component={CustomizedSteppers}/>}
+
         </Switch>
-    );
+    ) : (
+        <Switch>
+
+            <Route path={LINKS.ologin} component={First}/>
+            {task === null && <Redirect to={LINKS.ologin} component={First}/>}
+
+        </Switch>
+
+    )
 }
 
 export default PublicRoutes;

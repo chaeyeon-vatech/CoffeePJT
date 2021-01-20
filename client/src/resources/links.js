@@ -1,9 +1,14 @@
 export default {
     // private
     orderboard: '/order',
+    after: '/after',
     tickets: '/pay',
     settings: '/settings',
-    // auth
+    notask: '/notask',
+    // firstpage
     login: '/',
-    signup: '/signup'
+    ologin: '/login',
+    signup: '/signup',
+    create: '/create',
+    reset: '/reset'
 };

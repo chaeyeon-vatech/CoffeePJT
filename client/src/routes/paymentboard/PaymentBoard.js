@@ -2,11 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import {useQuery} from "@apollo/react-hooks";
-import {AllUserQuery, CostQuery, CountQuery, MeQuery, SearchQuery, UserSearchQuery} from "../../graphql/query";
+import {
+    CostQuery,
+    CountQuery,
+    MeQuery, NotQuery,
+    SearchQuery
+} from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
-import {OrderConfirmMutation, OrderGiveupMutation} from "../../graphql/mutation";
-import {TextField} from "@material-ui/core";
+import {OrderConfirmMutation} from "../../graphql/mutation";
+import {TextField, Tooltip} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
+import Button from "@material-ui/core/Button";
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -55,7 +61,9 @@ const useStyles = createUseStyles((theme) => ({
     },
     stats: {
         borderTop: `1px solid ${theme.color.lightGrayishBlue2}`,
-        width: '100%'
+        width: '100%',
+        marginTop: 10,
+        marginBottom: 20
     },
     statTitle: {
         fontWeight: '600',
@@ -71,51 +79,51 @@ const useStyles = createUseStyles((theme) => ({
         ...theme.typography.title,
         textAlign: 'center',
         color: theme.color.veryDarkGrayishBlue
+    },
+    a: {
+        color: "black"
     }
 }));
+
+function changeBackground(e) {
+    e.target.style.background = 'red';
+}
 
 function TodayTrendsComponent() {
     const theme = useTheme();
     const classes = useStyles({theme});
 
     const [money, setMoney] = useState('');
+    const [order, setOrder] = useState('');
+    const [count, setCount] = useState('');
+    const [id, setId] = useState();
+    const [user, setUser] = useState();
+    const [pa, setPa] = useState();
+
+
     const {data} = useQuery(CostQuery);
+    const {data: na} = useQuery(CountQuery);
+    const {data: da} = useQuery(MeQuery);
+    const {data: people} = useQuery(NotQuery);
+
     useEffect(() => {
         if (data) {
             setMoney(data.howmuch);
         }
-    }, [data]);
-
-
-    const [order, setOrder] = useState('');
-    const [count, setCount] = useState('');
-    const {data: na} = useQuery(CountQuery);
-    useEffect(() => {
         if (na) {
             setOrder(na.howmany);
         }
-    }, [na]);
-
-    const {data: user} = useQuery(AllUserQuery)
-
-
-    useEffect(() => {
         if (user) {
             setCount(user.allUsers.length);
-
         }
-    }, [user]);
-
-
-    const [id, setId] = useState();
-
-    const {data: da} = useQuery(MeQuery);
-
-    useEffect(() => {
         if (da) {
             setId(da.me._id);
         }
-    }, [da]);
+        if (people) {
+            setPa(people.includedNothing)
+        }
+    });
+
 
     const mutation = OrderConfirmMutation;
 
@@ -124,7 +132,8 @@ function TodayTrendsComponent() {
             variables: {creater: id},
             onCompleted: (data) => {
                 alert("주문이 초기화되었습니다.")
-                window.location.href = '/order';
+                localStorage.clear();
+                window.location.href = '/login';
 
 
             },
@@ -135,15 +144,6 @@ function TodayTrendsComponent() {
         }
     )
 
-
-    function renderLegend(color, title) {
-        return (
-            <Row vertical='center'>
-                <div style={{width: 16, border: '2px solid', borderColor: color}}></div>
-                <span className={classes.legendTitle}>{title}</span>
-            </Row>
-        );
-    }
 
     function renderStat(title, value) {
         return (
@@ -158,6 +158,7 @@ function TodayTrendsComponent() {
             </Column>
         );
     }
+
 
     return (
         <Row
@@ -180,13 +181,19 @@ function TodayTrendsComponent() {
             </Column>
             <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
                 {renderStat('누적 금액', money)}
-                {renderStat('미주문자', count - parseInt(order[0]) - parseInt(order[1]) - parseInt(order[2]))}
+                {renderStat('미주문자', <Tooltip title={pa &&
+                pa.map((content) => content.username).join(',')} placement="top">
+                    <Button variant="contained">{order[3]}</Button>
+                </Tooltip>)}
+
                 {renderStat('결제 완료', <TextField type='submit'
                                                 onClick={deletePostOrMutation}
                                                 disabled={loading}
-                                                value="Reset"/>)}
+                                                value='결제 완료'/>)}
             </Column>
         </Row>
+
+
     );
 }
 

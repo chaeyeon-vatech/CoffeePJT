@@ -1,18 +1,22 @@
 import React from 'react';
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
-import {DeleteOrder} from "../../graphql/useMutation";
+import {Giveup} from "../../graphql/useMutation";
 
 const useStyles = makeStyles((theme) => ({
     button: {
         selfAlign: "center",
         marginTop: "30px",
-        marginLeft: "20px"
+        marginLeft: "450px",
+        padding: "10px 40px 10px 40px",
+        textAlign: "center"
 
     }
+
 }));
 
-function DeleteButton(userid) {
+
+function GiveupButton(userid) {
 
     const classes = useStyles();
 
@@ -22,10 +26,10 @@ function DeleteButton(userid) {
             <form action="#">
 
                 <Button variant="contained" type='submit'
-                        onClick={DeleteOrder(userid)}
+                        onClick={Giveup(userid)}
                         className={classes.button}
                         value="↳주문 취소">
-                    주문 취소
+                    주문하지 않겠습니다.
                 </Button>
 
             </form>
@@ -35,4 +39,4 @@ function DeleteButton(userid) {
 }
 
 
-export default DeleteButton;
+export default GiveupButton;

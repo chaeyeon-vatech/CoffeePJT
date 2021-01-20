@@ -7,17 +7,14 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    idNum: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
     status: {
         type:String,
-        required:false
+        default:"대기중"
+    },
+    position: {
+        type: String,
+        default:"주문자"
+        
     }
 });
 

@@ -4,7 +4,7 @@ import {createUseStyles, useTheme} from 'react-jss';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
-        backgroundColor: '#f6f6f6',
+        backgroundColor: 'rgba(246,244,244,0.9)',
         border: `3px solid ${theme.color.lightGrayishBlue2}`,
         borderRadius: 4,
         cursor: 'pointer',

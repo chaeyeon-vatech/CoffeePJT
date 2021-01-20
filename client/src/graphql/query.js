@@ -1,40 +1,10 @@
 import gql from 'graphql-tag';
 
-//전체 목록 불러오기
-export const SearchQuery = gql`
-    query orders{
-        orders(search:"",category:1,index:1,hasNext:false,acdc:"username"){
-            _id
-            menu
-            hi
-            username
-            createdAt
-        }
-    }
-`;
-
-//Pagination할 전체 목록
-export const IndexQuery = gql`
-    query orders($index:Int!){
-        orders(search:"",category:1,index:$index,hasNext:true){
-            _id
-            menu
-            hi
-            username
-            createdAt
-        }
-    }
-`;
-
 //User Order 목록 불러오기/검색
 export const UserSearchQuery = gql`
-    query orders($search:String!){
-        orders(search:$search,category:4,index:1,hasNext:false,acdc:"username"){
-            _id
-            menu
-            hi
-            username
-            createdAt
+    query {
+        allUsers{
+            _id, position,username, status
         }
     }
 `;
@@ -42,11 +12,10 @@ export const UserSearchQuery = gql`
 
 //내 목록 불러오기
 export const MeQuery = gql`
-    query {
-        me {
-            _id
-            idNum
+    query me($userid:ID!) {
+        me(userid:$userid){
             username
+            position
             status
         }
     }
@@ -81,12 +50,42 @@ export const CupQuery = gql`
 
 export const TaskQuery = gql`
     query{
-        tasks(search:"",category:0,index:1,hasNext:true,acdc:""){
+        tasks{
             _id
             title
+            creater
         }
     }
 
+
+`
+
+//Search
+
+export const SearchQuery = gql`
+    query($word: String!) {
+        user(word:$word category:1){
+            _id
+            username
+            status
+            position
+        }
+    }
+
+`
+
+
+//주문자 Search
+
+export const USearchQuery = gql`
+    query($word: String!) {
+        user(word:$word category:2){
+            _id
+            username
+            status
+            position
+        }
+    }
 
 `
 
@@ -97,16 +96,70 @@ export const AllUserQuery = gql`
         allUsers{
             _id
             username
-            idNum
+            position
+            status
         }
     }
 `
 
+export const VacationQuery = gql`
+    query{
+        includedVacation{
+            username
+            _id
+        }
+    }
+
+`
+
+//Order Query
+
+export const OrderQuery = gql`
+    query {
+        orders{
+            username
+            menu}
+    }
+`
 
 
+export const NotQuery = gql`
+    query {
+        includedNothing{
+            username
+        }
+    }
 
 
+`
+
+export const Ordermen = gql`
+    query{
+        includedOrdermen{
+            username
+            _id
+        }
+    }`
 
 
+export const OrderSearch = gql`
+    query orderMine($id:ID!){
+        orderMine(_id:$id){
+            _id
+            username
+            hi
+            menu
+        }
+    }
+`
+
+export const Receipt = gql`
+    query {receipt}
+`
+
+
+export const ReceiptUsers = gql`
+    query receiptUsers{receiptUsers}
+`
 
 

@@ -1,15 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {Column, Row} from 'simple-flexbox';
+import React from 'react';
+import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import UserBoard from './UserBoard';
 
 const useStyles = createUseStyles({
     cardsContainer: {
         marginRight: -30,
-        marginTop: -30
+        marginTop: -50
     },
     cardRow: {
-        marginTop: 30,
         '@media (max-width: 768px)': {
             marginTop: 0
         }
@@ -18,16 +17,14 @@ const useStyles = createUseStyles({
         flexGrow: 1,
         marginRight: 30,
         '@media (max-width: 768px)': {
-            marginTop: 30,
+            // marginTop: 30,
             maxWidth: 'none'
         }
     },
-    todayTrends: {
-        marginTop: 30
+    container: {
+        marginTop: 0
     },
-    lastRow: {
-        marginTop: 30
-    },
+
     unresolvedTickets: {
         marginRight: 30,
         '@media (max-width: 1024px)': {
@@ -36,9 +33,7 @@ const useStyles = createUseStyles({
     },
     tasks: {
         marginTop: 0,
-        '@media (max-width: 1024px)': {
-            marginTop: 30
-        }
+        '@media (max-width: 1024px)': {}
     }
 });
 
@@ -48,7 +43,7 @@ function UserboardComponent() {
 
     return (
         <Column>
-            <div className={classes.todayTrends}>
+            <div className={classes.container}>
                 <UserBoard/>
             </div>
         </Column>
