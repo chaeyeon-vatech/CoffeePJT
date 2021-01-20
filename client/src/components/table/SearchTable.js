@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery} from "../../graphql/query";
-import FormDialog from "../dialog/UpdateUser";
+import UpdateUserDialog from "../dialog/UpdateUser";
 import UserDeleteButton from "../button/UserDeleteButton";
 
 
@@ -67,7 +67,7 @@ export default function SearchTable(search) {
 
                     <tr style={{marginBottom: 20}}>
                         <td>{content.username}</td>
-                        <td><FormDialog id={content._id} username={content.username}/></td>
+                        <td><UpdateUserDialog id={content._id} username={content.username}/></td>
                         <td><UserDeleteButton post_id={content._id}/></td>
 
                     </tr>
