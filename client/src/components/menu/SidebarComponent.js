@@ -76,9 +76,9 @@ function SidebarComponent() {
 
             <div className={classes.separator}></div>
             {user == "결제자" && <MenuItem
-                id={LINKS.tickets}
+                id={LINKS.pay}
                 title='결제자 페이지'
-                onClick={() => onClick(LINKS.tickets)}
+                onClick={() => onClick(LINKS.pay)}
             />}
 
 
