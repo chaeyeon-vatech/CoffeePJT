@@ -21,7 +21,7 @@ function PrivateRoutes() {
 
                 <Route exact path={LINKS.orderboard} component={MenuBoard}/>
                 <Route exact path={LINKS.after} component={AfterOrder}/>
-                <Route exact path={LINKS.tickets} component={PaymentboardComponent}/>
+                <Route exact path={LINKS.pay} component={PaymentboardComponent}/>
                 <Route exact path={LINKS.settings} component={UserboardComponent}/>
                 <Route exact path={LINKS.reset} component={Create}/>
                 <Redirect to={LINKS.orderboard} component={MenuBoard}/>

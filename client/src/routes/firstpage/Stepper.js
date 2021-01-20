@@ -162,11 +162,14 @@ const useStyles = makeStyles((theme) => ({
         display: "block",
         width: "100px",
         height: "100px",
-        border: "solid 6px #9e344d",
+        color:"white",
+        backgroundColor: "#254143",
+        border: "solid 6px #254143",
         borderRadius: "100%",
         transition: "all .2s linear",
         "&:hover": {
-            backgroundColor: 'rgb(12,12,12,0.8)'
+            backgroundColor: 'rgb(12,12,12,0.8)',
+            color:"white"
         }
 
     },
@@ -184,7 +187,8 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "100%",
         transition: "all .2s linear",
         "&:hover": {
-            backgroundColor: 'rgb(12,12,12,0.8)'
+            backgroundColor: 'rgb(12,12,12,0.8)',
+            color:"white"
         }
 
 
@@ -217,12 +221,17 @@ export default function CustomizedSteppers() {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
+
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-
     const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+
+    const handleUser = () => {
         if (window.confirm('결제자를 변경하시겠습니까?')) {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
             localStorage.clear();
@@ -303,15 +312,15 @@ export default function CustomizedSteppers() {
 
                                 {getStepContent(activeStep)}</Typography>
 
-                            <Button onClick={handleBack} className={classes.button}>
-                                Back
+                            <Button variant="contained" onClick={handleUser} className={classes.button}>
+                                결제자<br/> 전환
                             </Button>
                             <Button
                                 variant="contained"
                                 onClick={handleNext}
                                 className={classes.nbutton}
                             >
-                                Next
+                                주문 생성
                             </Button>
                         </div>
                     </div>
@@ -324,16 +333,11 @@ export default function CustomizedSteppers() {
 
                                 {getStepContent(activeStep)}</Typography>
 
-                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                                Back
+                            <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
+                                    className={classes.button}>
+                                주문자<br/>미주문자<br/> 페이지
                             </Button>
-                            <Button
-                                variant="contained"
-                                onClick={create}
-                                className={classes.nbutton}
-                            >
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
+
                         </div>
                     </div>
                 )}

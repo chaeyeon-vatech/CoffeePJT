@@ -164,7 +164,6 @@ const handleClick = (name, id) => {
     localStorage.setItem('myData', id)
     localStorage.setItem('name', name)
     window.location.href = '/create'
-
 }
 
 

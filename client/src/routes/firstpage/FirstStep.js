@@ -4,6 +4,8 @@ import {TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import TransferList from "../../components/table/TransferTable";
+import {Alert} from "@material-ui/lab";
+import SuccessAlert from "../../components/alert/SuccessAlert";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -17,7 +19,8 @@ const useStyles = createUseStyles((theme) => ({
             maxWidth: "525px",
             minHeight: "670px",
             position: "relative",
-            boxShadow: "0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19)"
+            boxShadow: "0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19)",
+            marginTop: "-20px"
         },
         loginhtml: {
             marginTop: "30px",
@@ -101,19 +104,12 @@ const useStyles = createUseStyles((theme) => ({
     }))
 ;
 
-const handleClick = (name, id) => {
-
-    localStorage.setItem('myData', id)
-    localStorage.setItem('name', name)
-    window.location.href = '/create'
-}
-
 const AuthenticationForm = () => {
 
     const theme = useTheme();
     const classes = useStyles({theme});
     const [contents, setContents] = useState();
-
+    const [open, setOpen] = React.useState(true);
 
     const {data} = useQuery(TaskQuery);
 
@@ -128,8 +124,12 @@ const AuthenticationForm = () => {
 
 
         <div className={classes.root}>
+            <SuccessAlert message="미주문자(휴가자/결근자/기타사유)/주문자를 구별하여 버튼을 이용하여 양 옆으로 상태 변환이 가능합니다!"
+            button="주문자/미주문자 페이지란?"/>
+
             <div className={classes.loginwrap}>
                 <div className={classes.loginhtml}>
+
 
                     <h2>👨🏻‍💻{localStorage.getItem('name')}님 환영합니다.👨🏻‍💻️</h2>
                     <h5 className={classes.h5}>미주문자/주문자 선택 후 버튼으로 변환해주세요.</h5>
