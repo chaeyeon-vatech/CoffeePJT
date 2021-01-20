@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import App from './App';
 import {ApolloClient, ApolloLink} from 'apollo-boost';
-import {onError} from 'apollo-link-error';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {createHttpLink} from 'apollo-link-http';
 import {ApolloProvider} from '@apollo/react-hooks';
