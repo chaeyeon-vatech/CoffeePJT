@@ -4,7 +4,6 @@ import {TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import TransferList from "../../components/table/TransferTable";
-import {Alert} from "@material-ui/lab";
 import SuccessAlert from "../../components/alert/SuccessAlert";
 
 
@@ -109,7 +108,6 @@ const AuthenticationForm = () => {
     const theme = useTheme();
     const classes = useStyles({theme});
     const [contents, setContents] = useState();
-    const [open, setOpen] = React.useState(true);
 
     const {data} = useQuery(TaskQuery);
 
@@ -125,7 +123,7 @@ const AuthenticationForm = () => {
 
         <div className={classes.root}>
             <SuccessAlert message="미주문자(휴가자/결근자/기타사유)/주문자를 구별하여 버튼을 이용하여 양 옆으로 상태 변환이 가능합니다!"
-            button="주문자/미주문자 페이지란?"/>
+                          button="주문자/미주문자 페이지란?"/>
 
             <div className={classes.loginwrap}>
                 <div className={classes.loginhtml}>

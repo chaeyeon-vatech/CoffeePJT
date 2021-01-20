@@ -2,6 +2,7 @@ import React from 'react';
 import {TaskDelete} from "../../graphql/useMutation";
 import {Row} from "simple-flexbox";
 import {createUseStyles, useTheme} from "react-jss";
+import Button from "@material-ui/core/Button";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -12,6 +13,9 @@ const useStyles = createUseStyles((theme) => ({
         padding: '5px !important',
         marginLeft: "40px"
     },
+    button:{
+        width:"200px"
+    }
 }));
 
 
@@ -25,14 +29,15 @@ function TaskDeleteButton(post_id, user_id) {
         <>
 
             <form action="#">
-                <Row
+                <Button
                     horizontal='center'
+                    variant="outlined"
                     vertical='center'
-                    className={[classes.addButton].join(' ')}
+                    className={classes.button}
                     onClick={TaskDelete(post_id, user_id)}
                 >
-                    삭제
-                </Row>
+                    주문 변경
+                </Button>
 
             </form>
 

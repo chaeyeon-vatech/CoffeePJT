@@ -5,7 +5,7 @@ import CardComponent from 'components/cards/CardComponent';
 import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../graphql/query";
 import UserEditTable from "../../components/table/UserEditTable";
-import SearchButton from "../../components/button/Searchbutton";
+import SearchTable from "../../components/table/SearchTable";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: "30px"},
@@ -64,8 +64,7 @@ function Create(props) {
     const classes = useStyles({theme});
     const [contents, setContents] = useState();
     const [result, setResult] = useState();
-    const [search, setSearch] = useState();
-
+    const [search, setSearch] = useState(undefined);
 
     const {data} = useQuery(TaskQuery);
 
@@ -100,14 +99,14 @@ function Create(props) {
                         <input type="text" placeholder="유저를 검색해주세요" onChange={e => setSearch(e.target.value)}
                                className={classes.input}/>
                     </span>
-                    <SearchButton search={search}/>
 
                 </Row>,
                 <Row>
 
                     <Row horizontal='space-between' vertical='center'>
                         <Row>
-                            <UserEditTable/>
+                            {(search === undefined || search === '') && <UserEditTable/>}
+                            {(search != undefined && search != '') && <SearchTable search={search}/>}
 
                         </Row>
                     </Row>

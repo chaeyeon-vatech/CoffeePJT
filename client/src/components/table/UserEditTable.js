@@ -10,7 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import {useQuery} from "@apollo/react-hooks";
 import {AllUserQuery} from "../../graphql/query";
-import FormDialog from "../../routes/userboard/Dialog";
+import FormDialog from "../dialog/UpdateUser";
 import UserDeleteButton from "../button/UserDeleteButton";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -85,16 +85,6 @@ export default function UserEditTable() {
         }
 
         setChecked(newChecked);
-    };
-
-    const numberOfChecked = (items) => intersection(checked, items).length;
-
-    const handleToggleAll = (items) => () => {
-        if (numberOfChecked(items) === items.length) {
-            setChecked(not(checked, items));
-        } else {
-            setChecked(union(checked, items));
-        }
     };
 
     const handleClickOpen = () => {

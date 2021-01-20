@@ -170,7 +170,7 @@ const AuthenticationForm = () => {
         <div className={classes.root}>
             <div className={classes.loginwrap}>
                 <div className={classes.taskhtml}>
-                    <h2>{localStorage.getItem('name')}님!<br/> 주문 설정이 모두 완료되었습니다.<br/></h2>
+                    <h2>{localStorage.getItem('name')}님!<br/> 작성하신 주문 설정을<br/> 변경하고 싶으신가요?<br/></h2>
 
                     <h3 className={classes.h5}>이후 주문 관리 페이지에서 주문자 관리/주문 내용<br/> 변경 가능합니다!</h3>
 

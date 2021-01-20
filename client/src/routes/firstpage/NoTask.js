@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
-import {SearchQuery, TaskQuery} from "../../graphql/query";
+import {SearchQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import {Autocomplete} from "@material-ui/lab";

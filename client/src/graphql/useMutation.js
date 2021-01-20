@@ -19,7 +19,7 @@ export function ChangeGiveup(userid) {
             variables: {
                 id: userid.userid
             },
-            onCompleted: (data) => {
+            onCompleted: () => {
                 window.location.href = '/order';
             }
         }
@@ -61,7 +61,7 @@ export function CreateOrder(hi) {
 export function DeleteOrder(userid) {
 
 
-    const [deletePostOrMutation, {loading}] = useMutation(RemoveMutation, {
+    const [deletePostOrMutation] = useMutation(RemoveMutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
             variables: {
@@ -89,7 +89,7 @@ export function Giveup(userid) {
             variables: {
                 userid: userid.userid
             },
-            onCompleted: (data) => {
+            onCompleted: () => {
             }
         }
     )
@@ -247,7 +247,8 @@ export function SelectUpdate(username, content, setClick) {
 //선택적 수정
 export function DUpdateUser(username, content, setOpen) {
     const [update] = useMutation(UpdateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
+            refetchQueries: [{query: UserSearchQuery},
+                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
             variables: {
                 id: username.id,
                 username: content

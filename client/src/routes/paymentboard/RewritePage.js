@@ -55,7 +55,7 @@ const useStyles = createUseStyles((theme) => ({
 
 }));
 
-function Create(props) {
+function RewritePage(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
     const [contents, setContents] = useState();
@@ -83,8 +83,8 @@ function Create(props) {
 
                                 <thead>
                                 <tr>
-                                    <th scope="col">게시글 내용</th>
-                                    <th scope="col">게시글 삭제</th>
+                                    <th scope="col">주문 내용</th>
+                                    <th scope="col">주문 변경</th>
 
 
                                 </tr>
@@ -100,7 +100,6 @@ function Create(props) {
                                                           user_id={localStorage.getItem('myData')}/></td>
 
                                     </tbody>
-
 
                                 ))}
                             </table>
@@ -119,4 +118,4 @@ function Create(props) {
 }
 
 
-export default Create;
+export default RewritePage;

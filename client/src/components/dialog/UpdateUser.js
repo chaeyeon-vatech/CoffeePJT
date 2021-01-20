@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {DUpdateUser} from "../../graphql/useMutation";
 
 export default function FormDialog(username) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const [content, setContent] = useState('');
 
     const handleClickOpen = () => {
