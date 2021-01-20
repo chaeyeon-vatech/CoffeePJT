@@ -6,6 +6,7 @@ import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../graphql/query";
 import UserEditTable from "../../components/table/UserEditTable";
 import SearchTable from "../../components/table/SearchTable";
+import UserAddButton from "../../components/button/UserAddButton";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: "30px"},
@@ -105,8 +106,8 @@ function Create(props) {
 
                     <Row horizontal='space-between' vertical='center'>
                         <Row>
-                            {(search === undefined || search === '') && <UserEditTable/>}
-                            {(search != undefined && search != '') && <SearchTable search={search}/>}
+
+                            {search === undefined || search === '' ? <UserEditTable/> : <SearchTable search={search}/>}
 
                         </Row>
                     </Row>

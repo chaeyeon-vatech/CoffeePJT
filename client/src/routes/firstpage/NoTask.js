@@ -225,15 +225,10 @@ const AuthenticationForm = () => {
                                             margin="normal"
                                             color={"secondary"}
                                             onChange={e => setSearch(e.target.value)}
-                                            InputProps={{
-                                                ...params.InputProps,
-                                                type: 'search',
-                                                className: classes.focused
-                                            }}
                                             onKeyPress={(ev) => {
                                                 const listener = event => {
-                                                    if (event.code === "Enter" || event.code === "NumpadEnter") {
-                                                        handleClick(search, result.map((content) => (content._id)))
+                                                    if (event.code === "Enter") {
+                                                        handleClick(inputValue, result.map((content) => (content._id)))
 
                                                     }
                                                 };
@@ -242,6 +237,11 @@ const AuthenticationForm = () => {
                                                     document.removeEventListener("keypress", listener);
                                                 };
 
+                                            }}
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                type: 'search',
+                                                className: classes.focused
                                             }}
                                         />
                                     )}

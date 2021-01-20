@@ -123,7 +123,7 @@ const useStyles = createUseStyles((theme) => ({
 ;
 
 const handleClick = (name, id) => {
-    if (window.confirm(name + '로 로그인하시겠습니까?')) {
+    if (window.confirm(name + '님으로 로그인하시겠습니까?')) {
 
         localStorage.setItem('myData', id)
         window.location.href = '/order'
@@ -165,22 +165,6 @@ const AuthenticationForm = () => {
         }
     }, [task]);
 
-    // useEffect(() => {
-    //     const listener = event => {
-    //         if (event.code === "Enter" || event.code === "NumpadEnter") {
-    //             handleClick(inputValue, result.map((content) => (content._id)))
-    //
-    //         }
-    //     };
-    //     document.addEventListener("keypress", listener);
-    //     return () => {
-    //         document.removeEventListener("keypress", listener);
-    //     };
-    // }, []);
-
-    // console.log(inputValue)
-
-
     return (
         <div className={classes.root}>
             <div className={classes.loginwrap}>
@@ -216,7 +200,7 @@ const AuthenticationForm = () => {
                                             onKeyPress={(ev) => {
                                                 const listener = event => {
                                                     if (event.code === "Enter" || event.code === "NumpadEnter") {
-                                                        handleClick(search, result.map((content) => (content._id)))
+                                                        handleClick(inputValue, result.map((content) => (content._id)))
 
                                                     }
                                                 };

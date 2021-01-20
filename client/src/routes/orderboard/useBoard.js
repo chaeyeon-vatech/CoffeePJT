@@ -1,6 +1,6 @@
 import {CreateMutation} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
-import {MeQuery, OrderSearch} from "../../graphql/query";
+import {MeQuery, OrderSearch, Receipt, ReceiptUsers} from "../../graphql/query";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -30,7 +30,8 @@ export function CreateOrder(hi) {
 
     const [create] = useMutation(createmutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}, {query: ReceiptUsers}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,

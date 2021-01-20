@@ -45,7 +45,8 @@ export default function UpdateUserDialog(username) {
                     <Button onClick={handleClose} color="primary">
                         취소
                     </Button>
-                    <Button disabled={content === ''||content===username.username} onClick={DUpdateUser(username, content, setOpen)} color="primary">
+                    <Button disabled={content === '' || content === username.username}
+                            onClick={DUpdateUser(username, content, setOpen)} color="primary">
                         변경
                     </Button>
                 </DialogActions>
