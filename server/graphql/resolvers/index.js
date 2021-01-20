@@ -1,4 +1,4 @@
-import { extendResolversFromInterfaces } from 'apollo-server';
+
 import Order from '../../models/order.js';
 import Task from '../../models/task.js';
 import users from '../../models/user.js';
