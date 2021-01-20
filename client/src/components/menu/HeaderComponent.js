@@ -83,7 +83,7 @@ function HeaderComponent() {
             title = '주문자 페이지';
             break;
 
-        case currentItem === SLUGS.tickets:
+        case currentItem === SLUGS.pay:
             title = '결제자 페이지';
             break;
 

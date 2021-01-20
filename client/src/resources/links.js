@@ -2,7 +2,7 @@ export default {
     // private
     orderboard: '/order',
     after: '/after',
-    tickets: '/pay',
+    pay: '/pay',
     settings: '/settings',
     notask: '/notask',
     // firstpage
