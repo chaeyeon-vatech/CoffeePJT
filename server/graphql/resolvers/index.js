@@ -461,7 +461,7 @@ const resolvers = {
             let start = new Date();
             const cmenu = args.cmenu
 
-            const result = ""
+            let result = ""
             if (cmenu == 0) {
                 const orders0 = await Order.find({ "menu": { $eq: "아메리카노" }, "hi": { $eq: "hot" } }).sort({ "username": 1 })
 
