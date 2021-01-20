@@ -80,7 +80,7 @@ const useStyles = createUseStyles((theme) => ({
             transformStyle: "preserve-3d",
             backgroundColor: "rgba(140,83,83,0.9)",
             marginBottom: "20px",
-            padding:"20 20 20 20",
+            padding: "20 20 20 20",
             '&:nth-child(n) > button': {
                 width: "100%",
                 margin: "none",
@@ -93,7 +93,7 @@ const useStyles = createUseStyles((theme) => ({
                 alignContent: "center",
                 marginTop: "30px",
                 display: "block",
-                marginBottom:"30px"
+                marginBottom: "30px"
             }
 
         },
@@ -135,7 +135,7 @@ const useStyles = createUseStyles((theme) => ({
                 width: "100%",
                 color: "black",
                 display: "block",
-                fontSize:"15px"
+                fontSize: "15px"
             },
             '&:nth-child(n) > label ': {
                 color: "#aaa",
@@ -160,24 +160,17 @@ const useStyles = createUseStyles((theme) => ({
 ;
 
 const handleClick = (name, id) => {
-    // if (window.confirm(name + '님 새로운 주문을 생성하시겠습니까?')) {
 
     localStorage.setItem('myData', id)
     localStorage.setItem('name', name)
     window.location.href = '/create'
-    // }
+
 }
 
 
 const handleLogout = () => {
-
     localStorage.clear()
-    window.location.href = '/create'
-
 }
-
-// const options = ['Option 1', 'Option 2'];
-
 
 const AuthenticationForm = () => {
 
@@ -187,8 +180,6 @@ const AuthenticationForm = () => {
     const [search, setSearch] = useState();
     const [result, setResult] = useState([]);
     const [inputValue, setInputValue] = useState();
-
-    const {task} = useQuery(TaskQuery);
 
     const {data} = useQuery(SearchQuery, {
         variables: {
@@ -206,85 +197,72 @@ const AuthenticationForm = () => {
 
 
     return (
+
         <div className={classes.root}>
-            <div>
-                {localStorage.getItem('name') ? (
-                    <div className={classes.root}>
-                        <div className={classes.confirmwrap}>
+            <div className={classes.loginwrap}>
 
-                            <div className={classes.loginafter}>
-                                <h3 className={classes.h5}>{localStorage.getItem('name') + "님 환영합니다"}</h3>
-                                <h5 className={classes.h5}>{localStorage.getItem('name') + "님이 맞으신가요?"}</h5>
+                <div className={classes.loginhtml}>
+                    <h3>현재 주문이 없습니다.</h3>
+                    <h5 className={classes.h5}>주문을 생성하시려면<br/>이름을 입력해주세요!</h5>
 
-                                <Button variant="contained" id='logout' onClick={()=>window.location.href = '/create'}
-                                        className={classes.button}>{localStorage.getItem('name') + "님이 맞습니다!"}</Button>
-                                <Button variant="contained" id='logout' onClick={handleLogout}
-                                        className={classes.button}>아닙니다.</Button>
+                    <div className={classes.loginform}>
 
-                                {/*</div>*/}
-                            </div>
+                        <div className={classes.group}>
+                            <label>결제자 </label>
+                            <Typography component="div" variant="body1">
 
+                                <Autocomplete
+                                    freeSolo
+                                    id="free-solo-2-demo"
+                                    disableClearable
+                                    options={result.map((content) => content.username)}
+                                    inputValue={inputValue}
+                                    onInputChange={(event, newInputValue) => {
+                                        setInputValue(newInputValue);
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            margin="normal"
+                                            color={"secondary"}
+                                            onChange={e => setSearch(e.target.value)}
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                type: 'search',
+                                                className: classes.focused
+                                            }}
+                                            onKeyPress={(ev) => {
+                                                const listener = event => {
+                                                    if (event.code === "Enter" || event.code === "NumpadEnter") {
+                                                        handleClick(search, result.map((content) => (content._id)))
+
+                                                    }
+                                                };
+                                                document.addEventListener("keypress", listener);
+                                                return () => {
+                                                    document.removeEventListener("keypress", listener);
+                                                };
+
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </Typography>
+
+
+                            <Button type="submit"
+                                    onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
+                            >Login</Button>
 
                         </div>
 
+
                     </div>
-                ) : (
-                    <div className={classes.root}>
-                        <div className={classes.loginwrap}>
-
-                            <div className={classes.loginhtml}>
-                                <h3>현재 주문이 없습니다.</h3>
-                                <h5 className={classes.h5}>주문을 생성하시려면<br/>이름을 입력해주세요!</h5>
-
-                                <div className={classes.loginform}>
-
-                                    <div className={classes.group}>
-                                        <label>결제자 </label>
-                                        <Typography component="div" variant="body1">
-
-                                            <Autocomplete
-                                                freeSolo
-                                                id="free-solo-2-demo"
-                                                disableClearable
-                                                options={result.map((content) => content.username)}
-                                                inputValue={inputValue}
-                                                onInputChange={(event, newInputValue) => {
-                                                    setInputValue(newInputValue);
-                                                }}
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
-                                                        margin="normal"
-                                                        color={"secondary"}
-                                                        onChange={e => setSearch(e.target.value)}
-                                                        InputProps={{
-                                                            ...params.InputProps,
-                                                            type: 'search',
-                                                            className: classes.focused
-                                                        }}
-                                                    />
-                                                )}
-                                            />
-                                        </Typography>
-
-
-                                        <Button type="submit"
-                                                onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
-                                        >Login</Button>
-
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                </div>
             </div>
         </div>
+    )
 
-
-    );
 };
 
 export default AuthenticationForm;

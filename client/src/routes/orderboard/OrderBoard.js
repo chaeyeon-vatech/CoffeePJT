@@ -8,15 +8,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
-import {Tab, Tabs, useTheme} from "@material-ui/core";
+import {useTheme} from "@material-ui/core";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import {CreateMutation} from "../../graphql/mutation";
-import CreateOrder from "./useMutation";
+import CreateOrder from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
-import {convertlinksToUrl} from "../../resources/utilities";
-import SLUGS from 'resources/links';
-import {useHistory} from "react-router-dom";
 import {Alert} from "@material-ui/lab";
 import CheckIcon from '@material-ui/icons/Check';
 
@@ -40,15 +37,9 @@ export default function CorderBoard() {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const {push} = useHistory();
-    const isMobile = window.innerWidth <= 1080;
-    const [value, setValue] = useState(0);
     const [menu, setMenu] = useState();
     const [hi, setHi] = useState();
-    const [position, setPosition] = useState();
     const [status, setStatus] = useState();
-    const [username, setName] = useState();
-    const [check, setCheck] = useState();
 
 
     const {data} = useQuery(MeQuery, {
@@ -60,10 +51,7 @@ export default function CorderBoard() {
 
     useEffect(() => {
         if (data) {
-            setName(data.me.username);
-            setPosition(data.me.position);
             setStatus(data.me.status);
-
         }
     }, [data]);
 

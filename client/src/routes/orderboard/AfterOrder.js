@@ -1,10 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import UserTable from "../../components/table/UserTable";
-import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, TaskQuery} from "../../graphql/query";
-
+import UserTable from "../../components/table/AfterTable";
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -21,36 +18,6 @@ const useStyles = createUseStyles((theme) => ({
 function OrderBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [name, setName] = useState();
-    const [position, setPosition] = useState();
-    const [status, setStatus] = useState();
-    const [contents, setContents] = useState('');
-
-    const {data: task} = useQuery(TaskQuery);
-    useEffect(() => {
-        if (task) {
-            setContents(data.tasks);
-
-        }
-    }, [task]);
-
-
-    const {data} = useQuery(MeQuery, {
-        variables: {
-            userid: localStorage.getItem('myData')
-        }
-    });
-
-
-    useEffect(() => {
-        if (data) {
-            setName(data.me.username);
-            setPosition(data.me.position);
-            setStatus(data.me.status);
-
-        }
-    }, [data]);
-
 
     return (
         <Row
@@ -68,7 +35,6 @@ function OrderBoard() {
             >
                 <UserTable/>
             </Column>
-
 
         </Row>
 

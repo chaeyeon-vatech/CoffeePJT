@@ -6,30 +6,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {CreateUserMutation} from "../../graphql/mutation";
-import {useMutation} from "@apollo/react-hooks";
-import {UserSearchQuery} from "../../graphql/query";
+import {UserAdd} from "../../graphql/useMutation";
 
 export default function UserAddButton(username) {
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState('');
-
-    const [create] = useMutation(CreateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery}],
-            variables: {
-                username: content
-            },
-            onCompleted: (data) => {
-                alert("유저 추가가 완료되었습니다.")
-                setOpen(false);
-
-            },
-
-            onError: () => {
-                alert("같은 이름은 등록하실 수 없습니다!")
-            },
-        }
-    )
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -63,7 +44,7 @@ export default function UserAddButton(username) {
                     <Button onClick={handleClose} color="primary">
                         취소
                     </Button>
-                    <Button onClick={create} color="primary">
+                    <Button onClick={UserAdd(username, content, setOpen)} color="primary">
                         추가
                     </Button>
                 </DialogActions>

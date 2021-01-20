@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import CardComponent from 'components/cards/CardComponent';
-import {useMutation, useQuery} from "@apollo/react-hooks";
-import {SearchQuery, TaskQuery, UserSearchQuery} from "../../graphql/query";
-import {CreateUserMutation} from "../../graphql/mutation";
+import {useQuery} from "@apollo/react-hooks";
+import {SearchQuery, TaskQuery} from "../../graphql/query";
 import UserEditTable from "../../components/table/UserEditTable";
 import SearchButton from "../../components/button/Searchbutton";
 
@@ -63,20 +62,12 @@ const useStyles = createUseStyles((theme) => ({
 function Create(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
-    const [title, setTitle] = useState();
     const [contents, setContents] = useState();
     const [result, setResult] = useState();
     const [search, setSearch] = useState();
 
 
     const {data} = useQuery(TaskQuery);
-
-    useEffect(() => {
-        if (data) {
-            setContents(data.tasks);
-        }
-    })
 
     const {data: se} = useQuery(SearchQuery, {
         variables: {
@@ -85,64 +76,20 @@ function Create(props) {
 
     });
 
-
     useEffect(() => {
+        if (data) {
+            setContents(data.tasks);
+        }
         if (se) {
             setResult(se.user);
 
         }
-    }, [se]);
-
-
-    const [create, {loading}] = useMutation(CreateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery}],
-            variables: {
-                username: title
-            },
-            onCompleted: (data) => {
-                alert("유저 추가가 완료되었습니다.")
-            },
-
-            onError: () => {
-                alert("유저 이름을 작성해주세요.")
-            },
-        }
-    )
-
-    function onCheckboxClick(index) {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems[index].checked = newItems[index].checked ? false : true;
-            return newItems;
-        });
-    }
-
-    function onClick() {
-        return (
-            console.log(result)
-        );
-    }
-
-
-    function renderAddButton() {
-        return (
-            <Row
-                horizontal='center'
-                vertical='center'
-                className={[classes.addButton].join(' ')}
-                onClick={onClick}
-            >
-                검색
-            </Row>
-        );
-    }
+    });
 
     return (
         <CardComponent
             containerStyles={props.containerStyles}
             className={classes.root}
-            // title='📋 유저를 추가해주세요 📋'
-            // subtitle='(예시) 👏오늘은 OOO님이 @@ 기념으로 커피 쏩니다!👏'
 
             items={[
 

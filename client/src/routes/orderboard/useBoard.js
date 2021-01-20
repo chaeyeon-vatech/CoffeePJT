@@ -2,7 +2,6 @@ import {CreateMutation} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
 import {MeQuery, OrderSearch} from "../../graphql/query";
 import React from "react";
-import {useTheme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import {Alert} from "@material-ui/lab";
@@ -35,11 +34,7 @@ export function CreateOrder(hi) {
                 menu: hi.menu,
                 hi: hi.hi
             },
-            onCompleted: (data) => {
-                window.alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
-                    This is a success alert — check it out!
-                </Alert>)
-
+            onCompleted: () => {
             },
             onError: () => {
                 alert("메뉴를 선택해주세요.")

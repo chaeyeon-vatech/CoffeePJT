@@ -49,10 +49,8 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 2,
-        // width:"1000px"
     },
     paper: {
-        // padding: theme.spacing(3),
         textAlign: 'center',
         color: "#6d4c41",
     },
@@ -70,8 +68,6 @@ const useStyles = makeStyles((theme) => ({
 export default function MenuBoard() {
     const classes = useStyles();
     const [value, setValue] = React.useState('one');
-    const [name, setName] = useState();
-    const [position, setPosition] = useState();
     const [status, setStatus] = useState();
 
     const handleChange = (event, newValue) => {
@@ -87,10 +83,7 @@ export default function MenuBoard() {
 
     useEffect(() => {
         if (data) {
-            setName(data.me.username);
-            setPosition(data.me.position);
             setStatus(data.me.status);
-
         }
     }, [data]);
 

@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {useMutation, useQuery} from "@apollo/react-hooks";
+import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
-import {TaskCreateMutation} from "../../graphql/mutation";
-import {Row} from "simple-flexbox";
 import TransferList from "../../components/table/TransferTable";
 
 

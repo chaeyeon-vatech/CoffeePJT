@@ -11,7 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import {Column, Row} from "simple-flexbox";
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
-import CreateOrder from "./useMutation";
+import CreateButton from "./useBoard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
     color: {
         brown: "#6d4c41"
     },
-    // lastRow: {
-    //     marginTop: 30
-    // },
     border: {
         backgroundColor: "whitesmoke",
         fontSize: '15px !important',
@@ -46,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#373a47",
         width: "50%"
     },
-    todayTrends: {
+    container: {
         marginTop: 30
     },
     button: {
@@ -56,10 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function IceBoard() {
     const classes = useStyles();
-    const [value, setValue] = React.useState(1);
-
     const [contents, setContents] = useState('');
-    const [count, setCount] = useState('');
 
     const {data} = useQuery(TaskQuery);
     useEffect(() => {
@@ -68,10 +62,6 @@ export default function IceBoard() {
 
         }
     }, [data]);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
 
 
     return (
@@ -90,7 +80,7 @@ export default function IceBoard() {
 
             </Row>
 
-            <div className={classes.todayTrends}>
+            <div className={classes.container}>
                 <div className={classes.root}>
 
                     <Grid container spacing={3}>
@@ -100,7 +90,6 @@ export default function IceBoard() {
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
-                                            alt="Contemplative Reptile"
                                             height="200"
                                             image="https://m.iceplanet.co.kr/web/product/big/201905/392ef164b0a2c8c2edb6f1462c3f6cdf.jpg"
                                             title="Contemplative Reptile"
@@ -115,8 +104,8 @@ export default function IceBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="아시나요" color="primary" label="아시나요 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="icecream" menu="아시나요" color="primary" label="아시나요 선택"
+                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -127,7 +116,6 @@ export default function IceBoard() {
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
-                                            alt="Contemplative Reptile"
                                             height="200"
                                             image="https://img5.yna.co.kr/etc/inner/KR/2017/08/07/AKR20170807054700030_01_i_P2.jpg"
                                             title="Contemplative Reptile"
@@ -142,8 +130,8 @@ export default function IceBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="돼지콘" color="primary" label="돼지콘 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="icecream" menu="돼지콘" color="primary" label="돼지콘 선택"
+                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -154,7 +142,6 @@ export default function IceBoard() {
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
-                                            alt="Contemplative Reptile"
                                             height="200"
                                             image="https://contents.lotteon.com/itemimage/_v100649/LF/15/00/59/6_/0/LF1500596_0_1.jpg/dims/resizemc/400x400"
                                             title="Contemplative Reptile"
@@ -169,8 +156,8 @@ export default function IceBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="브라보" color="primary" label="브라보 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="icecream" menu="브라보" color="primary" label="브라보 선택"
+                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -181,7 +168,6 @@ export default function IceBoard() {
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
-                                            alt="Contemplative Reptile"
                                             height="200"
                                             image="https://m.assabeer.com/web/product/big/a_64.jpg"
                                             title="Contemplative Reptile"
@@ -196,9 +182,8 @@ export default function IceBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="icecream" menu="녹차마루" color="primary" label="녹차마루 선택"
-                                                     className={classes.button}/>
-
+                                        <CreateButton hi="icecream" menu="녹차마루" color="primary" label="녹차마루 선택"
+                                                      className={classes.button}/>
 
                                     </CardActions>
                                 </Card>
@@ -207,11 +192,6 @@ export default function IceBoard() {
                     </Grid>
                 </div>
             </div>
-
-            {/*<div className={classes.todayTrends}>*/}
-            {/*    <AfterOrder/>*/}
-            {/*</div>*/}
-
         </Column>
 
 

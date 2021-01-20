@@ -48,8 +48,6 @@ function BoardTable() {
                     <th><ChangeGiveupButton userid={localStorage.getItem("myData")}/></th>
                 </tr>
 
-
-                {/*<th><ChangeGiveupButton userid={localStorage.getItem("myData")}/></th>*/}
             </table>
         </>) : (
         <>

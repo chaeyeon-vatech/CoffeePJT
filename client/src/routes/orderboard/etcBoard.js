@@ -10,8 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import {Column, Row} from "simple-flexbox";
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, TaskQuery} from "../../graphql/query";
-import CreateOrder from "./useMutation";
+import {TaskQuery} from "../../graphql/query";
+import CreateButton from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,13 +54,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EtcBoard() {
     const classes = useStyles();
-    const [value, setValue] = React.useState(2);
-
     const [contents, setContents] = useState('');
-    const [count, setCount] = useState('');
-
     const [status, setStatus] = useState();
-
 
     const {data} = useQuery(TaskQuery);
     useEffect(() => {
@@ -69,12 +64,6 @@ export default function EtcBoard() {
 
         }
     }, [data]);
-
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
 
     return (
         <Column className={classes.background}>
@@ -103,7 +92,6 @@ export default function EtcBoard() {
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
-                                            alt="Contemplative Reptile"
                                             height="230"
                                             image="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1949&q=80"
                                         />
@@ -118,8 +106,8 @@ export default function EtcBoard() {
                                     </CardActionArea>
                                     <CardActions>
 
-                                        <CreateOrder hi="etc" menu="아이스티" color="primary" label="아이스티 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="etc" menu="아이스티" color="primary" label="아이스티 선택"
+                                                      className={classes.button}/>
 
                                     </CardActions>
                                 </Card>
@@ -131,7 +119,6 @@ export default function EtcBoard() {
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
-                                            alt="Contemplative Reptile"
                                             height="200"
                                             image="https://images.unsplash.com/photo-1524156868115-e696b44983db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1946&q=80"
                                         />
@@ -145,8 +132,8 @@ export default function EtcBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="etc" menu="망고 요거트 스무디" color="primary" label="스무디 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="etc" menu="망고 요거트 스무디" color="primary" label="스무디 선택"
+                                                      className={classes.button}/>
 
                                     </CardActions>
                                 </Card>
@@ -158,7 +145,6 @@ export default function EtcBoard() {
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
-                                            alt="Contemplative Reptile"
                                             height="200"
                                             image="https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80"
                                             title="Contemplative Reptile"
@@ -173,8 +159,8 @@ export default function EtcBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="etc" menu="딸기 요거트 스무디" color="primary" label="스무디 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="etc" menu="딸기 요거트 스무디" color="primary" label="스무디 선택"
+                                                      className={classes.button}/>
                                     </CardActions>
                                 </Card>
                             </Paper>
@@ -185,7 +171,6 @@ export default function EtcBoard() {
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
-                                            alt="Contemplative Reptile"
                                             height="200"
                                             image="https://images.unsplash.com/photo-1577118202736-22e9be066d95?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
                                             title="Contemplative Reptile"
@@ -200,8 +185,8 @@ export default function EtcBoard() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        <CreateOrder hi="etc" menu="플레인 요거트 스무디" color="primary" label="스무디 선택"
-                                                     className={classes.button}/>
+                                        <CreateButton hi="etc" menu="플레인 요거트 스무디" color="primary" label="스무디 선택"
+                                                      className={classes.button}/>
 
                                     </CardActions>
                                 </Card>

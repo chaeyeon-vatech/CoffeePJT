@@ -8,8 +8,7 @@ import {TaskQuery} from "../../graphql/query";
 
 const useStyles = createUseStyles((theme) => ({
     cardsContainer: {
-        marginRight: -30,
-        // marginTop: -30
+        marginRight: -30
     },
     cardRow: {
         marginTop: 30,

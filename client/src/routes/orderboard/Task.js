@@ -57,32 +57,8 @@ const useStyles = createUseStyles((theme) => ({
 function Task(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [items, setItems] = useState([{title: '(예시) 오후 1시 커피- OOO 책임', checked: false}]);
-    const [title, setTitle] = useState();
     const [contents, setContents] = useState();
 
-
-    function onCheckboxClick(index) {
-        setItems((prev) => {
-            const newItems = [...prev];
-            newItems[index].checked = newItems[index].checked ? false : true;
-            return newItems;
-        });
-    }
-
-
-    function renderAddButton() {
-        return (
-            <Row
-                horizontal='center'
-                vertical='center'
-                className={[classes.addButton].join(' ')}
-                // onClick={create}
-            >
-                +
-            </Row>
-        );
-    }
 
     return (
 
@@ -93,7 +69,6 @@ function Task(props) {
 
                 <table className={classes.border}>
 
-                    {/*오늘은 ""님이 ""기념으로 "" 쏩니다!*/}
                     <td><span className={classes.itemTitle}>☕ 오늘의 주문 : {content.title} ☕</span></td>
                     <td><span className={classes.itemTitle}>👏 결제자님 : {content.title} 👏</span></td>
                 </table>

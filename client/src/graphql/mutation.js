@@ -73,16 +73,6 @@ export const OrderConfirmMutation = gql`
     }
 `
 
-
-export const MeMutation = gql`
-    mutation($id:ID!){
-        me(userid:$id){
-            username
-        }
-    }
-`
-
-
 export const BackUserMutation = gql`
     mutation updatePosition($ids:[ID])
 
@@ -114,7 +104,7 @@ export const getBackGiveup = gql`
 `
 
 export const multipleDelete = gql`
-mutation deleteUser($ids:[ID]!){
-    deleteUser(ids:$ids)
-}
+    mutation deleteUser($ids:[ID]!){
+        deleteUser(ids:$ids)
+    }
 `
