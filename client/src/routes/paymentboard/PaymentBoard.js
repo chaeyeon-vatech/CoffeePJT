@@ -3,7 +3,6 @@ import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import {useQuery} from "@apollo/react-hooks";
 import {
-    AllUserQuery,
     CostQuery,
     CountQuery,
     MeQuery, NotQuery,
@@ -83,10 +82,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     a: {
         color: "black"
-    },
-    // text: {
-    //     padding:"20 20 20 20"
-    // }
+    }
 }));
 
 function changeBackground(e) {
@@ -98,52 +94,36 @@ function TodayTrendsComponent() {
     const classes = useStyles({theme});
 
     const [money, setMoney] = useState('');
+    const [order, setOrder] = useState('');
+    const [count, setCount] = useState('');
+    const [id, setId] = useState();
+    const [user, setUser] = useState();
+    const [pa, setPa] = useState();
+
+
     const {data} = useQuery(CostQuery);
+    const {data: na} = useQuery(CountQuery);
+    const {data: da} = useQuery(MeQuery);
+    const {data: people} = useQuery(NotQuery);
+
     useEffect(() => {
         if (data) {
             setMoney(data.howmuch);
         }
-    }, [data]);
-
-    const [order, setOrder] = useState('');
-    const [count, setCount] = useState('');
-    const {data: na} = useQuery(CountQuery);
-    useEffect(() => {
         if (na) {
             setOrder(na.howmany);
         }
-    }, [na]);
-
-    const {data: user} = useQuery(AllUserQuery)
-
-
-    useEffect(() => {
         if (user) {
             setCount(user.allUsers.length);
-
         }
-    }, [user]);
-
-
-    const [id, setId] = useState();
-
-    const {data: da} = useQuery(MeQuery);
-
-    useEffect(() => {
         if (da) {
             setId(da.me._id);
         }
-    }, [da]);
-
-    const [pa, setPa] = useState();
-
-    const {data: people} = useQuery(NotQuery);
-
-    useEffect(() => {
         if (people) {
             setPa(people.includedNothing)
         }
-    })
+    });
+
 
     const mutation = OrderConfirmMutation;
 

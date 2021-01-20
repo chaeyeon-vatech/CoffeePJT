@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {useMutation} from '@apollo/react-hooks';
 import {UpdateUserMutation} from "../../graphql/mutation";
-import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
+import {MeQuery, OrderSearch} from "../../graphql/query";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
+import {SelectUpdate} from "../../graphql/useMutation";
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -40,24 +41,6 @@ function UpdateButton(username) {
     const [click, setClick] = useState(false);
 
 
-    const mutation = UpdateUserMutation;
-
-    const [update, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}], variables: {
-                id: username.id,
-                username: content
-            },
-            onCompleted: () => {
-
-                alert("정보 수정이 완료되었습니다.")
-                setClick(false)
-
-            }
-        }
-    )
-
-
     return (
 
         <>
@@ -68,9 +51,8 @@ function UpdateButton(username) {
                                   onChange={e => setContent(e.target.value)}/>)}
                 {click && (
                     <Button type='submit' variant="contained"
-                            onClick={update}
+                            onClick={SelectUpdate(username, content, setClick)}
                             className={classes.sbutton}
-                            disabled={loading}
                             value="↳Update">Update</Button>
 
                 )

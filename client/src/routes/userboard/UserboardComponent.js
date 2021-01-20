@@ -21,7 +21,7 @@ const useStyles = createUseStyles({
             maxWidth: 'none'
         }
     },
-    todayTrends: {
+    container: {
         marginTop: 0
     },
 
@@ -33,9 +33,7 @@ const useStyles = createUseStyles({
     },
     tasks: {
         marginTop: 0,
-        '@media (max-width: 1024px)': {
-            // marginTop: 30
-        }
+        '@media (max-width: 1024px)': {}
     }
 });
 
@@ -45,7 +43,7 @@ function UserboardComponent() {
 
     return (
         <Column>
-            <div className={classes.todayTrends}>
+            <div className={classes.container}>
                 <UserBoard/>
             </div>
         </Column>

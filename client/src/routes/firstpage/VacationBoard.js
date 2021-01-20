@@ -1,11 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {Column, Row} from 'simple-flexbox';
+import React from 'react';
+import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import {useQuery} from "@apollo/react-hooks";
-import {
-    SearchQuery,
-    TaskQuery
-} from "../../graphql/query";
 import TransferList from "../../components/table/TransferTable";
 
 const useStyles = createUseStyles((theme) => ({

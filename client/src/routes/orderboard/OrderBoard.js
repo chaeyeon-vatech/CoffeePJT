@@ -8,13 +8,14 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
-import {Snackbar, Tab, Tabs, useTheme} from "@material-ui/core";
+import {useTheme} from "@material-ui/core";
 import {useQuery, useMutation} from "@apollo/react-hooks";
 import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
 import {CreateMutation} from "../../graphql/mutation";
 import CreateOrder from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
-import {useHistory} from "react-router-dom";
+import {Alert} from "@material-ui/lab";
+import CheckIcon from '@material-ui/icons/Check';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,15 +37,9 @@ export default function CorderBoard() {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const {push} = useHistory();
-    const isMobile = window.innerWidth <= 1080;
-    const [value, setValue] = useState(0);
     const [menu, setMenu] = useState();
     const [hi, setHi] = useState();
-    const [position, setPosition] = useState();
     const [status, setStatus] = useState();
-    const [username, setName] = useState();
-    const [check, setCheck] = useState();
 
 
     const {data} = useQuery(MeQuery, {
@@ -56,10 +51,7 @@ export default function CorderBoard() {
 
     useEffect(() => {
         if (data) {
-            setName(data.me.username);
-            setPosition(data.me.position);
             setStatus(data.me.status);
-
         }
     }, [data]);
 
@@ -75,6 +67,11 @@ export default function CorderBoard() {
                 hi: hi
             },
             onCompleted: (data) => {
+                alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
+                    This is a success alert — check it out!
+                </Alert>)
+
+
             },
             onError: () => {
                 alert("메뉴를 선택해주세요.")
@@ -88,7 +85,6 @@ export default function CorderBoard() {
         <div className={classes.root}>
 
             <Grid container spacing={3}>
-
 
                 <Grid item xs={3}>
 
@@ -179,7 +175,7 @@ export default function CorderBoard() {
                                     alt="카페 모카"
                                     height="200"
                                     image="https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
-                                    title="카페모카"
+                                    title="Contemplative Reptile"
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">

@@ -15,7 +15,8 @@ export function ChangeGiveup(userid) {
 
     const [giveup] = useMutation(getBackGiveup, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}], variables: {
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+            variables: {
                 id: userid.userid
             },
             onCompleted: (data) => {
@@ -30,7 +31,7 @@ export function ChangeGiveup(userid) {
 
 //주문 생성
 
-export function CreateOrder(hi){
+export function CreateOrder(hi) {
     const createmutation = CreateMutation;
 
 
@@ -43,7 +44,8 @@ export function CreateOrder(hi){
                 menu: hi.menu,
                 hi: hi.hi
             },
-            onCompleted: () => {},
+            onCompleted: () => {
+            },
             onError: () => {
                 alert("메뉴를 선택해주세요.")
             },
@@ -54,7 +56,6 @@ export function CreateOrder(hi){
 
 
 }
-
 
 //주문 삭제
 export function DeleteOrder(userid) {
@@ -67,8 +68,11 @@ export function DeleteOrder(userid) {
                 userid: userid.userid,
                 orderid: userid.orderid
             },
+            onCompleted: () => {
+                alert("주문이 취소되었습니다.")
+            },
             onError: () => {
-                alert("다시 시도해주세요!")
+                alert("주문이 취소되었습니다.")
             }
         }
     )
@@ -178,7 +182,8 @@ export function UserDelete(post_id) {
 //다수의 유저 삭제
 export function MultipleUserDelete(checked) {
     const [mdelete] = useMutation(multipleDelete, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
+            refetchQueries: [{query: UserSearchQuery},
+                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
                 alert("선택하신 유저가 삭제되었습니다.");
@@ -195,7 +200,8 @@ export function MultipleUserDelete(checked) {
 //유저 정보 업데이트
 export function UpdateUser(checked, content, setOpen) {
     const [update] = useMutation(UpdateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery, MeQuery}],
+            refetchQueries: [{query: UserSearchQuery},
+                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
             variables: {
                 id: checked.map((c) => (c._id)).toString(),
                 username: content
@@ -213,6 +219,50 @@ export function UpdateUser(checked, content, setOpen) {
 
     return update
 
+}
+
+//유저 정보 선택적 업데이트
+export function SelectUpdate(username, content, setClick) {
+
+    const mutation = UpdateUserMutation;
+
+    const [update, {loading}] = useMutation(mutation, {
+            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}], variables: {
+                id: username.id,
+                username: content
+            },
+            onCompleted: () => {
+
+                alert("정보 수정이 완료되었습니다.")
+                setClick(false)
+
+            }
+        }
+    )
+    return update
+}
+
+
+//선택적 수정
+export function DUpdateUser(username, content, setOpen) {
+    const [update] = useMutation(UpdateUserMutation, {
+            refetchQueries: [{query: UserSearchQuery, MeQuery}],
+            variables: {
+                id: username.id,
+                username: content
+            },
+            onCompleted: () => {
+                alert("정보 수정이 완료되었습니다.")
+                setOpen(false);
+            },
+            onError: () => {
+                alert("다시 시도해주세요!")
+            }
+        }
+    )
+
+    return update
 }
 
 
@@ -250,6 +300,6 @@ export function OrderBack(checked) {
 export default {
     ChangeGiveup, DeleteOrder, Giveup,
     TaskDelete, TaskCreate,
-    UserAdd, UserDelete, MultipleUserDelete,
+    UserAdd, UserDelete, MultipleUserDelete, UpdateUser, SelectUpdate,
     VacationBack, OrderBack
 };

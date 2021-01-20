@@ -153,13 +153,16 @@ const AuthenticationForm = () => {
         if (window.confirm("주문 내용을 재작성하시겠습니까?")) {
 
             localStorage.removeItem('task')
+            window.location.href = '/create'
 
         }
 
     }
 
     const taskClick = () => {
+        alert("주문이 생성되었습니다!")
         localStorage.setItem('task', title)
+        window.location.href = '/create'
     }
 
 
