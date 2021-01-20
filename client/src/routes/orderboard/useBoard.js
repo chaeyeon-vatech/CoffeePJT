@@ -34,11 +34,7 @@ export function CreateOrder(hi) {
                 menu: hi.menu,
                 hi: hi.hi
             },
-            onCompleted: (data) => {
-                window.alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
-                    This is a success alert — check it out!
-                </Alert>)
-
+            onCompleted: () => {
             },
             onError: () => {
                 alert("메뉴를 선택해주세요.")

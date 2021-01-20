@@ -8,7 +8,7 @@ import {
     TaskRemoveMutation, UpdateUserMutation
 } from "./mutation";
 import {MeQuery, Ordermen, OrderSearch, Receipt, TaskQuery, UserSearchQuery, VacationQuery} from "./query";
-import React, {useState} from "react";
+import React from "react";
 
 //주문 포기=> 재주문 상태로
 export function ChangeGiveup(userid) {
@@ -68,8 +68,11 @@ export function DeleteOrder(userid) {
                 userid: userid.userid,
                 orderid: userid.orderid
             },
+            onCompleted: () => {
+                alert("주문이 취소되었습니다.")
+            },
             onError: () => {
-                alert("다시 시도해주세요!")
+                alert("주문이 취소되었습니다.")
             }
         }
     )
