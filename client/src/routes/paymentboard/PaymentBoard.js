@@ -13,6 +13,7 @@ import {OrderConfirmMutation} from "../../graphql/mutation";
 import {TextField, Tooltip} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
 import Button from "@material-ui/core/Button";
+import SuccessAlert from "../../components/alert/SuccessAlert";
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -81,6 +82,9 @@ const useStyles = createUseStyles((theme) => ({
     },
     a: {
         color: "black"
+    },
+    button: {
+        marginBottom: "20px"
     }
 }));
 
@@ -160,38 +164,43 @@ function TodayTrendsComponent() {
 
 
     return (
-        <Row
-            flexGrow={1}
-            className={classes.container}
-            horizontal='center'
-            breakpoints={{1024: 'column'}}
-        >
-            <Column
-                wrap
-                flexGrow={7}
-                flexBasis='735px'
-                className={classes.graphSection}
-                breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
+        <>
+         
+            <Row
+                flexGrow={1}
+                className={classes.container}
+                horizontal='center'
+                breakpoints={{1024: 'column'}}
             >
-                <PaymentTable/>
-            </Column>
-            <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
-                <div/>
-            </Column>
-            <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
-                {renderStat('누적 금액', money)}
-                {renderStat('미주문자', <Tooltip title={pa &&
-                pa.map((content) => content.username).join(',')} placement="top">
-                    <Button variant="contained">{order[3]}</Button>
-                </Tooltip>)}
+                <Column
+                    wrap
+                    flexGrow={7}
+                    flexBasis='735px'
+                    className={classes.graphSection}
+                    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
+                >
+                    <PaymentTable/>
+                </Column>
+                <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
+                    <div/>
+                </Column>
+                <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
+                    {renderStat('누적 금액', money)}
+                    {renderStat('미주문자', <Tooltip title={pa &&
+                    pa.map((content) => content.username).join(',')} placement="top">
+                        <Button variant="outlined">{order[3]}</Button>
+                    </Tooltip>)}
 
-                {renderStat('결제 완료', <TextField type='submit'
-                                                onClick={deletePostOrMutation}
-                                                disabled={loading}
-                                                value='결제 완료'/>)}
-            </Column>
-        </Row>
-
+                    {renderStat('결제 완료', <Button
+                        variant="outlined"
+                        color="secondary"
+                        className={classes.button}
+                        onClick={deletePostOrMutation}
+                        disabled={loading}
+                    >결제 완료</Button>)}
+                </Column>
+            </Row>
+        </>
 
     );
 }

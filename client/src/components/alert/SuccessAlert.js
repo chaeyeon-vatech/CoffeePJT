@@ -9,10 +9,14 @@ import CloseIcon from '@material-ui/icons/Close';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
+        marginBottom:"20px",
         '& > * + *': {
             marginTop: theme.spacing(2),
         },
     },
+    button:{
+        padding:"10 10 10 10"
+    }
 }));
 
 export default function SuccessAlert({message, button}) {
@@ -42,9 +46,12 @@ export default function SuccessAlert({message, button}) {
             <Button
                 disabled={open}
                 variant="contained"
+                className={classes.button}
                 onClick={() => {
                     setOpen(true);
                 }}
+                hidden={open}
+
             >
                 {button}
             </Button>

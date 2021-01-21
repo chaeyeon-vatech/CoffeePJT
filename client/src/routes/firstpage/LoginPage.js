@@ -126,7 +126,7 @@ const handleClick = (name, id) => {
     if (id != undefined && id != null) {
         localStorage.setItem('myData', id)
         localStorage.setItem('name', name)
-        window.location.href = '/create'
+        window.location.href = '/order'
     }
 
 }

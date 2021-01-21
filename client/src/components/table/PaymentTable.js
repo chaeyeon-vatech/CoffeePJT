@@ -40,27 +40,31 @@ function BoardTable() {
 
     return (
 
+        <>
 
-        <table>
-            <caption>영수증</caption>
-            <thead>
 
-            {content &&
-            content.map((content, index) => (
-                content != "" && <tr className={classes.content}>
-                    <Tooltip title={user} placement="top">
-                        <Button variant="contained"
-                                onMouseOver={() => {
-                                    setNum(index)
-                                }}
-                        > {content}</Button>
-                    </Tooltip>
-                </tr>
+            <table>
+                <caption>영수증</caption>
+                <thead>
 
-            ))}
+                {content &&
+                content.map((content, index) => (
+                    content != "" && <tr className={classes.content}>
+                        <Tooltip title={user} placement="top">
+                            <Button variant="outlined"
+                                    onMouseOver={() => {
+                                        setNum(index)
+                                    }}
+                            > {content}</Button>
+                        </Tooltip>
+                    </tr>
 
-            </thead>
-        </table>
+                ))}
+
+                </thead>
+            </table>
+
+        </>
 
     )
 }
