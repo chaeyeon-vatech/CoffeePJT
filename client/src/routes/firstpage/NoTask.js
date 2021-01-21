@@ -46,7 +46,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "100px 70px 50px 70px",
-            backgroundColor: "rgba(140,83,83,0.9)",
+            backgroundColor: theme.color.red,
             marginTop: "70px"
 
         },
@@ -76,9 +76,8 @@ const useStyles = createUseStyles((theme) => ({
             marginTop: "200px",
             minHeight: "200px",
             position: "relative",
-            // perspective: "1000px",
             transformStyle: "preserve-3d",
-            backgroundColor: "rgba(140,83,83,0.9)",
+            backgroundColor: theme.color.red,
             marginBottom: "20px",
             padding: "20 20 20 20",
             '&:nth-child(n) > button': {
@@ -161,15 +160,14 @@ const useStyles = createUseStyles((theme) => ({
 
 const handleClick = (name, id) => {
 
-    localStorage.setItem('myData', id)
-    localStorage.setItem('name', name)
-    window.location.href = '/create'
+    if (id != null) {
+        localStorage.setItem('myData', id)
+        localStorage.setItem('name', name)
+        window.location.href = '/create'
+    }
+
 }
 
-
-const handleLogout = () => {
-    localStorage.clear()
-}
 
 const AuthenticationForm = () => {
 

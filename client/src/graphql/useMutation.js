@@ -7,8 +7,19 @@ import {
     RemoveMutation, TaskCreateMutation,
     TaskRemoveMutation, UpdateUserMutation
 } from "./mutation";
-import {MeQuery, Ordermen, OrderSearch, Receipt, TaskQuery, UserSearchQuery, VacationQuery} from "./query";
+import {
+    CostQuery,
+    CountQuery,
+    MeQuery, NotQuery,
+    Ordermen,
+    OrderSearch,
+    Receipt,
+    TaskQuery,
+    UserSearchQuery,
+    VacationQuery
+} from "./query";
 import React from "react";
+import SuccessAlert from "../components/alert/SuccessAlert";
 
 //주문 포기=> 재주문 상태로
 export function ChangeGiveup(userid) {
@@ -38,13 +49,14 @@ export function CreateOrder(hi) {
     const [create] = useMutation(createmutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}],
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: NotQuery}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,
                 hi: hi.hi
             },
             onCompleted: () => {
+                alert("주문이 완료되었습니다!")
             },
             onError: () => {
                 alert("메뉴를 선택해주세요.")
@@ -63,7 +75,8 @@ export function DeleteOrder(userid) {
 
     const [deletePostOrMutation] = useMutation(RemoveMutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: NotQuery}],
             variables: {
                 userid: userid.userid,
                 orderid: userid.orderid
@@ -106,9 +119,6 @@ export function TaskCreate() {
             variables: {
                 title: localStorage.getItem('task'),
                 userid: localStorage.getItem('myData')
-            },
-            onCompleted: (data) => {
-                alert("주문이 생성되었습니다!");
             },
 
             onError: () => {

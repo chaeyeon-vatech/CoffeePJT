@@ -11,5 +11,6 @@ export default {
     ologin: '/login',
     signup: '/signup',
     create: '/create',
+    stepper:'/step',
     reset: '/reset'
 };

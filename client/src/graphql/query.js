@@ -162,9 +162,6 @@ export const ReceiptUser = gql`
     {receiptUser(cmenu:$menu)}
 `
 
-export const ReceiptUsers = gql`
-    query receiptUsers{receiptUsers}
-`
 
 
 

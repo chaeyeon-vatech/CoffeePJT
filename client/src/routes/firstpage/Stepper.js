@@ -17,6 +17,7 @@ import Third from "./FirstStep";
 import {useMutation} from "@apollo/react-hooks";
 import {TaskCreateMutation} from "../../graphql/mutation";
 import {TaskQuery} from "../../graphql/query";
+import {TaskCreate} from "../../graphql/useMutation";
 
 
 const useQontoStepIconStyles = makeStyles({
@@ -162,14 +163,14 @@ const useStyles = makeStyles((theme) => ({
         display: "block",
         width: "100px",
         height: "100px",
-        color:"white",
+        color: "white",
         backgroundColor: "#254143",
         border: "solid 6px #254143",
         borderRadius: "100%",
         transition: "all .2s linear",
         "&:hover": {
             backgroundColor: 'rgb(12,12,12,0.8)',
-            color:"white"
+            color: "white"
         }
 
     },
@@ -182,13 +183,14 @@ const useStyles = makeStyles((theme) => ({
         display: "block",
         width: "100px",
         height: "100px",
+        color: "white",
         backgroundColor: "#9e344d",
         border: "solid 6px #9e344d",
         borderRadius: "100%",
         transition: "all .2s linear",
         "&:hover": {
             backgroundColor: 'rgb(12,12,12,0.8)',
-            color:"white"
+            color: "white"
         }
 
 
@@ -202,7 +204,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['주문자/미주문자 관리', '주문 생성'];
+    return ['미주문자 등록', '주문 생성'];
 }
 
 function getStepContent(step) {
@@ -217,7 +219,6 @@ function getStepContent(step) {
 
 export default function CustomizedSteppers() {
     const classes = useStyles();
-    const [step, setStep] = useState(0);
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
@@ -238,24 +239,6 @@ export default function CustomizedSteppers() {
             window.location.href = '/login'
         }
     };
-
-
-    const [create] = useMutation(TaskCreateMutation, {
-            refetchQueries: [{query: TaskQuery}],
-            variables: {
-                title: localStorage.getItem('task'),
-                userid: localStorage.getItem('myData')
-            },
-            onCompleted: () => {
-                alert("주문이 생성되었습니다!");
-                localStorage.setItem('num', 0);
-            },
-
-            onError: () => {
-                alert("주문 내용을 정확히 작성해주세요.")
-            },
-        }
-    )
 
     return localStorage.getItem('task') ? (
 
@@ -313,7 +296,7 @@ export default function CustomizedSteppers() {
                                 {getStepContent(activeStep)}</Typography>
 
                             <Button variant="contained" onClick={handleUser} className={classes.button}>
-                                결제자<br/> 전환
+                                로그아웃
                             </Button>
                             <Button
                                 variant="contained"

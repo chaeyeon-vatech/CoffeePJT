@@ -5,6 +5,8 @@ import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import Button from "@material-ui/core/Button";
 import {TaskCreate} from "../../graphql/useMutation";
+import {TextField} from "@material-ui/core";
+import SuccessAlert from "../../components/alert/SuccessAlert";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -17,8 +19,7 @@ const useStyles = createUseStyles((theme) => ({
             margin: "auto",
             maxWidth: "525px",
             minHeight: "670px",
-            position: "relative",
-            boxShadow: "0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19)"
+            position: "relative"
         },
         loginhtml: {
             marginTop: "30px",
@@ -26,7 +27,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "90px 70px 50px 70px",
-            backgroundColor: "rgba(140,83,83,0.9)"
+            backgroundColor: theme.color.red,
 
 
         },
@@ -37,7 +38,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "90px 70px 50px 70px",
-            backgroundColor: "rgba(140,83,83,0.9)"
+            backgroundColor: theme.color.red,
 
 
         },
@@ -160,7 +161,6 @@ const AuthenticationForm = () => {
     }
 
     const taskClick = () => {
-        alert("주문이 생성되었습니다!")
         localStorage.setItem('task', title)
         window.location.href = '/create'
     }
@@ -168,6 +168,9 @@ const AuthenticationForm = () => {
 
     return localStorage.getItem('task') ? (
         <div className={classes.root}>
+            <SuccessAlert
+                message={"👏 오늘은 " + localStorage.getItem('name') + " 님이 " + localStorage.getItem('task') + " 기념으로 커피 삽니다! 👏로 화면에 보여집니다!"}
+                button="주문 내용 미리 보기"/>
             <div className={classes.loginwrap}>
                 <div className={classes.taskhtml}>
                     <h2>{localStorage.getItem('name')}님!<br/> 작성하신 주문 설정을<br/> 변경하고 싶으신가요?<br/></h2>
@@ -178,6 +181,7 @@ const AuthenticationForm = () => {
                     <Button variant="contained" id='logout' onClick={changeClick} className={classes.button}>주문
                         변경</Button>
                     <Button variant="contained" color={"secondary"} id='logout' onClick={TaskCreate()}
+
                             className={classes.button}>완료!</Button>
                 </div>
             </div>

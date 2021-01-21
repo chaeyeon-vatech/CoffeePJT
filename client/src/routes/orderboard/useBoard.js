@@ -1,13 +1,9 @@
 import {CreateMutation} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
-import {MeQuery, OrderSearch, Receipt, ReceiptUsers} from "../../graphql/query";
+import {MeQuery, OrderSearch, Receipt, ReceiptUser} from "../../graphql/query";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import {Alert} from "@material-ui/lab";
-import CheckIcon from "@material-ui/icons/Check";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardActionArea from "@material-ui/core/CardActionArea";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,7 +27,7 @@ export function CreateOrder(hi) {
     const [create] = useMutation(createmutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: ReceiptUsers}],
+                {query: Receipt}, {query: ReceiptUser}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,

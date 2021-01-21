@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     list: {
         width: 400,
-        height: 230,
+        height: 300,
         backgroundColor: theme.palette.background.paper,
         overflow: 'auto',
     },
@@ -133,7 +133,7 @@ export default function TransferList() {
 
     return (
         <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-            <Grid item>{customList('주문자', left)}</Grid>
+            <Grid item>{customList('커피 주문자', left)}</Grid>
             <Grid item>
                 <Grid container direction="column" alignItems="center">
                     <Button
@@ -159,7 +159,7 @@ export default function TransferList() {
                     </Button>
                 </Grid>
             </Grid>
-            <Grid item>{customList('미주문자', right)}</Grid>
+            <Grid item>{customList('휴가자/결근자/기타사유', right)}</Grid>
 
         </Grid>
 

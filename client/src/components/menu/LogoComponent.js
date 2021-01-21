@@ -11,7 +11,9 @@ const useStyles = createUseStyles((theme) => ({
         ...theme.typography.cardTitle,
         color: "white",
         opacity: 0.5,
-        marginLeft: 15
+        marginLeft: 15,
+        fontSize:"40px",
+        textAlign:"center"
     }
 }));
 
@@ -20,7 +22,7 @@ function LogoComponent() {
     const classes = useStyles({ theme });
     return (
         <Row className={classes.container} horizontal='center' vertical='center'>
-            <span className={classes.title}>플랫폼 사업팀 단체 주문 Board</span>
+            <span className={classes.title}>Vatech</span>
         </Row>
     );
 }

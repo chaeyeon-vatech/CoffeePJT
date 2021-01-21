@@ -18,7 +18,7 @@ function PublicRoutes() {
     }, [data]);
 
 
-    return localStorage.getItem('name') ? (
+    return localStorage.getItem('myData') ? (
         <Switch>
             <Route path={LINKS.create} component={CustomizedSteppers}/>
             {task === null &&

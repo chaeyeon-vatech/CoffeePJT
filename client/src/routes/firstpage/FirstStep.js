@@ -18,7 +18,6 @@ const useStyles = createUseStyles((theme) => ({
             maxWidth: "525px",
             minHeight: "670px",
             position: "relative",
-            boxShadow: "0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19)",
             marginTop: "-20px"
         },
         loginhtml: {
@@ -27,7 +26,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "90px 30px 50px 10px",
-            backgroundColor: "rgba(140,83,83,0.9)"
+            backgroundColor:theme.color.red,
 
         },
 
@@ -57,7 +56,7 @@ const useStyles = createUseStyles((theme) => ({
             '&:nth-child(n) > label,input,a,table': {
                 width: "100%",
                 color: "#fff",
-                marginTop: "30px"
+                marginBottom: "30px"
             },
             '&:nth-child(n) > input,button,table,tr': {
                 border: "none",
@@ -98,6 +97,10 @@ const useStyles = createUseStyles((theme) => ({
                 fontSize: "12px"
             }
         },
+        margin: {
+            marginTop: "-50px",
+            marginBottom: "50px"
+        }
 
 
     }))
@@ -129,8 +132,8 @@ const AuthenticationForm = () => {
                 <div className={classes.loginhtml}>
 
 
-                    <h2>👨🏻‍💻{localStorage.getItem('name')}님 환영합니다.👨🏻‍💻️</h2>
-                    <h5 className={classes.h5}>미주문자/주문자 선택 후 버튼으로 변환해주세요.</h5>
+                    <h2 className={classes.margin}>👨🏻‍💻{localStorage.getItem('name')}님 환영합니다.👨🏻‍💻️</h2>
+                    {/*<h5 className={classes.h5}>미주문자(휴가자/결근자/기타사유)/주문자를 등록해주세요. <br/> 버튼을 이용하여 양 옆으로 상태 변환이 가능합니다!</h5>*/}
 
                     <div className={classes.loginform}>
 
