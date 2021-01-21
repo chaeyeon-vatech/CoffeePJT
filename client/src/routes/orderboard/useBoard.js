@@ -1,7 +1,7 @@
 import {CreateMutation} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
-import {MeQuery, OrderSearch, Receipt, ReceiptUser} from "../../graphql/query";
-import React from "react";
+import {MeQuery, OrderSearch, Receipt} from "../../graphql/query";
+import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
@@ -23,11 +23,12 @@ const useStyles = makeStyles((theme) => ({
 export function CreateOrder(hi) {
 
     const createmutation = CreateMutation;
+    const [state,setState] = useState(false);
 
     const [create] = useMutation(createmutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: ReceiptUser}],
+                {query: Receipt}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,
@@ -40,6 +41,15 @@ export function CreateOrder(hi) {
             },
         }
     )
+
+// Handler for on click
+    const handleClick = (event) => {
+        if (state) {
+            return;
+        }
+        setState(true);
+        return console.log("success");
+    }
 
 
     return (

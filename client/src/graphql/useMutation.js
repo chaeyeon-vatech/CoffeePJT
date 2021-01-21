@@ -40,7 +40,6 @@ export function ChangeGiveup(userid) {
 }
 
 
-
 //주문 생성
 
 export function CreateOrder(hi) {
@@ -80,11 +79,8 @@ export function DeleteOrder(userid) {
                 userid: userid.userid,
                 orderid: userid.orderid
             },
-            onCompleted: () => {
-                alert("주문이 취소되었습니다.")
-            },
             onError: () => {
-                alert("주문이 취소되었습니다.")
+                alert("주문이 취소되었습니다!")
             }
         }
     )

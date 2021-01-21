@@ -193,7 +193,76 @@ const AuthenticationForm = () => {
     }, [data]);
 
 
-    return (
+    return localStorage.getItem('name') ? (
+        <div className={classes.root}>
+            <div className={classes.loginwrap}>
+
+                <div className={classes.loginhtml}>
+                    <h3>이름을 찾을 수 없습니다.</h3>
+
+                    <h5 className={classes.h5}>다시 입력해주세요!</h5>
+
+
+                    <div className={classes.loginform}>
+
+                        <div className={classes.group}>
+                            <label>주문자</label>
+                            <Typography component="div" variant="body1">
+
+                                <Autocomplete
+                                    freeSolo
+                                    id="free-solo-2-demo"
+                                    disableClearable
+                                    options={result.map((content) => content.username)}
+                                    inputValue={inputValue}
+                                    onInputChange={(event, newInputValue) => {
+                                        setInputValue(newInputValue);
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            id="standard-basic"
+                                            margin="normal"
+                                            color={"secondary"}
+                                            onChange={e => setSearch(e.target.value)}
+                                            onKeyPress={() => {
+                                                const listener = event => {
+                                                    if (event.code === "Enter") {
+                                                        handleClick(inputValue, result.map((content) => (content._id)))
+
+                                                    }
+                                                };
+                                                document.addEventListener("keypress", listener);
+                                                return () => {
+                                                    document.removeEventListener("keypress", listener);
+                                                };
+
+                                            }}
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                type: 'search',
+                                                className: classes.focused
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </Typography>
+
+                            <Button type="submit"
+                                    disabled={inputValue === undefined}
+                                    onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
+                            >로그인</Button>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    ) : (
 
         <div className={classes.root}>
             <div className={classes.loginwrap}>

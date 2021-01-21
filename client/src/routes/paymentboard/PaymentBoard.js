@@ -18,8 +18,7 @@ const useStyles = createUseStyles((theme) => ({
     container: {
         backgroundColor: '#FFFFFF',
         border: `5px solid ${theme.color.darkRed}`,
-        borderRadius: 5,
-        cursor: 'pointer'
+        borderRadius: 5
     },
     graphContainer: {
         marginTop: 24,
