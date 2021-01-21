@@ -68,7 +68,7 @@ QontoStepIcon.propTypes = {
 
 const ColorlibConnector = withStyles({
     alternativeLabel: {
-        top: 20,
+        top: 25,
         backgroundColor: "black"
     },
     active: {
@@ -84,7 +84,7 @@ const ColorlibConnector = withStyles({
         },
     },
     line: {
-        height: 3,
+        height: 2,
         border: 0,
         backgroundColor: '#eaeaf0',
         borderRadius: 1,
@@ -96,8 +96,8 @@ const useColorlibStepIconStyles = makeStyles({
         backgroundColor: "black",
         zIndex: 1,
         color: '#fff',
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         display: 'flex',
         borderRadius: '50%',
         justifyContent: 'center',
@@ -170,13 +170,13 @@ const useStyles = makeStyles((theme) => ({
 
     },
     nbutton: {
-        marginLeft: "1300px",
         marginTop: "-100px",
         margin: "none",
         cursor: "pointer",
         position: "relative",
         display: "block",
         width: "100px",
+        left: "90%",
         height: "100px",
         color: "white",
         backgroundColor: "#9e344d",

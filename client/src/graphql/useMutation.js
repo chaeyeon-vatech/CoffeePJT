@@ -8,7 +8,9 @@ import {
     TaskRemoveMutation, UpdateUserMutation
 } from "./mutation";
 import {
-    MeQuery,
+    CostQuery,
+    CountQuery,
+    MeQuery, NotQuery,
     Ordermen,
     OrderSearch,
     Receipt,
@@ -23,7 +25,8 @@ export function ChangeGiveup(userid) {
 
     const [giveup] = useMutation(getBackGiveup, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
             variables: {
                 id: userid.userid
             },
@@ -69,15 +72,17 @@ export function CreateOrder(hi) {
 export function DeleteOrder(userid) {
 
 
-    const [deletePostOrMutation, {loading}] = useMutation(RemoveMutation, {
-            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+    const [deletePostOrMutation] = useMutation(RemoveMutation, {
+            refetchQueries: [
+                {query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
             variables: {
                 userid: userid.userid,
                 orderid: userid.orderid
             },
             onError: () => {
-                alert("주문이 취소되었습니다!")
+                // alert("주문이 취소되었습니다!")
             }
         }
     )
@@ -90,7 +95,8 @@ export function Giveup(userid) {
 
     const [giveup] = useMutation(OrderGiveupMutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
             variables: {
                 userid: userid.userid
             },

@@ -14,10 +14,10 @@ const useStyles = createUseStyles((theme) => ({
             fontWeight: "lighter",
             textAlign: "center",
             width: "100%",
-            marginLeft: "230px",
             maxWidth: "525px",
             minHeight: "670px",
             position: "relative",
+            left:"15%",
             marginTop: "-20px"
         },
         loginhtml: {
@@ -98,9 +98,12 @@ const useStyles = createUseStyles((theme) => ({
             }
         },
         margin: {
-            marginTop: "-50px",
-            marginBottom: "50px"
-        }
+            marginTop: "-60px",
+            marginBottom: "30px"
+        },
+        containerMobile: {
+            padding: '12px 16px 6px 16px !important'
+        },
 
 
     }))

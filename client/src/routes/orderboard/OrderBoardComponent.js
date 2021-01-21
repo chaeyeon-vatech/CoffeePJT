@@ -8,6 +8,7 @@ import {TaskQuery} from "../../graphql/query";
 const useStyles = createUseStyles((theme) => ({
     cardsContainer: {
         marginRight: -30,
+        // marginTop: -30
     },
     background: {
         backgroundColor: 'rgba(246,244,244,0.9)',
