@@ -26,7 +26,7 @@ export function ChangeGiveup(userid) {
     const [giveup] = useMutation(getBackGiveup, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: NotQuery}],
             variables: {
                 id: userid.userid
             },
@@ -49,7 +49,7 @@ export function CreateOrder(hi) {
     const [create] = useMutation(createmutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}],
+                {query: Receipt}, {query: CountQuery}, {query: CountQuery}, {query: NotQuery}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,
@@ -120,7 +120,6 @@ export function TaskCreate() {
             },
 
             onError: () => {
-                alert("주문 내용을 작성해주세요.")
             },
         }
     )
@@ -132,10 +131,11 @@ export function TaskCreate() {
 export function TaskDelete(post_id, user_id) {
 
     const [deletemutation] = useMutation(TaskRemoveMutation, {
-            refetchQueries: [{query: TaskQuery}],
+            refetchQueries: [{query: TaskQuery}, {query: Receipt}],
             variables: {id: post_id.post_id, userid: post_id.user_id},
             onCompleted: () => {
-                alert("주문 재작성 페이지로 돌아갑니다.");
+                localStorage.removeItem('task');
+                alert("주문 재작성 페이지로 돌아갑니다!");
             }
         }
     )
@@ -148,7 +148,7 @@ export function TaskDelete(post_id, user_id) {
 export function UserAdd(username, content, setOpen) {
 
     const [create] = useMutation(CreateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery}],
+            refetchQueries: [{query: UserSearchQuery}, {query: Receipt}, {query: CountQuery}, {query: NotQuery}],
             variables: {
                 username: content
             },
@@ -173,7 +173,7 @@ export function UserDelete(post_id) {
     const [deleteMutation] = useMutation(multipleDelete, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}],
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: NotQuery}],
             variables: {ids: [String(Object.values(post_id))]},
             onCompleted: () => {
                 alert("유저 삭제가 완료되었습니다.")
@@ -191,7 +191,8 @@ export function UserDelete(post_id) {
 export function MultipleUserDelete(checked) {
     const [mdelete] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery},
-                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
                 alert("선택하신 유저가 삭제되었습니다.");
@@ -209,7 +210,8 @@ export function MultipleUserDelete(checked) {
 export function UpdateUser(checked, content, setOpen) {
     const [update] = useMutation(UpdateUserMutation, {
             refetchQueries: [{query: UserSearchQuery},
-                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
             variables: {
                 id: checked.map((c) => (c._id)).toString(),
                 username: content
@@ -234,7 +236,7 @@ export function SelectUpdate(username, content, setClick) {
 
     const mutation = UpdateUserMutation;
 
-    const [update, {loading}] = useMutation(mutation, {
+    const [update] = useMutation(mutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}], variables: {
                 id: username.id,
