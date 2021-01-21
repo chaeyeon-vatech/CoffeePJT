@@ -135,7 +135,7 @@ export function TaskDelete(post_id, user_id) {
             refetchQueries: [{query: TaskQuery}],
             variables: {id: post_id.post_id, userid: post_id.user_id},
             onCompleted: () => {
-                alert("주문이 취소되었습니다.");
+                alert("주문 재작성 페이지로 돌아갑니다.");
             }
         }
     )

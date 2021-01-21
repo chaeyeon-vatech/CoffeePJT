@@ -80,11 +80,11 @@ function HeaderComponent() {
     let title;
     switch (true) {
         case currentItem === LINKS.orderboard:
-            title = '주문하기 페이지';
+            title = '주문하기';
             break;
 
         case currentItem === LINKS.pay:
-            title = '결제하기 페이지';
+            title = '결제하기';
             break;
 
 
@@ -93,7 +93,7 @@ function HeaderComponent() {
             break;
 
         case currentItem === LINKS.settings:
-            title = '유저 관리 페이지';
+            title = '유저 관리';
             break;
         default:
             title = '';

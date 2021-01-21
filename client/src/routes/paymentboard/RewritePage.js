@@ -53,7 +53,7 @@ function RewritePage(props) {
                                 <thead>
                                 <tr>
                                     <th scope="col">주문 내용</th>
-                                    <th scope="col">주문 변경</th>
+                                    <th scope="col">주문 재작성</th>
 
 
                                 </tr>
