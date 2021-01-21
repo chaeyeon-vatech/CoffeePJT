@@ -25,7 +25,7 @@ const useStyles = createUseStyles((theme) => ({
             maxWidth: 'none'
         }
     },
-    todayTrends: {
+    boardsection: {
         marginTop: 30
     },
     unresolvedTickets: {
@@ -81,7 +81,7 @@ function PaymentboardComponent() {
                         </td>))}
                 </table>
 
-                <div className={classes.todayTrends}>
+                <div className={classes.boardsection}>
                     <PaymentBoard/>
                 </div>
 

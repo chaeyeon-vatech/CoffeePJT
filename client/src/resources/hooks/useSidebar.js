@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, {useState, useEffect, useContext, createContext} from 'react';
 
 export const SidebarContext = createContext();
 
-export function SidebarProvider({ children, defaultItem }) {
+export function SidebarProvider({children, defaultItem}) {
     const [currentItem, setCurrentItem] = useState(defaultItem);
     useEffect(() => {
         if (defaultItem !== currentItem) {
@@ -10,14 +10,14 @@ export function SidebarProvider({ children, defaultItem }) {
         }
     }, [currentItem, defaultItem]);
     return (
-        <SidebarContext.Provider value={{ currentItem, setCurrentItem }}>
+        <SidebarContext.Provider value={{currentItem, setCurrentItem}}>
             {children}
         </SidebarContext.Provider>
     );
 }
 
-export const useSidebar = ({ isCollapsible, item, items = [] } = {}) => {
-    const { currentItem, setCurrentItem } = useContext(SidebarContext);
+export const useSidebar = ({isCollapsible, item, items = []} = {}) => {
+    const {currentItem, setCurrentItem} = useContext(SidebarContext);
     const isActive = item === currentItem || items.includes(currentItem);
     const [isExpanded, setIsExpanded] = useState(isActive);
 
@@ -28,7 +28,6 @@ export const useSidebar = ({ isCollapsible, item, items = [] } = {}) => {
         if (isActive && !isExpanded) {
             return setIsExpanded(true);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentItem]);
 
     const onItemClick = () => {

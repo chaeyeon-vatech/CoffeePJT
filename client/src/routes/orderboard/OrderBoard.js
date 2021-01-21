@@ -9,13 +9,10 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import {useTheme} from "@material-ui/core";
-import {useQuery, useMutation} from "@apollo/react-hooks";
-import {MeQuery, OrderSearch, UserSearchQuery} from "../../graphql/query";
-import {CreateMutation} from "../../graphql/mutation";
+import {useQuery} from "@apollo/react-hooks";
+import {MeQuery} from "../../graphql/query";
 import CreateOrder from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
-import {Alert} from "@material-ui/lab";
-import CheckIcon from '@material-ui/icons/Check';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,30 +51,6 @@ export default function CorderBoard() {
             setStatus(data.me.status);
         }
     }, [data]);
-
-
-    const createmutation = CreateMutation;
-
-
-    const [create, error] = useMutation(createmutation, {
-            refetchQueries: [{query: OrderSearch, MeQuery, UserSearchQuery}],
-            variables: {
-                id: localStorage.getItem('myData'),
-                menu: menu,
-                hi: hi
-            },
-            onCompleted: (data) => {
-                alert(<Alert icon={<CheckIcon fontSize="inherit"/>} severity="success">
-                    This is a success alert — check it out!
-                </Alert>)
-
-
-            },
-            onError: () => {
-                alert("메뉴를 선택해주세요.")
-            },
-        }
-    )
 
     return (
 

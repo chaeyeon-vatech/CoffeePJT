@@ -6,7 +6,6 @@ import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../graphql/query";
 import UserEditTable from "../../components/table/UserEditTable";
 import SearchTable from "../../components/table/SearchTable";
-import UserAddButton from "../../components/button/UserAddButton";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: "30px"},

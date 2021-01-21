@@ -8,9 +8,7 @@ import {
     TaskRemoveMutation, UpdateUserMutation
 } from "./mutation";
 import {
-    CostQuery,
-    CountQuery,
-    MeQuery, NotQuery,
+    MeQuery,
     Ordermen,
     OrderSearch,
     Receipt,
@@ -19,7 +17,6 @@ import {
     VacationQuery
 } from "./query";
 import React from "react";
-import SuccessAlert from "../components/alert/SuccessAlert";
 
 //주문 포기=> 재주문 상태로
 export function ChangeGiveup(userid) {

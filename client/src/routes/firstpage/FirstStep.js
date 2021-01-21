@@ -26,7 +26,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "90px 30px 50px 10px",
-            backgroundColor:theme.color.red,
+            backgroundColor: theme.color.red,
 
         },
 
@@ -133,7 +133,6 @@ const AuthenticationForm = () => {
 
 
                     <h2 className={classes.margin}>👨🏻‍💻{localStorage.getItem('name')}님 환영합니다.👨🏻‍💻️</h2>
-                    {/*<h5 className={classes.h5}>미주문자(휴가자/결근자/기타사유)/주문자를 등록해주세요. <br/> 버튼을 이용하여 양 옆으로 상태 변환이 가능합니다!</h5>*/}
 
                     <div className={classes.loginform}>
 

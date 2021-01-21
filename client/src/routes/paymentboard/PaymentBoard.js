@@ -10,10 +10,9 @@ import {
 } from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
 import {OrderConfirmMutation} from "../../graphql/mutation";
-import {TextField, Tooltip} from "@material-ui/core";
+import {Tooltip} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
 import Button from "@material-ui/core/Button";
-import SuccessAlert from "../../components/alert/SuccessAlert";
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -21,30 +20,8 @@ const useStyles = createUseStyles((theme) => ({
         border: `5px solid ${theme.color.darkRed}`,
         borderRadius: 5
     },
-    graphContainer: {
-        marginTop: 24,
-        marginLeft: 0,
-        marginRight: 0,
-        width: '100%'
-    },
-    graphSection: {
+    tableSection: {
         padding: 24
-    },
-    graphSubtitle: {
-        ...theme.typography.smallSubtitle,
-        color: theme.color.grayishBlue2,
-        marginTop: 4,
-        marginRight: 8
-    },
-    graphTitle: {
-        ...theme.typography.cardTitle,
-        color: theme.color.veryDarkGrayishBlue
-    },
-    legendTitle: {
-        ...theme.typography.smallSubtitle,
-        fontWeight: '600',
-        color: theme.color.grayishBlue2,
-        marginLeft: 8
     },
     separator: {
         backgroundColor: theme.color.lightGrayishBlue2,
@@ -79,9 +56,6 @@ const useStyles = createUseStyles((theme) => ({
         ...theme.typography.title,
         textAlign: 'center',
         color: theme.color.veryDarkGrayishBlue
-    },
-    a: {
-        color: "black"
     },
     button: {
         marginBottom: "20px"
@@ -165,7 +139,7 @@ function TodayTrendsComponent() {
 
     return (
         <>
-         
+
             <Row
                 flexGrow={1}
                 className={classes.container}
@@ -176,7 +150,7 @@ function TodayTrendsComponent() {
                     wrap
                     flexGrow={7}
                     flexBasis='735px'
-                    className={classes.graphSection}
+                    className={classes.tableSection}
                     breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
                 >
                     <PaymentTable/>

@@ -12,14 +12,8 @@ import {useQuery} from "@apollo/react-hooks";
 import {AllUserQuery} from "../../graphql/query";
 import UpdateUserDialog from "../dialog/UpdateUser";
 import UserDeleteButton from "../button/UserDeleteButton";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
 import UserAddButton from "../button/UserAddButton";
-import {MultipleUserDelete, UpdateUser} from "../../graphql/useMutation";
+import {MultipleUserDelete} from "../../graphql/useMutation";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -86,16 +80,7 @@ export default function UserEditTable() {
 
         setChecked(newChecked);
     };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-
+    
     const customList = (title, items) => (
         <Card>
             <List className={classes.list} dense component="div" role="list">

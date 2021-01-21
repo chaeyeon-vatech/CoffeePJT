@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#373a47",
         width: "50%"
     },
-    todayTrends: {
+    ordercard: {
         marginTop: 30
     },
     button: {
@@ -81,7 +81,7 @@ export default function EtcBoard() {
 
             </Row>
 
-            <div className={classes.todayTrends}>
+            <div className={classes.ordercard}>
                 <div className={classes.root}>
 
                     <Grid container spacing={3}>

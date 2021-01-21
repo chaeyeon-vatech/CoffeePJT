@@ -14,11 +14,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Second from "./SecondStep";
 import Third from "./FirstStep";
-import {useMutation} from "@apollo/react-hooks";
-import {TaskCreateMutation} from "../../graphql/mutation";
-import {TaskQuery} from "../../graphql/query";
-import {TaskCreate} from "../../graphql/useMutation";
-
 
 const useQontoStepIconStyles = makeStyles({
     root: {

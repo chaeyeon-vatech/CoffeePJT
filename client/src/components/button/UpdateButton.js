@@ -1,7 +1,4 @@
 import React, {useState} from 'react';
-import {useMutation} from '@apollo/react-hooks';
-import {UpdateUserMutation} from "../../graphql/mutation";
-import {MeQuery, OrderSearch} from "../../graphql/query";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 import {SelectUpdate} from "../../graphql/useMutation";
