@@ -134,6 +134,7 @@ export function TaskDelete(post_id, user_id) {
             refetchQueries: [{query: TaskQuery}, {query: Receipt}],
             variables: {id: post_id.post_id, userid: post_id.user_id},
             onCompleted: () => {
+                localStorage.removeItem('task');
                 alert("주문 재작성 페이지로 돌아갑니다!");
             }
         }
@@ -309,7 +310,7 @@ export function OrderBack(checked) {
 
 export default {
     ChangeGiveup, DeleteOrder, Giveup,
-    OrderDelete: TaskDelete, TaskCreate,
+    TaskDelete, TaskCreate,
     UserAdd, UserDelete, MultipleUserDelete, UpdateUser, SelectUpdate,
     VacationBack, OrderBack
 };
