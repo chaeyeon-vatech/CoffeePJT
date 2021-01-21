@@ -36,7 +36,7 @@ function TaskDeleteButton(post_id, user_id) {
                     className={classes.button}
                     onClick={TaskDelete(post_id, user_id)}
                 >
-                    주문 변경
+                    주문 재작성
                 </Button>
 
             </form>
