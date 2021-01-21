@@ -40,6 +40,7 @@ export function ChangeGiveup(userid) {
 }
 
 
+
 //주문 생성
 
 export function CreateOrder(hi) {
@@ -49,14 +50,13 @@ export function CreateOrder(hi) {
     const [create] = useMutation(createmutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
                 , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: NotQuery}],
+                {query: Receipt}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,
                 hi: hi.hi
             },
             onCompleted: () => {
-                alert("주문이 완료되었습니다!")
             },
             onError: () => {
                 alert("메뉴를 선택해주세요.")
@@ -73,10 +73,9 @@ export function CreateOrder(hi) {
 export function DeleteOrder(userid) {
 
 
-    const [deletePostOrMutation] = useMutation(RemoveMutation, {
+    const [deletePostOrMutation, {loading}] = useMutation(RemoveMutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: NotQuery}],
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
             variables: {
                 userid: userid.userid,
                 orderid: userid.orderid
