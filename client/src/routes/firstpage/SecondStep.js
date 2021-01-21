@@ -6,6 +6,7 @@ import '../../components/table/table.css';
 import Button from "@material-ui/core/Button";
 import {TaskCreate} from "../../graphql/useMutation";
 import SuccessAlert from "../../components/alert/SuccessAlert";
+import {TextField} from "@material-ui/core";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -159,6 +160,14 @@ const AuthenticationForm = () => {
 
     }
 
+    const handleKeypress = e => {
+        //it triggers by pressing the enter key
+        if (e.keyCode === 13) {
+            localStorage.setItem('task', title)
+            window.location.href = '/create'
+        }
+    };
+
     const taskClick = () => {
         localStorage.setItem('task', title)
         window.location.href = '/create'
@@ -180,7 +189,6 @@ const AuthenticationForm = () => {
                     <Button variant="contained" id='logout' onClick={changeClick} className={classes.button}>주문
                         변경</Button>
                     <Button variant="contained" color={"secondary"} id='logout' onClick={TaskCreate()}
-
                             className={classes.button}>완료!</Button>
                 </div>
             </div>
@@ -200,6 +208,18 @@ const AuthenticationForm = () => {
                         <div className={classes.group}>
                             <label>결제자 </label>
                             <input type="text" placeholder="(예시) 승진, 결혼" onChange={e => setTitle(e.target.value)}
+                                   onKeyPress={() => {
+                                       const listener = event => {
+                                           if (event.code === "Enter") {
+                                               taskClick()
+                                           }
+                                       };
+                                       document.addEventListener("keypress", listener);
+                                       return () => {
+                                           document.removeEventListener("keypress", listener);
+                                       };
+
+                                   }}
                                    className={classes.input}/>
                             <Button variant="contained" id='logout' onClick={taskClick}
                                     className={classes.button}>주문 생성</Button>

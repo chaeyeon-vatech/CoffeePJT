@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SuccessAlert({message, button}) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     return (
         <div className={classes.root}>
