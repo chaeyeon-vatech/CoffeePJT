@@ -121,7 +121,7 @@ const useStyles = createUseStyles((theme) => ({
     }))
 ;
 
-const handleClick = (name, id) => {
+const  handleClick = (name, id) => {
     if (id != undefined && id != null) {
         localStorage.setItem('myData', id)
         localStorage.setItem('name', name)
@@ -201,7 +201,7 @@ const AuthenticationForm = () => {
                                             onKeyPress={() => {
                                                 const listener = event => {
                                                     if (event.code === "Enter") {
-                                                        handleClick(inputValue, result.map((content) => (content._id)))
+                                                        handleClick(search, result.map((content) => (content._id)))
 
                                                     }
                                                 };

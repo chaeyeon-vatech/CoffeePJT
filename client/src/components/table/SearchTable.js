@@ -11,11 +11,20 @@ export default function SearchTable(search) {
 
 
     const {data: se} = useQuery(SearchQuery, {
-        variables: {
-            word: search.search
-        },
+            variables: {
+                word: search.search
+            },
 
-    });
+            refetchQueries: {
+                query: SearchQuery,
+                variables: {
+                    word: search.search
+                }
+            }
+
+        }
+        )
+    ;
 
 
     useEffect(() => {
@@ -50,7 +59,7 @@ export default function SearchTable(search) {
                     <tr style={{marginBottom: 20}}>
                         <td>{content.username}</td>
                         <td><UpdateUserDialog id={content._id} username={content.username}/></td>
-                        <td><UserDeleteButton post_id={content._id}/></td>
+                        <td><UserDeleteButton id={content._id} username={search}/></td>
 
                     </tr>
 

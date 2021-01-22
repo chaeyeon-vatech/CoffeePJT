@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginLeft: 45
+    },
+    media: {
+        cursor: "default"
     }
 }));
 
@@ -93,6 +96,7 @@ export default function EtcBoard() {
                                         <CardMedia
                                             component="img"
                                             height="230"
+                                            className={classes.media}
                                             image="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1949&q=80"
                                         />
                                         <CardContent>
@@ -120,6 +124,7 @@ export default function EtcBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://images.unsplash.com/photo-1524156868115-e696b44983db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1946&q=80"
                                         />
                                         <CardContent>
@@ -146,6 +151,7 @@ export default function EtcBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80"
                                         />
                                         <CardContent>
@@ -171,6 +177,7 @@ export default function EtcBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://images.unsplash.com/photo-1577118202736-22e9be066d95?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
                                         />
                                         <CardContent>

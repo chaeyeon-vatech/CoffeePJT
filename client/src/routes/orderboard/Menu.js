@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 10,
         color:"black",
         marginLeft: "23px",
-        width: "1079px",
+        width: "1235px",
         height: "50px",
         marginBottom: "-24px"
     }

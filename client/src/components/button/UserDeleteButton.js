@@ -3,17 +3,14 @@ import {UserDelete} from "../../graphql/useMutation";
 import Button from "@material-ui/core/Button";
 
 
-function DeleteButton(post_id) {
+function DeleteButton(id) {
 
     return (
         <>
 
             <form action="#">
-
                 <Button
-                    onClick={UserDelete(post_id)}
-                    value="🗑">🗑</Button>
-
+                    onClick={UserDelete(id)}>🗑</Button>
             </form>
 
         </>
