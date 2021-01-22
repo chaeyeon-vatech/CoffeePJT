@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CorderBoard() {
+export default function TestBoard() {
 
     const theme = useTheme();
     const classes = useStyles({theme});
@@ -66,7 +66,7 @@ export default function CorderBoard() {
         <div className={classes.root}>
 
             <Grid container spacing={3} flexGrow={1} horizontal='center'
-            breakpoints={{300:classes.itemContainerMobile}}>
+                  breakpoints={{300:classes.itemContainerMobile}}>
 
                 <Grid item xs={3} flexGrow={3}
                       flexBasis='350px'>

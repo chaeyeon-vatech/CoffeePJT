@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import {SidebarContext} from 'resources/hooks/useSidebar';
-import SLUGS from 'resources/links';
+import LINKS from 'resources/links';
 import {useQuery} from "@apollo/react-hooks";
 import {MeQuery} from "../../graphql/query";
 
@@ -26,7 +26,7 @@ const useStyles = createUseStyles((theme) => ({
     name: {
         ...theme.typography.itemTitle,
         textAlign: 'right',
-        color: "white",
+        color: "black",
         '@media (max-width: 768px)': {
             display: 'none'
         }
@@ -44,7 +44,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     title: {
         ...theme.typography.title,
-        color: "white",
+        color: "black",
         '@media (max-width: 1080px)': {
             marginLeft: 50
         },
@@ -79,21 +79,21 @@ function HeaderComponent() {
 
     let title;
     switch (true) {
-        case currentItem === SLUGS.orderboard:
-            title = '주문자 페이지';
+        case currentItem === LINKS.orderboard:
+            title = '주문하기';
             break;
 
-        case currentItem === SLUGS.pay:
-            title = '결제자 페이지';
+        case currentItem === LINKS.pay:
+            title = '결제하기';
             break;
 
 
-        case currentItem === SLUGS.create:
-            title = '주문 관리 페이지';
+        case currentItem === LINKS.reset:
+            title = '마이 페이지';
             break;
 
-        case currentItem === SLUGS.settings:
-            title = '유저 관리 페이지';
+        case currentItem === LINKS.settings:
+            title = '유저 관리';
             break;
         default:
             title = '';

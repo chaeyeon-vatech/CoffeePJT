@@ -5,6 +5,8 @@ import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import Button from "@material-ui/core/Button";
 import {TaskCreate} from "../../graphql/useMutation";
+import SuccessAlert from "../../components/alert/SuccessAlert";
+import {TextField} from "@material-ui/core";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -17,8 +19,7 @@ const useStyles = createUseStyles((theme) => ({
             margin: "auto",
             maxWidth: "525px",
             minHeight: "670px",
-            position: "relative",
-            boxShadow: "0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0,0,0,.19)"
+            position: "relative"
         },
         loginhtml: {
             marginTop: "30px",
@@ -26,7 +27,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "90px 70px 50px 70px",
-            backgroundColor: "rgba(140,83,83,0.9)"
+            backgroundColor: theme.color.red,
 
 
         },
@@ -37,7 +38,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "90px 70px 50px 70px",
-            backgroundColor: "rgba(140,83,83,0.9)"
+            backgroundColor: theme.color.red,
 
 
         },
@@ -159,8 +160,15 @@ const AuthenticationForm = () => {
 
     }
 
+    const handleKeypress = e => {
+        //it triggers by pressing the enter key
+        if (e.keyCode === 13) {
+            localStorage.setItem('task', title)
+            window.location.href = '/create'
+        }
+    };
+
     const taskClick = () => {
-        alert("주문이 생성되었습니다!")
         localStorage.setItem('task', title)
         window.location.href = '/create'
     }
@@ -168,9 +176,12 @@ const AuthenticationForm = () => {
 
     return localStorage.getItem('task') ? (
         <div className={classes.root}>
+            <SuccessAlert
+                message={"👏 오늘은 " + localStorage.getItem('name') + " 님이 " + localStorage.getItem('task') + " 기념으로 커피 삽니다! 👏로 화면에 보여집니다!"}
+                button="주문 내용 미리 보기"/>
             <div className={classes.loginwrap}>
                 <div className={classes.taskhtml}>
-                    <h2>{localStorage.getItem('name')}님!<br/> 주문 설정이 모두 완료되었습니다.<br/></h2>
+                    <h2>{localStorage.getItem('name')}님!<br/> 작성하신 주문 설정을<br/> 변경하고 싶으신가요?<br/></h2>
 
                     <h3 className={classes.h5}>이후 주문 관리 페이지에서 주문자 관리/주문 내용<br/> 변경 가능합니다!</h3>
 
@@ -197,6 +208,18 @@ const AuthenticationForm = () => {
                         <div className={classes.group}>
                             <label>결제자 </label>
                             <input type="text" placeholder="(예시) 승진, 결혼" onChange={e => setTitle(e.target.value)}
+                                   onKeyPress={() => {
+                                       const listener = event => {
+                                           if (event.code === "Enter") {
+                                               taskClick()
+                                           }
+                                       };
+                                       document.addEventListener("keypress", listener);
+                                       return () => {
+                                           document.removeEventListener("keypress", listener);
+                                       };
+
+                                   }}
                                    className={classes.input}/>
                             <Button variant="contained" id='logout' onClick={taskClick}
                                     className={classes.button}>주문 생성</Button>

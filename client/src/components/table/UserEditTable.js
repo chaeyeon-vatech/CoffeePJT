@@ -10,16 +10,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import {useQuery} from "@apollo/react-hooks";
 import {AllUserQuery} from "../../graphql/query";
-import FormDialog from "../../routes/userboard/Dialog";
+import UpdateUserDialog from "../dialog/UpdateUser";
 import UserDeleteButton from "../button/UserDeleteButton";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
 import UserAddButton from "../button/UserAddButton";
-import {MultipleUserDelete, UpdateUser} from "../../graphql/useMutation";
+import {MultipleUserDelete} from "../../graphql/useMutation";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -86,26 +80,7 @@ export default function UserEditTable() {
 
         setChecked(newChecked);
     };
-
-    const numberOfChecked = (items) => intersection(checked, items).length;
-
-    const handleToggleAll = (items) => () => {
-        if (numberOfChecked(items) === items.length) {
-            setChecked(not(checked, items));
-        } else {
-            setChecked(union(checked, items));
-        }
-    };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-
+    
     const customList = (title, items) => (
         <Card>
             <List className={classes.list} dense component="div" role="list">
@@ -141,7 +116,7 @@ export default function UserEditTable() {
 
                                     </ListItem>
                                 </td>
-                                <td><FormDialog username={value.username} id={value._id}/></td>
+                                <td><UpdateUserDialog username={value.username} id={value._id}/></td>
                                 <td><UserDeleteButton post_id={value._id}/></td>
                             </tr>
                         );
@@ -172,46 +147,6 @@ export default function UserEditTable() {
                             선택 삭제
                         </Button>
                     </td>
-
-                    <td>
-                        <Button
-                            variant="outlined"
-                            className={classes.button}
-                            onClick={handleClickOpen}
-                            disabled={listChecked.length === 0 || listChecked.length > 1}
-                            aria-label="move selected right"
-                            color="primary"
-                        >
-                            선택 수정
-                        </Button>
-                    </td>
-                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">유저 이름 수정</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                {checked.map((c) => (c.username))}님의 이름을 변경하시겠습니까?
-                            </DialogContentText>
-                            <TextField
-                                defaultValue={checked.map((c) => (c.username))}
-                                autoFocus
-                                margin="dense"
-                                id="name"
-                                label="수정하실 이름을 입력해주세요."
-                                type="email"
-                                onChange={e => setContent(e.target.value)}
-                                fullWidth
-                            />
-                        </DialogContent>
-                        <DialogActions>
-
-                            <Button onClick={handleClose} color="primary">
-                                취소
-                            </Button>
-                            <Button onClick={UpdateUser(checked, content, setOpen)} color="primary">
-                                변경
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
 
                 </th>
             </table>

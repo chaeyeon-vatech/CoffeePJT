@@ -157,9 +157,11 @@ export const Receipt = gql`
     query {receipt}
 `
 
-
-export const ReceiptUsers = gql`
-    query receiptUsers{receiptUsers}
+export const ReceiptUser = gql`
+    query receiptUser($menu:Int!)
+    {receiptUser(cmenu:$menu)}
 `
+
+
 
 

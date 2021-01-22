@@ -10,7 +10,7 @@ import {
 } from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
 import {OrderConfirmMutation} from "../../graphql/mutation";
-import {TextField, Tooltip} from "@material-ui/core";
+import {Tooltip} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
 import Button from "@material-ui/core/Button";
 
@@ -18,33 +18,10 @@ const useStyles = createUseStyles((theme) => ({
     container: {
         backgroundColor: '#FFFFFF',
         border: `5px solid ${theme.color.darkRed}`,
-        borderRadius: 5,
-        cursor: 'pointer'
+        borderRadius: 5
     },
-    graphContainer: {
-        marginTop: 24,
-        marginLeft: 0,
-        marginRight: 0,
-        width: '100%'
-    },
-    graphSection: {
+    tableSection: {
         padding: 24
-    },
-    graphSubtitle: {
-        ...theme.typography.smallSubtitle,
-        color: theme.color.grayishBlue2,
-        marginTop: 4,
-        marginRight: 8
-    },
-    graphTitle: {
-        ...theme.typography.cardTitle,
-        color: theme.color.veryDarkGrayishBlue
-    },
-    legendTitle: {
-        ...theme.typography.smallSubtitle,
-        fontWeight: '600',
-        color: theme.color.grayishBlue2,
-        marginLeft: 8
     },
     separator: {
         backgroundColor: theme.color.lightGrayishBlue2,
@@ -80,8 +57,8 @@ const useStyles = createUseStyles((theme) => ({
         textAlign: 'center',
         color: theme.color.veryDarkGrayishBlue
     },
-    a: {
-        color: "black"
+    button: {
+        marginBottom: "20px"
     }
 }));
 
@@ -161,38 +138,43 @@ function TodayTrendsComponent() {
 
 
     return (
-        <Row
-            flexGrow={1}
-            className={classes.container}
-            horizontal='center'
-            breakpoints={{1024: 'column'}}
-        >
-            <Column
-                wrap
-                flexGrow={7}
-                flexBasis='735px'
-                className={classes.graphSection}
-                breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
+        <>
+
+            <Row
+                flexGrow={1}
+                className={classes.container}
+                horizontal='center'
+                breakpoints={{1024: 'column'}}
             >
-                <PaymentTable/>
-            </Column>
-            <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
-                <div/>
-            </Column>
-            <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
-                {renderStat('누적 금액', money)}
-                {renderStat('미주문자', <Tooltip title={pa &&
-                pa.map((content) => content.username).join(',')} placement="top">
-                    <Button variant="contained">{order[3]}</Button>
-                </Tooltip>)}
+                <Column
+                    wrap
+                    flexGrow={7}
+                    flexBasis='735px'
+                    className={classes.tableSection}
+                    breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
+                >
+                    <PaymentTable/>
+                </Column>
+                <Column className={classes.separator} breakpoints={{1024: {display: 'none'}}}>
+                    <div/>
+                </Column>
+                <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
+                    {renderStat('누적 금액', money)}
+                    {renderStat('미주문자', <Tooltip title={pa &&
+                    pa.map((content) => content.username).join(',')} placement="top">
+                        <Button variant="outlined">{order[3]}</Button>
+                    </Tooltip>)}
 
-                {renderStat('결제 완료', <TextField type='submit'
-                                                onClick={deletePostOrMutation}
-                                                disabled={loading}
-                                                value='결제 완료'/>)}
-            </Column>
-        </Row>
-
+                    {renderStat('결제 완료', <Button
+                        variant="outlined"
+                        color="secondary"
+                        className={classes.button}
+                        onClick={deletePostOrMutation}
+                        disabled={loading}
+                    >결제 완료</Button>)}
+                </Column>
+            </Row>
+        </>
 
     );
 }

@@ -70,31 +70,32 @@ function SidebarComponent() {
             {localStorage.getItem('myData') &&
             <MenuItem
                 id={LINKS.orderboard}
-                title='주문자 페이지'
+                title='주문하기'
                 onClick={() => onClick(LINKS.orderboard)}
             />}
 
-            <div className={classes.separator}></div>
             {user == "결제자" && <MenuItem
                 id={LINKS.pay}
-                title='결제자 페이지'
+                title='결제하기'
                 onClick={() => onClick(LINKS.pay)}
             />}
 
+            <div className={classes.separator}></div>
 
-            {user == "결제자" && <MenuItem
-                id={LINKS.create}
-                title='주문 관리'
-                onClick={() => onClick(LINKS.reset)}
-            />}
             {user == "결제자" &&
             <MenuItem
                 id={LINKS.settings}
-                title='유저 관리'
+                title='팀원 관리'
                 onClick={() => onClick(LINKS.settings)}
             />}
 
-            <div className={classes.separator}></div>
+            {user == "결제자" && <MenuItem
+                id={LINKS.create}
+                title='마이페이지'
+                onClick={() => onClick(LINKS.reset)}
+            />}
+
+
             {localStorage.getItem('myData') && <MenuItem id='logout' title='로그아웃' onClick={handleClick}/>}
 
         </Menu>

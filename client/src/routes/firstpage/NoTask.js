@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
-import {SearchQuery, TaskQuery} from "../../graphql/query";
+import {SearchQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import {Autocomplete} from "@material-ui/lab";
@@ -46,7 +46,7 @@ const useStyles = createUseStyles((theme) => ({
             height: "100%",
             position: "center",
             padding: "100px 70px 50px 70px",
-            backgroundColor: "rgba(140,83,83,0.9)",
+            backgroundColor: theme.color.red,
             marginTop: "70px"
 
         },
@@ -76,9 +76,8 @@ const useStyles = createUseStyles((theme) => ({
             marginTop: "200px",
             minHeight: "200px",
             position: "relative",
-            // perspective: "1000px",
             transformStyle: "preserve-3d",
-            backgroundColor: "rgba(140,83,83,0.9)",
+            backgroundColor: theme.color.red,
             marginBottom: "20px",
             padding: "20 20 20 20",
             '&:nth-child(n) > button': {
@@ -161,16 +160,14 @@ const useStyles = createUseStyles((theme) => ({
 
 const handleClick = (name, id) => {
 
-    localStorage.setItem('myData', id)
-    localStorage.setItem('name', name)
-    window.location.href = '/create'
+    if (id != null) {
+        localStorage.setItem('myData', id)
+        localStorage.setItem('name', name)
+        window.location.href = '/create'
+    }
 
 }
 
-
-const handleLogout = () => {
-    localStorage.clear()
-}
 
 const AuthenticationForm = () => {
 
@@ -196,7 +193,76 @@ const AuthenticationForm = () => {
     }, [data]);
 
 
-    return (
+    return localStorage.getItem('name') ? (
+        <div className={classes.root}>
+            <div className={classes.loginwrap}>
+
+                <div className={classes.loginhtml}>
+                    <h3>이름을 찾을 수 없습니다.</h3>
+
+                    <h5 className={classes.h5}>다시 입력해주세요!</h5>
+
+
+                    <div className={classes.loginform}>
+
+                        <div className={classes.group}>
+                            <label>주문자</label>
+                            <Typography component="div" variant="body1">
+
+                                <Autocomplete
+                                    freeSolo
+                                    id="free-solo-2-demo"
+                                    disableClearable
+                                    options={result.map((content) => content.username)}
+                                    inputValue={inputValue}
+                                    onInputChange={(event, newInputValue) => {
+                                        setInputValue(newInputValue);
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            id="standard-basic"
+                                            margin="normal"
+                                            color={"secondary"}
+                                            onChange={e => setSearch(e.target.value)}
+                                            onKeyPress={() => {
+                                                const listener = event => {
+                                                    if (event.code === "Enter") {
+                                                        handleClick(inputValue, result.map((content) => (content._id)))
+
+                                                    }
+                                                };
+                                                document.addEventListener("keypress", listener);
+                                                return () => {
+                                                    document.removeEventListener("keypress", listener);
+                                                };
+
+                                            }}
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                type: 'search',
+                                                className: classes.focused
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </Typography>
+
+                            <Button type="submit"
+                                    disabled={inputValue === undefined}
+                                    onClick={() => handleClick(inputValue, result.map((content) => (content._id)))}
+                            >로그인</Button>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    ) : (
 
         <div className={classes.root}>
             <div className={classes.loginwrap}>
@@ -226,15 +292,10 @@ const AuthenticationForm = () => {
                                             margin="normal"
                                             color={"secondary"}
                                             onChange={e => setSearch(e.target.value)}
-                                            InputProps={{
-                                                ...params.InputProps,
-                                                type: 'search',
-                                                className: classes.focused
-                                            }}
                                             onKeyPress={(ev) => {
                                                 const listener = event => {
-                                                    if (event.code === "Enter" || event.code === "NumpadEnter") {
-                                                        handleClick(search, result.map((content) => (content._id)))
+                                                    if (event.code === "Enter") {
+                                                        handleClick(inputValue, result.map((content) => (content._id)))
 
                                                     }
                                                 };
@@ -243,6 +304,11 @@ const AuthenticationForm = () => {
                                                     document.removeEventListener("keypress", listener);
                                                 };
 
+                                            }}
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                type: 'search',
+                                                className: classes.focused
                                             }}
                                         />
                                     )}

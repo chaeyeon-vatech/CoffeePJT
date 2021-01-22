@@ -1,9 +1,10 @@
 import React from 'react';
-import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import UserTable from "../../components/table/AfterTable";
+import CardComponent from "../../components/cards/CardComponent";
 
 const useStyles = createUseStyles((theme) => ({
+    root: {marginTop: "30px"},
     container: {
         backgroundColor: '#FFFFFF',
         border: `5px solid ${theme.color.darkRed}`,
@@ -15,31 +16,19 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function OrderBoard() {
+function OrderBoard(props) {
     const theme = useTheme();
     const classes = useStyles({theme});
 
     return (
-        <Row
-            flexGrow={1}
-            className={classes.container}
-            horizontal='center'
-            breakpoints={{1024: 'column'}}
-        >
-            <Column
-                wrap
-                flexGrow={7}
-                flexBasis='735px'
-                className={classes.graphSection}
-                breakpoints={{1024: {width: 'calc(100% - 48px)', flexBasis: 'auto'}}}
-            >
-                <UserTable/>
-            </Column>
-
-        </Row>
+        <CardComponent
+            containerStyles={props.containerStyles}
+            className={classes.root}
+            items={[  <UserTable/>]}
+            />
 
 
-    )
+    );
 
 
 }

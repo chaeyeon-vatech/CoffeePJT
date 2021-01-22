@@ -1,5 +1,5 @@
-export function convertlinksToUrl(slug, parameters) {
-    let url = slug;
+export function convertlinksToUrl(link, parameters) {
+    let url = link;
     Object.entries(parameters).forEach(([key, value]) => {
         url = url.replace(`:${key}`, value);
     });

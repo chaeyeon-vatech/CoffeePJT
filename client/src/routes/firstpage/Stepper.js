@@ -14,10 +14,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Second from "./SecondStep";
 import Third from "./FirstStep";
-import {useMutation} from "@apollo/react-hooks";
-import {TaskCreateMutation} from "../../graphql/mutation";
-import {TaskQuery} from "../../graphql/query";
-
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -72,7 +68,7 @@ QontoStepIcon.propTypes = {
 
 const ColorlibConnector = withStyles({
     alternativeLabel: {
-        top: 20,
+        top: 25,
         backgroundColor: "black"
     },
     active: {
@@ -88,7 +84,7 @@ const ColorlibConnector = withStyles({
         },
     },
     line: {
-        height: 3,
+        height: 2,
         border: 0,
         backgroundColor: '#eaeaf0',
         borderRadius: 1,
@@ -100,8 +96,8 @@ const useColorlibStepIconStyles = makeStyles({
         backgroundColor: "black",
         zIndex: 1,
         color: '#fff',
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         display: 'flex',
         borderRadius: '50%',
         justifyContent: 'center',
@@ -162,29 +158,34 @@ const useStyles = makeStyles((theme) => ({
         display: "block",
         width: "100px",
         height: "100px",
-        border: "solid 6px #9e344d",
+        color: "white",
+        backgroundColor: "#254143",
+        border: "solid 6px #254143",
         borderRadius: "100%",
         transition: "all .2s linear",
         "&:hover": {
-            backgroundColor: 'rgb(12,12,12,0.8)'
+            backgroundColor: 'rgb(12,12,12,0.8)',
+            color: "white"
         }
 
     },
     nbutton: {
-        marginLeft: "1300px",
         marginTop: "-100px",
         margin: "none",
         cursor: "pointer",
         position: "relative",
         display: "block",
         width: "100px",
+        left: "90%",
         height: "100px",
+        color: "white",
         backgroundColor: "#9e344d",
         border: "solid 6px #9e344d",
         borderRadius: "100%",
         transition: "all .2s linear",
         "&:hover": {
-            backgroundColor: 'rgb(12,12,12,0.8)'
+            backgroundColor: 'rgb(12,12,12,0.8)',
+            color: "white"
         }
 
 
@@ -198,7 +199,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['주문자/미주문자 관리', '주문 생성'];
+    return ['미주문자 등록', '주문 생성'];
 }
 
 function getStepContent(step) {
@@ -213,40 +214,26 @@ function getStepContent(step) {
 
 export default function CustomizedSteppers() {
     const classes = useStyles();
-    const [step, setStep] = useState(0);
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
+
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-
     const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+
+    const handleUser = () => {
         if (window.confirm('결제자를 변경하시겠습니까?')) {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
             localStorage.clear();
             window.location.href = '/login'
         }
     };
-
-
-    const [create] = useMutation(TaskCreateMutation, {
-            refetchQueries: [{query: TaskQuery}],
-            variables: {
-                title: localStorage.getItem('task'),
-                userid: localStorage.getItem('myData')
-            },
-            onCompleted: () => {
-                alert("주문이 생성되었습니다!");
-                localStorage.setItem('num', 0);
-            },
-
-            onError: () => {
-                alert("주문 내용을 정확히 작성해주세요.")
-            },
-        }
-    )
 
     return localStorage.getItem('task') ? (
 
@@ -303,15 +290,15 @@ export default function CustomizedSteppers() {
 
                                 {getStepContent(activeStep)}</Typography>
 
-                            <Button onClick={handleBack} className={classes.button}>
-                                Back
+                            <Button variant="contained" onClick={handleUser} className={classes.button}>
+                                로그아웃
                             </Button>
                             <Button
                                 variant="contained"
                                 onClick={handleNext}
                                 className={classes.nbutton}
                             >
-                                Next
+                                주문 생성
                             </Button>
                         </div>
                     </div>
@@ -324,16 +311,11 @@ export default function CustomizedSteppers() {
 
                                 {getStepContent(activeStep)}</Typography>
 
-                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                                Back
+                            <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
+                                    className={classes.button}>
+                                주문자<br/>미주문자<br/> 페이지
                             </Button>
-                            <Button
-                                variant="contained"
-                                onClick={create}
-                                className={classes.nbutton}
-                            >
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
+
                         </div>
                     </div>
                 )}

@@ -4,6 +4,7 @@ import {createUseStyles} from 'react-jss';
 import PaymentBoard from './PaymentBoard';
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
+import SuccessAlert from "../../components/alert/SuccessAlert";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -24,7 +25,7 @@ const useStyles = createUseStyles((theme) => ({
             maxWidth: 'none'
         }
     },
-    todayTrends: {
+    boardsection: {
         marginTop: 30
     },
     unresolvedTickets: {
@@ -67,22 +68,25 @@ function PaymentboardComponent() {
     }, [data]);
 
     return (
+        <>
 
+            <SuccessAlert message="미주문자와 영수증 메뉴에 마우스를 올리시면 명단 확인이 가능합니다!"
+                          button="결제하기 페이지란?"/>
+            <Column>
+                <table className={classes.border}>
 
-        <Column>
-            <table className={classes.border}>
+                    {contents && contents.map((content) => (
+                        <td><span
+                            className={classes.itemTitle}>👏  결제자 {content.creater}님 환영합니다!👏</span>
+                        </td>))}
+                </table>
 
-                {contents && contents.map((content) => (
-                    <td><span
-                        className={classes.itemTitle}>👏  결제자 {content.creater}님 환영합니다!👏</span>
-                    </td>))}
-            </table>
+                <div className={classes.boardsection}>
+                    <PaymentBoard/>
+                </div>
 
-            <div className={classes.todayTrends}>
-                <PaymentBoard/>
-            </div>
-
-        </Column>
+            </Column>
+        </>
     );
 }
 

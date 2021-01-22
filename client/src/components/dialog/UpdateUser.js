@@ -8,8 +8,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {DUpdateUser} from "../../graphql/useMutation";
 
-export default function FormDialog(username) {
-    const [open, setOpen] = React.useState(false);
+export default function UpdateUserDialog(username) {
+    const [open, setOpen] = useState(false);
     const [content, setContent] = useState('');
 
     const handleClickOpen = () => {
@@ -37,7 +37,6 @@ export default function FormDialog(username) {
                         id="name"
                         label="수정하실 이름을 입력해주세요."
                         defaultValue={username.username}
-                        type="email"
                         onChange={e => setContent(e.target.value)}
                         fullWidth
                     />
@@ -46,7 +45,8 @@ export default function FormDialog(username) {
                     <Button onClick={handleClose} color="primary">
                         취소
                     </Button>
-                    <Button onClick={DUpdateUser(username, content, setOpen)} color="primary">
+                    <Button disabled={content === '' || content === username.username}
+                            onClick={DUpdateUser(username, content, setOpen)} color="primary">
                         변경
                     </Button>
                 </DialogActions>

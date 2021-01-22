@@ -12,7 +12,8 @@ const color = {
     paleBlueTransparent: 'rgba(221, 226, 255, 0.08)',
     veryDarkGrayishBlue: '#373a47',
     darkgreen: "rgba(65,81,54,0.9)",
-    lightyellow: "#d2cdc1"
+    lightyellow: "#d2cdc1",
+    red:"rgba(131,4,29,0.8)"
 };
 
 const typography = {

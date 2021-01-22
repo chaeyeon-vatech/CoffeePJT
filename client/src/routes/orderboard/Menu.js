@@ -56,8 +56,9 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {maxWidth: 250},
     color: {
-        backgroundColor: 'rgb(219,150,26)',
+        backgroundColor: 'rgb(200,176,141)',
         fontSize: 10,
+        color:"black",
         marginLeft: "23px",
         width: "1079px",
         height: "50px",

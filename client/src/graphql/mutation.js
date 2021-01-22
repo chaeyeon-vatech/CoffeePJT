@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 
-//Order Create
+//Order RewritePage
 
 export const CreateMutation = gql`
     mutation createOrder($id:ID! $menu:String! $hi:String!){
@@ -25,7 +25,7 @@ export const RemoveMutation = gql`
     }
 `
 
-//Task Create
+//Task RewritePage
 export const TaskCreateMutation = gql`
     mutation($userid:ID!, $title:String!){
         createTask(userid:$userid, title:$title){

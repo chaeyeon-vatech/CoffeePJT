@@ -1,14 +1,15 @@
 export default {
-    // private
+    //private
+    login: '/',
+    create: '/create',
+
+    //public
+    ologin: '/login',
+    signup: '/signup',
     orderboard: '/order',
     after: '/after',
     pay: '/pay',
     settings: '/settings',
     notask: '/notask',
-    // firstpage
-    login: '/',
-    ologin: '/login',
-    signup: '/signup',
-    create: '/create',
     reset: '/reset'
 };
