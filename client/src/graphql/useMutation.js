@@ -8,6 +8,7 @@ import {
     TaskRemoveMutation, TaskUpdateMutation, UpdateUserMutation
 } from "./mutation";
 import {
+    AllUserQuery,
     CostQuery,
     CountQuery,
     MeQuery, NotQuery,
@@ -163,7 +164,7 @@ export function TaskUpdate(id, content, setOpen) {
 export function UserAdd(username, content, setOpen) {
 
     const [create] = useMutation(CreateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery}, {query: Receipt}, {query: CountQuery}, {query: NotQuery}],
+            refetchQueries: [{query: UserSearchQuery}, {query: Receipt}, {query: CountQuery}, {query: NotQuery},{query:AllUserQuery}],
             variables: {
                 username: content
             },
@@ -188,7 +189,7 @@ export function UserDelete(id) {
     const [deleteMutation] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
+                {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery},{query:AllUserQuery}],
             variables: {ids: [String(Object.values(id))]},
             onCompleted: () => {
                 alert("유저 삭제가 완료되었습니다.")
@@ -208,7 +209,7 @@ export function MultipleUserDelete(checked) {
     const [mdelete] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery},{query:AllUserQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
                 alert("선택하신 유저가 삭제되었습니다.");
