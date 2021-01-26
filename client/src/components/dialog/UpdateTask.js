@@ -6,9 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {useMutation, useQuery} from "@apollo/react-hooks";
-import {Receipt, TaskQuery} from "../../graphql/query";
-import {TaskUpdateMutation} from "../../graphql/mutation";
+import {useQuery} from "@apollo/react-hooks";
+import {TaskQuery} from "../../graphql/query";
 import {TaskUpdate} from "../../graphql/useMutation";
 
 export default function UpdateTask(id) {
@@ -24,19 +23,6 @@ export default function UpdateTask(id) {
 
         }
     }, [data]);
-
-    const [t] = useMutation(TaskUpdateMutation, {
-        refetchQueries: [{query: TaskQuery}, {query: Receipt}],
-
-        variables: {
-            id: id.id,
-            title: content
-        },
-        onCompleted: () => {
-            setOpen(false);
-
-        },
-    })
 
 
     const handleClickOpen = () => {

@@ -292,6 +292,11 @@ export default function CustomizedSteppers() {
                                 variant="contained"
                                 onClick={handleNext}
                                 className={classes.nbutton}
+                                onKeyDown={({key}) => {
+                                    if (key === "Enter") {
+                                      handleNext()
+                                    }
+                                }}
                             >
                                 주문 생성
                             </Button>

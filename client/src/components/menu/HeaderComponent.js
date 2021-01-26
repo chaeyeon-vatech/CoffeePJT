@@ -62,6 +62,8 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 function HeaderComponent() {
+
+
     const {push} = useHistory();
     const {currentItem} = useContext(SidebarContext);
     const theme = useTheme();

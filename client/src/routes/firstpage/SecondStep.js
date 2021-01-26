@@ -208,17 +208,10 @@ const AuthenticationForm = () => {
                         <div className={classes.group}>
                             <label>결제자 </label>
                             <input type="text" placeholder="(예시) 승진, 결혼" onChange={e => setTitle(e.target.value)}
-                                   onKeyPress={() => {
-                                       const listener = event => {
-                                           if (event.code === "Enter") {
-                                               taskClick()
-                                           }
-                                       };
-                                       document.addEventListener("keypress", listener);
-                                       return () => {
-                                           document.removeEventListener("keypress", listener);
-                                       };
-
+                                   onKeyDown={({key}) => {
+                                       if (key === "Enter") {
+                                           taskClick()
+                                       }
                                    }}
                                    className={classes.input}/>
                             <Button variant="contained" id='logout' onClick={taskClick}
