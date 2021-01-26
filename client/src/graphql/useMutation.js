@@ -164,7 +164,8 @@ export function TaskUpdate(id, content, setOpen) {
 export function UserAdd(username, content, setOpen) {
 
     const [create] = useMutation(CreateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery}, {query: Receipt}, {query: CountQuery}, {query: NotQuery},{query:AllUserQuery}],
+            refetchQueries: [{query: UserSearchQuery}, {query: Receipt}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
+            awaitRefetchQueries: true,
             variables: {
                 username: content
             },
@@ -189,10 +190,35 @@ export function UserDelete(id) {
     const [deleteMutation] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery},{query:AllUserQuery}],
+                {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
+            awaitRefetchQueries: true,
+
             variables: {ids: [String(Object.values(id))]},
             onCompleted: () => {
                 alert("유저 삭제가 완료되었습니다.")
+
+            },
+            onError: () => {
+                alert("다시 시도해주세요!")
+            }
+        }
+    )
+
+    return deleteMutation;
+}
+
+export function SearchDelete(id) {
+
+    const [deleteMutation] = useMutation(multipleDelete, {
+            refetchQueries: [{query: UserSearchQuery},
+                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
+                {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
+            awaitRefetchQueries: true,
+
+            variables: {ids: [String(Object.values(id))]},
+            onCompleted: () => {
+                alert("선택하신 유저가 삭제되었습니다.")
+                window.location.href = '/settings';
 
             },
             onError: () => {
@@ -209,7 +235,9 @@ export function MultipleUserDelete(checked) {
     const [mdelete] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery},{query:AllUserQuery}],
+                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
+            awaitRefetchQueries: true,
+
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
                 alert("선택하신 유저가 삭제되었습니다.");
@@ -229,6 +257,8 @@ export function UpdateUser(checked, content, setOpen) {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
                 {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
+            awaitRefetchQueries: true,
+
             variables: {
                 id: checked.map((c) => (c._id)).toString(),
                 username: content
@@ -259,6 +289,8 @@ export function SelectUpdate(username, content, setClick) {
                 id: username.id,
                 username: content
             },
+            awaitRefetchQueries: true,
+
             onCompleted: () => {
 
                 alert("정보 수정이 완료되었습니다.")
@@ -272,10 +304,13 @@ export function SelectUpdate(username, content, setClick) {
 
 
 //선택적 수정
+
 export function DUpdateUser(username, content, setOpen) {
     const [update] = useMutation(UpdateUserMutation, {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+            awaitRefetchQueries: true,
+
             variables: {
                 id: username.id,
                 username: content
@@ -293,12 +328,37 @@ export function DUpdateUser(username, content, setOpen) {
     return update
 }
 
+export function DSelectUser(username, content, setOpen) {
+    const [update] = useMutation(multipleDelete, {
+            refetchQueries: [{query: UserSearchQuery},
+                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+            variables: {
+                ids: [username.id]
+            },
+            awaitRefetchQueries: true,
+
+            onCompleted: () => {
+                setOpen(false);
+                window.location.href = '/settings';
+
+            },
+            onError: () => {
+                alert("다시 시도해주세요!")
+            }
+        }
+    )
+
+    return update
+}
+
 
 //주문자 => 미주문자로
 export function VacationBack(checked) {
     const [vacationback] = useMutation(BackUserMutation, {
             refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
             variables: {ids: checked.map((c) => (c._id))},
+            awaitRefetchQueries: true,
+
             onCompleted: () => {
                 alert("미주문자로 전환되었습니다!");
 
@@ -313,6 +373,8 @@ export function VacationBack(checked) {
 export function OrderBack(checked) {
     const [orderback] = useMutation(OrderBackMutation, {
             refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
+            awaitRefetchQueries: true,
+
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
 
@@ -328,6 +390,6 @@ export function OrderBack(checked) {
 export default {
     ChangeGiveup, DeleteOrder, Giveup,
     TaskDelete, TaskUpdate, TaskCreate,
-    UserAdd, UserDelete, MultipleUserDelete, UpdateUser, SelectUpdate,
+    UserAdd, UserDelete, SearchDelete, MultipleUserDelete, UpdateUser, SelectUpdate, DSelectUser,
     VacationBack, OrderBack
 };

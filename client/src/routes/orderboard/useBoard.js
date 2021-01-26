@@ -17,8 +17,6 @@ export function CreateOrder(hi) {
                 menu: hi.menu,
                 hi: hi.hi
             },
-            onCompleted: () => {
-            },
             onError: () => {
                 alert("메뉴를 선택해주세요.")
             },

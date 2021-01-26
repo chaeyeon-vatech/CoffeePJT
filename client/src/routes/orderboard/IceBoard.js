@@ -97,12 +97,10 @@ export default function IceBoard() {
                                             className={classes.media}
                                             image="https://m.iceplanet.co.kr/web/product/big/201905/392ef164b0a2c8c2edb6f1462c3f6cdf.jpg"
                                         />
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" component="h2">
+                                        <CardContent className={classes.media}>
+                                            <Typography gutterBottom variant="h5" component="h2"
+                                                        className={classes.media}>
                                                 아시나요
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -123,12 +121,9 @@ export default function IceBoard() {
                                             className={classes.media}
                                             image="https://img5.yna.co.kr/etc/inner/KR/2017/08/07/AKR20170807054700030_01_i_P2.jpg"
                                         />
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" component="h2">
+                                        <CardContent className={classes.media}>
+                                            <Typography gutterBottom variant="h5" component="h2"  className={classes.media}>
                                                 돼지콘
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -149,12 +144,9 @@ export default function IceBoard() {
                                             className={classes.media}
                                             image="https://contents.lotteon.com/itemimage/_v100649/LF/15/00/59/6_/0/LF1500596_0_1.jpg/dims/resizemc/400x400"
                                         />
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" component="h2">
+                                        <CardContent className={classes.media}>
+                                            <Typography gutterBottom variant="h5" component="h2"  className={classes.media}>
                                                 브라보
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -175,7 +167,7 @@ export default function IceBoard() {
                                             className={classes.media}
                                             image="https://m.assabeer.com/web/product/big/a_64.jpg"
                                         />
-                                        <CardContent>
+                                        <CardContent className={classes.media}>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 녹차마루
                                             </Typography>
