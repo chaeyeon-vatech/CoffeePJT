@@ -174,9 +174,9 @@ const AuthenticationForm = () => {
     const theme = useTheme();
     const classes = useStyles({theme});
 
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
-    const [inputValue, setInputValue] = useState();
+    const [inputValue, setInputValue] = useState("");
 
     const {data} = useQuery(SearchQuery, {
         variables: {
