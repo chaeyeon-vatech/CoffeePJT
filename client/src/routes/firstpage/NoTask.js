@@ -161,7 +161,7 @@ const useStyles = createUseStyles((theme) => ({
 const handleClick = (name, id) => {
 
     if (id != null) {
-        localStorage.setItem('myData', id)
+        localStorage.setItem('myData', id.toString())
         localStorage.setItem('name', name)
         window.location.href = '/create'
     }

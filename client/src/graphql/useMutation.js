@@ -83,7 +83,9 @@ export function DeleteOrder(userid) {
                 orderid: userid.orderid
             },
             onError: () => {
-                // alert("주문이 취소되었습니다!")
+                console.log(userid)
+                console.log(typeof (userid.userid))
+                console.log(typeof (userid.orderid))
             }
         }
     )
