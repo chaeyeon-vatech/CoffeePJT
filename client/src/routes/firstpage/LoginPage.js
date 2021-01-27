@@ -123,7 +123,7 @@ const useStyles = createUseStyles((theme) => ({
 
 const handleClick = (name, id) => {
     if (id != undefined && id != null) {
-        localStorage.setItem('myData', id)
+        localStorage.setItem('myData', id.toString())
         localStorage.setItem('name', name)
         window.location.href = '/order'
     }

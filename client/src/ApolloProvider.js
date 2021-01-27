@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import App from './App';
 import {ApolloClient} from 'apollo-boost';
 import {InMemoryCache} from 'apollo-cache-inmemory';

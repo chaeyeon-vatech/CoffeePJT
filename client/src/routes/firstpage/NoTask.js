@@ -161,7 +161,7 @@ const useStyles = createUseStyles((theme) => ({
 const handleClick = (name, id) => {
 
     if (id != null) {
-        localStorage.setItem('myData', id)
+        localStorage.setItem('myData', id.toString())
         localStorage.setItem('name', name)
         window.location.href = '/create'
     }
@@ -174,9 +174,9 @@ const AuthenticationForm = () => {
     const theme = useTheme();
     const classes = useStyles({theme});
 
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
-    const [inputValue, setInputValue] = useState();
+    const [inputValue, setInputValue] = useState("");
 
     const {data} = useQuery(SearchQuery, {
         variables: {

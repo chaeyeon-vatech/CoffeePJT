@@ -1,11 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../graphql/query";
+import React from 'react';
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import TransferList from "../../components/table/TransferTable";
 import SuccessAlert from "../../components/alert/SuccessAlert";
-
 
 const useStyles = createUseStyles((theme) => ({
 
@@ -17,7 +14,7 @@ const useStyles = createUseStyles((theme) => ({
             maxWidth: "525px",
             minHeight: "670px",
             position: "relative",
-            left:"15%",
+            left: "15%",
             marginTop: "-20px"
         },
         loginhtml: {
@@ -113,41 +110,32 @@ const AuthenticationForm = () => {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [contents, setContents] = useState();
-
-    const {data} = useQuery(TaskQuery);
-
-    useEffect(() => {
-        if (data) {
-            setContents(data.tasks);
-        }
-    })
-
 
     return (
 
 
-        <div className={classes.root}>
+        <>
             <SuccessAlert message="미주문자(휴가자/결근자/기타사유)/주문자를 구별하여 버튼을 이용하여 양 옆으로 상태 변환이 가능합니다!"
                           button="주문자/미주문자 페이지란?"/>
+            <div className={classes.root}>
+                <div className={classes.loginwrap}>
+                    <div className={classes.loginhtml}>
 
-            <div className={classes.loginwrap}>
-                <div className={classes.loginhtml}>
+
+                        <h2 className={classes.margin}>{localStorage.getItem('name')}님 환영합니다.</h2>
+
+                        <div className={classes.loginform}>
+
+                            <div className={classes.group}>
+                                <TransferList/>
+                            </div>
 
 
-                    <h2 className={classes.margin}>👨🏻‍💻{localStorage.getItem('name')}님 환영합니다.👨🏻‍💻️</h2>
-
-                    <div className={classes.loginform}>
-
-                        <div className={classes.group}>
-                            <TransferList/>
                         </div>
-
-
                     </div>
                 </div>
             </div>
-        </div>
+        </>
 
 
     );

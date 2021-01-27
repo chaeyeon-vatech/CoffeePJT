@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -13,7 +13,7 @@ import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Second from "./SecondStep";
-import Third from "./FirstStep";
+import First from "./FirstStep";
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -188,7 +188,8 @@ const useStyles = makeStyles((theme) => ({
 
     background: {
         backgroundColor: "rgba(169,162,162,0.9)",
-
+        width: '100%',
+        height: "70%",
     }
 
 }));
@@ -200,9 +201,11 @@ function getSteps() {
 function getStepContent(step) {
     switch (step) {
         case 0:
-            return <Third/>;
+            return <First/>;
         case 1:
             return <Second/>;
+        default:
+            return <First/>;
 
     }
 }
@@ -240,10 +243,13 @@ export default function CustomizedSteppers() {
 
                 <Step>
 
-                    <StepLabel StepIconComponent={AssignmentTurnedInTwoToneIcon}>Completed</StepLabel>
+                    <StepLabel StepIconComponent={AssignmentTurnedInTwoToneIcon}
+                               completed="true"
+                               active="true"
+                               error="false"
+                    >Completed</StepLabel>
 
                 </Step>
-
 
             </Stepper>
             <div>
@@ -255,11 +261,11 @@ export default function CustomizedSteppers() {
 
                     </div>
                 </div>
-                )}
+                )
             </div>
         </div>
     ) : (
-        <div className={classes.root}>
+        <>
 
 
             <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}
@@ -275,51 +281,40 @@ export default function CustomizedSteppers() {
 
 
             </Stepper>
-            <div>
-                {activeStep === 0 ? (
+
+            {activeStep === 0 ? (
+                <>
+
+                    {getStepContent(activeStep)}
+
+                    <Button variant="contained" onClick={handleUser} className={classes.button}>
+                        로그아웃
+                    </Button>
+                    <Button
+                        variant="contained"
+                        onClick={handleNext}
+                        className={classes.nbutton}
+                    >
+                        주문 생성
+                    </Button>
+                </>
+            ) : (
+                <div>
+
                     <div>
 
-                        <div>
+                        <Typography className={classes.instructions}>
 
-                            <Typography className={classes.instructions}>
+                            {getStepContent(activeStep)}</Typography>
 
-                                {getStepContent(activeStep)}</Typography>
+                        <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
+                                className={classes.button}>
+                            주문자<br/>미주문자<br/> 페이지
+                        </Button>
 
-                            <Button variant="contained" onClick={handleUser} className={classes.button}>
-                                로그아웃
-                            </Button>
-                            <Button
-                                variant="contained"
-                                onClick={handleNext}
-                                className={classes.nbutton}
-                                onKeyDown={({key}) => {
-                                    if (key === "Enter") {
-                                      handleNext()
-                                    }
-                                }}
-                            >
-                                주문 생성
-                            </Button>
-                        </div>
                     </div>
-                ) : (
-                    <div>
-
-                        <div>
-
-                            <Typography className={classes.instructions}>
-
-                                {getStepContent(activeStep)}</Typography>
-
-                            <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
-                                    className={classes.button}>
-                                주문자<br/>미주문자<br/> 페이지
-                            </Button>
-
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div>
+                </div>
+            )}
+        </>
     );
 }
