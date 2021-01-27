@@ -225,18 +225,10 @@ const AuthenticationForm = () => {
                                             margin="normal"
                                             color={"secondary"}
                                             onChange={e => setSearch(e.target.value)}
-                                            onKeyPress={() => {
-                                                const listener = event => {
-                                                    if (event.code === "Enter") {
-                                                        handleClick(inputValue, result.map((content) => (content._id)))
-
-                                                    }
-                                                };
-                                                document.addEventListener("keypress", listener);
-                                                return () => {
-                                                    document.removeEventListener("keypress", listener);
-                                                };
-
+                                            onKeyDown={({key}) => {
+                                                if (key === "Enter") {
+                                                    handleClick(inputValue, result.map((content) => (content._id)))
+                                                }
                                             }}
                                             InputProps={{
                                                 ...params.InputProps,
@@ -330,5 +322,7 @@ const AuthenticationForm = () => {
     )
 
 };
+
+
 
 export default AuthenticationForm;

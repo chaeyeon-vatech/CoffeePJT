@@ -10,7 +10,7 @@ function DeleteButton(id) {
 
             <form action="#">
                 <Button
-                    onClick={UserDelete(id)}>🗑</Button>
+                    onClick={SearchDelete(id)}>🗑</Button>
             </form>
 
         </>
