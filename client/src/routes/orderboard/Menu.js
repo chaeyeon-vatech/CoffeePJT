@@ -4,7 +4,6 @@ import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import IceBoard from "./IceBoard";
 import EtcBoard from "./etcBoard";
@@ -12,9 +11,10 @@ import OrderBoardComponent from "./OrderBoardComponent";
 import {useQuery} from "@apollo/react-hooks";
 import {MeQuery} from "../../graphql/query";
 import AfterOrder from "./AfterOrder";
+import {Container} from "@material-ui/core";
 
 function TabPanel(props) {
-    const {children, value, index, ...other} = props;
+    const {children, value, index, classes, ...other} = props;
 
     return (
         <div
@@ -25,9 +25,9 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
+                <Container>
+                    <Box>{children}</Box>
+                </Container>
             )}
         </div>
     );

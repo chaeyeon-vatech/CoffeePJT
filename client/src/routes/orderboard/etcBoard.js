@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
     background: {
         backgroundColor: 'rgba(246,244,244,0.9)',
-        padding: "45px 45px 45px 45px"
+        padding: "45px 45px 45px 45px",
+        marginTop:"20px"
     },
     border: {
         backgroundColor: "whitesmoke",
