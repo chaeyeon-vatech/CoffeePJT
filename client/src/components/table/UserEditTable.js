@@ -39,24 +39,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function not(a, b) {
-    return a.filter((value) => b.indexOf(value) === -1);
-}
 
 function intersection(a, b) {
     return a.filter((value) => b.indexOf(value) !== -1);
 }
 
-function union(a, b) {
-    return [...a, ...not(b, a)];
-}
 
 export default function UserEditTable() {
     const classes = useStyles();
     const [checked, setChecked] = useState([]);
     const [list, setList] = useState([]);
-    const [open, setOpen] = useState(false);
-    const [content, setContent] = useState('');
+
 
     const {data: order} = useQuery(AllUserQuery);
 
@@ -80,7 +73,7 @@ export default function UserEditTable() {
 
         setChecked(newChecked);
     };
-    
+
     const customList = (title, items) => (
         <Card>
             <List className={classes.list} dense component="div" role="list">

@@ -122,8 +122,8 @@ const useStyles = createUseStyles((theme) => ({
 ;
 
 const handleClick = (name, id) => {
-    if (id != undefined && id != null) {
-        localStorage.setItem('myData', id)
+    if (id !== undefined && id !== null) {
+        localStorage.setItem('myData', id.toString())
         localStorage.setItem('name', name)
         window.location.href = '/order'
     }
@@ -136,10 +136,10 @@ const AuthenticationForm = () => {
     const theme = useTheme();
     const classes = useStyles({theme});
 
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
-    const [inputValue, setInputValue] = useState();
-    const [tasks, setTasks] = useState();
+    const [inputValue, setInputValue] = useState("");
+    const [tasks, setTasks] = useState("");
 
     const {data: task} = useQuery(TaskQuery);
 
@@ -171,10 +171,7 @@ const AuthenticationForm = () => {
                 <div className={classes.loginhtml}>
                     <h3>이름을 찾을 수 없습니다.</h3>
 
-                    {tasks && tasks.map((task) => (
-                        <h5 className={classes.h5}>재입력해주시거나 <br/> 결제자이신 {task.creater}님에게<br/> 유저 추가를 문의해주세요!</h5>
-                    ))}
-
+                    <h5 className={classes.h5}>재입력해주시거나 <br/> 결제자에게 문의해주세요!</h5>
 
                     <div className={classes.loginform}>
 
@@ -198,23 +195,15 @@ const AuthenticationForm = () => {
                                             margin="normal"
                                             color={"secondary"}
                                             onChange={e => setSearch(e.target.value)}
-                                            onKeyPress={() => {
-                                                const listener = event => {
-                                                    if (event.code === "Enter") {
-                                                        handleClick(inputValue, result.map((content) => (content._id)))
-
-                                                    }
-                                                };
-                                                document.addEventListener("keypress", listener);
-                                                return () => {
-                                                    document.removeEventListener("keypress", listener);
-                                                };
-
-                                            }}
                                             InputProps={{
                                                 ...params.InputProps,
                                                 type: 'search',
                                                 className: classes.focused
+                                            }}
+                                            onKeyDown={({key}) => {
+                                                if (key === "Enter") {
+                                                    handleClick(inputValue, result.map((content) => (content._id)))
+                                                }
                                             }}
                                         />
                                     )}
@@ -241,7 +230,7 @@ const AuthenticationForm = () => {
 
                 <div className={classes.loginhtml}>
                     {tasks && tasks.map((task) => (
-                        <h3>{task.creater}님의 주문이 진행 중입니다.</h3>
+                        <h3 key={task}>{task.creater}님의 주문이 진행 중입니다.</h3>
                     ))}
                     <h5 className={classes.h5}>주문하시려면<br/>로그인해주세요!</h5>
 
@@ -267,18 +256,10 @@ const AuthenticationForm = () => {
                                             margin="normal"
                                             color={"secondary"}
                                             onChange={e => setSearch(e.target.value)}
-                                            onKeyPress={() => {
-                                                const listener = event => {
-                                                    if (event.code === "Enter") {
-                                                        handleClick(inputValue, result.map((content) => (content._id)))
-
-                                                    }
-                                                };
-                                                document.addEventListener("keypress", listener);
-                                                return () => {
-                                                    document.removeEventListener("keypress", listener);
-                                                };
-
+                                            onKeyDown={({key}) => {
+                                                if (key === "Enter") {
+                                                    handleClick(inputValue, result.map((content) => (content._id)))
+                                                }
                                             }}
                                             InputProps={{
                                                 ...params.InputProps,

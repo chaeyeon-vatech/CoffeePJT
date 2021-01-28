@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -11,9 +11,8 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Second from "./SecondStep";
-import Third from "./FirstStep";
+import First from "./FirstStep";
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -56,13 +55,8 @@ function QontoStepIcon(props) {
 }
 
 QontoStepIcon.propTypes = {
-    /**
-     * Whether this step is active.
-     */
+
     active: PropTypes.bool,
-    /**
-     * Mark the step as completed. Is passed to child components.
-     */
     completed: PropTypes.bool,
 };
 
@@ -159,7 +153,27 @@ const useStyles = makeStyles((theme) => ({
         width: "100px",
         height: "100px",
         color: "white",
-        backgroundColor: "#254143",
+        backgroundColor: "#7d997a",
+        border: "solid 6px #254143",
+        borderRadius: "100%",
+        transition: "all .2s linear",
+        "&:hover": {
+            backgroundColor: 'rgb(12,12,12,0.8)',
+            color: "white"
+        }
+
+    },
+    bbutton: {
+        marginLeft: "70px",
+        marginTop: "-200px",
+        margin: "none",
+        cursor: "pointer",
+        position: "relative",
+        display: "block",
+        width: "100px",
+        height: "100px",
+        color: "white",
+        backgroundColor: "#7d997a",
         border: "solid 6px #254143",
         borderRadius: "100%",
         transition: "all .2s linear",
@@ -193,7 +207,8 @@ const useStyles = makeStyles((theme) => ({
 
     background: {
         backgroundColor: "rgba(169,162,162,0.9)",
-
+        width: '100%',
+        height: "70%",
     }
 
 }));
@@ -205,9 +220,11 @@ function getSteps() {
 function getStepContent(step) {
     switch (step) {
         case 0:
-            return <Third/>;
+            return <First/>;
         case 1:
             return <Second/>;
+        default:
+            return <First/>;
 
     }
 }
@@ -245,26 +262,22 @@ export default function CustomizedSteppers() {
 
                 <Step>
 
-                    <StepLabel StepIconComponent={AssignmentTurnedInTwoToneIcon}>Completed</StepLabel>
+                    <StepLabel StepIconComponent={AssignmentTurnedInTwoToneIcon}
+                               completed="true"
+                               active="true"
+                    >Completed</StepLabel>
 
                 </Step>
 
-
             </Stepper>
-            <div>
-                <div>
 
-                    <div>
+            <Second/>
 
-                        <Typography><Second/></Typography>
+            )
 
-                    </div>
-                </div>
-                )}
-            </div>
         </div>
     ) : (
-        <div className={classes.root}>
+        <>
 
 
             <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}
@@ -280,46 +293,35 @@ export default function CustomizedSteppers() {
 
 
             </Stepper>
-            <div>
-                {activeStep === 0 ? (
-                    <div>
 
-                        <div>
+            {activeStep === 0 ? (
+                <>
 
-                            <Typography className={classes.instructions}>
+                    {getStepContent(activeStep)}
 
-                                {getStepContent(activeStep)}</Typography>
+                    <Button variant="contained" onClick={handleUser} className={classes.button}>
+                        로그아웃
+                    </Button>
+                    <Button
+                        variant="contained"
+                        onClick={handleNext}
+                        className={classes.nbutton}
+                    >
+                        주문 생성
+                    </Button>
+                </>
+            ) : (
+                <>
 
-                            <Button variant="contained" onClick={handleUser} className={classes.button}>
-                                로그아웃
-                            </Button>
-                            <Button
-                                variant="contained"
-                                onClick={handleNext}
-                                className={classes.nbutton}
-                            >
-                                주문 생성
-                            </Button>
-                        </div>
-                    </div>
-                ) : (
-                    <div>
+                    {getStepContent(activeStep)}
 
-                        <div>
+                    <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
+                            className={classes.bbutton}>
+                        주문자<br/>미주문자<br/> 페이지
+                    </Button>
 
-                            <Typography className={classes.instructions}>
-
-                                {getStepContent(activeStep)}</Typography>
-
-                            <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
-                                    className={classes.button}>
-                                주문자<br/>미주문자<br/> 페이지
-                            </Button>
-
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div>
+                </>
+            )}
+        </>
     );
 }

@@ -35,8 +35,11 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '15px !important',
         fontFamily: "Do Hyeon",
         fontWeight: "600",
+        textAlign: "center",
         border: `5px solid #624444`,
         borderRadius: 5,
+        width: "100%",
+        padding: "10px 10px 10px 10px"
     },
     itemTitle: {
         ...theme.typography.itemTitle,
@@ -48,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginLeft: 45
+    },
+    media: {
+        cursor: "default"
     }
 }));
 
@@ -68,17 +74,17 @@ export default function IceBoard() {
         <Column className={classes.background}>
             <Row
                 horizontal='space-between'
-                className={classes.lastRow}
                 breakpoints={{1024: 'column'}}
             >
-                <table className={classes.border}>
 
-                    {contents && contents.map((content) => (
-                        <td><span className={classes.itemTitle}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
-                        </td>))}
-                </table>
+
+                {contents && contents.map((content) => (
+                    <span className={classes.border}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
+                ))}
+
 
             </Row>
+
 
             <div className={classes.container}>
                 <div className={classes.root}>
@@ -91,14 +97,13 @@ export default function IceBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://m.iceplanet.co.kr/web/product/big/201905/392ef164b0a2c8c2edb6f1462c3f6cdf.jpg"
                                         />
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" component="h2">
+                                        <CardContent className={classes.media}>
+                                            <Typography gutterBottom variant="h5" component="h2"
+                                                        className={classes.media}>
                                                 아시나요
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -116,14 +121,13 @@ export default function IceBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://img5.yna.co.kr/etc/inner/KR/2017/08/07/AKR20170807054700030_01_i_P2.jpg"
                                         />
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" component="h2">
+                                        <CardContent className={classes.media}>
+                                            <Typography gutterBottom variant="h5" component="h2"
+                                                        className={classes.media}>
                                                 돼지콘
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -141,14 +145,13 @@ export default function IceBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://contents.lotteon.com/itemimage/_v100649/LF/15/00/59/6_/0/LF1500596_0_1.jpg/dims/resizemc/400x400"
                                         />
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" component="h2">
+                                        <CardContent className={classes.media}>
+                                            <Typography gutterBottom variant="h5" component="h2"
+                                                        className={classes.media}>
                                                 브라보
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -166,9 +169,10 @@ export default function IceBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://m.assabeer.com/web/product/big/a_64.jpg"
                                         />
-                                        <CardContent>
+                                        <CardContent className={classes.media}>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 녹차마루
                                             </Typography>

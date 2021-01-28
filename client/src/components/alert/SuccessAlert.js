@@ -25,7 +25,7 @@ export default function SuccessAlert({message, button}) {
     const [open, setOpen] = React.useState(true);
 
     return (
-        <div className={classes.root}>
+        <>
             <Collapse in={open}>
                 <Alert
                     action={
@@ -57,6 +57,6 @@ export default function SuccessAlert({message, button}) {
             >
                 {button}
             </Button>
-        </div>
+        </>
     );
 }
