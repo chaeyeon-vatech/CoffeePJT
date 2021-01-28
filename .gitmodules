@@ -4,6 +4,3 @@
 [submodule "dynamoose"]
 	path = dynamoose
 	url = https://github.com/youngho-vatech/CoffeePJT_dynamoose_final.git
-[submodule "aws-sdk"]
-	path = aws-sdk
-	url = https://github.com/youngho-vatech/CoffeePJT_AWS-SDK_final.git
