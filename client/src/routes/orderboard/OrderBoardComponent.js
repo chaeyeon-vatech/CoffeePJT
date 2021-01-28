@@ -12,7 +12,7 @@ const useStyles = createUseStyles((theme) => ({
     background: {
         backgroundColor: 'rgba(246,244,244,0.9)',
         padding: "45px 45px 45px 45px",
-        marginTop:"20px"
+        marginTop: "20px"
     },
     miniCardContainer: {
         flexGrow: 1,
@@ -71,11 +71,13 @@ function OrderBoardComponent() {
 
 
     return (
+
         <Column className={classes.background}>
 
 
             {contents && contents.map((content) => (
-                <span className={classes.border} key={content}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
+                <span role="img" aria-label="clap" className={classes.border}
+                      key={content}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
             ))}
 
 
