@@ -75,7 +75,7 @@ const resolvers = {
         // 주문 정보
         howmany: async (_, args) => {
             const number = [0, 0, 0, 0];
-            const people = await users.find()
+            const people = await users.find({"position":{$ne:"휴가자"}})
             for (let i = 0; i < people.length; i++) {
                 if (people[i].status === "주문완료") {
                     number[0]++;
