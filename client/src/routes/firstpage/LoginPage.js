@@ -123,7 +123,7 @@ const useStyles = createUseStyles((theme) => ({
 
 const handleClick = (name, id) => {
     if (id != undefined && id != null) {
-        localStorage.setItem('myData', id)
+        localStorage.setItem('myData', id.toString())
         localStorage.setItem('name', name)
         window.location.href = '/order'
     }
@@ -198,23 +198,15 @@ const AuthenticationForm = () => {
                                             margin="normal"
                                             color={"secondary"}
                                             onChange={e => setSearch(e.target.value)}
-                                            onKeyPress={() => {
-                                                const listener = event => {
-                                                    if (event.code === "Enter") {
-                                                        handleClick(inputValue, result.map((content) => (content._id)))
-
-                                                    }
-                                                };
-                                                document.addEventListener("keypress", listener);
-                                                return () => {
-                                                    document.removeEventListener("keypress", listener);
-                                                };
-
-                                            }}
                                             InputProps={{
                                                 ...params.InputProps,
                                                 type: 'search',
                                                 className: classes.focused
+                                            }}
+                                            onKeyDown={({key}) => {
+                                                if (key === "Enter") {
+                                                    handleClick(inputValue, result.map((content) => (content._id)))
+                                                }
                                             }}
                                         />
                                     )}

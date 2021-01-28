@@ -55,8 +55,7 @@ export default function UserEditTable() {
     const classes = useStyles();
     const [checked, setChecked] = useState([]);
     const [list, setList] = useState([]);
-    const [open, setOpen] = useState(false);
-    const [content, setContent] = useState('');
+
 
     const {data: order} = useQuery(AllUserQuery);
 
@@ -80,7 +79,7 @@ export default function UserEditTable() {
 
         setChecked(newChecked);
     };
-    
+
     const customList = (title, items) => (
         <Card>
             <List className={classes.list} dense component="div" role="list">

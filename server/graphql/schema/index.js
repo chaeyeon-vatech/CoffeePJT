@@ -3,10 +3,10 @@ const typeDefs = gql`
     type Query {
         orders(hi:String): [Order]!
         tasks:[Task]
-        orderMine(_id:ID!):[Order!]
+        orderMine(_id:String!):[Order!]
         user(word:String, category:Int!):[User!]
         allUsers: [User!]!
-        me(userid: ID!):User!
+        me(userid: String!):User!
         howmany:[Int!]
         howmuch:Int!
         coffeeAmount:[Int!]
@@ -19,42 +19,42 @@ const typeDefs = gql`
         receiptUser(cmenu:Int!):String!
     }
     type User {
-        _id: ID
+        _id: String
         username: String
         status: String
         position : String
     }
     type Order {
-        _id: ID
+        _id: String
         menu: String
         hi : String
         username: String
     }
     type Task{
-        _id: ID
+        _id: String
         creater:String
         title: String
     }
 
     type Mutation{
-        createOrder(_id:ID!, menu:String!, hi:String): Order!
-        updateOrder(userid: ID!, orderid: ID!, menu:String, hi:String): Order!
-        removeOrder(userid: ID!, orderid: ID!): Order!
-        giveupOrder(userid: ID!): String!
+        createOrder(_id:String!, menu:String!, hi:String): Order!
+        updateOrder(userid: String!, orderid: String!, menu:String, hi:String): Order!
+        removeOrder(userid: String!, orderid: String!): Order!
+        giveupOrder(userid: String!): String!
         confirmOrders:String!
 
 
-        createTask(userid: ID!, title:String!): Task!
-        updateTask(_id:ID!, title:String):Task!
-        removeTask(_id: ID!, userid:ID!): Task!
+        createTask(userid: String!, title:String!): Task!
+        updateTask(_id:String!, title:String):Task!
+        removeTask(_id: String!, userid:String!): Task!
 
         registerUser(username:String!):User!
-        updatePosition(ids:[ID]):String!
-        updateUser(_id:ID!, username:String!):User!
-        getbackUser(ids:[ID]):String!
-        getbackStatus(_id:ID!):String!
-        deleteUser(ids:[ID]):String!
-        mee(userid: ID!):User!
+        updatePosition(ids:[String]):String!
+        updateUser(_id:String!, username:String!):User!
+        getbackUser(ids:[String]):String!
+        getbackStatus(_id:String!):String!
+        deleteUser(ids:[String]):String!
+        mee(userid: String!):User!
     }
 `;
 // input 타입은 인자가 적으면 그냥 넣어주면 되지만 만약에 인자 값이 10개가 넘어간다고 했을 때 한번에 넣을 수 있는 객체이다.

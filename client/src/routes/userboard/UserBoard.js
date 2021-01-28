@@ -3,7 +3,7 @@ import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import CardComponent from 'components/cards/CardComponent';
 import {useQuery} from "@apollo/react-hooks";
-import {SearchQuery, TaskQuery} from "../../graphql/query";
+import {AllUserQuery, MeQuery, OrderSearch, SearchQuery, TaskQuery} from "../../graphql/query";
 import UserEditTable from "../../components/table/UserEditTable";
 import SearchTable from "../../components/table/SearchTable";
 
@@ -72,6 +72,15 @@ function Create(props) {
         variables: {
             word: search
         },
+        refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+            , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}, {
+                query: SearchQuery, variables: {
+                    word: search
+                }
+            }],
+
+        awaitRefetchQueries: true,
+
 
     });
 

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
-import {SearchQuery} from "../../graphql/query";
+import {MeQuery, OrderSearch, SearchQuery} from "../../graphql/query";
 import UpdateUserDialog from "../dialog/UpdateUser";
-import UserDeleteButton from "../button/UserDeleteButton";
+import DeleteUserDialog from "../dialog/DeleteUser";
 
 
 export default function SearchTable(search) {
@@ -11,11 +11,19 @@ export default function SearchTable(search) {
 
 
     const {data: se} = useQuery(SearchQuery, {
-        variables: {
-            word: search.search
-        },
-
-    });
+            variables: {
+                word: search.search
+            },
+            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
+                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}, {
+                    query: SearchQuery, variables: {
+                        word: search.search
+                    }
+                }],
+            awaitRefetchQueries: true
+        }
+        )
+    ;
 
 
     useEffect(() => {
@@ -50,7 +58,8 @@ export default function SearchTable(search) {
                     <tr style={{marginBottom: 20}}>
                         <td>{content.username}</td>
                         <td><UpdateUserDialog id={content._id} username={content.username}/></td>
-                        <td><UserDeleteButton post_id={content._id}/></td>
+                        <td><DeleteUserDialog id={content._id} username={content.username}/></td>
+
 
                     </tr>
 

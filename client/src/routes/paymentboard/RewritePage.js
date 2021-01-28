@@ -6,6 +6,7 @@ import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
 import TaskDeleteButton from "../../components/button/TaskDeleteButton";
 import VacationBoard from "../firstpage/VacationBoard";
+import UpdateTask from "../../components/dialog/UpdateTask";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: -160},
@@ -65,8 +66,8 @@ function RewritePage(props) {
                                     <tbody>
                                     <td><span className={classes.itemTitle}>
                                         👏오늘은 {content.creater}님이 {content.title} 기념으로 커피 삽니다!👏</span></td>
-                                    <td><TaskDeleteButton post_id={content._id}
-                                                          user_id={localStorage.getItem('myData')}/></td>
+                                    <td><UpdateTask id={content._id} title={content.title}/></td>
+
 
                                     </tbody>
 

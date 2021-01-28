@@ -106,11 +106,11 @@ export default function TransferList() {
             />
             <Divider/>
             <List className={classes.list} dense component="div" role="list">
-                {items.map((value) => {
+                {items.map((value,index) => {
                     const labelId = `transfer-list-all-item-${value}-label`;
 
                     return (
-                        <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
+                        <ListItem key={index} role="listitem" button onClick={handleToggle(value)}>
                             <ListItemIcon>
                                 <Checkbox
                                     checked={checked.indexOf(value) !== -1}
@@ -153,7 +153,6 @@ export default function TransferList() {
                         className={classes.button}
                         onClick={OrderBack(checked)}
                         disabled={rightChecked.length === 0}
-                        aria-label="move selected left"
                     >
                         &lt;
                     </Button>
