@@ -36,8 +36,11 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '15px !important',
         fontFamily: "Do Hyeon",
         fontWeight: "600",
+        textAlign: "center",
         border: `5px solid #624444`,
         borderRadius: 5,
+        width: "100%",
+        padding: "10px 10px 10px 10px"
     },
     itemTitle: {
         ...theme.typography.itemTitle,
@@ -72,15 +75,14 @@ export default function EtcBoard() {
         <Column className={classes.background}>
             <Row
                 horizontal='space-between'
-                className={classes.lastRow}
                 breakpoints={{1024: 'column'}}
             >
-                <table className={classes.border}>
 
-                    {contents && contents.map((content) => (
-                        <td><span className={classes.itemTitle}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
-                        </td>))}
-                </table>
+
+                {contents && contents.map((content) => (
+                    <span className={classes.border}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
+                ))}
+
 
             </Row>
 

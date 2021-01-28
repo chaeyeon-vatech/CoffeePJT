@@ -75,11 +75,15 @@ function PaymentboardComponent() {
                           button="결제하기 페이지란?"/>
             <Column>
                 <table className={classes.border}>
+                    <tbody>
 
-                    {contents && contents.map((content) => (
-                        <td><span
-                            className={classes.itemTitle}>👏  결제자 {content.creater}님 환영합니다!👏</span>
-                        </td>))}
+                    <tr key={contents}>
+                        {contents && contents.map((content) => (
+                            <td key={content}><span
+                                className={classes.itemTitle}>👏  결제자 {content.creater}님 환영합니다!👏</span>
+                            </td>))}
+                    </tr>
+                    </tbody>
                 </table>
 
                 <div className={classes.boardsection}>

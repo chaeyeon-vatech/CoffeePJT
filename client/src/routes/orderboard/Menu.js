@@ -47,9 +47,6 @@ function a11yProps(index) {
 }
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 2,
-    },
     paper: {
         textAlign: 'center',
         color: "#6d4c41",
@@ -58,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     color: {
         backgroundColor: 'rgb(200,176,141)',
         fontSize: 10,
-        color:"black",
+        color: "black",
         marginLeft: "23px",
         width: "1235px",
         height: "50px",
@@ -95,7 +92,7 @@ export default function MenuBoard() {
         </>
     ) : (
 
-        <div className={classes.root}>
+        <>
             <AppBar position="static" className={classes.color}>
                 <Tabs value={value} onChange={handleChange}>
                     <Tab
@@ -117,6 +114,6 @@ export default function MenuBoard() {
             <TabPanel value={value} index="three">
                 <EtcBoard/>
             </TabPanel>
-        </div>
+        </>
     )
 }
