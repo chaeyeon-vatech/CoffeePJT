@@ -11,7 +11,6 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Second from "./SecondStep";
 import First from "./FirstStep";
 
@@ -154,7 +153,27 @@ const useStyles = makeStyles((theme) => ({
         width: "100px",
         height: "100px",
         color: "white",
-        backgroundColor: "#254143",
+        backgroundColor: "#7d997a",
+        border: "solid 6px #254143",
+        borderRadius: "100%",
+        transition: "all .2s linear",
+        "&:hover": {
+            backgroundColor: 'rgb(12,12,12,0.8)',
+            color: "white"
+        }
+
+    },
+    bbutton: {
+        marginLeft: "70px",
+        marginTop: "-200px",
+        margin: "none",
+        cursor: "pointer",
+        position: "relative",
+        display: "block",
+        width: "100px",
+        height: "100px",
+        color: "white",
+        backgroundColor: "#7d997a",
         border: "solid 6px #254143",
         borderRadius: "100%",
         transition: "all .2s linear",
@@ -246,23 +265,16 @@ export default function CustomizedSteppers() {
                     <StepLabel StepIconComponent={AssignmentTurnedInTwoToneIcon}
                                completed="true"
                                active="true"
-                               error="false"
                     >Completed</StepLabel>
 
                 </Step>
 
             </Stepper>
-            <div>
-                <div>
 
-                    <div>
+            <Second/>
 
-                        <Typography><Second/></Typography>
+            )
 
-                    </div>
-                </div>
-                )
-            </div>
         </div>
     ) : (
         <>
@@ -299,21 +311,16 @@ export default function CustomizedSteppers() {
                     </Button>
                 </>
             ) : (
-                <div>
+                <>
 
-                    <div>
+                    {getStepContent(activeStep)}
 
-                        <Typography className={classes.instructions}>
+                    <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
+                            className={classes.bbutton}>
+                        주문자<br/>미주문자<br/> 페이지
+                    </Button>
 
-                            {getStepContent(activeStep)}</Typography>
-
-                        <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
-                                className={classes.button}>
-                            주문자<br/>미주문자<br/> 페이지
-                        </Button>
-
-                    </div>
-                </div>
+                </>
             )}
         </>
     );

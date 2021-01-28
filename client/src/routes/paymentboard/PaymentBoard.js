@@ -70,12 +70,12 @@ function TodayTrendsComponent() {
     const theme = useTheme();
     const classes = useStyles({theme});
 
-    const [money, setMoney] = useState('');
-    const [order, setOrder] = useState('');
-    const [count, setCount] = useState('');
-    const [id, setId] = useState();
-    const [user, setUser] = useState();
-    const [pa, setPa] = useState();
+    const [money, setMoney] = useState("");
+    const [order, setOrder] = useState("");
+    const [count, setCount] = useState("");
+    const [id, setId] = useState("");
+    const [user, setUser] = useState("");
+    const [pa, setPa] = useState("");
 
 
     const {data} = useQuery(CostQuery);
@@ -107,7 +107,7 @@ function TodayTrendsComponent() {
     const [deletePostOrMutation, {loading}] = useMutation(mutation, {
             refetchQueries: [{query: SearchQuery}],
             variables: {creater: id},
-            onCompleted: (data) => {
+            onCompleted: () => {
                 alert("주문이 초기화되었습니다.")
                 localStorage.clear();
                 window.location.href = '/login';

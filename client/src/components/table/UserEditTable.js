@@ -39,17 +39,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function not(a, b) {
-    return a.filter((value) => b.indexOf(value) === -1);
-}
 
 function intersection(a, b) {
     return a.filter((value) => b.indexOf(value) !== -1);
 }
 
-function union(a, b) {
-    return [...a, ...not(b, a)];
-}
 
 export default function UserEditTable() {
     const classes = useStyles();
