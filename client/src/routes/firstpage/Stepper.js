@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -8,7 +8,6 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Second from "./SecondStep";
@@ -231,7 +230,7 @@ function getStepContent(step) {
 
 export default function CustomizedSteppers() {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = useState(0);
     const steps = getSteps();
 
 
@@ -257,23 +256,7 @@ export default function CustomizedSteppers() {
         <div className={classes.root}>
 
 
-            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}
-                     className={classes.background}>
-
-                <Step>
-
-                    <StepLabel StepIconComponent={AssignmentTurnedInTwoToneIcon}
-                               completed="true"
-                               active="true"
-                    >Completed</StepLabel>
-
-                </Step>
-
-            </Stepper>
-
             <Second/>
-
-            )
 
         </div>
     ) : (

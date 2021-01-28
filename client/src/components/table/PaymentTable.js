@@ -10,7 +10,9 @@ const useStyles = createUseStyles(() => ({
     content: {
         textAlign: "center",
         textSize: "10px",
-        padding: 20
+        padding: 10,
+        display: "inline-block",
+        border: "0.1px solid lightgrey"
     }
 }));
 
@@ -19,7 +21,7 @@ function BoardTable() {
     const classes = useStyles();
     const [content, setContent] = useState();
     const [user, setUser] = useState();
-    const [num, setNum] = useState();
+    const [num, setNum] = useState(-1);
     const {data: receipt} = useQuery(Receipt)
     const {data} = useQuery(ReceiptUser, {
         variables: {
@@ -35,21 +37,15 @@ function BoardTable() {
             setUser(String(Object.values(data)))
         }
 
-    })
-
+    }, [receipt, data])
 
     return (
 
         <>
 
-
-            <table>
-                <caption>영수증</caption>
-                <thead>
-
-                {content &&
-                content.map((content, index) => (
-                    content != "" && <tr className={classes.content}>
+            {content && user &&
+            content.map((content, index) => (
+                content !== "" && <span key={index} className={classes.content}>
                         <Tooltip title={user} placement="top">
                             <Button variant="outlined"
                                     onMouseOver={() => {
@@ -57,12 +53,10 @@ function BoardTable() {
                                     }}
                             > {content}</Button>
                         </Tooltip>
-                    </tr>
+                    </span>
 
-                ))}
+            ))}
 
-                </thead>
-            </table>
 
         </>
 

@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import {TaskCreate} from "../../graphql/useMutation";
 import SuccessAlert from "../../components/alert/SuccessAlert";
 import Typography from "@material-ui/core/Typography";
+import Emoji from "../../components/alert/emoji";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -40,7 +41,7 @@ const useStyles = createUseStyles((theme) => ({
 
         h3: {
             color: "white",
-            marginBottom: "30px",
+            marginBottom: "50px",
             textAlign: "center",
             fontSize: 20
         },
@@ -144,13 +145,14 @@ const AuthenticationForm = () => {
     return localStorage.getItem('task') ? (
         <>
             <SuccessAlert
-                message={"👏 오늘은 " + localStorage.getItem('name') + " 님이 " + localStorage.getItem('task') + " 기념으로 커피 삽니다! 👏로 화면에 보여집니다!"}
+                message={"오늘은 " + localStorage.getItem('name') + " 님이 " + localStorage.getItem('task') + " 기념으로 커피 삽니다! 로 화면에 보여집니다!"}
                 button="주문 내용 미리 보기"/>
             <div className={classes.loginwrap}>
 
                 <Typography component={'span'} variant={'h5'}
-                            className={classes.h3}>👨{localStorage.getItem('name')}님!👨<br/> 작성하신 주문 설정을<br/> 변경하고
-                    싶으신가요?<br/></Typography>
+                            className={classes.h3}><Emoji symbol="👨🏻‍💻️‍"/>{localStorage.getItem('name')}님!<Emoji
+                    symbol="👨🏻‍💻️‍"/><br/> 주문을
+                    완료하셨습니다!<br/><br/></Typography>
 
                 <Typography component={'span'} variant={'subtitle1'}
                             className={classes.h5}>이후 주문 관리 페이지에서 주문자 관리/주문 내용<br/> 변경 가능합니다!</Typography><br/><br/>
@@ -169,7 +171,8 @@ const AuthenticationForm = () => {
             <div className={classes.loginwrap}>
 
                 <Typography component={'span'} variant={'h5'}
-                            className={classes.h3}>👨🏻‍💻{localStorage.getItem('name')}님 환영합니다.👨🏻‍💻️</Typography>
+                            className={classes.h3}><Emoji symbol="👨🏻‍💻️‍"/>{localStorage.getItem('name')}님
+                    환영합니다.<Emoji symbol="👨🏻‍💻️‍"/></Typography>
                 <br/><Typography component={'span'} variant={'subtitle1'} className={classes.h5}>어떤 이유로 커피를
                 사시나요?</Typography>
 
@@ -178,7 +181,7 @@ const AuthenticationForm = () => {
                     <input type="text" placeholder="(예시) 승진, 결혼" onChange={e => setTitle(e.target.value)}
                            onKeyDown={({key}) => {
                                if (key === "Enter") {
-                                  taskClick()
+                                   taskClick()
                                }
                            }}
                            className={classes.input}/>

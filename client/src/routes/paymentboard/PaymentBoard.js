@@ -62,9 +62,6 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function changeBackground(e) {
-    e.target.style.background = 'red';
-}
 
 function TodayTrendsComponent() {
     const theme = useTheme();
@@ -72,15 +69,16 @@ function TodayTrendsComponent() {
 
     const [money, setMoney] = useState("");
     const [order, setOrder] = useState("");
-    const [count, setCount] = useState("");
     const [id, setId] = useState("");
-    const [user, setUser] = useState("");
     const [pa, setPa] = useState("");
 
 
     const {data} = useQuery(CostQuery);
     const {data: na} = useQuery(CountQuery);
-    const {data: da} = useQuery(MeQuery);
+    const {data: da} = useQuery(MeQuery, {
+        variables: {userid: localStorage.getItem('myData')}
+
+    });
     const {data: people} = useQuery(NotQuery);
 
     useEffect(() => {
@@ -90,16 +88,13 @@ function TodayTrendsComponent() {
         if (na) {
             setOrder(na.howmany);
         }
-        if (user) {
-            setCount(user.allUsers.length);
-        }
         if (da) {
             setId(da.me._id);
         }
         if (people) {
             setPa(people.includedNothing)
         }
-    });
+    },[data,na,da,people]);
 
 
     const mutation = OrderConfirmMutation;
