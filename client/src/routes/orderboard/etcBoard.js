@@ -12,7 +12,7 @@ import {Column, Row} from "simple-flexbox";
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
 import CreateButton from "./useBoard";
-import GiveupButton from "../../components/button/GiveupButton";
+import Emoji from "../../components/alert/emoji";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
     background: {
         backgroundColor: 'rgba(246,244,244,0.9)',
-        padding: "45px 45px 45px 45px"
+        padding: "45px 45px 45px 45px",
+        marginTop: "20px"
     },
     border: {
         backgroundColor: "whitesmoke",
@@ -61,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
 export default function EtcBoard() {
     const classes = useStyles();
     const [contents, setContents] = useState('');
-    const [status, setStatus] = useState();
 
     const {data} = useQuery(TaskQuery);
     useEffect(() => {
@@ -80,7 +80,9 @@ export default function EtcBoard() {
 
 
                 {contents && contents.map((content) => (
-                    <span className={classes.border}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
+                    <span
+                        className={classes.border}><Emoji symbol="👏"/> 오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! <Emoji
+                        symbol="👏"/></span>
                 ))}
 
 
@@ -189,9 +191,6 @@ export default function EtcBoard() {
                                 </Card>
                             </Paper>
                         </Grid>
-                        {status === "대기중" && (
-                            <GiveupButton userid={localStorage.getItem("myData")}/>
-                        )}
 
                     </Grid>
                 </div>

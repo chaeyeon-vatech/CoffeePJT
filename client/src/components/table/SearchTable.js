@@ -59,8 +59,6 @@ export default function SearchTable(search) {
                         <td>{content.username}</td>
                         <td><UpdateUserDialog id={content._id} username={content.username}/></td>
                         <td><DeleteUserDialog id={content._id} username={content.username}/></td>
-
-
                     </tr>
 
 

@@ -8,7 +8,6 @@ import {TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-
 const useStyles = createUseStyles((theme) => ({
         focused: {
             "& $notchedOutline": {
@@ -136,7 +135,6 @@ const AuthenticationForm = () => {
     const theme = useTheme();
     const classes = useStyles({theme});
 
-    const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [tasks, setTasks] = useState("");
@@ -194,7 +192,6 @@ const AuthenticationForm = () => {
                                             id="standard-basic"
                                             margin="normal"
                                             color={"secondary"}
-                                            onChange={e => setSearch(e.target.value)}
                                             InputProps={{
                                                 ...params.InputProps,
                                                 type: 'search',
@@ -255,7 +252,6 @@ const AuthenticationForm = () => {
                                             id="standard-basic"
                                             margin="normal"
                                             color={"secondary"}
-                                            onChange={e => setSearch(e.target.value)}
                                             onKeyDown={({key}) => {
                                                 if (key === "Enter") {
                                                     handleClick(inputValue, result.map((content) => (content._id)))
