@@ -1,12 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery, VacationQuery} from "../../graphql/query";
+import React, {useState} from 'react';
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import Button from "@material-ui/core/Button";
 import {TaskCreate} from "../../graphql/useMutation";
 import SuccessAlert from "../../components/alert/SuccessAlert";
-import {TextField} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -18,19 +16,16 @@ const useStyles = createUseStyles((theme) => ({
             width: "100%",
             margin: "auto",
             maxWidth: "525px",
-            minHeight: "670px",
-            position: "relative"
-        },
-        loginhtml: {
+            minHeight: "500px",
             marginTop: "30px",
-            width: "100%",
-            height: "100%",
+            height: "50%",
             position: "center",
             padding: "90px 70px 50px 70px",
             backgroundColor: theme.color.red,
-
-
+            perspective: "1000px",
+            transformStyle: "preserve-3d"
         },
+
 
         taskhtml: {
             marginTop: "70px",
@@ -46,22 +41,17 @@ const useStyles = createUseStyles((theme) => ({
         h3: {
             color: "white",
             marginBottom: "30px",
-            textAlign: "center"
+            textAlign: "center",
+            fontSize: 20
         },
         h5: {
-            marginTop: "20px",
+            marginTop: "80px",
             color: "white",
             fontWeight: "lighter",
-            marginBottom: "30px",
+            marginBottom: "50px",
             textAlign: "center"
         },
-        loginform: {
-            minHeight: "345px",
-            position: "relative",
-            perspective: "1000px",
-            transformStyle: "preserve-3d"
-
-        },
+        loginform: {},
         button: {
             display: "inline-block",
             width: "calc(50% - 4px)",
@@ -124,23 +114,7 @@ const AuthenticationForm = () => {
     const theme = useTheme();
     const classes = useStyles({theme});
     const [title, setTitle] = useState();
-    const [right, setRight] = useState();
-    const [contents, setContents] = useState();
-    const {data: user} = useQuery(VacationQuery)
 
-    useEffect(() => {
-        if (user) {
-            setRight(user.includedVacation);
-        }
-    }, [user]);
-
-    const {data} = useQuery(TaskQuery);
-
-    useEffect(() => {
-        if (data) {
-            setContents(data.tasks);
-        }
-    })
 
     const handleClick = () => {
 
@@ -160,13 +134,6 @@ const AuthenticationForm = () => {
 
     }
 
-    const handleKeypress = e => {
-        //it triggers by pressing the enter key
-        if (e.keyCode === 13) {
-            localStorage.setItem('task', title)
-            window.location.href = '/create'
-        }
-    };
 
     const taskClick = () => {
         localStorage.setItem('task', title)
@@ -175,63 +142,55 @@ const AuthenticationForm = () => {
 
 
     return localStorage.getItem('task') ? (
-        <div className={classes.root}>
+        <>
             <SuccessAlert
                 message={"👏 오늘은 " + localStorage.getItem('name') + " 님이 " + localStorage.getItem('task') + " 기념으로 커피 삽니다! 👏로 화면에 보여집니다!"}
                 button="주문 내용 미리 보기"/>
             <div className={classes.loginwrap}>
-                <div className={classes.taskhtml}>
-                    <h2>{localStorage.getItem('name')}님!<br/> 작성하신 주문 설정을<br/> 변경하고 싶으신가요?<br/></h2>
 
-                    <h3 className={classes.h5}>이후 주문 관리 페이지에서 주문자 관리/주문 내용<br/> 변경 가능합니다!</h3>
+                <Typography component={'span'} variant={'h5'}
+                            className={classes.h3}>👨{localStorage.getItem('name')}님!👨<br/> 작성하신 주문 설정을<br/> 변경하고
+                    싶으신가요?<br/></Typography>
+
+                <Typography component={'span'} variant={'subtitle1'}
+                            className={classes.h5}>이후 주문 관리 페이지에서 주문자 관리/주문 내용<br/> 변경 가능합니다!</Typography><br/><br/>
 
 
-                    <Button variant="contained" id='logout' onClick={changeClick} className={classes.button}>주문
-                        변경</Button>
-                    <Button variant="contained" color={"secondary"} id='logout' onClick={TaskCreate()}
-                            className={classes.button}>완료!</Button>
-                </div>
+                <Button variant="contained" id='logout' onClick={changeClick} className={classes.button}>주문
+                    변경</Button>
+                <Button variant="contained" color={"secondary"} id='logout' onClick={TaskCreate()}
+                        className={classes.button}>완료!</Button>
             </div>
-        </div>
+        </>
     ) : (
 
 
-        <div className={classes.root}>
+        <>
             <div className={classes.loginwrap}>
-                <div className={classes.loginhtml}>
 
-                    <h2>👨🏻‍💻{localStorage.getItem('name')}님 환영합니다.👨🏻‍💻️</h2>
-                    <h5 className={classes.h5}>어떤 이유로 커피를 사시나요?</h5>
+                <Typography component={'span'} variant={'h5'}
+                            className={classes.h3}>👨🏻‍💻{localStorage.getItem('name')}님 환영합니다.👨🏻‍💻️</Typography>
+                <br/><Typography component={'span'} variant={'subtitle1'} className={classes.h5}>어떤 이유로 커피를
+                사시나요?</Typography>
 
-                    <div className={classes.loginform}>
-
-                        <div className={classes.group}>
-                            <label>결제자 </label>
-                            <input type="text" placeholder="(예시) 승진, 결혼" onChange={e => setTitle(e.target.value)}
-                                   onKeyPress={() => {
-                                       const listener = event => {
-                                           if (event.code === "Enter") {
-                                               taskClick()
-                                           }
-                                       };
-                                       document.addEventListener("keypress", listener);
-                                       return () => {
-                                           document.removeEventListener("keypress", listener);
-                                       };
-
-                                   }}
-                                   className={classes.input}/>
-                            <Button variant="contained" id='logout' onClick={taskClick}
-                                    className={classes.button}>주문 생성</Button>
-                            <Button variant="contained" id='logout' onClick={handleClick}
-                                    className={classes.button}>결제자 설정 페이지로 돌아가고 싶으신가요?</Button>
-                        </div>
-
-
-                    </div>
+                <div className={classes.group}>
+                    <label>결제자 </label>
+                    <input type="text" placeholder="(예시) 승진, 결혼" onChange={e => setTitle(e.target.value)}
+                           onKeyDown={({key}) => {
+                               if (key === "Enter") {
+                                  taskClick()
+                               }
+                           }}
+                           className={classes.input}/>
+                    <Button variant="contained" id='logout' onClick={taskClick}
+                            className={classes.button}>주문 생성</Button>
+                    <Button variant="contained" id='logout' onClick={handleClick}
+                            className={classes.button}>결제자 설정 페이지로 돌아가고 싶으신가요?</Button>
                 </div>
+
+
             </div>
-        </div>
+        </>
 
 
     );

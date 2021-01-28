@@ -29,15 +29,19 @@ const useStyles = makeStyles((theme) => ({
     },
     background: {
         backgroundColor: 'rgba(246,244,244,0.9)',
-        padding: "45px 45px 45px 45px"
+        padding: "45px 45px 45px 45px",
+        marginTop:"20px"
     },
     border: {
         backgroundColor: "whitesmoke",
         fontSize: '15px !important',
         fontFamily: "Do Hyeon",
         fontWeight: "600",
+        textAlign: "center",
         border: `5px solid #624444`,
         borderRadius: 5,
+        width: "100%",
+        padding: "10px 10px 10px 10px"
     },
     itemTitle: {
         ...theme.typography.itemTitle,
@@ -49,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginLeft: 45
+    },
+    media: {
+        cursor: "default"
     }
 }));
 
@@ -69,15 +76,14 @@ export default function EtcBoard() {
         <Column className={classes.background}>
             <Row
                 horizontal='space-between'
-                className={classes.lastRow}
                 breakpoints={{1024: 'column'}}
             >
-                <table className={classes.border}>
 
-                    {contents && contents.map((content) => (
-                        <td><span className={classes.itemTitle}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
-                        </td>))}
-                </table>
+
+                {contents && contents.map((content) => (
+                    <span className={classes.border}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
+                ))}
+
 
             </Row>
 
@@ -93,14 +99,13 @@ export default function EtcBoard() {
                                         <CardMedia
                                             component="img"
                                             height="230"
+                                            className={classes.media}
                                             image="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1949&q=80"
                                         />
                                         <CardContent>
-                                            <Typography gutterBottom variant="h5" component="h2">
+                                            <Typography gutterBottom variant="h5" component="h2"
+                                                        className={classes.media}>
                                                 아이스티
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -120,14 +125,13 @@ export default function EtcBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://images.unsplash.com/photo-1524156868115-e696b44983db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1946&q=80"
                                         />
-                                        <CardContent>
+
+                                        <CardContent className={classes.media}>
                                             <Typography gutterBottom variant="h6" component="h2">
                                                 망고 요거트<br/> 스무디
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -146,14 +150,12 @@ export default function EtcBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80"
                                         />
-                                        <CardContent>
+                                        <CardContent className={classes.media}>
                                             <Typography gutterBottom variant="h6" component="h2">
                                                 딸기 요거트<br/> 스무디
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -171,14 +173,12 @@ export default function EtcBoard() {
                                         <CardMedia
                                             component="img"
                                             height="200"
+                                            className={classes.media}
                                             image="https://images.unsplash.com/photo-1577118202736-22e9be066d95?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
                                         />
-                                        <CardContent>
+                                        <CardContent className={classes.media}>
                                             <Typography gutterBottom variant="h6" component="h2">
                                                 플레인 요거트<br/> 스무디
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>

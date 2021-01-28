@@ -161,7 +161,7 @@ const useStyles = createUseStyles((theme) => ({
 const handleClick = (name, id) => {
 
     if (id != null) {
-        localStorage.setItem('myData', id)
+        localStorage.setItem('myData', id.toString())
         localStorage.setItem('name', name)
         window.location.href = '/create'
     }
@@ -174,9 +174,9 @@ const AuthenticationForm = () => {
     const theme = useTheme();
     const classes = useStyles({theme});
 
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
-    const [inputValue, setInputValue] = useState();
+    const [inputValue, setInputValue] = useState("");
 
     const {data} = useQuery(SearchQuery, {
         variables: {
@@ -225,18 +225,10 @@ const AuthenticationForm = () => {
                                             margin="normal"
                                             color={"secondary"}
                                             onChange={e => setSearch(e.target.value)}
-                                            onKeyPress={() => {
-                                                const listener = event => {
-                                                    if (event.code === "Enter") {
-                                                        handleClick(inputValue, result.map((content) => (content._id)))
-
-                                                    }
-                                                };
-                                                document.addEventListener("keypress", listener);
-                                                return () => {
-                                                    document.removeEventListener("keypress", listener);
-                                                };
-
+                                            onKeyDown={({key}) => {
+                                                if (key === "Enter") {
+                                                    handleClick(inputValue, result.map((content) => (content._id)))
+                                                }
                                             }}
                                             InputProps={{
                                                 ...params.InputProps,
@@ -330,5 +322,7 @@ const AuthenticationForm = () => {
     )
 
 };
+
+
 
 export default AuthenticationForm;

@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {useTheme} from 'react-jss';
 import {slide as Menu} from 'react-burger-menu';
+import MenuItem from "./MenuItemComponent";
+import LogoComponent from "./LogoComponent";
 
 const getMenuStyles = ({theme}) => ({
     bmBurgerButton: {
