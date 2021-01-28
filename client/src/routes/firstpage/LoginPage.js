@@ -9,11 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
 const useStyles = createUseStyles((theme) => ({
-        focused: {
-            "& $notchedOutline": {
-                borderColor: "yellow"
-            }
-        },
+
         loginwrap: {
             color: "white",
             fontWeight: "lighter",
@@ -153,14 +149,11 @@ const AuthenticationForm = () => {
             setResult(data.user);
 
         }
-    }, [data]);
-
-    useEffect(() => {
         if (task) {
             setTasks(task.tasks);
 
         }
-    }, [task]);
+    }, [data, task]);
 
     return localStorage.getItem('name') ? (
         <div className={classes.root}>
