@@ -628,7 +628,15 @@ const resolvers = {
                 for (let i = 0; i < ids.length; i++) {
 
                     await users.findByIdAndUpdate(ids[i], { $set: { "position": "휴가자" } })
-
+                    const getUser = await users.findById(ids[i])
+                    if(getUser.status == "주문완료"){
+                        const st = await users.findByIdAndUpdate(getUser._id,{$set:{"status":"대기중"}})
+                        const updated = await Order.find({"username":getUser.username}).exec()
+                        
+                        if(updated){
+                            await Order.findByIdAndRemove(updated[0]._id)
+                        }
+                    }
                 }
 
                 return "휴가자 등록이 완료 되었습니다."
