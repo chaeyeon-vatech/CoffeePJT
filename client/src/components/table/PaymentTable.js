@@ -6,7 +6,7 @@ import {createUseStyles} from "react-jss";
 import {Tooltip} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles({
     content: {
         textAlign: "center",
         textSize: "10px",
@@ -14,14 +14,14 @@ const useStyles = createUseStyles(() => ({
         display: "inline-block",
         border: "0.1px solid lightgrey"
     }
-}));
+});
 
 function BoardTable() {
 
     const classes = useStyles();
     const [content, setContent] = useState();
     const [user, setUser] = useState();
-    const [num, setNum] = useState(-1);
+    const [num, setNum] = useState(1);
     const {data: receipt} = useQuery(Receipt)
     const {data} = useQuery(ReceiptUser, {
         variables: {
