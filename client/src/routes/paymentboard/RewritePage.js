@@ -6,7 +6,7 @@ import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
 import VacationBoard from "../firstpage/VacationBoard";
 import UpdateTask from "../../components/dialog/UpdateTask";
-import Emoji from "../../components/alert/emoji";
+import Emoji from "../../components/alert/Emoji";
 
 const useStyles = createUseStyles((theme) => ({
     root: {marginTop: -160},

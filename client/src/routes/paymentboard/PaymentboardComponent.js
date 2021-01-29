@@ -5,7 +5,7 @@ import PaymentBoard from './PaymentBoard';
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
 import SuccessAlert from "../../components/alert/SuccessAlert";
-import Emoji from "../../components/alert/emoji";
+import Emoji from "../../components/alert/Emoji";
 
 
 const useStyles = createUseStyles((theme) => ({
