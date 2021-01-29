@@ -648,7 +648,11 @@ const resolvers = {
         // 유저이름 수정
         updateUser: async (_, { _id, username }) => {
             try {
-
+                const person = await users.findById(_id).exec()
+                if(person.status = "주문완료"){
+                    const updated = await Order.find({"username":person.username}).exec()
+                    const updateorder = await Order.findByIdAndUpdate(updated[0]._id,{$set:{"username":username}})
+                }
                 return await users.findByIdAndUpdate(_id, { $set: { username } }).exec()
             } catch (error) {
                 throw new Error(error.message)
