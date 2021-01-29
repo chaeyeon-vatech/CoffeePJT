@@ -82,7 +82,8 @@ export default function IceBoard() {
 
                 {contents && contents.map((content) => (
                     <span
-                        className={classes.border}><Emoji symbol="👏"/> 오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! <Emoji
+                        key={content} className={classes.border}><Emoji
+                        symbol="👏"/> 오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! <Emoji
                         symbol="👏"/></span>
                 ))}
 
