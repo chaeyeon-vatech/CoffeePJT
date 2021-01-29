@@ -12,7 +12,7 @@ import {Column, Row} from "simple-flexbox";
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
 import CreateButton from "./useBoard";
-import Emoji from "../../components/alert/emoji";
+import Emoji from "../../components/alert/Emoji";
 
 const useStyles = makeStyles((theme) => ({
     root: {
