@@ -5,7 +5,7 @@ import DeleteButton from "../button/DeleteButton";
 import ChangeGiveupButton from "../button/ChangeGiveup";
 import {makeStyles} from "@material-ui/core/styles";
 import {Typography} from "@material-ui/core";
-import Emoji from "../alert/emoji";
+import Emoji from "../alert/Emoji";
 
 
 const useStyles = makeStyles({

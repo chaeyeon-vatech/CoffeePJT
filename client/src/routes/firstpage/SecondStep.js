@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import {TaskCreate} from "../../graphql/useMutation";
 import SuccessAlert from "../../components/alert/SuccessAlert";
 import Typography from "@material-ui/core/Typography";
-import Emoji from "../../components/alert/emoji";
+import Emoji from "../../components/alert/Emoji";
 
 
 const useStyles = createUseStyles((theme) => ({
