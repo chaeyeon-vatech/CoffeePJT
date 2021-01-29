@@ -8,7 +8,7 @@ import {Typography} from "@material-ui/core";
 import Emoji from "../alert/emoji";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     border: {
         backgroundColor: "whitesmoke",
         fontSize: '17px !important',
@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        fontSize:'30px',
+        fontSize: '30px',
         marginBottom: "30px",
         fontWeight: "600",
     }
-}))
+})
 
 export default function BoardTable() {
 
