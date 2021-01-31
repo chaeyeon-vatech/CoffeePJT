@@ -94,7 +94,7 @@ function TodayTrendsComponent() {
         if (people) {
             setPa(people.includedNothing)
         }
-    },[data,na,da,people]);
+    }, [data, na, da, people]);
 
 
     const mutation = OrderConfirmMutation;

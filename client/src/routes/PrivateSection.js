@@ -7,7 +7,6 @@ import HeaderComponent from 'components/menu/HeaderComponent';
 import PrivateRoutes from './PrivateRoutes';
 import {useLocation} from "react-router-dom";
 
-
 const useStyles = createUseStyles({
     container: {
         height: '100%',
