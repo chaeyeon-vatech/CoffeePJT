@@ -22,8 +22,12 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(5),
         textAlign: 'center',
         color: theme.palette.text.secondary,
+        cursor: "default"
     },
-    card: {maxWidth: 345,},
+    card: {
+        maxWidth: 345,
+
+    },
     color: {
         brown: "#6d4c41"
     },
@@ -52,32 +56,36 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 30
     },
     button: {
-        marginLeft: 45
+        display: "grid",
+        justifyContent: "center",
+        textAlign: "center"
     },
     media: {
-        cursor: "default"
+        cursor: "default",
+        fontSize: '18px !important'
     }
 }));
 
 const menu = [{
+
     menu: "아이스티",
     image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1949&q=80",
-    height: 260
+
 },
     {
         menu: "망고 요거트 스무디",
         image: "https://images.unsplash.com/photo-1524156868115-e696b44983db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1946&q=80",
-        height: 230
+
     },
     {
         menu: "딸기 요거트 스무디",
         image: "https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80",
-        height: 230
+
     },
     {
         menu: "플레인 요거트 스무디",
         image: "https://images.unsplash.com/photo-1577118202736-22e9be066d95?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",
-        height: 230
+
     }]
 
 export default function EtcBoard() {
@@ -122,20 +130,20 @@ export default function EtcBoard() {
                                         <CardActionArea>
                                             <CardMedia
                                                 component="img"
-                                                height={value.height}
+                                                height="230"
                                                 className={classes.media}
                                                 image={value.image}
                                             />
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h5" component="h2"
-                                                            className={classes.media}>
+                                            <CardContent className={classes.media}>
+                                                <Typography gutterBottom variant="h5" component="h2">
                                                     {value.menu}
                                                 </Typography>
                                             </CardContent>
                                         </CardActionArea>
                                         <CardActions>
 
-                                            <CreateButton hi="etc" menu={value.menu} color="primary" label="SELECT"
+                                            <CreateButton hi="etc" menu={value.menu} color="primary"
+                                                          label="SELECT"
                                                           className={classes.button}/>
 
                                         </CardActions>

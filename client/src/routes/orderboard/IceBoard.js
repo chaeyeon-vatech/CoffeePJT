@@ -124,9 +124,8 @@ export default function IceBoard() {
                                                 className={classes.media}
                                                 image={value.image}
                                             />
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h5" component="h2"
-                                                            className={classes.media}>
+                                            <CardContent className={classes.media}>
+                                                <Typography gutterBottom variant="h5" component="h2">
                                                     {value.menu}
                                                 </Typography>
                                             </CardContent>
