@@ -41,11 +41,6 @@ export const CostQuery = gql`
 
 `
 
-//누적 잔 수
-export const CupQuery = gql`
-    query{coffeeAmount}`
-
-
 //TASK QUERY
 
 
