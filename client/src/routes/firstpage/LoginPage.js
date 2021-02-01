@@ -163,15 +163,16 @@ const AuthenticationForm = () => {
             setO(one.user);
         }
     }, [data, task, one]);
-    
+
     return localStorage.getItem('name') ? (
         <div className={classes.root}>
             <div className={classes.loginwrap}>
 
                 <div className={classes.loginhtml}>
+
                     <h3>이름을 찾을 수 없습니다.</h3>
 
-                    <h5 className={classes.h5}>재입력해주시거나 <br/> 결제자에게 문의해주세요!</h5>
+                    <h5 className={classes.h5}>다시 입력해주세요!</h5>
 
                     <div className={classes.loginform}>
 
