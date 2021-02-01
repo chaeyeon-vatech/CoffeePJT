@@ -133,7 +133,7 @@ export default function IceBoard() {
                                         <CardActions>
 
                                             <CreateButton hi="icecream" menu={value.menu} color="primary"
-                                                          label="SELECT"
+                                                          label="아이스크림 주문"
                                                           className={classes.button}/>
 
                                         </CardActions>
