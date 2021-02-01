@@ -45,9 +45,9 @@ function BoardTable() {
 
     return (
 
-        <Suspense fallback={<LoadingComponent loading/>}>
+        <Suspense fallback={<LoadingComponent loading/> && user}>
 
-            {content && user &&
+            {content &&
             content.map((content, index) => (
                 content !== "" && <span key={index} className={classes.content}>
                        <Tooltip title={user} placement="top">
