@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, Suspense} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
 import {Receipt, ReceiptUser} from "../../graphql/query";
 import {createUseStyles} from "react-jss";
 import {Tooltip} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import LoadingComponent from "../loading";
 
 const useStyles = createUseStyles({
     content: {
@@ -19,34 +20,37 @@ const useStyles = createUseStyles({
 function BoardTable() {
 
     const classes = useStyles();
-    const [content, setContent] = useState();
-    const [user, setUser] = useState();
+    const [content, setContent] = useState("");
+    const [user, setUser] = useState("");
     const [num, setNum] = useState(1);
-    const {data: receipt} = useQuery(Receipt)
     const {data} = useQuery(ReceiptUser, {
         variables: {
             menu: num
         }
     });
+    const {data: receipt} = useQuery(Receipt)
+
 
     useEffect(() => {
-        if (receipt) {
-            setContent(receipt.receipt)
-        }
+
         if (data) {
             setUser(String(Object.values(data)))
         }
 
-    }, [receipt, data])
+        if (receipt) {
+            setContent(receipt.receipt)
+        }
+
+    }, [data, receipt])
 
     return (
 
-        <>
+        <Suspense fallback={<LoadingComponent loading/>}>
 
             {content && user &&
             content.map((content, index) => (
                 content !== "" && <span key={index} className={classes.content}>
-                        <Tooltip title={user} placement="top">
+                       <Tooltip title={user} placement="top">
                             <Button variant="outlined"
                                     onMouseOver={() => {
                                         setNum(index)
@@ -58,7 +62,7 @@ function BoardTable() {
             ))}
 
 
-        </>
+        </Suspense>
 
     )
 }

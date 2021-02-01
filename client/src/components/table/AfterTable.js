@@ -7,7 +7,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Typography} from "@material-ui/core";
 import Emoji from "../alert/Emoji";
 
-
 const useStyles = makeStyles({
     border: {
         backgroundColor: "whitesmoke",
@@ -71,7 +70,6 @@ export default function BoardTable() {
                 <thead>
                 <tr>
                     <th scope="col"><ChangeGiveupButton userid={localStorage.getItem("myData")}/></th>
-
 
                 </tr>
                 </thead>

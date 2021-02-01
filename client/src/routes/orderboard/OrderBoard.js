@@ -14,9 +14,6 @@ import CreateOrder from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
     paper: {
         padding: theme.spacing(5),
         textAlign: 'center',
