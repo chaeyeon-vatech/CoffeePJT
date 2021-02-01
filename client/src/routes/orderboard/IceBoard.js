@@ -59,6 +59,23 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const menu = [{
+    menu: "아시나요",
+    image: "https://m.iceplanet.co.kr/web/product/big/201905/392ef164b0a2c8c2edb6f1462c3f6cdf.jpg"
+},
+    {
+        menu: "돼지콘",
+        image: "https://img5.yna.co.kr/etc/inner/KR/2017/08/07/AKR20170807054700030_01_i_P2.jpg"
+    },
+    {
+        menu: "브라보",
+        image: "https://contents.lotteon.com/itemimage/_v100649/LF/15/00/59/6_/0/LF1500596_0_1.jpg/dims/resizemc/400x400"
+    },
+    {
+        menu: "녹차마루",
+        image: "https://m.assabeer.com/web/product/big/a_64.jpg"
+    }]
+
 export default function IceBoard() {
     const classes = useStyles();
     const [contents, setContents] = useState('');
@@ -95,105 +112,37 @@ export default function IceBoard() {
                 <div className={classes.root}>
 
                     <Grid container spacing={3}>
-                        <Grid item xs={3}>
-                            <Paper className={classes.paper}>
-                                <Card className={classes.card}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            component="img"
-                                            height="200"
-                                            className={classes.media}
-                                            image="https://m.iceplanet.co.kr/web/product/big/201905/392ef164b0a2c8c2edb6f1462c3f6cdf.jpg"
-                                        />
-                                        <CardContent className={classes.media}>
-                                            <Typography gutterBottom variant="h5" component="h2"
-                                                        className={classes.media}>
-                                                아시나요
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                    <CardActions>
-                                        <CreateButton hi="icecream" menu="아시나요" color="primary" label="아시나요 선택"
-                                                      className={classes.button}/>
-                                    </CardActions>
-                                </Card>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Paper className={classes.paper}>
-                                <Card className={classes.card}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            component="img"
-                                            height="200"
-                                            className={classes.media}
-                                            image="https://img5.yna.co.kr/etc/inner/KR/2017/08/07/AKR20170807054700030_01_i_P2.jpg"
-                                        />
-                                        <CardContent className={classes.media}>
-                                            <Typography gutterBottom variant="h5" component="h2"
-                                                        className={classes.media}>
-                                                돼지콘
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                    <CardActions>
-                                        <CreateButton hi="icecream" menu="돼지콘" color="primary" label="돼지콘 선택"
-                                                      className={classes.button}/>
-                                    </CardActions>
-                                </Card>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Paper className={classes.paper}>
-                                <Card className={classes.card}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            component="img"
-                                            height="200"
-                                            className={classes.media}
-                                            image="https://contents.lotteon.com/itemimage/_v100649/LF/15/00/59/6_/0/LF1500596_0_1.jpg/dims/resizemc/400x400"
-                                        />
-                                        <CardContent className={classes.media}>
-                                            <Typography gutterBottom variant="h5" component="h2"
-                                                        className={classes.media}>
-                                                브라보
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                    <CardActions>
-                                        <CreateButton hi="icecream" menu="브라보" color="primary" label="브라보 선택"
-                                                      className={classes.button}/>
-                                    </CardActions>
-                                </Card>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Paper className={classes.paper}>
-                                <Card className={classes.card}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            component="img"
-                                            height="200"
-                                            className={classes.media}
-                                            image="https://m.assabeer.com/web/product/big/a_64.jpg"
-                                        />
-                                        <CardContent className={classes.media}>
-                                            <Typography gutterBottom variant="h5" component="h2">
-                                                녹차마루
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
 
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                    <CardActions>
-                                        <CreateButton hi="icecream" menu="녹차마루" color="primary" label="녹차마루 선택"
-                                                      className={classes.button}/>
+                        {menu.map((value, index) => (
+                            <Grid key={index} item xs={3}>
+                                <Paper className={classes.paper}>
+                                    <Card className={classes.card}>
+                                        <CardActionArea>
+                                            <CardMedia
+                                                component="img"
+                                                height="230"
+                                                className={classes.media}
+                                                image={value.image}
+                                            />
+                                            <CardContent className={classes.media}>
+                                                <Typography gutterBottom variant="h5" component="h2">
+                                                    {value.menu}
+                                                </Typography>
+                                            </CardContent>
+                                        </CardActionArea>
+                                        <CardActions>
 
-                                    </CardActions>
-                                </Card>
-                            </Paper>
-                        </Grid>
+                                            <CreateButton hi="icecream" menu={value.menu} color="primary"
+                                                          label="SELECT"
+                                                          className={classes.button}/>
+
+                                        </CardActions>
+                                    </Card>
+                                </Paper>
+
+                            </Grid>
+                        ))}
+
                     </Grid>
                 </div>
             </div>
