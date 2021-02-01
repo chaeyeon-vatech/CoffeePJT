@@ -66,16 +66,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const menu = [{
-
-    menu: "아이스티",
-    image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1949&q=80",
-
-},
+const menu = [
+    {
+        menu: "아이스티",
+        image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1949&q=80",
+    },
     {
         menu: "망고 요거트 스무디",
         image: "https://images.unsplash.com/photo-1524156868115-e696b44983db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1946&q=80",
-
     },
     {
         menu: "딸기 요거트 스무디",
@@ -135,7 +133,8 @@ export default function EtcBoard() {
                                                 image={value.image}
                                             />
                                             <CardContent className={classes.media}>
-                                                <Typography gutterBottom variant="h5" component="h2">
+                                                <Typography gutterBottom variant="h5" component="h2"
+                                                            className={classes.media}>
                                                     {value.menu}
                                                 </Typography>
                                             </CardContent>
@@ -143,7 +142,7 @@ export default function EtcBoard() {
                                         <CardActions>
 
                                             <CreateButton hi="etc" menu={value.menu} color="primary"
-                                                          label="SELECT"
+                                                          label="기타 음료 주문"
                                                           className={classes.button}/>
 
                                         </CardActions>
