@@ -12,6 +12,7 @@ import {useQuery} from "@apollo/react-hooks";
 import {MeQuery} from "../../graphql/query";
 import CreateOrder from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
+import CardActions from "@material-ui/core/CardActions";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -36,6 +37,23 @@ const useStyles = makeStyles((theme) => ({
         cursor: "default"
     }
 }));
+
+const menu = [{
+    menu: "아메리카노",
+    image: "https://images.unsplash.com/photo-1593231269103-6667d6905882?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80"
+},
+    {
+        menu: "카페라떼",
+        image: "https://images.unsplash.com/photo-1556484245-2c765becb8eb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
+    },
+    {
+        menu: "바닐라라떼",
+        image: "https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80"
+    },
+    {
+        menu: "카페모카",
+        image: "https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
+    }]
 
 export default function CorderBoard() {
 
@@ -63,106 +81,37 @@ export default function CorderBoard() {
             <Grid container spacing={3} horizontal='center'
                   breakpoints={{300: classes.itemContainerMobile}}>
 
+                <Grid container spacing={3}>
 
-                <Grid item xs={3}>
+                    {menu.map((value, index) => (
+                        <Grid key={index} item xs={3}>
+                            <Paper className={classes.paper}>
+                                <Card className={classes.card}>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            component="img"
+                                            height="230"
+                                            className={classes.media}
+                                            image={value.image}
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="h2"
+                                                        className={classes.media}>
+                                                {value.menu}
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                    <CardActions>
 
-                    <Paper className={classes.paper}>
-                        <Card className={classes.card}>
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    height="200"
-                                    className={classes.media}
-                                    image="https://images.unsplash.com/photo-1593231269103-6667d6905882?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80"
-                                    title="아메리카노"
-                                />
-                                <CardContent className={classes.media}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        아메리카노
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
+                                        <CreateOrder hi="hot" menu={value.menu} color="secondary" label="Hot"/>
+                                        <CreateOrder hi="ice" menu={value.menu} color="primary" label="Ice"/>
 
-                            <CreateOrder hi="hot" menu="아메리카노" color="secondary" label="Hot"/>
-                            <CreateOrder hi="ice" menu="아메리카노" color="primary" label="Ice"/>
+                                    </CardActions>
+                                </Card>
+                            </Paper>
 
-                        </Card>
-                    </Paper>
-                </Grid>
-                <Grid item xs={3}>
-
-                    <Paper className={classes.paper}>
-                        <Card className={classes.card}>
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    height="200"
-                                    className={classes.media}
-                                    image="https://images.unsplash.com/photo-1556484245-2c765becb8eb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
-                                    title="카페라떼"
-                                />
-                                <CardContent className={classes.media}>
-                                    <Typography gutterBottom variant="h5" component="h2" className={classes.media}>
-                                        카페라떼
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-
-                            <CreateOrder hi="hot" menu="카페라떼" color="secondary" label="Hot"/>
-                            <CreateOrder hi="ice" menu="카페라떼" color="primary" label="Ice"/>
-
-                        </Card>
-                    </Paper>
-                </Grid>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                        <Card className={classes.card}>
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    alt="바닐라라떼"
-                                    height="200"
-                                    className={classes.media}
-                                    image="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80"
-                                    title="바닐라라떼"
-                                />
-                                <CardContent className={classes.media}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        바닐라라떼
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-
-                            <CreateOrder hi="hot" menu="바닐라라떼" color="secondary" label="Hot"/>
-                            <CreateOrder hi="ice" menu="바닐라라떼" color="primary" label="Ice"/>
-
-                        </Card>
-                    </Paper>
-                </Grid>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                        <Card className={classes.card}>
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    alt="카페 모카"
-                                    className={classes.media}
-                                    height="200"
-                                    image="https://images.unsplash.com/photo-1523247140972-52cc3cdd2715?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
-                                />
-                                <CardContent className={classes.media}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        카페 모카
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-
-                            <CreateOrder hi="hot" menu="카페모카" color="secondary" label="Hot"/>
-                            <CreateOrder hi="ice" menu="카페모카" color="primary" label="Ice"/>
-
-                        </Card>
-                    </Paper>
-
+                        </Grid>
+                    ))}
                 </Grid>
 
                 {status === "대기중" && (
