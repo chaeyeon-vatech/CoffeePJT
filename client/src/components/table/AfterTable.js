@@ -10,12 +10,12 @@ import Emoji from "../alert/Emoji";
 const useStyles = makeStyles({
     border: {
         backgroundColor: "whitesmoke",
-        fontSize: '17px !important',
+        fontSize: '19px !important',
         textAlign: "center",
         border: `5px solid #624444`,
         borderRadius: 5,
         width: "100%",
-        padding: "10px 10px 10px 10px"
+        padding: "15px 15px 15px 15px"
     },
     title: {
         textAlign: "center",
@@ -83,7 +83,7 @@ export default function BoardTable() {
 
             {contents && contents.map((content) => (
                 <span className={classes.border} key={content} style={{marginBottom: 20}}>
-                        {content.username}님은 현재 {content.hi} {content.menu}를 주문하셨습니다.
+                         {content.username}님의 주문내역 : {content.hi} {content.menu}
                     </span>
 
             ))}
