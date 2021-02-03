@@ -197,78 +197,14 @@ const AuthenticationForm = () => {
     }, [data, one]);
 
 
-    return localStorage.getItem('name') ? (
+    return (
         <div className={classes.root}>
             <div className={classes.loginwrap}>
 
                 <div className={classes.loginhtml}>
-                    <h3>이름을 찾을 수 없습니다.</h3>
-
-                    <h5 className={classes.h5}>다시 입력해주세요!</h5>
-
-
-                    <div className={classes.loginform}>
-
-                        <div className={classes.group}>
-                            <label>주문자</label>
-                            <Typography component="div" variant="body1">
-
-                                <Autocomplete
-                                    freeSolo
-                                    id="free-solo-2-demo"
-                                    disableClearable
-                                    options={result.map((content) => content.username)}
-                                    value={value}
-                                    onChange={(event, newValue) => {
-                                        setValue(newValue);
-                                    }}
-                                    inputValue={inputValue}
-                                    onInputChange={(event, newInputValue) => {
-                                        setInputValue(newInputValue);
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            id="standard-basic"
-                                            margin="normal"
-                                            color={"secondary"}
-                                            onChange={e => setSearch(e.target.value)}
-                                            onKeyDown={({key}) => {
-                                                if (key === "Enter" && value !== undefined && value !== '') {
-                                                    handleClick(value, o.map((content) => (content._id)))
-                                                }
-                                            }}
-                                            InputProps={{
-                                                ...params.InputProps,
-                                                type: 'search',
-                                                className: classes.focused
-                                            }}
-                                        />
-                                    )}
-                                />
-                            </Typography>
-
-                            <Button type="submit"
-                                    disabled={inputValue === undefined}
-                                    onClick={() => handleClick(value, o.map((content) => (content._id)))}
-                            >로그인</Button>
-
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    ) : (
-
-        <div className={classes.root}>
-            <div className={classes.loginwrap}>
-
-                <div className={classes.loginhtml}>
-                    <h3>현재 주문이 없습니다.</h3>
+                    {localStorage.getItem('name') ? (<h3>유저 목록에 없는 이름입니다.</h3>) : (
+                        <h3>현재 주문이 없습니다.</h3>
+                    )}
                     <h5 className={classes.h5}>주문을 생성하시려면<br/>이름을 입력해주세요!</h5>
 
                     <div className={classes.loginform}>
