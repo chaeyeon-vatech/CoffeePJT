@@ -116,13 +116,13 @@ const useStyles = createUseStyles((theme) => ({
     }))
 ;
 
+
 const handleClick = (name, id) => {
-    if (id !== undefined && id !== null) {
+    if (id) {
         localStorage.setItem('myData', id.toString())
         localStorage.setItem('name', name)
         window.location.href = '/order'
     }
-
 }
 
 
@@ -130,12 +130,12 @@ const AuthenticationForm = () => {
 
     const theme = useTheme();
     const classes = useStyles({theme});
-
     const [result, setResult] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [value, setValue] = useState('');
     const [tasks, setTasks] = useState("");
     const [o, setO] = useState("");
+
 
     const {data: task} = useQuery(TaskQuery);
 
@@ -164,78 +164,19 @@ const AuthenticationForm = () => {
         }
     }, [data, task, one]);
 
-    return localStorage.getItem('name') ? (
+
+    return (
         <div className={classes.root}>
             <div className={classes.loginwrap}>
 
                 <div className={classes.loginhtml}>
+                    {localStorage.getItem('name') ? (<h3>유저 목록에 없는 이름입니다.</h3>) : (
+                        tasks && tasks.map((task) => (
+                            <h3 key={task}>{task.creater}님의 주문이 진행 중입니다.</h3>
 
-                    <h3>이름을 찾을 수 없습니다.</h3>
+                        ))
+                    )}
 
-                    <h5 className={classes.h5}>다시 입력해주세요!</h5>
-
-                    <div className={classes.loginform}>
-
-                        <div className={classes.group}>
-                            <label>주문자</label>
-                            <Typography component="div" variant="body1">
-
-                                <Autocomplete
-                                    freeSolo
-                                    id="free-solo-2-demo"
-                                    disableClearable
-                                    value={value}
-                                    onChange={(event, newValue) => {
-                                        setValue(newValue);
-                                    }}
-                                    options={result.map((content) => content.username)}
-                                    inputValue={inputValue}
-                                    onInputChange={(event, newInputValue) => {
-                                        setInputValue(newInputValue);
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            id="standard-basic"
-                                            margin="normal"
-                                            color={"secondary"}
-                                            InputProps={{
-                                                ...params.InputProps,
-                                                type: 'search',
-                                                className: classes.focused
-                                            }}
-                                            onKeyDown={({key}) => {
-                                                if (key === "Enter" && value !== undefined && value !== '') {
-                                                    handleClick(value, o.map((content) => (content._id)))
-                                                }
-                                            }}
-                                        />
-                                    )}
-                                />
-                            </Typography>
-
-                            <Button type="submit"
-                                    disabled={inputValue === undefined}
-                                    onClick={() => handleClick(value, o.map((content) => (content._id)))}
-                            >로그인</Button>
-
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    ) : (
-        <div className={classes.root}>
-            <div className={classes.loginwrap}>
-
-                <div className={classes.loginhtml}>
-                    {tasks && tasks.map((task) => (
-                        <h3 key={task}>{task.creater}님의 주문이 진행 중입니다.</h3>
-                    ))}
                     <h5 className={classes.h5}>주문하시려면<br/>로그인해주세요!</h5>
 
                     <div className={classes.loginform}>

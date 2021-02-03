@@ -118,8 +118,6 @@ export function TaskCreate(å) {
                 title: localStorage.getItem('task'),
                 userid: localStorage.getItem('myData')
             },
-            onError: () => {
-            },
         }
     )
     return create
@@ -191,7 +189,6 @@ export function UserDelete(id) {
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
                 {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
             awaitRefetchQueries: true,
-
             variables: {ids: [String(Object.values(id))]},
             onCompleted: () => {
                 alert("유저 삭제가 완료되었습니다.")
