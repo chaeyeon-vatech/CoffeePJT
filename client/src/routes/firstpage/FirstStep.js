@@ -130,7 +130,6 @@ const AuthenticationForm = () => {
                                 <TransferList/>
                             </div>
 
-
                         </div>
                     </div>
                 </div>

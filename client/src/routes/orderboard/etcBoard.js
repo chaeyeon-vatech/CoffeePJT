@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     border: {
         backgroundColor: "whitesmoke",
         fontSize: '15px !important',
-        fontFamily: "Do Hyeon",
         fontWeight: "600",
         textAlign: "center",
         border: `5px solid #624444`,
