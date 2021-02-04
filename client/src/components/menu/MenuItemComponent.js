@@ -2,7 +2,8 @@ import React from 'react';
 import {any, arrayOf, func, string} from 'prop-types';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import {useSidebar} from 'resources/hooks/useSidebar';
+import {useSidebar} from "../../context/SidebarContext";
+
 
 const useStyles = createUseStyles({
     activeContainer: {

@@ -26,7 +26,6 @@ const handleClick = () => {
     }
 }
 
-
 function SidebarComponent() {
     // const [_, removeAuthToken] = useAuthToken();
 

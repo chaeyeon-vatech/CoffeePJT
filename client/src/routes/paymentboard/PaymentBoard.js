@@ -67,6 +67,7 @@ function TodayTrendsComponent() {
     const theme = useTheme();
     const classes = useStyles({theme});
 
+
     const [money, setMoney] = useState("");
     const [order, setOrder] = useState("");
     const [id, setId] = useState("");
@@ -115,7 +116,6 @@ function TodayTrendsComponent() {
             },
         }
     )
-
 
     function renderStat(title, value) {
         return (

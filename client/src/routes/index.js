@@ -5,7 +5,6 @@ import PublicRoutes from 'routes/PublicRoutes';
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../graphql/query";
 
-
 function Routes() {
     const {pathname} = useLocation();
     const [task, setTask] = useState();
