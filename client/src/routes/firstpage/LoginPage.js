@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useQuery} from "@apollo/react-hooks";
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {useQuery, useLazyQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
@@ -7,6 +7,7 @@ import {Autocomplete} from "@material-ui/lab";
 import {TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import {UserContext} from "../../context";
 
 const useStyles = createUseStyles((theme) => ({
 
@@ -136,6 +137,29 @@ const AuthenticationForm = () => {
     const [tasks, setTasks] = useState("");
     const [o, setO] = useState("");
 
+    const {userContext, dispatchUser} = useContext(UserContext);
+    const initSelect = {
+        name: userContext ? userContext.name : null,
+        id: userContext ? userContext.id : null
+    }
+
+    const IdRef = useRef(localStorage.getItem('name'));
+
+
+    const [selectedItem, setSelectedItem] = useState(initSelect);
+
+
+    const [user] = useLazyQuery(SearchQuery, {
+        onCompleted: (data) => {
+            if (data) {
+                dispatchUser({
+                    type: "change",
+                    target: data
+                })
+                setSelectedItem(data);
+            }
+        }
+    })
 
     const {data: task} = useQuery(TaskQuery);
 
@@ -162,7 +186,16 @@ const AuthenticationForm = () => {
         if (one) {
             setO(one.user);
         }
-    }, [data, task, one]);
+        if (userContext) {
+            user({
+                variables: {
+                    word: value
+                }
+            })
+        }
+    }, [data, task, one, userContext]);
+
+    console.log(userContext)
 
 
     return (
@@ -170,7 +203,7 @@ const AuthenticationForm = () => {
             <div className={classes.loginwrap}>
 
                 <div className={classes.loginhtml}>
-                    {localStorage.getItem('name') ? (<h3>유저 목록에 없는 이름입니다.</h3>) : (
+                    {userContext.id ? (<h3>주문자가 선택되었습니다!</h3>) : (
                         tasks && tasks.map((task) => (
                             <h3 key={task}>{task.creater}님의 주문이 진행 중입니다.</h3>
 
@@ -203,6 +236,8 @@ const AuthenticationForm = () => {
                                             {...params}
                                             id="standard-basic"
                                             margin="normal"
+                                            placeholder={IdRef.current}
+
                                             color={"secondary"}
                                             onKeyDown={({key}) => {
                                                 if (key === "Enter" && value !== undefined && value !== '') {

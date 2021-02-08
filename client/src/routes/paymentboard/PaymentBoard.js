@@ -63,10 +63,9 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 
-function TodayTrendsComponent() {
+function PaymentBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
-
 
     const [money, setMoney] = useState("");
     const [order, setOrder] = useState("");
@@ -174,4 +173,4 @@ function TodayTrendsComponent() {
     );
 }
 
-export default TodayTrendsComponent;
+export default PaymentBoard;

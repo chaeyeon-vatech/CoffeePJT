@@ -8,6 +8,8 @@ import {ApolloClient} from "apollo-boost";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import {createHttpLink} from "apollo-link-http";
 import AppContextProvider from "../AppContext";
+import {PaymentContextProvider} from "../index";
+import UserContextProvider from "../UserContext";
 
 const useStyles = makeStyles(() => ({
     root: {width: "100vw"},
@@ -27,7 +29,6 @@ const client = new ApolloClient({
 const ThemeContext = props => {
     const {children} = props;
     const classes = useStyles();
-    // const {appContext} = useContext(AppContext);
 
     return (
         <ThemeProvider theme={Theme}>
@@ -52,9 +53,15 @@ const ContextProvider = props => {
 
     return (
         <AppContextProvider>
+
             <ApolloProvider client={client}>
-                <ThemeContext children={children}/>
+                <UserContextProvider>
+                    <PaymentContextProvider>
+                        <ThemeContext children={children}/>
+                    </PaymentContextProvider>
+                </UserContextProvider>
             </ApolloProvider>
+
         </AppContextProvider>
 
     );

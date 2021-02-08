@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
@@ -7,7 +7,8 @@ import {Autocomplete} from "@material-ui/lab";
 import Typography from '@material-ui/core/Typography';
 import {TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-
+import {PaymentContext} from "../../context";
+import {useLazyQuery} from "@apollo/client";
 
 const useStyles = createUseStyles((theme) => ({
 
@@ -174,10 +175,13 @@ const AuthenticationForm = () => {
     const [inputValue, setInputValue] = useState("");
     const [value, setValue] = useState('');
 
+    const IdRef = useRef(localStorage.getItem('name'));
+
+
     const {data} = useQuery(SearchQuery, {
         variables: {
             word: search
-        },
+        }
 
     });
     const {data: one} = useQuery(SearchQuery, {
@@ -202,7 +206,7 @@ const AuthenticationForm = () => {
             <div className={classes.loginwrap}>
 
                 <div className={classes.loginhtml}>
-                    {localStorage.getItem('name') ? (<h3>유저 목록에 없는 이름입니다.</h3>) : (
+                    {IdRef.current ? (<h3>로그인 기록이 존재합니다!</h3>) : (
                         <h3>현재 주문이 없습니다.</h3>
                     )}
                     <h5 className={classes.h5}>주문을 생성하시려면<br/>이름을 입력해주세요!</h5>
@@ -231,6 +235,7 @@ const AuthenticationForm = () => {
                                             {...params}
                                             margin="normal"
                                             color={"secondary"}
+                                            placeholder={IdRef.current}
                                             onChange={e => setSearch(e.target.value)}
                                             onKeyDown={({key}) => {
                                                 if (key === "Enter" && value !== undefined && value !== '') {

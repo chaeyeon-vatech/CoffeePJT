@@ -246,7 +246,7 @@ export default function CustomizedSteppers() {
     const handleUser = () => {
         if (window.confirm('결제자를 변경하시겠습니까?')) {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            localStorage.clear();
+            localStorage.removeItem('myData');
             window.location.href = '/login'
         }
     };

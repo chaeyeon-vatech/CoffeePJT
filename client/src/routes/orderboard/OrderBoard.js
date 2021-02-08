@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -13,6 +13,7 @@ import {MeQuery} from "../../graphql/query";
 import CreateOrder from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
 import CardActions from "@material-ui/core/CardActions";
+import {UserContext} from "../../context";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -60,6 +61,10 @@ export default function CorderBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
     const [status, setStatus] = useState("");
+
+    const {userContext, dispatchUser} = useContext(UserContext)
+
+    console.log(userContext)
 
     const {data} = useQuery(MeQuery, {
         variables: {

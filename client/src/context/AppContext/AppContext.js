@@ -17,7 +17,6 @@ const initialState = {
 };
 
 const initializer = () => {
-
     return {...initialState};
 };
 

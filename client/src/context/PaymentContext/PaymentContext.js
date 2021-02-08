@@ -1,40 +1,17 @@
-import React, {useReducer} from "react";
+import React, { useReducer } from "react";
 
-const initialState = {
-    data: null,
-    loading: false,
-    error: false
-}
-
+const initialState = null;
 
 const reducer = (state, action) => {
-
-    switch (action.type) {
-        case "FETCH":
-            return {...state, loading: true};
-        case "FETCH_SUCCESS":
-            return {
-                ...state,
-                data: action.payload,
-                loading: false,
-                error: false
-            };
-        case "FETCH_ERROR":
-            return {...state, loading: false, error: true};
-        default:
-            throw new Error();
-
-    }
-}
-
-
+    return action;
+};
 
 const PaymentContext = React.createContext();
 const PaymentContextConsumer = PaymentContext.Consumer;
 
-const PatientContextProvider = props => {
+const PaymentContextProvider = props => {
     const [paymentContext, dispatchPayment] = useReducer(reducer, initialState);
-    const value = {paymentContext, dispatchPayment};
+    const value = { paymentContext, dispatchPayment };
 
     return (
         <PaymentContext.Provider value={value}>
@@ -43,5 +20,5 @@ const PatientContextProvider = props => {
     );
 };
 
-export default PatientContextProvider;
-export {PaymentContext, PaymentContextConsumer};
+export default PaymentContextProvider;
+export { PaymentContext, PaymentContextConsumer };

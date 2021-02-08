@@ -21,7 +21,7 @@ const useStyles = createUseStyles({
 const handleClick = () => {
     if (window.confirm('로그아웃하시겠습니까?')) {
 
-        localStorage.clear()
+        localStorage.removeItem('myData')
         window.location.href = '/'
     }
 }
