@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {useQuery, useLazyQuery} from "@apollo/react-hooks";
+import React, {useContext, useEffect, useState} from 'react';
+import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery, TaskQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
@@ -135,31 +135,9 @@ const AuthenticationForm = () => {
     const [inputValue, setInputValue] = useState("");
     const [value, setValue] = useState('');
     const [tasks, setTasks] = useState("");
-    const [o, setO] = useState("");
+    const [o, setO] = useState([]);
 
     const {userContext, dispatchUser} = useContext(UserContext);
-    const initSelect = {
-        name: userContext ? userContext.name : null,
-        id: userContext ? userContext.id : null
-    }
-
-    const IdRef = useRef(localStorage.getItem('name'));
-
-
-    const [selectedItem, setSelectedItem] = useState(initSelect);
-
-
-    const [user] = useLazyQuery(SearchQuery, {
-        onCompleted: (data) => {
-            if (data) {
-                dispatchUser({
-                    type: "change",
-                    target: data
-                })
-                setSelectedItem(data);
-            }
-        }
-    })
 
     const {data: task} = useQuery(TaskQuery);
 
@@ -173,6 +151,14 @@ const AuthenticationForm = () => {
     const {data: one} = useQuery(SearchQuery, {
         variables: {
             word: value
+        },
+        onCompleted: (data) => {
+            if (data) {
+                dispatchUser({
+                    type: "change",
+                    target: data
+                })
+            }
         }
     })
 
@@ -186,16 +172,8 @@ const AuthenticationForm = () => {
         if (one) {
             setO(one.user);
         }
-        if (userContext) {
-            user({
-                variables: {
-                    word: value
-                }
-            })
-        }
-    }, [data, task, one, userContext]);
 
-    console.log(userContext)
+    }, [value, data, task, one]);
 
 
     return (
@@ -203,7 +181,7 @@ const AuthenticationForm = () => {
             <div className={classes.loginwrap}>
 
                 <div className={classes.loginhtml}>
-                    {userContext.id ? (<h3>주문자가 선택되었습니다!</h3>) : (
+                    {o.length !== 0 ? (<h3>유저가 선택되었습니다.</h3>) : (
                         tasks && tasks.map((task) => (
                             <h3 key={task}>{task.creater}님의 주문이 진행 중입니다.</h3>
 
@@ -236,12 +214,11 @@ const AuthenticationForm = () => {
                                             {...params}
                                             id="standard-basic"
                                             margin="normal"
-                                            placeholder={IdRef.current}
-
                                             color={"secondary"}
+                                            placeholder={localStorage.getItem('name')}
                                             onKeyDown={({key}) => {
                                                 if (key === "Enter" && value !== undefined && value !== '') {
-                                                    handleClick(value, o.map((content) => (content._id)))
+                                                    handleClick(userContext.id.user.map((option) => option.username), userContext.id.user.map((option) => option._id))
                                                 }
                                             }}
                                             InputProps={{
@@ -256,7 +233,7 @@ const AuthenticationForm = () => {
 
                             <Button type="submit"
                                     disabled={inputValue === undefined}
-                                    onClick={() => handleClick(value, o.map((content) => content._id))}
+                                    onClick={() => handleClick(userContext.id.user.map((option) => option.username), userContext.id.user.map((option) => option._id))}
                             >로그인</Button>
 
                         </div>

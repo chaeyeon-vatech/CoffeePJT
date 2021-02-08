@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
 import {SearchQuery} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
@@ -7,8 +7,6 @@ import {Autocomplete} from "@material-ui/lab";
 import Typography from '@material-ui/core/Typography';
 import {TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import {PaymentContext} from "../../context";
-import {useLazyQuery} from "@apollo/client";
 
 const useStyles = createUseStyles((theme) => ({
 
