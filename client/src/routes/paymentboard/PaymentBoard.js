@@ -13,6 +13,7 @@ import {OrderConfirmMutation} from "../../graphql/mutation";
 import {Tooltip} from "@material-ui/core";
 import {useMutation} from '@apollo/react-hooks';
 import Button from "@material-ui/core/Button";
+import {useSnackbar} from "notistack";
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -66,6 +67,8 @@ const useStyles = createUseStyles((theme) => ({
 function PaymentBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
+    const {enqueueSnackbar} = useSnackbar();
+
 
     const [money, setMoney] = useState("");
     const [order, setOrder] = useState("");
@@ -103,14 +106,14 @@ function PaymentBoard() {
             refetchQueries: [{query: SearchQuery}],
             variables: {creater: id},
             onCompleted: () => {
-                alert("주문이 초기화되었습니다.")
+                enqueueSnackbar("주문이 초기화되었습니다.")
                 localStorage.clear();
                 window.location.href = '/login';
 
 
             },
             onError: () => {
-                alert("초기화 권한이 없습니다.")
+                enqueueSnackbar("초기화 권한이 없습니다.")
                 window.location.href = '/order';
             },
         }

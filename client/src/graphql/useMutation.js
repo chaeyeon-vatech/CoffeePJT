@@ -19,9 +19,12 @@ import {
     UserSearchQuery,
     VacationQuery
 } from "./query";
+import {useSnackbar} from "notistack";
+
 
 //주문 포기=> 재주문 상태로
 export function ChangeGiveup(userid) {
+    const {enqueueSnackbar} = useSnackbar();
 
     const [giveup] = useMutation(getBackGiveup, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
@@ -31,6 +34,8 @@ export function ChangeGiveup(userid) {
                 id: userid.userid
             },
             onCompleted: () => {
+
+                enqueueSnackbar("주문을 포기하셨습니다.")
                 window.location.href = '/order';
             }
         }
@@ -44,6 +49,7 @@ export function ChangeGiveup(userid) {
 
 export function CreateOrder(hi) {
     const createmutation = CreateMutation;
+    const {enqueueSnackbar} = useSnackbar();
 
 
     const [create] = useMutation(createmutation, {
@@ -54,6 +60,9 @@ export function CreateOrder(hi) {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,
                 hi: hi.hi
+            },
+            onCompleted: () => {
+                enqueueSnackbar(localStorage.getItem('name') + "님" + hi.menu + "를 선택하셨습니다!")
             },
             onError: () => {
                 alert("메뉴를 선택해주세요.")
@@ -68,6 +77,7 @@ export function CreateOrder(hi) {
 
 //주문 삭제
 export function DeleteOrder(userid) {
+    const {enqueueSnackbar} = useSnackbar();
 
 
     const [deletePostOrMutation] = useMutation(RemoveMutation, {
@@ -78,6 +88,9 @@ export function DeleteOrder(userid) {
             variables: {
                 userid: userid.userid,
                 orderid: userid.orderid
+            },
+            onCompleted: () => {
+                enqueueSnackbar("주문을 삭제하셨습니다.")
             },
             onError: () => {
                 console.log(userid)
@@ -92,6 +105,7 @@ export function DeleteOrder(userid) {
 
 //주문 포기
 export function Giveup(userid) {
+    const {enqueueSnackbar} = useSnackbar();
 
     const [giveup] = useMutation(OrderGiveupMutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
@@ -101,6 +115,7 @@ export function Giveup(userid) {
                 userid: userid.userid
             },
             onCompleted: () => {
+                enqueueSnackbar("주문을 포기하셨습니다.")
             }
         }
     )
@@ -111,13 +126,17 @@ export function Giveup(userid) {
 
 //주문 생성
 
-export function TaskCreate(å) {
+export function TaskCreate() {
+    const {enqueueSnackbar} = useSnackbar();
     const [create] = useMutation(TaskCreateMutation, {
             refetchQueries: [{query: TaskQuery}],
             variables: {
                 title: localStorage.getItem('task'),
                 userid: localStorage.getItem('myData')
             },
+            onCompleted: () => {
+                enqueueSnackbar(localStorage.getItem('name') + "님" + localStorage.getItem('task') + "의 이유로 커피 주문을 생성하셨습니다.")
+            }
         }
     )
     return create
@@ -126,12 +145,14 @@ export function TaskCreate(å) {
 
 //주문 재작성
 export function TaskDelete(post_id) {
+    const {enqueueSnackbar} = useSnackbar();
+
 
     const [deletemutation] = useMutation(TaskRemoveMutation, {
             refetchQueries: [{query: TaskQuery}, {query: Receipt}],
             variables: {id: post_id.post_id, userid: post_id.user_id},
             onCompleted: () => {
-                alert("주문 재작성 페이지로 돌아갑니다!");
+                enqueueSnackbar("주문 재작성 페이지로 돌아갑니다!");
             }
         }
     )
@@ -139,6 +160,8 @@ export function TaskDelete(post_id) {
 }
 
 export function TaskUpdate(id, content, setOpen) {
+    const {enqueueSnackbar} = useSnackbar();
+
 
     const [update] = useMutation(TaskUpdateMutation, {
         refetchQueries: [{query: TaskQuery}, {query: Receipt}],
@@ -148,9 +171,13 @@ export function TaskUpdate(id, content, setOpen) {
             title: content
         },
         onCompleted: () => {
+            enqueueSnackbar("주문 내용이 " + content + "으로 수정되었습니다.")
             setOpen(false);
 
         },
+        onError: () => {
+            enqueueSnackbar("다시 시도해주세요!")
+        }
     })
     return update
 }
@@ -159,6 +186,8 @@ export function TaskUpdate(id, content, setOpen) {
 //유저 생성
 
 export function UserAdd(username, content, setOpen) {
+    const {enqueueSnackbar} = useSnackbar();
+
 
     const [create] = useMutation(CreateUserMutation, {
             refetchQueries: [{query: UserSearchQuery}, {query: Receipt}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
@@ -167,12 +196,12 @@ export function UserAdd(username, content, setOpen) {
                 username: content
             },
             onCompleted: () => {
-                alert("유저 추가가 완료되었습니다.")
+                enqueueSnackbar("유저 추가가 완료되었습니다.")
                 setOpen(false);
 
             },
             onError: () => {
-                alert("같은 이름은 등록하실 수 없습니다!")
+                enqueueSnackbar("같은 이름은 등록하실 수 없습니다!")
             },
         }
     )
@@ -183,6 +212,8 @@ export function UserAdd(username, content, setOpen) {
 //유저 삭제
 
 export function UserDelete(id) {
+    const {enqueueSnackbar} = useSnackbar();
+
 
     const [deleteMutation] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery},
@@ -191,11 +222,11 @@ export function UserDelete(id) {
             awaitRefetchQueries: true,
             variables: {ids: [String(Object.values(id))]},
             onCompleted: () => {
-                alert("유저 삭제가 완료되었습니다.")
+                enqueueSnackbar("유저 삭제가 완료되었습니다.")
 
             },
             onError: () => {
-                alert("다시 시도해주세요!")
+                enqueueSnackbar("다시 시도해주세요!")
             }
         }
     )
@@ -204,6 +235,8 @@ export function UserDelete(id) {
 }
 
 export function SearchDelete(id) {
+    const {enqueueSnackbar} = useSnackbar();
+
 
     const [deleteMutation] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery},
@@ -213,12 +246,12 @@ export function SearchDelete(id) {
 
             variables: {ids: [String(Object.values(id))]},
             onCompleted: () => {
-                alert("선택하신 유저가 삭제되었습니다.")
+                enqueueSnackbar("선택하신 유저가 삭제되었습니다.")
                 window.location.href = '/settings';
 
             },
             onError: () => {
-                alert("다시 시도해주세요!")
+                enqueueSnackbar("다시 시도해주세요!")
             }
         }
     )
@@ -228,6 +261,8 @@ export function SearchDelete(id) {
 
 //다수의 유저 삭제
 export function MultipleUserDelete(checked) {
+    const {enqueueSnackbar} = useSnackbar();
+
     const [mdelete] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
@@ -235,10 +270,10 @@ export function MultipleUserDelete(checked) {
             awaitRefetchQueries: true,
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
-                alert("선택하신 유저가 삭제되었습니다.");
+                enqueueSnackbar("선택하신 유저가 삭제되었습니다.");
             },
             onError: () => {
-                alert("다시 시도해주세요!")
+                enqueueSnackbar("다시 시도해주세요!")
             }
         }
     )
@@ -248,6 +283,8 @@ export function MultipleUserDelete(checked) {
 
 //유저 정보 업데이트
 export function UpdateUser(checked, content, setOpen) {
+    const {enqueueSnackbar} = useSnackbar();
+
     const [update] = useMutation(UpdateUserMutation, {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
@@ -258,11 +295,11 @@ export function UpdateUser(checked, content, setOpen) {
                 username: content
             },
             onCompleted: () => {
-                alert("정보 수정이 완료되었습니다.")
+                enqueueSnackbar("정보 수정이 완료되었습니다.")
                 setOpen(false);
             },
             onError: () => {
-                alert("다시 시도해주세요!")
+                enqueueSnackbar("다시 시도해주세요!")
             }
         }
     )
@@ -275,6 +312,8 @@ export function UpdateUser(checked, content, setOpen) {
 export function SelectUpdate(username, content, setClick) {
 
     const mutation = UpdateUserMutation;
+    const {enqueueSnackbar} = useSnackbar();
+
 
     const [update] = useMutation(mutation, {
             refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
@@ -286,7 +325,7 @@ export function SelectUpdate(username, content, setClick) {
 
             onCompleted: () => {
 
-                alert("정보 수정이 완료되었습니다.")
+                enqueueSnackbar("정보 수정이 완료되었습니다.")
                 setClick(false)
 
             }
@@ -299,6 +338,8 @@ export function SelectUpdate(username, content, setClick) {
 //선택적 수정
 
 export function DUpdateUser(username, content, setOpen) {
+    const {enqueueSnackbar} = useSnackbar();
+
     const [update] = useMutation(UpdateUserMutation, {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
@@ -309,11 +350,11 @@ export function DUpdateUser(username, content, setOpen) {
                 username: content
             },
             onCompleted: () => {
-                alert("정보 수정이 완료되었습니다.")
+                enqueueSnackbar("정보 수정이 완료되었습니다.")
                 setOpen(false);
             },
             onError: () => {
-                alert("다시 시도해주세요!")
+                enqueueSnackbar("다시 시도해주세요!")
             }
         }
     )
@@ -322,6 +363,8 @@ export function DUpdateUser(username, content, setOpen) {
 }
 
 export function DSelectUser(username, setOpen) {
+    const {enqueueSnackbar} = useSnackbar();
+
     const [update] = useMutation(multipleDelete, {
             refetchQueries: [{query: UserSearchQuery},
                 {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
@@ -336,7 +379,7 @@ export function DSelectUser(username, setOpen) {
 
             },
             onError: () => {
-                alert("다시 시도해주세요!")
+                enqueueSnackbar("다시 시도해주세요!")
             }
         }
     )
@@ -346,14 +389,16 @@ export function DSelectUser(username, setOpen) {
 
 
 //주문자 => 미주문자로
-export function VacationBack(checked) {
+export function VacationBack(checked, setChecked) {
+    const {enqueueSnackbar} = useSnackbar();
     const [vacationback] = useMutation(BackUserMutation, {
             refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
             variables: {ids: checked.map((c) => (c._id))},
             awaitRefetchQueries: true,
 
             onCompleted: () => {
-                alert("미주문자로 전환되었습니다!");
+                setChecked([]);
+                enqueueSnackbar(checked.map((c) => (c.username)) + ": 미주문자로 전환되었습니다!");
 
             }
         }
@@ -363,15 +408,18 @@ export function VacationBack(checked) {
 
 
 //미주문자 => 주문자로
-export function OrderBack(checked) {
+export function OrderBack(checked, setChecked) {
+    const {enqueueSnackbar} = useSnackbar();
+
+
     const [orderback] = useMutation(OrderBackMutation, {
             refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
             awaitRefetchQueries: true,
 
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
-
-                alert("주문자로 전환되었습니다!");
+                setChecked([]);
+                enqueueSnackbar(checked.map((c) => (c.username)) + ": 주문자로 전환되었습니다!");
 
             }
         }

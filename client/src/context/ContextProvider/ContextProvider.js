@@ -12,7 +12,7 @@ import {PaymentContextProvider} from "../index";
 import UserContextProvider from "../UserContext";
 
 const useStyles = makeStyles(() => ({
-    root: {width: "100vw"},
+    root: {width: "40vw"},
     containerAnchorOriginBottomCenter: {}
 }));
 

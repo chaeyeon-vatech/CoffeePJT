@@ -8,6 +8,8 @@ import {TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import {UserContext} from "../../context";
+import {useSnackbar} from "notistack";
+import moment from 'moment';
 
 const useStyles = createUseStyles((theme) => ({
 
@@ -126,6 +128,8 @@ const handleClick = (name, id) => {
     }
 }
 
+const nowTime = moment().format('YYYY년 MM월 DD일');
+
 
 const AuthenticationForm = () => {
 
@@ -173,7 +177,7 @@ const AuthenticationForm = () => {
             setO(one.user);
         }
 
-    }, [value, data, task, one]);
+    }, [data, task, one]);
 
 
     return (
@@ -181,9 +185,10 @@ const AuthenticationForm = () => {
             <div className={classes.loginwrap}>
 
                 <div className={classes.loginhtml}>
+
                     {o.length !== 0 ? (<h3>유저가 선택되었습니다.</h3>) : (
                         tasks && tasks.map((task) => (
-                            <h3 key={task}>{task.creater}님의 주문이 진행 중입니다.</h3>
+                            <h3 key={task}> {nowTime} <br/>{task.creater}님의 주문이 진행 중입니다.</h3>
 
                         ))
                     )}

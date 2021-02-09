@@ -7,6 +7,7 @@ import {Autocomplete} from "@material-ui/lab";
 import Typography from '@material-ui/core/Typography';
 import {TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import moment from "moment";
 
 const useStyles = createUseStyles((theme) => ({
 
@@ -172,6 +173,8 @@ const AuthenticationForm = () => {
     const [o, setO] = useState("");
     const [inputValue, setInputValue] = useState("");
     const [value, setValue] = useState('');
+    const nowTime = moment().format('YYYY년 MM월 DD일');
+
 
     const IdRef = useRef(localStorage.getItem('name'));
 
@@ -204,6 +207,8 @@ const AuthenticationForm = () => {
             <div className={classes.loginwrap}>
 
                 <div className={classes.loginhtml}>
+
+
                     {IdRef.current ? (<h3>로그인 기록이 존재합니다!</h3>) : (
                         <h3>현재 주문이 없습니다.</h3>
                     )}
