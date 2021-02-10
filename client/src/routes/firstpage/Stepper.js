@@ -147,7 +147,10 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "-400px",
         margin: "none",
         cursor: "pointer",
-        position: "relative",
+        position: "absolute",
+        left: '5%',
+        top: '80%',
+        transform: 'translate(-50%, -50%)',
         display: "block",
         width: "100px",
         height: "100px",
@@ -186,10 +189,13 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "-100px",
         margin: "none",
         cursor: "pointer",
-        position: "relative",
+
         display: "block",
         width: "100px",
-        left: "90%",
+        position: "absolute",
+        left: '93%',
+        top: '55%',
+        transform: 'translate(-50%, -50%)',
         height: "100px",
         color: "white",
         backgroundColor: "#9e344d",
@@ -269,7 +275,12 @@ export default function CustomizedSteppers() {
                 {steps.map((label) => (
                     <Step key={label}>
 
-                        <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                        <StepLabel StepIconComponent={ColorlibStepIcon}
+                                   container
+                                   spacing={0}
+                                   direction="column"
+                                   alignItems="center"
+                                   justify="center">{label}</StepLabel>
 
                     </Step>
                 ))}

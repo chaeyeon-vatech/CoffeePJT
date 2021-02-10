@@ -3,6 +3,7 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 import LINKS from 'resources/links';
 import LoadingComponent from 'components/loading';
 import AfterOrder from "./orderboard/AfterOrder";
+import MenuComponent from "./orderboard/MenuComponent";
 
 const MenuBoard = lazy(() => import('./orderboard/Menu'))
 const Create = lazy(() => import('./paymentboard/RewritePage'))
@@ -19,7 +20,7 @@ function PrivateRoutes() {
 
             <Switch>
 
-                <Route exact path={LINKS.orderboard} component={MenuBoard}/>
+                <Route exact path={LINKS.orderboard} component={MenuComponent}/>
                 <Route exact path={LINKS.after} component={AfterOrder}/>
                 <Route exact path={LINKS.pay} component={PaymentboardComponent}/>
                 <Route exact path={LINKS.settings} component={UserboardComponent}/>

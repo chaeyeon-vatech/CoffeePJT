@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: -30,
         marginRight: -30,
         paddingLeft: 30,
-        paddingRight: 30
+        paddingRight: 30,
+        width: "1235px",
     },
     media: {
         cursor: "default"

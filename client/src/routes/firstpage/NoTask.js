@@ -208,11 +208,10 @@ const AuthenticationForm = () => {
 
                 <div className={classes.loginhtml}>
 
-
                     {IdRef.current ? (<h3>로그인 기록이 존재합니다!</h3>) : (
-                        <h3>현재 주문이 없습니다.</h3>
+                        <h3>{nowTime}<br/> 주문을 생성하시겠습니까?</h3>
                     )}
-                    <h5 className={classes.h5}>주문을 생성하시려면<br/>이름을 입력해주세요!</h5>
+                    <h5 className={classes.h5}>이름을 입력해주세요!</h5>
 
                     <div className={classes.loginform}>
 

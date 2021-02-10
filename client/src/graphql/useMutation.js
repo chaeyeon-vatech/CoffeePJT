@@ -135,7 +135,7 @@ export function TaskCreate() {
                 userid: localStorage.getItem('myData')
             },
             onCompleted: () => {
-                enqueueSnackbar(localStorage.getItem('name') + "님" + localStorage.getItem('task') + "의 이유로 커피 주문을 생성하셨습니다.")
+                enqueueSnackbar(localStorage.getItem('name') + "님 환영합니다!")
             }
         }
     )

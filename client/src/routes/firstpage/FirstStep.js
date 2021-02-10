@@ -4,25 +4,37 @@ import '../../components/table/table.css';
 import TransferList from "../../components/table/TransferTable";
 import SuccessAlert from "../../components/alert/SuccessAlert";
 
+
 const useStyles = createUseStyles((theme) => ({
 
         loginwrap: {
             color: "white",
             fontWeight: "lighter",
             textAlign: "center",
+
+            paddingTop: "10px",
             width: "100%",
-            maxWidth: "525px",
-            minHeight: "670px",
-            position: "relative",
-            left: "15%",
-            marginTop: "-20px"
+            maxWidth: "1300px",
+            minHeight: "300px",
+            position: 'absolute',
+            left: '45%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            '@media (max-width: 650px)': {
+
+            },
+            '@media (max-width: 1000px)': {
+
+            }
+
         },
         loginhtml: {
-            marginTop: "30px",
-            width: "200%",
+            width: "100%",
             height: "100%",
             position: "center",
-            padding: "90px 30px 50px 10px",
+            marginLeft: "150px",
+            marginTop: "-50px",
+            padding: "80px 70px 50px 70px",
             backgroundColor: theme.color.red,
 
         },
@@ -31,14 +43,14 @@ const useStyles = createUseStyles((theme) => ({
             color: "white",
             marginBottom: "30px",
             textAlign: "center",
-            fontSize: "30px"
+            marginTop: "40px"
         },
         h5: {
             color: "white",
-            fontWeight: "lighter",
+            padding: "30px 30px 30px 30px",
             marginBottom: "30px",
-            textAlign: "center",
-            fontSize: "18px"
+            fontWeight: "bolder",
+            textAlign: "center"
         },
         loginform: {
             minHeight: "345px",
@@ -48,38 +60,43 @@ const useStyles = createUseStyles((theme) => ({
 
         },
 
+        loginafter: {
+            marginTop: "50px",
+            minHeight: "200px",
+            position: "relative",
+            perspective: "1000px",
+            transformStyle: "preserve-3d",
+            backgroundColor: "rgb(42,47,34,0.9)"
+        },
+
         group: {
             marginBottom: "15px",
-            '&:nth-child(n) > label,input,a,table': {
+            '&:nth-child(n) > TextField,label,input,button,a,table': {
                 width: "100%",
                 color: "#fff",
-                marginBottom: "30px"
             },
-            '&:nth-child(n) > input,button,table,tr': {
+            '&:nth-child(n) > TextField,input,button,table,tr': {
                 border: "none",
                 padding: "15px 20px",
                 borderRadius: "25px",
-                background: "rgba(255,255,255,0.6)",
+                background: "rgba(255,255,255,.1)",
                 textAlign: "center",
-                alignContent: "center",
-                marginTop: "30px",
+                alignContent: "center"
             },
-            '&:nth-child(n) > input': {
-                '&::placeholder': {
-                    color: "rgba(184,171,171,0.9)",
-                    fontWeight: "bolder"
-                }
+            '&:nth-child(n) > TextField': {
+                outline: "none",
+            },
 
-            },
-            '&:nth-child(n) > tr,td': {
+            '&:nth-child(n) > tr,td, TextField': {
                 width: "50%",
                 padding: "15px 60px",
                 alignContent: "center",
                 marginTop: 10,
-                border: "none"
+                border: "none",
+                margin: "20px",
             },
 
-            '&:nth-child(n) > a': {
+            '&:nth-child(n) > button': {
                 marginTop: "50px",
                 border: "none",
                 padding: "50px 50px",
@@ -92,17 +109,16 @@ const useStyles = createUseStyles((theme) => ({
             '&:nth-child(n) > label ': {
                 color: "#aaa",
                 fontSize: "12px"
-            }
-        },
-        margin: {
-            marginTop: "-60px",
-            marginBottom: "30px"
-        },
-        containerMobile: {
-            padding: '12px 16px 6px 16px !important'
-        },
-
-
+            },
+            palette: {
+                primary: {
+                    main: 'rgba(255,255,255,.1)',
+                },
+                secondary: {
+                    main: '#030303',
+                },
+            },
+        }
     }))
 ;
 
@@ -117,7 +133,8 @@ const AuthenticationForm = () => {
         <>
             <SuccessAlert message="미주문자(휴가자/결근자/기타사유)/주문자를 구별하여 버튼을 이용하여 양 옆으로 상태 변환이 가능합니다!"
                           button="주문자/미주문자 페이지란?"/>
-            <div className={classes.root}>
+            <div className={classes.root}
+            >
                 <div className={classes.loginwrap}>
                     <div className={classes.loginhtml}>
 
