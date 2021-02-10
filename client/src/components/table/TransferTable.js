@@ -60,7 +60,7 @@ export default function TransferList() {
         if (order) {
             setLeft(order.includedOrdermen);
         }
-    },[user,order]);
+    }, [user, order]);
 
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
@@ -88,6 +88,8 @@ export default function TransferList() {
         }
     };
 
+    console.log(checked)
+
     const customList = (title, items) => (
         <Card>
             <CardHeader
@@ -106,7 +108,7 @@ export default function TransferList() {
             />
             <Divider/>
             <List className={classes.list} dense component="div" role="list">
-                {items.map((value,index) => {
+                {items.map((value, index) => {
                     const labelId = `transfer-list-all-item-${value}-label`;
 
                     return (
@@ -140,7 +142,7 @@ export default function TransferList() {
                         variant="outlined"
                         size="small"
                         className={classes.button}
-                        onClick={VacationBack(checked)}
+                        onClick={VacationBack(checked,setChecked)}
                         disabled={leftChecked.length === 0}
                         aria-label="move selected right"
                     >
@@ -151,7 +153,7 @@ export default function TransferList() {
                         variant="outlined"
                         size="small"
                         className={classes.button}
-                        onClick={OrderBack(checked)}
+                        onClick={OrderBack(checked,setChecked)}
                         disabled={rightChecked.length === 0}
                     >
                         &lt;

@@ -18,7 +18,7 @@ const useStyles = createUseStyles((theme) => ({
             margin: "auto",
             maxWidth: "525px",
             minHeight: "500px",
-            marginTop: "30px",
+            marginTop: "80px",
             height: "50%",
             position: "center",
             padding: "90px 70px 50px 70px",

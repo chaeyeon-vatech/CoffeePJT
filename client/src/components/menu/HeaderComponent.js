@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import {string} from 'prop-types';
 import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import {SidebarContext} from 'resources/hooks/useSidebar';
 import LINKS from 'resources/links';
+import {SidebarContext} from "../../context";
 
 const useStyles = createUseStyles((theme) => ({
     avatar: {

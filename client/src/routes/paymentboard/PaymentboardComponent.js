@@ -66,7 +66,7 @@ const useStyles = createUseStyles((theme) => ({
     }
 }));
 
-function PaymentboardComponent() {
+function PaymentboardComponent(props) {
     const classes = useStyles();
 
     const [contents, setContents] = useState('');

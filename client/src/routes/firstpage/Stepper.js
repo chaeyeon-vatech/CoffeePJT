@@ -147,7 +147,10 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "-400px",
         margin: "none",
         cursor: "pointer",
-        position: "relative",
+        position: "absolute",
+        left: '5%',
+        top: '90%',
+        transform: 'translate(-50%, -50%)',
         display: "block",
         width: "100px",
         height: "100px",
@@ -183,24 +186,26 @@ const useStyles = makeStyles((theme) => ({
 
     },
     nbutton: {
-        marginTop: "-100px",
+        marginLeft: "70px",
+        marginTop: "-400px",
         margin: "none",
         cursor: "pointer",
-        position: "relative",
+        position: "absolute",
+        left: '90%',
+        top: '90%',
+        transform: 'translate(-50%, -50%)',
         display: "block",
         width: "100px",
-        left: "90%",
         height: "100px",
         color: "white",
-        backgroundColor: "#9e344d",
-        border: "solid 6px #9e344d",
+        backgroundColor: "#9a867f",
+        border: "solid 6px #254143",
         borderRadius: "100%",
         transition: "all .2s linear",
         "&:hover": {
             backgroundColor: 'rgb(12,12,12,0.8)',
             color: "white"
         }
-
 
     },
 
@@ -246,7 +251,7 @@ export default function CustomizedSteppers() {
     const handleUser = () => {
         if (window.confirm('결제자를 변경하시겠습니까?')) {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            localStorage.clear();
+            localStorage.removeItem('myData');
             window.location.href = '/login'
         }
     };
@@ -299,7 +304,7 @@ export default function CustomizedSteppers() {
                     {getStepContent(activeStep)}
 
                     <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
-                            className={classes.bbutton}>
+                            className={classes.button}>
                         주문자<br/>미주문자<br/> 페이지
                     </Button>
 

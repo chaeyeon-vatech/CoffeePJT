@@ -1,3 +1,4 @@
+import {ContextProvider} from "./context";
 import React from 'react';
 import App from './App';
 import {ApolloClient} from 'apollo-boost';
@@ -6,9 +7,9 @@ import {createHttpLink} from 'apollo-link-http';
 import {ApolloProvider} from '@apollo/react-hooks';
 import {ThemeProvider} from 'react-jss';
 import Theme from 'resources/theme';
-// import {CookiesProvider} from 'react-cookie';
 import {setContext} from '@apollo/client/link/context';
 import './index.css';
+
 
 
 const httpLink = createHttpLink({
@@ -35,8 +36,10 @@ const client = new ApolloClient({
 export default (
     <ThemeProvider theme={Theme}>
         <ApolloProvider client={client}>
-            {/*<CookiesProvider>*/}
-            <App/>
+            <ContextProvider>
+                {/*<CookiesProvider>*/}
+                <App/>
+            </ContextProvider>
             {/*</CookiesProvider>*/}
         </ApolloProvider>
     </ThemeProvider>

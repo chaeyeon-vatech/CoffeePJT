@@ -13,7 +13,7 @@ const color = {
     veryDarkGrayishBlue: '#373a47',
     darkgreen: "rgba(65,81,54,0.9)",
     lightyellow: "#d2cdc1",
-    red:"rgba(131,4,29,0.8)"
+    red:"rgba(173,35,63,0.8)"
 };
 
 const typography = {
