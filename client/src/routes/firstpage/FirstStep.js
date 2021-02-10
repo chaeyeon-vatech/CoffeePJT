@@ -3,29 +3,25 @@ import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import TransferList from "../../components/table/TransferTable";
 import SuccessAlert from "../../components/alert/SuccessAlert";
+import StepLabel from "@material-ui/core/StepLabel";
+import {Column} from 'simple-flexbox';
 
 
 const useStyles = createUseStyles((theme) => ({
+
 
         loginwrap: {
             color: "white",
             fontWeight: "lighter",
             textAlign: "center",
-
             paddingTop: "10px",
-            width: "100%",
-            maxWidth: "1300px",
-            minHeight: "300px",
+            width: "80%",
+            maxWidth: "1140px",
+            minHeight: "400px",
             position: 'absolute',
-            left: '45%',
-            top: '50%',
+            left: '43%',
+            top: '58%',
             transform: 'translate(-50%, -50%)',
-            '@media (max-width: 650px)': {
-
-            },
-            '@media (max-width: 1000px)': {
-
-            }
 
         },
         loginhtml: {
@@ -130,28 +126,32 @@ const AuthenticationForm = () => {
     return (
 
 
-        <>
+        <Column container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+                className={classes.root}>
             <SuccessAlert message="미주문자(휴가자/결근자/기타사유)/주문자를 구별하여 버튼을 이용하여 양 옆으로 상태 변환이 가능합니다!"
                           button="주문자/미주문자 페이지란?"/>
-            <div className={classes.root}
-            >
-                <div className={classes.loginwrap}>
-                    <div className={classes.loginhtml}>
+
+            <div className={classes.loginwrap}>
+                <div className={classes.loginhtml}>
 
 
-                        <h2 className={classes.margin}>{localStorage.getItem('name')}님 환영합니다.</h2>
+                    <h2 className={classes.margin}>{localStorage.getItem('name')}님 환영합니다.</h2>
 
-                        <div className={classes.loginform}>
+                    <div className={classes.loginform}>
 
-                            <div className={classes.group}>
-                                <TransferList/>
-                            </div>
-
+                        <div className={classes.group}>
+                            <TransferList/>
                         </div>
+
                     </div>
                 </div>
             </div>
-        </>
+
+        </Column>
 
 
     );

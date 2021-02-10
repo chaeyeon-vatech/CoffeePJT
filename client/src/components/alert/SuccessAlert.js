@@ -9,14 +9,14 @@ import CloseIcon from '@material-ui/icons/Close';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        marginBottom: "20px",
+        marginBottom: "30px",
         '& > * + *': {
             marginTop: theme.spacing(2),
         },
     },
     button: {
         padding: "10 10 10 10",
-        marginLeft: "10px"
+        marginLeft: "10px",
     }
 }));
 

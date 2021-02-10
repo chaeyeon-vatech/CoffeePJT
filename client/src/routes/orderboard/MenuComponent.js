@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
-import OrderBoard from './OrderBoard';
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
 import MenuBoard from "./Menu";
 
 const useStyles = createUseStyles((theme) => ({
-    cardsContainer: {
-
-    },
+    cardsContainer: {},
     background: {
         backgroundColor: 'rgba(248,246,243,0.5)',
         padding: "45px 45px 45px 45px",
@@ -83,7 +80,7 @@ function OrderBoardComponent() {
         </Column>
 
 
-);
+    );
 }
 
 export default OrderBoardComponent;

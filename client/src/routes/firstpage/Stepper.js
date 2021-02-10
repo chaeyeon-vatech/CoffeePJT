@@ -149,7 +149,7 @@ const useStyles = makeStyles((theme) => ({
         cursor: "pointer",
         position: "absolute",
         left: '5%',
-        top: '80%',
+        top: '90%',
         transform: 'translate(-50%, -50%)',
         display: "block",
         width: "100px",
@@ -186,27 +186,26 @@ const useStyles = makeStyles((theme) => ({
 
     },
     nbutton: {
-        marginTop: "-100px",
+        marginLeft: "70px",
+        marginTop: "-400px",
         margin: "none",
         cursor: "pointer",
-
+        position: "absolute",
+        left: '90%',
+        top: '90%',
+        transform: 'translate(-50%, -50%)',
         display: "block",
         width: "100px",
-        position: "absolute",
-        left: '93%',
-        top: '55%',
-        transform: 'translate(-50%, -50%)',
         height: "100px",
         color: "white",
-        backgroundColor: "#9e344d",
-        border: "solid 6px #9e344d",
+        backgroundColor: "#9a867f",
+        border: "solid 6px #254143",
         borderRadius: "100%",
         transition: "all .2s linear",
         "&:hover": {
             backgroundColor: 'rgb(12,12,12,0.8)',
             color: "white"
         }
-
 
     },
 
@@ -275,12 +274,7 @@ export default function CustomizedSteppers() {
                 {steps.map((label) => (
                     <Step key={label}>
 
-                        <StepLabel StepIconComponent={ColorlibStepIcon}
-                                   container
-                                   spacing={0}
-                                   direction="column"
-                                   alignItems="center"
-                                   justify="center">{label}</StepLabel>
+                        <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
 
                     </Step>
                 ))}
@@ -310,7 +304,7 @@ export default function CustomizedSteppers() {
                     {getStepContent(activeStep)}
 
                     <Button variant="contained" disabled={activeStep === 0} onClick={handleBack}
-                            className={classes.bbutton}>
+                            className={classes.button}>
                         주문자<br/>미주문자<br/> 페이지
                     </Button>
 
