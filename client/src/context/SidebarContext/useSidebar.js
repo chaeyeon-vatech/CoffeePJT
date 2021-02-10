@@ -28,7 +28,7 @@ export const useSidebar = ({isCollapsible, item, items = []} = {}) => {
         if (isActive && !isExpanded) {
             return setIsExpanded(true);
         }
-    }, [currentItem,isActive,isExpanded]);
+    }, [currentItem, isActive, isExpanded]);
 
     const onItemClick = () => {
         if (!isCollapsible) {
@@ -43,3 +43,5 @@ export const useSidebar = ({isCollapsible, item, items = []} = {}) => {
         onItemClick
     };
 };
+
+export default SidebarProvider;

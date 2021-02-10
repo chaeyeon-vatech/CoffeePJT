@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: -30,
         marginRight: -30,
         paddingLeft: 30,
-        paddingRight: 30
+        paddingRight: 30,
+        width: "1235px",
     },
     media: {
         cursor: "default"
@@ -60,6 +61,10 @@ export default function CorderBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
     const [status, setStatus] = useState("");
+
+    // const {userContext, dispatchUser} = useContext(UserContext)
+
+    // console.log(userContext)
 
     const {data} = useQuery(MeQuery, {
         variables: {

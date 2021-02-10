@@ -1,24 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
-import OrderBoard from './OrderBoard';
 import {useQuery} from "@apollo/react-hooks";
 import {TaskQuery} from "../../graphql/query";
+import MenuBoard from "./Menu";
 
 const useStyles = createUseStyles((theme) => ({
-    cardsContainer: {
-        marginRight: -30,
-    },
+    cardsContainer: {},
     background: {
-        backgroundColor: 'rgba(246,244,244,0.9)',
+        backgroundColor: 'rgba(248,246,243,0.5)',
         padding: "45px 45px 45px 45px",
         marginTop: "20px"
     },
     miniCardContainer: {
         flexGrow: 1,
-        marginRight: 30,
-        '@media (max-width: 768px)': {
-            marginTop: 30,
+        '@media (max-width: 600px)': {
             maxWidth: 'none'
         }
     },
@@ -26,14 +22,13 @@ const useStyles = createUseStyles((theme) => ({
         marginTop: 30
     },
     unresolvedTickets: {
-        marginRight: 30,
-        '@media (max-width: 1024px)': {
+        '@media (max-width: 1000px)': {
             marginRight: 0
         }
     },
     tasks: {
         marginTop: 0,
-        '@media (max-width: 1024px)': {
+        '@media (max-width: 1000px)': {
             marginTop: 30
         },
 
@@ -54,7 +49,7 @@ const useStyles = createUseStyles((theme) => ({
     itemTitle: {
         color: theme.color.veryDarkGrayishBlue,
         width: "50%"
-    }
+    },
 }));
 
 
@@ -72,17 +67,14 @@ function OrderBoardComponent() {
 
     return (
 
-        <Column className={classes.background}>
+        <Column className={classes.background}
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center">
 
-
-            {contents && contents.map((content) => (
-                <span role="img" aria-label="clap" className={classes.border}
-                      key={content}>👏  오늘은 {content.creater}님이 {content.title} 기념으로 커피 쏩니다! 👏</span>
-            ))}
-
-
-
-            <OrderBoard/>
+            <MenuBoard className={classes.itemContainerMobile}/>
 
 
         </Column>
