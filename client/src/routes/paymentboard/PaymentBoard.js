@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {Column, Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
-import {useQuery} from "@apollo/react-hooks";
 import {
-    CostQuery,
-    CountQuery,
-    MeQuery, NotQuery,
-    SearchQuery
+    COST_QUERY,
+    COUNT_QUERY,
+    ME_QUERY, NOT_QUERY,
+    SEARCH_QUERY
 } from "../../graphql/query";
 import PaymentTable from "../../components/table/PaymentTable";
-import {OrderConfirmMutation} from "../../graphql/mutation";
+import {ORDER_CONFIRM_MUTATION} from "../../graphql/mutation";
 import {Tooltip} from "@material-ui/core";
-import {useMutation} from '@apollo/react-hooks';
+import {useMutation, useApolloClient} from '@apollo/react-hooks';
 import Button from "@material-ui/core/Button";
 import {useSnackbar} from "notistack";
 
@@ -68,49 +67,50 @@ function PaymentBoard() {
     const theme = useTheme();
     const classes = useStyles({theme});
     const {enqueueSnackbar} = useSnackbar();
+    const client = useApolloClient();
 
+    const [loading, setLoading] = useState(false);
 
-    const [money, setMoney] = useState("");
-    const [order, setOrder] = useState("");
-    const [id, setId] = useState("");
-    const [pa, setPa] = useState("");
-
-
-    const {data} = useQuery(CostQuery);
-    const {data: na} = useQuery(CountQuery);
-    const {data: da} = useQuery(MeQuery, {
-        variables: {userid: localStorage.getItem('myData')}
-
-    });
-    const {data: people} = useQuery(NotQuery);
+    const [state, setState] = useState({
+        money: "",
+        order: "",
+        id: "",
+        pa: ""
+    })
 
     useEffect(() => {
-        if (data) {
-            setMoney(data.howmuch);
+        setLoading(true);
+        runQuery();
+        return () => {
+            setLoading(false);
         }
-        if (na) {
-            setOrder(na.howmany);
-        }
-        if (da) {
-            setId(da.me._id);
-        }
-        if (people) {
-            setPa(people.includedNothing)
-        }
-    }, [data, na, da, people]);
+    }, [])
 
+    async function runQuery() {
 
-    const mutation = OrderConfirmMutation;
+        const cost = await client.query({query: COST_QUERY})
+        const count = await client.query({query: COUNT_QUERY})
+        const me = await client.query({query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}})
+        const not = await client.query({query: NOT_QUERY});
 
-    const [deletePostOrMutation, {loading}] = useMutation(mutation, {
-            refetchQueries: [{query: SearchQuery}],
-            variables: {creater: id},
+        setState({
+            ...state,
+            money: cost?.data.howmuch,
+            order: count?.data.howmany,
+            id: me?.data.me._id,
+            pa: not?.data.includedNothing
+        })
+
+        return state
+    }
+
+    const [deletePostOrMutation] = useMutation(ORDER_CONFIRM_MUTATION, {
+            refetchQueries: [{query: SEARCH_QUERY}],
+            variables: {creater: state.id},
             onCompleted: () => {
                 enqueueSnackbar("주문이 초기화되었습니다.")
                 localStorage.clear();
                 window.location.href = '/login';
-
-
             },
             onError: () => {
                 enqueueSnackbar("초기화 권한이 없습니다.")
@@ -118,6 +118,7 @@ function PaymentBoard() {
             },
         }
     )
+
 
     function renderStat(title, value) {
         return (
@@ -156,10 +157,10 @@ function PaymentBoard() {
                     <div/>
                 </Column>
                 <Column flexGrow={3} flexBasis='342px' breakpoints={{1024: classes.stats}}>
-                    {renderStat('누적 금액', money)}
-                    {renderStat('미주문자', <Tooltip title={pa &&
-                    pa.map((content) => content.username).join(',')} placement="top">
-                        <Button variant="outlined">{order[3]}</Button>
+                    {renderStat('누적 금액', state.money)}
+                    {renderStat('미주문자', <Tooltip title={state && state.pa &&
+                    state.pa.map(c => c.username).join(',')} placement="top">
+                        <Button variant="outlined">{state.order[3]}</Button>
                     </Tooltip>)}
 
                     {renderStat('결제 완료', <Button
@@ -167,7 +168,6 @@ function PaymentBoard() {
                         color="secondary"
                         className={classes.button}
                         onClick={deletePostOrMutation}
-                        disabled={loading}
                     >결제 완료</Button>)}
                 </Column>
             </Row>

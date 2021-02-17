@@ -1,7 +1,7 @@
 import React, {useEffect, useState, Suspense} from 'react';
 import './table.css';
 import {useQuery} from "@apollo/react-hooks";
-import {Receipt, ReceiptUser} from "../../graphql/query";
+import {RECEIPT_QUERY, USER_RECEIPT_QUERY} from "../../graphql/query";
 import {createUseStyles} from "react-jss";
 import {Tooltip} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -23,12 +23,12 @@ function BoardTable() {
     const [content, setContent] = useState("");
     const [user, setUser] = useState("");
     const [num, setNum] = useState(1);
-    const {data} = useQuery(ReceiptUser, {
+    const {data} = useQuery(USER_RECEIPT_QUERY, {
         variables: {
             menu: num
         }
     });
-    const {data: receipt} = useQuery(Receipt)
+    const {data: receipt} = useQuery(RECEIPT_QUERY)
 
 
     useEffect(() => {

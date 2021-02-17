@@ -1,23 +1,22 @@
 import {useMutation} from "@apollo/react-hooks";
 import {
-    BackUserMutation, CreateMutation,
-    CreateUserMutation,
-    getBackGiveup, multipleDelete, OrderBackMutation,
-    OrderGiveupMutation,
-    RemoveMutation, TaskCreateMutation,
-    TaskRemoveMutation, TaskUpdateMutation, UpdateUserMutation
+    POSITION_UPDATE_MUTATION, ORDER_CREATE_MUTATION,
+    USER_REGISTER_MUTATION,
+    STATUS_GETBACK_MUTATION, MULUSER_DELETE_MUTATION, USER_GETBACK_MUTATION,
+    ORDER_GIVEUP_MUTATION,
+    ORDER_REMOVE_MUTATION, TASK_CREATE_MUTATION,
+    TASK_REMOVE_MUTATION, TASK_UPDATE_MUTATION, USER_UPDATE_MUTATION
 } from "./mutation";
 import {
-    AllUserQuery,
-    CostQuery,
-    CountQuery,
-    MeQuery, NotQuery,
-    Ordermen,
-    OrderSearch,
-    Receipt,
-    TaskQuery,
-    UserSearchQuery,
-    VacationQuery
+    COST_QUERY,
+    COUNT_QUERY,
+    ME_QUERY, NOT_QUERY,
+    ORDERMAN_QUERY,
+    MY_ORDER_QUERY,
+    RECEIPT_QUERY,
+    TASK_QUERY,
+    USER_SEARCH_QUERY,
+    VACATION_QUERY
 } from "./query";
 import {useSnackbar} from "notistack";
 
@@ -26,10 +25,10 @@ import {useSnackbar} from "notistack";
 export function ChangeGiveup(userid) {
     const {enqueueSnackbar} = useSnackbar();
 
-    const [giveup] = useMutation(getBackGiveup, {
-            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: NotQuery}],
+    const [giveup] = useMutation(STATUS_GETBACK_MUTATION, {
+            refetchQueries: [{query: MY_ORDER_QUERY, variables: {id: localStorage.getItem('myData')}}
+                , {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}},
+                {query: RECEIPT_QUERY}, {query: COUNT_QUERY}, {query: COST_QUERY}, {query: NOT_QUERY}],
             variables: {
                 id: userid.userid
             },
@@ -48,14 +47,14 @@ export function ChangeGiveup(userid) {
 //주문 생성
 
 export function CreateOrder(hi) {
-    const createmutation = CreateMutation;
+    const createmutation = ORDER_CREATE_MUTATION;
     const {enqueueSnackbar} = useSnackbar();
 
 
     const [create] = useMutation(createmutation, {
-            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CountQuery}, {query: NotQuery}],
+            refetchQueries: [{query: MY_ORDER_QUERY, variables: {id: localStorage.getItem('myData')}}
+                , {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}},
+                {query: RECEIPT_QUERY}, {query: COUNT_QUERY}, {query: COUNT_QUERY}, {query: NOT_QUERY}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,
@@ -80,11 +79,11 @@ export function DeleteOrder(userid) {
     const {enqueueSnackbar} = useSnackbar();
 
 
-    const [deletePostOrMutation] = useMutation(RemoveMutation, {
+    const [deletePostOrMutation] = useMutation(ORDER_REMOVE_MUTATION, {
             refetchQueries: [
-                {query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
+                {query: MY_ORDER_QUERY, variables: {id: localStorage.getItem('myData')}}
+                , {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}},
+                {query: RECEIPT_QUERY}, {query: COUNT_QUERY}, {query: COST_QUERY}, {query: COUNT_QUERY}, {query: NOT_QUERY}],
             variables: {
                 userid: userid.userid,
                 orderid: userid.orderid
@@ -107,10 +106,10 @@ export function DeleteOrder(userid) {
 export function Giveup(userid) {
     const {enqueueSnackbar} = useSnackbar();
 
-    const [giveup] = useMutation(OrderGiveupMutation, {
-            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
+    const [giveup] = useMutation(ORDER_GIVEUP_MUTATION, {
+            refetchQueries: [{query: MY_ORDER_QUERY, variables: {id: localStorage.getItem('myData')}}
+                , {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}},
+                {query: RECEIPT_QUERY}, {query: COUNT_QUERY}, {query: COST_QUERY}, {query: COUNT_QUERY}, {query: NOT_QUERY}],
             variables: {
                 userid: userid.userid
             },
@@ -128,8 +127,8 @@ export function Giveup(userid) {
 
 export function TaskCreate() {
     const {enqueueSnackbar} = useSnackbar();
-    const [create] = useMutation(TaskCreateMutation, {
-            refetchQueries: [{query: TaskQuery}],
+    const [create] = useMutation(TASK_CREATE_MUTATION, {
+            refetchQueries: [{query: TASK_QUERY}],
             variables: {
                 title: localStorage.getItem('task'),
                 userid: localStorage.getItem('myData')
@@ -148,8 +147,8 @@ export function TaskDelete(post_id) {
     const {enqueueSnackbar} = useSnackbar();
 
 
-    const [deletemutation] = useMutation(TaskRemoveMutation, {
-            refetchQueries: [{query: TaskQuery}, {query: Receipt}],
+    const [deletemutation] = useMutation(TASK_REMOVE_MUTATION, {
+            refetchQueries: [{query: TASK_QUERY}, {query: RECEIPT_QUERY}],
             variables: {id: post_id.post_id, userid: post_id.user_id},
             onCompleted: () => {
                 enqueueSnackbar("주문 재작성 페이지로 돌아갑니다!");
@@ -163,8 +162,8 @@ export function TaskUpdate(id, content, setOpen) {
     const {enqueueSnackbar} = useSnackbar();
 
 
-    const [update] = useMutation(TaskUpdateMutation, {
-        refetchQueries: [{query: TaskQuery}, {query: Receipt}],
+    const [update] = useMutation(TASK_UPDATE_MUTATION, {
+        refetchQueries: [{query: TASK_QUERY}, {query: RECEIPT_QUERY}],
 
         variables: {
             id: id.id,
@@ -189,8 +188,8 @@ export function UserAdd(username, content, setOpen) {
     const {enqueueSnackbar} = useSnackbar();
 
 
-    const [create] = useMutation(CreateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery}, {query: Receipt}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
+    const [create] = useMutation(USER_REGISTER_MUTATION, {
+            refetchQueries: [{query: USER_SEARCH_QUERY}, {query: RECEIPT_QUERY}, {query: COUNT_QUERY}, {query: NOT_QUERY}, {query: USER_SEARCH_QUERY}],
             awaitRefetchQueries: true,
             variables: {
                 username: content
@@ -215,10 +214,10 @@ export function UserDelete(id) {
     const {enqueueSnackbar} = useSnackbar();
 
 
-    const [deleteMutation] = useMutation(multipleDelete, {
-            refetchQueries: [{query: UserSearchQuery},
-                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
+    const [deleteMutation] = useMutation(MULUSER_DELETE_MUTATION, {
+            refetchQueries: [{query: USER_SEARCH_QUERY},
+                {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}},
+                {query: RECEIPT_QUERY}, {query: COST_QUERY}, {query: COUNT_QUERY}, {query: NOT_QUERY}, {query: USER_SEARCH_QUERY}],
             awaitRefetchQueries: true,
             variables: {ids: [String(Object.values(id))]},
             onCompleted: () => {
@@ -238,10 +237,10 @@ export function SearchDelete(id) {
     const {enqueueSnackbar} = useSnackbar();
 
 
-    const [deleteMutation] = useMutation(multipleDelete, {
-            refetchQueries: [{query: UserSearchQuery},
-                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
+    const [deleteMutation] = useMutation(MULUSER_DELETE_MUTATION, {
+            refetchQueries: [{query: USER_SEARCH_QUERY},
+                {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}},
+                {query: RECEIPT_QUERY}, {query: COST_QUERY}, {query: COUNT_QUERY}, {query: NOT_QUERY}, {query: USER_SEARCH_QUERY}],
             awaitRefetchQueries: true,
 
             variables: {ids: [String(Object.values(id))]},
@@ -263,10 +262,10 @@ export function SearchDelete(id) {
 export function MultipleUserDelete(checked) {
     const {enqueueSnackbar} = useSnackbar();
 
-    const [mdelete] = useMutation(multipleDelete, {
-            refetchQueries: [{query: UserSearchQuery},
-                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CountQuery}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}, {query: AllUserQuery}],
+    const [mdelete] = useMutation(MULUSER_DELETE_MUTATION, {
+            refetchQueries: [{query: USER_SEARCH_QUERY},
+                {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}},
+                {query: RECEIPT_QUERY}, {query: COUNT_QUERY}, {query: COST_QUERY}, {query: COUNT_QUERY}, {query: NOT_QUERY}, {query: USER_SEARCH_QUERY}],
             awaitRefetchQueries: true,
             variables: {ids: checked.map((c) => (c._id))},
             onCompleted: () => {
@@ -285,10 +284,10 @@ export function MultipleUserDelete(checked) {
 export function UpdateUser(checked, content, setOpen) {
     const {enqueueSnackbar} = useSnackbar();
 
-    const [update] = useMutation(UpdateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery},
-                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
+    const [update] = useMutation(USER_UPDATE_MUTATION, {
+            refetchQueries: [{query: USER_SEARCH_QUERY},
+                {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}},
+                {query: RECEIPT_QUERY}, {query: COST_QUERY}, {query: COUNT_QUERY}, {query: NOT_QUERY}],
             awaitRefetchQueries: true,
             variables: {
                 id: checked.map((c) => (c._id)).toString(),
@@ -311,13 +310,13 @@ export function UpdateUser(checked, content, setOpen) {
 //유저 정보 선택적 업데이트
 export function SelectUpdate(username, content, setClick) {
 
-    const mutation = UpdateUserMutation;
+    const mutation = USER_UPDATE_MUTATION;
     const {enqueueSnackbar} = useSnackbar();
 
 
     const [update] = useMutation(mutation, {
-            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}], variables: {
+            refetchQueries: [{query: MY_ORDER_QUERY, variables: {id: localStorage.getItem('myData')}}
+                , {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}}], variables: {
                 id: username.id,
                 username: content
             },
@@ -340,9 +339,9 @@ export function SelectUpdate(username, content, setClick) {
 export function DUpdateUser(username, content, setOpen) {
     const {enqueueSnackbar} = useSnackbar();
 
-    const [update] = useMutation(UpdateUserMutation, {
-            refetchQueries: [{query: UserSearchQuery},
-                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+    const [update] = useMutation(USER_UPDATE_MUTATION, {
+            refetchQueries: [{query: USER_SEARCH_QUERY},
+                {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}}],
             awaitRefetchQueries: true,
 
             variables: {
@@ -365,9 +364,9 @@ export function DUpdateUser(username, content, setOpen) {
 export function DSelectUser(username, setOpen) {
     const {enqueueSnackbar} = useSnackbar();
 
-    const [update] = useMutation(multipleDelete, {
-            refetchQueries: [{query: UserSearchQuery},
-                {query: MeQuery, variables: {userid: localStorage.getItem('myData')}}],
+    const [update] = useMutation(MULUSER_DELETE_MUTATION, {
+            refetchQueries: [{query: USER_SEARCH_QUERY},
+                {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}}],
             variables: {
                 ids: [username.id]
             },
@@ -391,8 +390,8 @@ export function DSelectUser(username, setOpen) {
 //주문자 => 미주문자로
 export function VacationBack(checked, setChecked) {
     const {enqueueSnackbar} = useSnackbar();
-    const [vacationback] = useMutation(BackUserMutation, {
-            refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
+    const [vacationback] = useMutation(POSITION_UPDATE_MUTATION, {
+            refetchQueries: [{query: ORDERMAN_QUERY}, {query: VACATION_QUERY}],
             variables: {ids: checked.map((c) => (c._id))},
             awaitRefetchQueries: true,
 
@@ -412,8 +411,8 @@ export function OrderBack(checked, setChecked) {
     const {enqueueSnackbar} = useSnackbar();
 
 
-    const [orderback] = useMutation(OrderBackMutation, {
-            refetchQueries: [{query: Ordermen}, {query: VacationQuery}],
+    const [orderback] = useMutation(USER_GETBACK_MUTATION, {
+            refetchQueries: [{query: ORDERMAN_QUERY}, {query: VACATION_QUERY}],
             awaitRefetchQueries: true,
 
             variables: {ids: checked.map((c) => (c._id))},

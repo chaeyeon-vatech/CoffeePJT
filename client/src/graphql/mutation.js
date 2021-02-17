@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 
 //Order RewritePage
 
-export const CreateMutation = gql`
+export const ORDER_CREATE_MUTATION = gql`
     mutation createOrder($id:String! $menu:String! $hi:String!){
         createOrder(_id:$id,menu:$menu, hi:$hi){
             menu
@@ -14,7 +14,7 @@ export const CreateMutation = gql`
 
 `
 
-export const RemoveMutation = gql`
+export const ORDER_REMOVE_MUTATION = gql`
     mutation removeOrder($userid:String! $orderid:String!){
         removeOrder(userid:$userid, orderid:$orderid)
         {
@@ -26,7 +26,7 @@ export const RemoveMutation = gql`
 `
 
 //Task RewritePage
-export const TaskCreateMutation = gql`
+export const TASK_CREATE_MUTATION = gql`
     mutation($userid:String!, $title:String!){
         createTask(userid:$userid, title:$title){
             _id
@@ -38,7 +38,7 @@ export const TaskCreateMutation = gql`
 `
 
 
-export const TaskUpdateMutation = gql`
+export const TASK_UPDATE_MUTATION = gql`
     mutation updateTask($id:String! $title:String!){
         updateTask(_id:$id, title:$title){
             _id
@@ -51,7 +51,7 @@ export const TaskUpdateMutation = gql`
 
 //Task Update
 
-export const UpdateUserMutation = gql`
+export const USER_UPDATE_MUTATION = gql`
     mutation updateUser($id:String! $username:String!){
         updateUser(_id:$id, username:$username){
             _id
@@ -62,7 +62,7 @@ export const UpdateUserMutation = gql`
 `
 
 //Task Remove
-export const TaskRemoveMutation = gql`
+export const TASK_REMOVE_MUTATION = gql`
     mutation removeTask($id:String!,$userid:ID!){
         removeTask(_id:$id,userid:$userid){
             _id
@@ -73,19 +73,19 @@ export const TaskRemoveMutation = gql`
 
 
 //주문 포기 상태로 전환
-export const OrderGiveupMutation = gql`
+export const ORDER_GIVEUP_MUTATION = gql`
     mutation giveupOrder($userid:String!){
         giveupOrder(userid:$userid)
     }`
 
 //주문 초기화
-export const OrderConfirmMutation = gql`
+export const ORDER_CONFIRM_MUTATION = gql`
     mutation {
         confirmOrders
     }
 `
 
-export const BackUserMutation = gql`
+export const POSITION_UPDATE_MUTATION = gql`
     mutation updatePosition($ids:[String])
 
     {updatePosition(ids:$ids)}
@@ -93,7 +93,7 @@ export const BackUserMutation = gql`
 `
 
 
-export const CreateUserMutation = gql`
+export const USER_REGISTER_MUTATION = gql`
     mutation registerUser($username: String!){
         registerUser(username:$username){
             username
@@ -102,20 +102,20 @@ export const CreateUserMutation = gql`
 
 
 `
-export const OrderBackMutation = gql`
+export const USER_GETBACK_MUTATION = gql`
     mutation getbackUser($ids:[String])
 
     {getbackUser(ids:$ids)}
 
 `
 
-export const getBackGiveup = gql`
+export const STATUS_GETBACK_MUTATION = gql`
     mutation getbackStatus($id:String!){
         getbackStatus(_id:$id)
     }
 `
 
-export const multipleDelete = gql`
+export const MULUSER_DELETE_MUTATION = gql`
     mutation deleteUser($ids:[String]!){
         deleteUser(ids:$ids)
     }

@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import {Column, Row} from "simple-flexbox";
 import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../graphql/query";
+import {TASK_QUERY} from "../../graphql/query";
 import CreateButton from "./useBoard";
 import Emoji from "../../components/alert/Emoji";
 
@@ -80,7 +80,7 @@ export default function IceBoard() {
     const classes = useStyles();
     const [contents, setContents] = useState('');
 
-    const {data} = useQuery(TaskQuery);
+    const {data} = useQuery(TASK_QUERY);
     useEffect(() => {
         if (data) {
             setContents(data.tasks);

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery, OrderSearch} from "../../graphql/query";
+import {ME_QUERY, MY_ORDER_QUERY} from "../../graphql/query";
 import DeleteButton from "../button/DeleteButton";
 import ChangeGiveupButton from "../button/ChangeGiveup";
 import {makeStyles} from "@material-ui/core/styles";
@@ -33,7 +33,7 @@ export default function BoardTable() {
     const [status, setStatus] = useState();
 
 
-    const {data} = useQuery(OrderSearch, {
+    const {data} = useQuery(MY_ORDER_QUERY, {
         variables: {
             id: localStorage.getItem('myData')
 
@@ -46,7 +46,7 @@ export default function BoardTable() {
         }
     }, [data]);
 
-    const {data: me} = useQuery(MeQuery, {
+    const {data: me} = useQuery(ME_QUERY, {
         variables: {
             userid: localStorage.getItem('myData')
         }

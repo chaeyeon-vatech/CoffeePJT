@@ -3,7 +3,7 @@ import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import OrderBoard from './OrderBoard';
 import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../graphql/query";
+import {TASK_QUERY} from "../../graphql/query";
 
 const useStyles = createUseStyles((theme) => ({
     cardsContainer: {
@@ -62,7 +62,7 @@ function OrderBoardComponent() {
     const classes = useStyles();
     const [contents, setContents] = useState("");
 
-    const {data} = useQuery(TaskQuery);
+    const {data} = useQuery(TASK_QUERY);
     useEffect(() => {
         if (data) {
             setContents(data.tasks);

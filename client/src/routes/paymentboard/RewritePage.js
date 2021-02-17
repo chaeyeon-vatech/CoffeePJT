@@ -3,7 +3,7 @@ import {Row} from 'simple-flexbox';
 import {createUseStyles, useTheme} from 'react-jss';
 import CardComponent from 'components/cards/CardComponent';
 import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../graphql/query";
+import {TASK_QUERY} from "../../graphql/query";
 import VacationBoard from "../firstpage/VacationBoard";
 import UpdateTask from "../../components/dialog/UpdateTask";
 import Emoji from "../../components/alert/Emoji";
@@ -30,7 +30,7 @@ function RewritePage(props) {
     const classes = useStyles({theme});
     const [contents, setContents] = useState();
 
-    const {data} = useQuery(TaskQuery);
+    const {data} = useQuery(TASK_QUERY);
 
     useEffect(() => {
         if (data) {

@@ -4,12 +4,12 @@ import LINKS from 'resources/links';
 import First from "./firstpage/NoTask";
 import CustomizedSteppers from "./firstpage/Stepper";
 import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../graphql/query";
+import {TASK_QUERY} from "../graphql/query";
 
 function PublicRoutes() {
 
     const [task, setTask] = useState();
-    const {data} = useQuery(TaskQuery);
+    const {data} = useQuery(TASK_QUERY);
 
     useEffect(() => {
         if (data) {
