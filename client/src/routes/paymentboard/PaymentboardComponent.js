@@ -3,7 +3,7 @@ import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
 import PaymentBoard from './PaymentBoard';
 import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../graphql/query";
+import {TASK_QUERY} from "../../graphql/query";
 import SuccessAlert from "../../components/alert/SuccessAlert";
 import Emoji from "../../components/alert/Emoji";
 
@@ -70,7 +70,7 @@ function PaymentboardComponent(props) {
     const classes = useStyles();
 
     const [contents, setContents] = useState('');
-    const {data} = useQuery(TaskQuery);
+    const {data} = useQuery(TASK_QUERY);
     useEffect(() => {
         if (data) {
             setContents(data.tasks);

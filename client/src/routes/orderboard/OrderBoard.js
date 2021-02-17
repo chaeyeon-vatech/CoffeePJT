@@ -9,7 +9,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import {useTheme} from "@material-ui/core";
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery} from "../../graphql/query";
+import {ME_QUERY} from "../../graphql/query";
 import CreateOrder from "./useBoard";
 import GiveupButton from "../../components/button/GiveupButton";
 import CardActions from "@material-ui/core/CardActions";
@@ -66,7 +66,7 @@ export default function CorderBoard() {
 
     // console.log(userContext)
 
-    const {data} = useQuery(MeQuery, {
+    const {data} = useQuery(ME_QUERY, {
         variables: {
             userid: localStorage.getItem('myData')
         }

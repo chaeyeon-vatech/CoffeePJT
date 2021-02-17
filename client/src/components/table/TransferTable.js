@@ -11,7 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import {useQuery} from "@apollo/react-hooks";
-import {Ordermen, VacationQuery} from "../../graphql/query";
+import {ORDERMAN_QUERY, VACATION_QUERY} from "../../graphql/query";
 import {OrderBack, VacationBack} from "../../graphql/useMutation";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,8 +50,8 @@ export default function TransferList() {
     const [left, setLeft] = useState([1, 2, 3]);
     const [right, setRight] = useState([4, 5, 6, 7]);
 
-    const {data: user} = useQuery(VacationQuery);
-    const {data: order} = useQuery(Ordermen);
+    const {data: user} = useQuery(VACATION_QUERY);
+    const {data: order} = useQuery(ORDERMAN_QUERY);
 
     useEffect(() => {
         if (user) {

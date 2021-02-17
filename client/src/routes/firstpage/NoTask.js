@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
-import {SearchQuery} from "../../graphql/query";
+import {SEARCH_QUERY} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import {Autocomplete} from "@material-ui/lab";
@@ -179,13 +179,13 @@ const AuthenticationForm = () => {
     const IdRef = useRef(localStorage.getItem('name'));
 
 
-    const {data} = useQuery(SearchQuery, {
+    const {data} = useQuery(SEARCH_QUERY, {
         variables: {
             word: search
         }
 
     });
-    const {data: one} = useQuery(SearchQuery, {
+    const {data: one} = useQuery(SEARCH_QUERY, {
         variables: {
             word: value
         }

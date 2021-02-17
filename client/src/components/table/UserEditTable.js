@@ -9,7 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import {useQuery} from "@apollo/react-hooks";
-import {AllUserQuery} from "../../graphql/query";
+import {USER_SEARCH_QUERY} from "../../graphql/query";
 import UpdateUserDialog from "../dialog/UpdateUser";
 import UserDeleteButton from "../button/UserDeleteButton";
 import UserAddButton from "../button/UserAddButton";
@@ -50,7 +50,7 @@ export default function UserEditTable() {
     const [list, setList] = useState([]);
 
 
-    const {data: order} = useQuery(AllUserQuery);
+    const {data: order} = useQuery(USER_SEARCH_QUERY);
 
     useEffect(() => {
         if (order) {

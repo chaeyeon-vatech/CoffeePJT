@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Column} from 'simple-flexbox';
 import {createUseStyles} from 'react-jss';
-import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../../graphql/query";
 import MenuBoard from "./Menu";
 
 const useStyles = createUseStyles((theme) => ({
@@ -55,20 +53,10 @@ const useStyles = createUseStyles((theme) => ({
 
 function OrderBoardComponent() {
     const classes = useStyles();
-    const [contents, setContents] = useState("");
-
-    const {data} = useQuery(TaskQuery);
-    useEffect(() => {
-        if (data) {
-            setContents(data.tasks);
-        }
-    }, [data]);
-
 
     return (
 
         <Column className={classes.background}
-                container
                 spacing={0}
                 direction="column"
                 alignItems="center"

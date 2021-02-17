@@ -3,7 +3,6 @@ import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import TransferList from "../../components/table/TransferTable";
 import SuccessAlert from "../../components/alert/SuccessAlert";
-import StepLabel from "@material-ui/core/StepLabel";
 import {Column} from 'simple-flexbox';
 
 

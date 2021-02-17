@@ -7,7 +7,7 @@ import LogoComponent from './LogoComponent';
 import Menu from './MenuComponent';
 import MenuItem from './MenuItemComponent';
 import {useQuery} from '@apollo/react-hooks';
-import {MeQuery} from "../../graphql/query";
+import {ME_QUERY} from "../../graphql/query";
 
 const useStyles = createUseStyles({
     separator: {
@@ -37,7 +37,7 @@ function SidebarComponent() {
     const [user, setUser] = useState();
 
 
-    const {data} = useQuery(MeQuery, {
+    const {data} = useQuery(ME_QUERY, {
         variables: {
             userid: localStorage.getItem('myData')
         },

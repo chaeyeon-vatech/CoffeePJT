@@ -3,7 +3,7 @@ import {useLocation} from 'react-router-dom';
 import PrivateSection from 'routes/PrivateSection';
 import PublicRoutes from 'routes/PublicRoutes';
 import {useQuery} from "@apollo/react-hooks";
-import {TaskQuery} from "../graphql/query";
+import {TASK_QUERY} from "../graphql/query";
 
 function Routes() {
     const {pathname} = useLocation();
@@ -14,7 +14,7 @@ function Routes() {
     }, [pathname]);
 
 
-    const {data} = useQuery(TaskQuery);
+    const {data} = useQuery(TASK_QUERY);
 
     useEffect(() => {
         if (data) {
