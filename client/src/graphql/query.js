@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 //User Order 목록 불러오기/검색
-export const UserSearchQuery = gql`
+export const USER_SEARCH_QUERY = gql`
     query {
         allUsers{
             _id, position,username, status
@@ -11,7 +11,7 @@ export const UserSearchQuery = gql`
 
 
 //내 목록 불러오기
-export const MeQuery = gql`
+export const ME_QUERY = gql`
     query me($userid:String!) {
         me(userid:$userid){
             username
@@ -25,7 +25,7 @@ export const MeQuery = gql`
 
 
 //명수 계산
-export const CountQuery = gql`
+export const COUNT_QUERY = gql`
     query howmany{
         howmany
     }
@@ -33,7 +33,7 @@ export const CountQuery = gql`
 `
 
 //누적 금액 계산
-export const CostQuery = gql`
+export const COST_QUERY = gql`
     query
     {
         howmuch
@@ -44,7 +44,7 @@ export const CostQuery = gql`
 //TASK QUERY
 
 
-export const TaskQuery = gql`
+export const TASK_QUERY = gql`
     query{
         tasks{
             _id
@@ -58,7 +58,7 @@ export const TaskQuery = gql`
 
 //Search
 
-export const SearchQuery = gql`
+export const SEARCH_QUERY = gql`
     query($word: String!) {
         user(word:$word category:1){
             _id
@@ -70,35 +70,7 @@ export const SearchQuery = gql`
 
 `
 
-
-//주문자 Search
-
-export const USearchQuery = gql`
-    query($word: String!) {
-        user(word:$word category:2){
-            _id
-            username
-            status
-            position
-        }
-    }
-
-`
-
-
-//모든 유저 불러오기
-export const AllUserQuery = gql`
-    query{
-        allUsers{
-            _id
-            username
-            position
-            status
-        }
-    }
-`
-
-export const VacationQuery = gql`
+export const VACATION_QUERY = gql`
     query{
         includedVacation{
             username
@@ -108,18 +80,7 @@ export const VacationQuery = gql`
 
 `
 
-//Order Query
-
-export const OrderQuery = gql`
-    query {
-        orders{
-            username
-            menu}
-    }
-`
-
-
-export const NotQuery = gql`
+export const NOT_QUERY = gql`
     query {
         includedNothing{
             username
@@ -129,7 +90,7 @@ export const NotQuery = gql`
 
 `
 
-export const Ordermen = gql`
+export const ORDERMAN_QUERY = gql`
     query{
         includedOrdermen{
             username
@@ -138,7 +99,7 @@ export const Ordermen = gql`
     }`
 
 
-export const OrderSearch = gql`
+export const MY_ORDER_QUERY = gql`
     query orderMine($id:String!){
         orderMine(_id:$id){
             _id
@@ -149,11 +110,11 @@ export const OrderSearch = gql`
     }
 `
 
-export const Receipt = gql`
+export const RECEIPT_QUERY = gql`
     query {receipt}
 `
 
-export const ReceiptUser = gql`
+export const USER_RECEIPT_QUERY = gql`
     query receiptUser($menu:Int!)
     {receiptUser(cmenu:$menu)}
 `

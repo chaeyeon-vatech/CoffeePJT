@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import Button from "@material-ui/core/Button";
@@ -6,6 +6,7 @@ import {TaskCreate} from "../../graphql/useMutation";
 import SuccessAlert from "../../components/alert/SuccessAlert";
 import Typography from "@material-ui/core/Typography";
 import Emoji from "../../components/alert/Emoji";
+import {useForm} from "react-hook-form";
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -110,12 +111,23 @@ const useStyles = createUseStyles((theme) => ({
     }))
 ;
 
+
+const Input = ({register, required, label, taskClick}) => (
+    <>
+        <label>주문 내용</label>
+        <input name={label} ref={register({required})} placeholder="(예시) 승진, 결혼"/>
+    </>
+);
+
+
 const AuthenticationForm = () => {
+
 
     const theme = useTheme();
     const classes = useStyles({theme});
-    const [title, setTitle] = useState();
 
+
+    const {register, handleSubmit} = useForm();
 
     const handleClick = () => {
 
@@ -135,12 +147,11 @@ const AuthenticationForm = () => {
 
     }
 
-
-    const taskClick = () => {
-        localStorage.setItem('task', title)
+    const onSubmit = data => {
+        localStorage.setItem('task', data.task);
         window.location.href = '/create'
-    }
 
+    };
 
     return localStorage.getItem('task') ? (
         <>
@@ -161,6 +172,7 @@ const AuthenticationForm = () => {
                 <Button variant="contained" id='logout' onClick={changeClick} className={classes.button}>주문
                     변경</Button>
                 <Button variant="contained" color={"secondary"} id='logout' onClick={TaskCreate()}
+
                         className={classes.button}>완료!</Button>
             </div>
         </>
@@ -177,15 +189,8 @@ const AuthenticationForm = () => {
                 사시나요?</Typography>
 
                 <div className={classes.group}>
-                    <label>결제자 </label>
-                    <input type="text" placeholder="(예시) 승진, 결혼" onChange={e => setTitle(e.target.value)}
-                           onKeyDown={({key}) => {
-                               if (key === "Enter") {
-                                   taskClick()
-                               }
-                           }}
-                           className={classes.input}/>
-                    <Button variant="contained" id='logout' onClick={taskClick}
+                    <Input label="task" register={register} required/>
+                    <Button variant="contained" id='logout' onClick={handleSubmit(onSubmit)}
                             className={classes.button}>주문 생성</Button>
                     <Button variant="contained" id='logout' onClick={handleClick}
                             className={classes.button}>결제자 설정 페이지로 돌아가고 싶으신가요?</Button>

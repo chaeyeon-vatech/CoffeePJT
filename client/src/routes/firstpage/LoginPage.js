@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useQuery} from "@apollo/react-hooks";
-import {SearchQuery, TaskQuery} from "../../graphql/query";
+import {SEARCH_QUERY, TASK_QUERY} from "../../graphql/query";
 import {createUseStyles, useTheme} from "react-jss";
 import '../../components/table/table.css';
 import {Autocomplete} from "@material-ui/lab";
@@ -180,16 +180,16 @@ const AuthenticationForm = () => {
 
     const {userContext, dispatchUser} = useContext(UserContext);
 
-    const {data: task} = useQuery(TaskQuery);
+    const {data: task} = useQuery(TASK_QUERY);
 
-    const {data} = useQuery(SearchQuery, {
+    const {data} = useQuery(SEARCH_QUERY, {
         variables: {
             word: inputValue
         },
 
     });
 
-    const {data: one} = useQuery(SearchQuery, {
+    const {data: one} = useQuery(SEARCH_QUERY, {
         variables: {
             word: value
         },

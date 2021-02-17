@@ -1,22 +1,22 @@
 import React from "react";
-import {CreateMutation} from "../../graphql/mutation";
+import {ORDER_CREATE_MUTATION} from "../../graphql/mutation";
 import {useMutation} from "@apollo/react-hooks";
-import {CostQuery, CountQuery, MeQuery, NotQuery, OrderSearch, Receipt, ReceiptUser} from "../../graphql/query";
+import {COST_QUERY, COUNT_QUERY, ME_QUERY, NOT_QUERY, MY_ORDER_QUERY, RECEIPT_QUERY, USER_RECEIPT_QUERY} from "../../graphql/query";
 import Button from "@material-ui/core/Button";
 import {useSnackbar} from "notistack";
 
 export function CreateOrder(hi) {
 
-    const createmutation = CreateMutation;
+    const createmutation = ORDER_CREATE_MUTATION;
     const {enqueueSnackbar} = useSnackbar();
 
     const [create] = useMutation(createmutation, {
-            refetchQueries: [{query: OrderSearch, variables: {id: localStorage.getItem('myData')}}
-                , {query: MeQuery, variables: {userid: localStorage.getItem('myData')}},
-                {query: Receipt}, {query: ReceiptUser, variables: {menu: 1}}, {
-                    query: ReceiptUser,
+            refetchQueries: [{query: MY_ORDER_QUERY, variables: {id: localStorage.getItem('myData')}}
+                , {query: ME_QUERY, variables: {userid: localStorage.getItem('myData')}},
+                {query: RECEIPT_QUERY}, {query: USER_RECEIPT_QUERY, variables: {menu: 1}}, {
+                    query: USER_RECEIPT_QUERY,
                     variables: {menu: 3}
-                }, {query: CostQuery}, {query: CountQuery}, {query: NotQuery}],
+                }, {query: COST_QUERY}, {query: COUNT_QUERY}, {query: NOT_QUERY}],
             variables: {
                 id: localStorage.getItem('myData'),
                 menu: hi.menu,

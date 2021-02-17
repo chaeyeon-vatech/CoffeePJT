@@ -9,7 +9,7 @@ import IceBoard from "./IceBoard";
 import EtcBoard from "./etcBoard";
 import OrderBoardComponent from "./OrderBoardComponent";
 import {useQuery} from "@apollo/react-hooks";
-import {MeQuery} from "../../graphql/query";
+import {ME_QUERY} from "../../graphql/query";
 import AfterOrder from "./AfterOrder";
 import {Container} from "@material-ui/core";
 
@@ -71,7 +71,7 @@ export default function MenuBoard() {
         setValue(newValue);
     };
 
-    const {data} = useQuery(MeQuery, {
+    const {data} = useQuery(ME_QUERY, {
         variables: {
             userid: localStorage.getItem('myData')
         }
